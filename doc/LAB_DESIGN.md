@@ -1,6 +1,6 @@
 # Cell Society Design Discussion
 ### Team Number: 10
-### Names: Vaishvi Patel, Nick Ward, Eka Ebong
+### Names: Vaishvi Patel, Nick Ward, Eka Ebong, Luyao Wang, Jake Vigeant
 
 
 
