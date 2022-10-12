@@ -1,6 +1,6 @@
 # Cell Society Design Discussion
-### Team Number
-### Names
+### Team Number: 10
+### Names: Vaishvi Patel
 
 
 
@@ -16,18 +16,26 @@
 ## Discussion Questions
 
  * How does a Cell know what rules to apply for its simulation?
+   * Grid would apply the rule by looping through the cells and apply the rule stored in the type of cell
+   * Cell should be its own class and then use inheritance to make specific cells for the type for simulation. They will have a common method like applyRule() which will be different for each type of cell.
 
  * How does a Cell know about its neighbors?
+   * The Grid itself would be used to access cell neighbors or a method that accesses the neighbors of the cell
 
  * How can a Cell update itself without affecting its neighbors update?
+   * Two Grids: a current and history grid. The current grid's cells are updated based on the states of its neighbors on the history grid. Once the current grid is calculated, it is published and then it now becomes the new history grid.
 
  * What behaviors does the Grid itself have?
+   * Change size/add more cells, background color, generate grid (constructor?) based on a parsed csv, ability to access each cell.
 
  * How can a Grid update all the Cells it contains?
+   * Loop through the cells and call a method on the Cell class to apply rule
 
  * How is configuration information used to set up a simulation?
+   * The step function we use for each cell will be determined by the type and that will determine the type of cell
 
  * How is the GUI updated after all the cells have been updated?
+   * A signal from model to update Grid GUI to based on the published current grid
 
 
 
