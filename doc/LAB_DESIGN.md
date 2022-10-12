@@ -1,6 +1,6 @@
 # Cell Society Design Discussion
 ### Team Number: 10
-### Names: Vaishvi Patel
+### Names: Vaishvi Patel, Nick Ward
 
 
 
