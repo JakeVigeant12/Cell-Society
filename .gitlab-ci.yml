@@ -22,7 +22,7 @@ sonar_analysis:
         -Dsonar.host.url=http://coursework.cs.duke.edu:9000 \
         -Dsonar.sources=src \
         -Dsonar.java.binaries=. \
-        -Dsonar.exclusions=**/*.xml,**/*.txt,**/*.css,test/**
+        -Dsonar.exclusions=**/*.xml,**/*.txt,**/*.css,**/test/**
   tags:
     - sonarqube
   only:
