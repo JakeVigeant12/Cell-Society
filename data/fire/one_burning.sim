@@ -1,0 +1,7 @@
+# EMPTY, TREE, BURNING
+Type=SpreadingOfFire
+Title=One Burning Tree
+Author=Robert Duvall
+Description=Begins with a single tree burning in the middle
+InitialStates=fire/one_burning.csv
+StateColors=6e4d07,1f8518,cf1f13

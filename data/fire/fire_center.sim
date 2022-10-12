@@ -1,0 +1,6 @@
+Type=Fire
+Title=Room to Burn
+Author=Robert Duvall
+Description=Fire in the center of the trees
+InitialStates=fire/fire_center.csv
+Parameters=0.4

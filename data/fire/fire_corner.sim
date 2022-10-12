@@ -1,0 +1,6 @@
+Type=Fire
+InitialStates=fire/fire_corner.csv
+Parameters=0.2
+Author=Robert Duvall
+Title=Starts Small
+Description=Fire starts from the corner

@@ -1,0 +1,7 @@
+# EMPTY, FLUID, ROCK
+StateColors=FFFFFF,0000FF,000000
+InitialStates=percolation/long_pipe.csv
+Type=Percolation
+Title=Long Pipe
+Author=Robert Duvall
+Description=Long, bendy pipes flowing from top to bottom

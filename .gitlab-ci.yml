@@ -1,0 +1,29 @@
+image: maven
+
+stages:
+  - analyze
+  - validate
+
+checkstyle_analysis:
+  stage: validate
+  script: mvn validate
+  artifacts:
+    reports:
+      codequality: target/checkstyle-result.xml
+
+
+sonar_analysis:
+  stage: analyze
+  script:
+    - java -version
+    - mvn -version
+    - |
+      mvn -X -ntp sonar:sonar \
+        -Dsonar.host.url=http://coursework.cs.duke.edu:9000 \
+        -Dsonar.sources=src \
+        -Dsonar.java.binaries=. \
+        -Dsonar.exclusions=**/*.xml,**/*.txt,**/*.css,test/**
+  tags:
+    - sonarqube
+  only:
+    - master

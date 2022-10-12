@@ -1,0 +1,8 @@
+# EMPTY, AGENT1, AGENT2
+Type=Segregation
+Title=Example
+Author=Frank McCown
+Description=Agents don't want to be by each other
+InitialStates=schelling/example.csv
+Parameters=0.7
+StateColors=FFFFFF,0000FF,FF0000

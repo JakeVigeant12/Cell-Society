@@ -1,0 +1,5 @@
+Type=Segregation
+Title=Divided
+Author=Robert Duvall
+Description=Agents on either side
+InitialStates=schelling/divided.csv

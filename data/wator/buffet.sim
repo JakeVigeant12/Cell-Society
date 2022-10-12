@@ -1,0 +1,5 @@
+Type=WatorWorld
+Title=Time To Eat
+Author=Robert Duvall
+Description=One shark, and a whole lot of fish in a row.
+InitialStates=wator/buffet.csv

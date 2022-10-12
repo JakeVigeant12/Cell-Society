@@ -1,0 +1,5 @@
+Type=RockPaperScissor
+Title=Diagonal Division
+Author=Former Student
+Description=Diagonal ands of each type, order matters to determine who wins the day
+InitialStates=rock_paper_scissors/diagonal.csv

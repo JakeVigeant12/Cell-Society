@@ -1,0 +1,5 @@
+Title=Lines of Prey
+Description=Lines of prey for predators to share
+Type=WatorWorld
+InitialStates=wator/lines.csv
+Author=Robert Duvall

@@ -1,0 +1,6 @@
+Type=Segregation
+Title=Diagonal
+Author=Robert Duvall
+Description=Agents on opposite corners
+InitialStates=schelling/diagonal.csv
+Parameters=0.5

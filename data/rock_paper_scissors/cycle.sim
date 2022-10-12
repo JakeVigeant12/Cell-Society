@@ -1,0 +1,7 @@
+# ROCK, PAPER, SCISSORS
+Type=RockPaperScissor
+Author=Former Student
+Title=Endless Cycle
+Description=Endless cycle of rotating cells, no dominance
+InitialStates=rock_paper_scissors/cycle.csv
+StateColors=999999,FFFFFF,000000

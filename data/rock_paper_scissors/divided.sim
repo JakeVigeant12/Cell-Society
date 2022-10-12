@@ -1,0 +1,7 @@
+# ROCK, PAPER, SCISSORS
+Type=RockPaperScissor
+Author=Robert Duvall
+Description=Bands of each type, order matters to determine who wins the day
+Title=Divided to Start
+StateColors=FF0000,00FF00,0000FF
+InitialStates=rock_paper_scissors/divided.csv
