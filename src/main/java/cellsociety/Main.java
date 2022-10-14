@@ -30,8 +30,14 @@ public class Main extends Application {
     /**
      * @see Application#start(Stage)
      */
-    @Override
-    public void start (Stage primaryStage) {
+
+    public void start(Stage start){
+        StartSplash ss = new StartSplash(600);
+        start.setTitle("CellSociety");
+        start.setScene(ss.createScene(start, 600, 600));
+        start.show();
+    }
+    public void filepick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
