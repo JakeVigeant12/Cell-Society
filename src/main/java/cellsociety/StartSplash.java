@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-public class StartSplash {
+public class StartSplash extends SceneCreator{
     public double screenSize;
     public Pane startPane;
     private Text mainTitle;
@@ -19,15 +19,14 @@ public class StartSplash {
     private Button english;
     private Button spanish;
     private Button anotherlanguage;
+    private Scene myScene;
 
     public StartSplash(double size){
-        screenSize = size;
+        super(size);
         startPane = new Pane();
     }
 
-    public Scene createScene(Stage stage, double width, double height){
-        Scene scene = new Scene(startPane, width, height);
-        scene.getStylesheets().add("startsplash.css");
+    public Pane createStart(Stage stage){
         english = new Button(("English"));
         spanish = new Button("Español");
         anotherlanguage = new Button("3rd Language");
@@ -52,22 +51,19 @@ public class StartSplash {
         startPane.getChildren().addAll(buttons, mainTitle, selectLanguage, subtitle);
         handleEvents(stage);
 
-        return scene;
+        return startPane;
     }
 
     public void handleEvents(Stage stage){
         english.setOnAction(event->{
-            nextScreen(stage);
+            nextScreen(stage, myScene);
         });
         spanish.setOnAction(event ->{
-            nextScreen(stage);
+            nextScreen(stage, myScene);
         });
         anotherlanguage.setOnAction(event -> {
-            nextScreen(stage);
+            nextScreen(stage, myScene);
         });
     }
 
-    public void nextScreen(Stage stage){
-        stage.show();
-    }
 }
