@@ -33,13 +33,23 @@ public class StartSplash {
         anotherlanguage = new Button("3rd Language");
         mainTitle = new Text("Cell Society");
         mainTitle.getStyleClass().add("mainTitle");
+        mainTitle.setLayoutX(160);
+        mainTitle.setLayoutY(70);
+        selectLanguage = new Text("Select Language");
+        selectLanguage.getStyleClass().add("startSelectLanguage");
+        selectLanguage.setLayoutX(250);
+        selectLanguage.setLayoutY(430);
+        Text subtitle = new Text("Team 10");
+        subtitle.getStyleClass().add("startSelectLanguage");
+        subtitle.setLayoutY(100);
+        subtitle.setLayoutX(280);
 
         HBox buttons = new HBox(english, spanish, anotherlanguage);
         buttons.setLayoutY(490);
         buttons.setLayoutX(130);
         buttons.getStyleClass().add("allbuttons");
 
-        startPane.getChildren().addAll(buttons);
+        startPane.getChildren().addAll(buttons, mainTitle, selectLanguage, subtitle);
         handleEvents(stage);
 
         return scene;
