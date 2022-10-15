@@ -79,9 +79,10 @@ public class Cell {
    * Method to swap states with two cells
    * @param neighbor
    */
-  public void swapNeighborCell(Cell neighbor) {
+  public void swapCellStates(Cell neighbor) {
+    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getRow(), neighbor.getCol());
     neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
-    setFutureStateValue(neighbor.getCurrentState()); // set current cell's future state to neighbor's current state
+    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
   }
 
   /**
