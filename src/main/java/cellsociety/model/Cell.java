@@ -69,6 +69,22 @@ public class Cell {
   }
 
   /**
+   * Method that sets the row of the cell
+   * @param row
+   */
+  public void setRow(int row) {
+    this.row = row;
+  }
+
+  /**
+   * Method that sets the column of the cell
+   * @param col
+   */
+  public void setCol(int col) {
+    this.col = col;
+  }
+
+  /**
    * Method that manually updates the state of the cell
    */
   public void updateState() {
