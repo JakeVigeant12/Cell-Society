@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 
 public class SceneCreator {
     public double mySize;
+    public Scene myScene;
     public SceneCreator(double size){
         mySize = size;
     }
@@ -13,11 +14,12 @@ public class SceneCreator {
     public Scene createScene(Stage stage, Pane myPane, String css){
         Scene scene  = new Scene(myPane, mySize, mySize);
         scene.getStylesheets().add(css);
+        myScene = scene;
         return scene;
     }
 
-    public static void nextScreen(Stage stage, Scene scene){
-        stage.setScene(scene);
+    public void nextScreen(Stage stage){
+        stage.setScene(myScene);
         stage.show();
     }
 }

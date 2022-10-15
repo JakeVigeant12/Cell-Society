@@ -90,6 +90,11 @@ public class Main extends Application {
     }
 
     // set some sensible defaults when the FileChooser is created
+
+
+    /**
+     * Default version of main() is actually included within JavaFX!
+     */
     private static FileChooser makeChooser (String extensionAccepted) {
         FileChooser result = new FileChooser();
         result.setTitle("Open Data File");
@@ -98,8 +103,4 @@ public class Main extends Application {
         result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
         return result;
     }
-
-    /**
-     * Default version of main() is actually included within JavaFX!
-     */
 }

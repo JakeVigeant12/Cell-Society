@@ -19,7 +19,7 @@ public class StartSplash extends SceneCreator{
     private Button english;
     private Button spanish;
     private Button anotherlanguage;
-    private Scene myScene;
+
 
     public StartSplash(double size){
         super(size);
@@ -55,14 +55,18 @@ public class StartSplash extends SceneCreator{
     }
 
     public void handleEvents(Stage stage){
+        FileInput fi = new FileInput(mySize);
         english.setOnAction(event->{
-            nextScreen(stage, myScene);
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            nextScreen(stage);
         });
         spanish.setOnAction(event ->{
-            nextScreen(stage, myScene);
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels_es"), "fileinput.css"));
+            nextScreen(stage);
         });
         anotherlanguage.setOnAction(event -> {
-            nextScreen(stage, myScene);
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            nextScreen(stage);
         });
     }
 
