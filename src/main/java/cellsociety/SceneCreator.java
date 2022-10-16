@@ -18,8 +18,14 @@ public class SceneCreator {
         return scene;
     }
 
-    public void nextScreen(Stage stage){
-        stage.setScene(myScene);
-        stage.show();
+    public Scene createScene(Stage stage, Pane myPane){
+        Scene scene  = new Scene(myPane, mySize, mySize);
+        myScene = scene;
+        return scene;
     }
+
+//    public void nextScreen(Stage stage){
+//        stage.setScene(myScene);
+//        stage.show();
+//    }
 }

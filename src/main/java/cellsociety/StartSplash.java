@@ -58,15 +58,15 @@ public class StartSplash extends SceneCreator{
         FileInput fi = new FileInput(mySize);
         english.setOnAction(event->{
             stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
-            nextScreen(stage);
+            //nextScreen(stage);
         });
         spanish.setOnAction(event ->{
             stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels_es"), "fileinput.css"));
-            nextScreen(stage);
+//            nextScreen(stage);
         });
         anotherlanguage.setOnAction(event -> {
             stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
-            nextScreen(stage);
+//            nextScreen(stage);
         });
     }
 

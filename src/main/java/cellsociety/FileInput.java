@@ -22,7 +22,7 @@ public class FileInput extends SceneCreator{
     public Pane inputPane;
     public Button input;
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.sim";
+    public static final String DATA_FILE_CSV_EXTENSION = "*.csv";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
@@ -53,9 +53,11 @@ public class FileInput extends SceneCreator{
     }
 
     private void buttonPress(Stage stage) {
+        GridView gridView = new GridView(600);
         input.setOnAction(event -> {
             filepick(stage);
-            nextScreen(stage);
+            stage.setScene(createScene(stage, gridView.setUpGrid(stage)));
+//            nextScreen(stage);
         });
     }
     public void filepick(Stage primaryStage) {

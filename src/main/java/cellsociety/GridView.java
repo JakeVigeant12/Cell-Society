@@ -1,52 +1,38 @@
 package cellsociety;
 
-import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
-public class GridView extends Application {
-
-    private double paneHeight = 800;
-    private double paneWidth = 700;
+public class GridView extends SceneCreator {
+    GridPane grid;
+    private double size;
     private int n = 20;
     private int m = 20;
 
-    CellView[][] grid = new CellView[n][m];
+    CellView[][] cells = new CellView[n][m];
 
-    @Override
-    public void start(Stage primaryStage) {
+    public GridView(double size) {
+        super(size);
+        this.size = size;
+        grid = new GridPane();
+    }
 
-        int width = 700 / 20;
+    public GridPane setUpGrid(Stage primaryStage) {
 
-        GridPane root = new GridPane();
+        double width = size / 20;
 
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-
-                CellView node = new CellView(y + "," + x, y * width, 100 + x * width, width);
-
+                CellView node = new CellView(y + "," + x, y * width, +x * width, width, Color.AZURE);
                 // add cells to group
-                root.getChildren().add(node);
-
+                grid.getChildren().add(node);
                 // add to grid for further reference using an array
-                grid[y][x] = node;
-
-
+                cells[y][x] = node;
             }
         }
-
-        Scene scene = new Scene(root, paneWidth, paneHeight);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
+        return grid;
     }
 }
