@@ -1,5 +1,6 @@
 package cellsociety;
 
+import cellsociety.controller.CellSocietyController;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,11 +20,11 @@ import com.opencsv.exceptions.CsvValidationException;
  */
 public class Main extends Application {
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.csv";
+    public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
+    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
     // internal configuration file
     public static final String INTERNAL_CONFIGURATION = "cellsociety.Configuration";
 
@@ -42,13 +43,15 @@ public class Main extends Application {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                int sum = sumCSVData(new FileReader(dataFile));
-                showMessage(AlertType.INFORMATION, "" + sum);
+                CellSocietyController controller = new CellSocietyController(dataFile);
+                controller.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(AlertType.ERROR, "Invalid CSV Format");
         }
     }
 
