@@ -1,8 +1,8 @@
-package cellsociety;
+package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -11,13 +11,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class FileInput extends SceneCreator{
+public class FileInput extends SceneCreator {
     public double screenSize;
     public Pane inputPane;
     public Button input;
@@ -64,13 +62,15 @@ public class FileInput extends SceneCreator{
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                int sum = sumCSVData(new FileReader(dataFile));
-                showMessage(Alert.AlertType.INFORMATION, "" + sum);
+                CellSocietyController controller = new CellSocietyController(dataFile);
+                controller.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
     private void showMessage (Alert.AlertType type, String message) {

@@ -1,17 +1,12 @@
-package cellsociety;
+package cellsociety.view;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-public class StartSplash extends SceneCreator{
+public class StartSplash extends SceneCreator {
     public double screenSize;
     public Pane startPane;
     private Text mainTitle;
