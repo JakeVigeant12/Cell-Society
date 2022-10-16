@@ -1,5 +1,6 @@
 package cellsociety;
 
+import cellsociety.controller.CellSocietyController;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,13 +36,16 @@ public class Main extends Application {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                int sum = sumCSVData(new FileReader(dataFile));
-                showMessage(AlertType.INFORMATION, "" + sum);
+                CellSocietyController controller = new CellSocietyController(new FileReader(dataFile));
+                controller.loadSimulation(primaryStage);
+//                showMessage(AlertType.INFORMATION, "" + sum);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(AlertType.ERROR, "Invalid CSV Format");
         }
     }
 
