@@ -2,10 +2,12 @@ package cellsociety;
 
 import cellsociety.controller.CellSocietyController;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
+
+import cellsociety.view.SceneCreator;
+import cellsociety.view.StartSplash;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
