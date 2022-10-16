@@ -1,5 +1,7 @@
 package cellsociety.controller;
 
+import static cellsociety.Main.DATA_FILE_FOLDER;
+
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -20,24 +22,17 @@ import javafx.stage.Stage;
 import org.apache.commons.collections.map.HashedMap;
 
 public class CellSocietyController {
-
+  private static final String DATA_FOLDER = "data/";
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
   private final Map<String, String> simMap;
-  private List<List<String>> currentGrid = new ArrayList<>();
+  private List<List<String>> currentGrid;
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     SimParser simParser = new SimParser();
     simMap = simParser.parseSimFile(simFile);
     String csvPath = simMap.get(INITIAL_STATES);
-    currentGrid = loadInitialStates(new FileReader(csvPath));
-  }
-
-  //Temporary constructor to test functionality. TODO: Delete after UI is set to pass SimFile
-  public CellSocietyController(Reader csvReader) throws CsvValidationException, IOException {
-    SimParser simParser = new SimParser();
-    simMap = simParser.parseSimFile(new File("data/game_of_life/blinkers.sim"));
-    currentGrid = loadInitialStates(csvReader);
+    currentGrid = loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
   }
 
   private List<List<String>> loadInitialStates(Reader fileReader) throws CsvValidationException, IOException {

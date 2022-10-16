@@ -13,8 +13,12 @@ public class SimParser {
     Scanner fileScanner = new Scanner(simFile); //TODO: Fix exception handling
     while(fileScanner.hasNextLine()) {
       String infoString = fileScanner.nextLine();
-      String[] infoArray = infoString.split("=");
-      simInfoMap.put(infoArray[0], infoArray[1]);
+      if(infoString.startsWith("#")) {
+        continue;
+      } else {
+        String[] infoArray = infoString.split("=");
+        simInfoMap.put(infoArray[0], infoArray[1]);
+      }
     }
     return simInfoMap;
   }
