@@ -1,0 +1,11 @@
+.button{
+    -fx-pref-height: 40;
+    -fx-font-size: 12pt;
+    -fx-alignment: center;
+}
+
+.mainText{
+    -fx-alignment: center;
+    -fx-fill: black;
+    -fx-font-size: 30pt;
+}
