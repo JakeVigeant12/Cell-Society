@@ -1,0 +1,21 @@
+.startSelectLanguage{
+    -fx-font-size: 14pt;
+    -fx-fill: darkblue;
+    -fx-alignment: center;
+}
+.button{
+    -fx-pref-height: 40;
+    -fx-pref-width: 100;
+    -fx-font-size: 12pt;
+}
+
+.allbuttons{
+    -fx-alignment: bottom-center;
+    -fx-spacing: 30px;
+}
+
+.mainTitle{
+    -fx-alignment: center;
+    -fx-fill: black;
+    -fx-font-size: 48pt;
+}

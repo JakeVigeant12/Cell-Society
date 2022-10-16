@@ -1,25 +1,28 @@
 package cellsociety;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 
-
-/**
- * Feel free to completely change this code or delete it entirely. 
- */
-public class Main extends Application {
+public class FileInput extends SceneCreator{
+    public double screenSize;
+    public Pane inputPane;
+    public Button input;
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.csv";
+    public static final String DATA_FILE_CSV_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
@@ -27,34 +30,50 @@ public class Main extends Application {
     // internal configuration file
     public static final String INTERNAL_CONFIGURATION = "cellsociety.Configuration";
 
-    /**
-     * @see Application#start(Stage)
-     */
+    private ResourceBundle label;
+    public FileInput(double size){
+        super(size);
+        inputPane = new Pane();
+    }
 
-    public void start(Stage start){
-        StartSplash ss = new StartSplash(600.0);
-        start.setTitle("CellSociety");
-        SceneCreator current = new SceneCreator(600.0);
-        start.setScene(current.createScene(start,ss.createStart(start),"startsplash.css" ));
-        start.show();
+    public Pane createFileInput(Stage stage, String language){
+        label = ResourceBundle.getBundle(language);
+        input = new Button(label.getString("buttonText"));
+        input.getStyleClass().add("button");
+        input.setLayoutY(500);
+        input.setLayoutX(235);
+        Text title = new Text("Select .sim File to upload");
+        title.getStyleClass().add("mainText");
+        title.setLayoutY(200);
+        title.setLayoutX(75);
+
+        inputPane.getChildren().addAll(input,title);
+        buttonPress(stage);
+        return inputPane;
+    }
+
+    private void buttonPress(Stage stage) {
+        input.setOnAction(event -> {
+            filepick(stage);
+            nextScreen(stage);
+        });
     }
     public void filepick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
                 int sum = sumCSVData(new FileReader(dataFile));
-                showMessage(AlertType.INFORMATION, "" + sum);
+                showMessage(Alert.AlertType.INFORMATION, "" + sum);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
-            showMessage(AlertType.ERROR, "Invalid Data File Given");
+            showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
         }
     }
-
-    /**
-     * Returns sum of values in the given CSV data source (could be anything that is readable).
-     */
+    private void showMessage (Alert.AlertType type, String message) {
+        new Alert(type, message).showAndWait();
+    }
     public int sumCSVData (Reader dataReader) {
         // this syntax automatically close file resources if an exception occurs
         try (CSVReader csvReader = new CSVReader(dataReader)) {
@@ -71,30 +90,11 @@ public class Main extends Application {
             return total;
         }
         catch (IOException | CsvValidationException e) {
-            showMessage(AlertType.ERROR, "Invalid CSV Data");
+            showMessage(Alert.AlertType.ERROR, "Invalid CSV Data");
             return 0;
         }
     }
 
-    /**
-     * A method to test getting internal resources.
-     */
-    public double getVersion () {
-        ResourceBundle resources = ResourceBundle.getBundle(INTERNAL_CONFIGURATION);
-        return Double.parseDouble(resources.getString("Version"));
-    }
-
-    // display given message to user using the given type of Alert dialog box
-    private void showMessage (AlertType type, String message) {
-        new Alert(type, message).showAndWait();
-    }
-
-    // set some sensible defaults when the FileChooser is created
-
-
-    /**
-     * Default version of main() is actually included within JavaFX!
-     */
     private static FileChooser makeChooser (String extensionAccepted) {
         FileChooser result = new FileChooser();
         result.setTitle("Open Data File");
@@ -103,4 +103,6 @@ public class Main extends Application {
         result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
         return result;
     }
+
+
 }
