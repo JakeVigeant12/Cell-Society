@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.view;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

@@ -1,9 +1,8 @@
-package cellsociety;
+package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -12,13 +11,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class FileInput extends SceneCreator{
+public class FileInput extends SceneCreator {
     public double screenSize;
     public Pane inputPane;
     public Button input;
