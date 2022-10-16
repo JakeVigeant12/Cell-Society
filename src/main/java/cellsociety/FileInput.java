@@ -1,5 +1,6 @@
 package cellsociety;
 
+import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.Scene;
@@ -62,13 +63,15 @@ public class FileInput extends SceneCreator{
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                int sum = sumCSVData(new FileReader(dataFile));
-                showMessage(Alert.AlertType.INFORMATION, "" + sum);
+                CellSocietyController controller = new CellSocietyController(dataFile);
+                controller.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
     private void showMessage (Alert.AlertType type, String message) {
