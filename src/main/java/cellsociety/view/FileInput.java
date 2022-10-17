@@ -58,24 +58,26 @@ public class FileInput extends SceneCreator {
     private void buttonPress(Stage stage) throws CsvValidationException, IOException {
         //add go back button
         mySize = 800;
-        GridScreen firstgrid = new GridScreen(mySize);
+        cellSocietyController = new CellSocietyController();
+        GridScreen firstgrid = new GridScreen(mySize, cellSocietyController);
         input.setOnAction(event -> {
-            filepick(stage);
+            filePick(stage);
             stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
             nextScreen(stage);
         });
     }
-    public void filepick(Stage primaryStage) {
+    public void filePick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
                 cellSocietyController.loadSimFile(dataFile);
-                cellSocietyController.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
         }
     }
     private void showMessage (Alert.AlertType type, String message) {

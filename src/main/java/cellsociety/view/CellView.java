@@ -8,7 +8,7 @@
     public class CellView extends StackPane {
 
 
-        public CellView(String name, double x, double y, double width, Color color) {
+        public CellView(Integer name, double x, double y, double width, Color color) {
 
             // create rectangle
             Rectangle rectangle = new Rectangle(width, width);
@@ -16,7 +16,7 @@
             rectangle.setFill(color);
 
             // create label
-            Label label = new Label(name);
+            Label label = new Label(name+"");
 
             // set position
 //            setTranslateX(x);

@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //Default implementation of the model
@@ -15,10 +16,10 @@ public class InitialModelImplementation extends Model{
   private final GraphGrid myGrid;
   private final Parser gridParser;
   private final SimType simType;
-  public InitialModelImplementation(String csvPath, Map<String,String> simParameters) throws IOException, CsvValidationException {
+  public InitialModelImplementation(String csvPath, Map<String,String> simParameters, File simFile) throws IOException, CsvValidationException {
     simType = SimType.valueOf(simParameters.get("Type"));
     gridParser = new CSVParser(csvPath);
-    myGrid = new GraphGrid((ArrayList<ArrayList<String>>)gridParser.parseData(null), simType);
+    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(simFile), simType);
 
   }
   public void computeStates(){

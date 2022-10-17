@@ -21,6 +21,7 @@ public class GridScreen extends SceneCreator{
     private Pane gridPane;
     private Button play;
     private Button step;
+
     private Rectangle about;
     private Text title;
     private Text type;
@@ -30,19 +31,19 @@ public class GridScreen extends SceneCreator{
     private Paint jid = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
     private GridView gridView;
+    private CellSocietyController controller;
 
-
-    public GridScreen(double size)throws CsvValidationException, IOException {
+    public GridScreen(double size, CellSocietyController controller)throws CsvValidationException, IOException {
         super(size);
+        this.controller = controller;
         gridPane = new Pane();
-        cellSocietyController = new CellSocietyController();
     }
 
     public Pane createGridScreen(Stage stage, ResourceBundle label){
         myLabels = label;
-        play = new Button("Play");
-        step = new Button("Next");
-        play.getStyleClass().add("buttons");
+        play = new Button(">");
+        step = new Button(">|");
+        play.getStyleClass().add("play");
 
         Abouttitle = new Text(myLabels.getString("aboutText"));
         title = new Text(myLabels.getString("title"));
@@ -65,8 +66,9 @@ public class GridScreen extends SceneCreator{
         controls.getStyleClass().add("allbuttons");
 
         gridPane.getChildren().addAll(controls, fileinfo);
-        gridView = new GridView(mySize, cellSocietyController);
-        gridPane.getChildren().add(gridView.getGrid());
+        gridView = new GridView(mySize, controller);
+        gridView.setUpView(controller.getViewGrid());
+        controls.getChildren().add(gridView.getGrid());
         return gridPane;
     }
 

@@ -6,21 +6,23 @@ import cellsociety.SimType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GraphGrid extends Grid{
-  private HashMap<Integer, Cell> myCells;
-  private HashMap<Cell, ArrayList<Cell>> myAdjacenyList;
+  private Map<Integer, Cell> myCells;
+  private Map<Cell, List<Cell>> myAdjacenyList;
   private final SimType simType;
-  public GraphGrid(ArrayList<ArrayList<String>> gridParsing, SimType simInput) {
+  public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
     simType = simInput;
-    populateGrid(gridParsing);
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
+    populateGrid(gridParsing);
   }
 
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
+  public void populateGrid(List<List<String>> inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.size(); i++){
@@ -56,7 +58,7 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  public ArrayList<Cell> initializeNeighbors(ArrayList<ArrayList<String>> gridParsing, int row, int col){
+  public ArrayList<Cell> initializeNeighbors(List<List<String>> gridParsing, int row, int col){
       ArrayList<Cell> neighbors = new ArrayList<>();
     //TODO refactor method to generalize neighbor calculation using open/close solution
 

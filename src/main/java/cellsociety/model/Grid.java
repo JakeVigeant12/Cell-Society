@@ -8,6 +8,6 @@ public abstract class Grid {
     return;
   }
 
-  public abstract void populateGrid(ArrayList<ArrayList<String>> inputLayout);
+  public abstract void populateGrid(List<List<String>> inputLayout);
 }
 

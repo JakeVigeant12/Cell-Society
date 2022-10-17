@@ -32,7 +32,7 @@ public class GridView{
 //        setUpButton();
     }
 
-    public void setUpView(List<List<String>> gridData) {
+    public void setUpView(List<List<Integer>> gridData) {
         n = gridData.size();
         m = gridData.get(0).size();
         int width = (int) Math.min((size - 2 * rem - 50) / n, (size - 1.6 * rem) / m);
