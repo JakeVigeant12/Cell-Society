@@ -27,30 +27,22 @@ public class CellSocietyController {
   private static final String DATA_FOLDER = "data/";
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
-  private final Map<String, String> simMap;
-  private List<List<String>> currentGrid;
+  private Map<String, String> simMap;
   private Model myModel;
+  private File simFile;
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
+    this.simFile = simFile;
+    getSimData();
+    String csvPath = simMap.get(INITIAL_STATES);
+    //Specification of model type
+    myModel = new InitialModelImplementation(csvPath, simMap.get("Type"));
+
+  }
+  public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();
     simMap = simParser.parseData(simFile);
-    String csvPath = simMap.get(INITIAL_STATES);
-    myModel = new InitialModelImplementation(csvPath);
-    currentGrid = loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
   }
-
-  private List<List<String>> loadInitialStates(Reader fileReader) throws CsvValidationException, IOException {
-    List<List<String>> grid = new ArrayList<>();
-    CSVReader csvReader = new CSVReader(fileReader);
-    csvReader.readNext();
-    String[] states = csvReader.readNext();
-    while(states != null) {
-      grid.add(Arrays.asList(states));
-      states = csvReader.readNext();
-    }
-    return grid;
-  }
-
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
     stage.setScene(new Scene(new Group()));

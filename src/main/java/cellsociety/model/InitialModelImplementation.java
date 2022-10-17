@@ -9,11 +9,13 @@ import java.util.ArrayList;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model{
-  GraphGrid myGrid;
-  Parser gridParser;
-  public InitialModelImplementation(String csvPath) throws IOException, CsvValidationException {
+  private final GraphGrid myGrid;
+  private final Parser gridParser;
+  private final String simType;
+  public InitialModelImplementation(String csvPath, String simInput) throws IOException, CsvValidationException {
+    this.simType = simInput;
     gridParser = new CSVParser(csvPath);
-    myGrid = new GraphGrid((ArrayList<ArrayList<String>>)gridParser.parseData(null));
+    myGrid = new GraphGrid((ArrayList<ArrayList<String>>)gridParser.parseData(null), simType);
 
   }
   public void computeStates(){

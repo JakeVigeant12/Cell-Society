@@ -5,6 +5,7 @@ import cellsociety.parser.Parser;
 public abstract class Model {
   private Parser inputGrid;
   private Grid myGrid;
+  private String simType;
 
 
   //Use the parser abstraction to read in data file. Use myGrid to store the data structure representing the grid.
@@ -12,8 +13,4 @@ public abstract class Model {
   public void computeStates(){
     myGrid.computeStates();
   }
-  public Grid constructGrid(){
-    return null;
-  }
-
 }
