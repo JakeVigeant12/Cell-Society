@@ -57,10 +57,11 @@ public class FileInput extends SceneCreator {
 
     private void buttonPress(Stage stage) {
         //add go back button
-        GridScreen firstgrid = new GridScreen(800);
+        mySize = 800;
+        GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
             filepick(stage);
-            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage), "gridscreen.css"));
+            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
             nextScreen(stage);
         });
     }

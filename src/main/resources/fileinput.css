@@ -6,6 +6,9 @@
 
 .mainText{
     -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-background-color: white;
     -fx-fill: black;
     -fx-font-size: 30pt;
+    margin: auto;
 }

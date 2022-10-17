@@ -1,0 +1,8 @@
+.button{
+    -fx-pref-height: 40;
+    -fx-pref-width: 40;
+}
+.allbuttons{
+    -fx-alignment: bottom-center;
+    -fx-spacing: 10px;
+}
