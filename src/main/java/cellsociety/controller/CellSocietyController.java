@@ -2,6 +2,8 @@ package cellsociety.controller;
 
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
+import cellsociety.model.InitialModelImplementation;
+import cellsociety.model.Model;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -27,11 +29,13 @@ public class CellSocietyController {
   public static final String TITLE = "Title";
   private final Map<String, String> simMap;
   private List<List<String>> currentGrid;
+  private Model myModel;
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     SimParser simParser = new SimParser();
-    simMap = simParser.parseSimFile(simFile);
+    simMap = simParser.parseData(simFile);
     String csvPath = simMap.get(INITIAL_STATES);
+    myModel = new InitialModelImplementation(csvPath);
     currentGrid = loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
   }
 
