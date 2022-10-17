@@ -11,15 +11,16 @@ public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, ArrayList<Cell>> myAdjacenyList;
   private final SimType simType;
-  public GraphGrid(ArrayList<ArrayList<String>> graphParsing, SimType simInput) {
+  public GraphGrid(ArrayList<ArrayList<String>> gridParsing, SimType simInput) {
     simType = simInput;
-    populateGrid(graphParsing);
+    populateGrid(gridParsing);
+    myAdjacenyList = new HashMap<>();
+    myCells = new HashMap<>();
   }
 
   @Override
   //Assume grid values are passed in as expected, sans dimensions
   public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
-    //TODO refactor method to generalize neighbor calculation using open/close solution
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.size(); i++){
@@ -57,8 +58,7 @@ public class GraphGrid extends Grid{
   }
   public ArrayList<Cell> initializeNeighbors(ArrayList<ArrayList<String>> gridParsing, int row, int col){
       ArrayList<Cell> neighbors = new ArrayList<>();
-
-
+    //TODO refactor method to generalize neighbor calculation using open/close solution
 
       return neighbors;
   }
