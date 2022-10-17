@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -10,6 +12,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator{
@@ -25,11 +29,13 @@ public class GridScreen extends SceneCreator{
     private Text Abouttitle;
     private Paint jid = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
+    private GridView gridView;
 
 
-    public GridScreen(double size){
+    public GridScreen(double size)throws CsvValidationException, IOException {
         super(size);
         gridPane = new Pane();
+        cellSocietyController = new CellSocietyController();
     }
 
     public Pane createGridScreen(Stage stage, ResourceBundle label){
@@ -59,6 +65,8 @@ public class GridScreen extends SceneCreator{
         controls.getStyleClass().add("allbuttons");
 
         gridPane.getChildren().addAll(controls, fileinfo);
+        gridView = new GridView(mySize, cellSocietyController);
+        gridPane.getChildren().add(gridView.getGrid());
         return gridPane;
     }
 

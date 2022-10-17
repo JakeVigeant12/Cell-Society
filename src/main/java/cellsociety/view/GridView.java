@@ -14,28 +14,25 @@ import javafx.stage.Stage;
 import java.util.List;
 
 
-public class GridView extends SceneCreator {
+public class GridView{
     GridPane grid;
     private double size;
     private int n;
     private int m;
-    BorderPane root;
     CellView[][] cells;
     CellSocietyController controller;
     final double rem = new Text("").getLayoutBounds().getHeight();
 
     public GridView(double size, CellSocietyController controller) {
-        super(size);
-        root = new BorderPane();
         this.size = size;
         grid = new GridPane();
         this.controller = controller;
         grid.setPadding(new Insets(0.8 * rem));
         grid.setGridLinesVisible(true);
-        setUpButton();
+//        setUpButton();
     }
 
-    public BorderPane setUpView(List<List<String>> gridData) {
+    public void setUpView(List<List<String>> gridData) {
         n = gridData.size();
         m = gridData.get(0).size();
         int width = (int) Math.min((size - 2 * rem - 50) / n, (size - 1.6 * rem) / m);
@@ -50,19 +47,21 @@ public class GridView extends SceneCreator {
                 cells[y][x] = node;
             }
         }
-        root.setBottom(grid);
-        return root;
     }
 
-    private void setUpButton() {
-
-        Button nextButton = new Button("Next");
-        nextButton.setPrefWidth(50);
-        HBox hBox = new HBox(nextButton);
-        hBox.setPadding(new Insets(0.8 * rem));
-        root.setTop(hBox);
-        //TODO: updateGrid method in controller
-        nextButton.setOnAction(e -> controller.updateGrid());
+    public GridPane getGrid() {
+        return grid;
     }
+
+    //    private void setUpButton() {
+//
+//        Button nextButton = new Button("Next");
+//        nextButton.setPrefWidth(50);
+//        HBox hBox = new HBox(nextButton);
+//        hBox.setPadding(new Insets(0.8 * rem));
+//        root.setTop(hBox);
+//        //TODO: updateGrid method in controller
+//        nextButton.setOnAction(e -> controller.updateGrid());
+//    }
 
 }

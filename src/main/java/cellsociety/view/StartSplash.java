@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -8,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class StartSplash extends SceneCreator {
@@ -64,15 +66,27 @@ public class StartSplash extends SceneCreator {
     public void handleEvents(Stage stage){
         FileInput fi = new FileInput(mySize);
         english.setOnAction(event->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            try {
+                stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            } catch (CsvValidationException | IOException e) {
+                throw new RuntimeException(e);
+            }
             //nextScreen(stage);
         });
         spanish.setOnAction(event ->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"), "fileinput.css"));
+            try {
+                stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"), "fileinput.css"));
+            } catch (CsvValidationException | IOException e) {
+                throw new RuntimeException(e);
+            }
             nextScreen(stage);
         });
         anotherlanguage.setOnAction(event -> {
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            try {
+                stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            } catch (CsvValidationException | IOException e) {
+                throw new RuntimeException(e);
+            }
 //            nextScreen(stage);
         });
     }

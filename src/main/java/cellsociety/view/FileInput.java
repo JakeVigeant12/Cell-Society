@@ -26,7 +26,7 @@ public class FileInput extends SceneCreator {
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
+    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ResourceBundle label;
     private Rectangle fileBackground;
@@ -35,7 +35,7 @@ public class FileInput extends SceneCreator {
         inputPane = new Pane();
     }
 
-    public Pane createFileInput(Stage stage, String language){
+    public Pane createFileInput(Stage stage, String language) throws CsvValidationException, IOException {
         label = ResourceBundle.getBundle(language);
 
         input = new Button(label.getString("buttonText"));
@@ -55,7 +55,7 @@ public class FileInput extends SceneCreator {
         return inputPane;
     }
 
-    private void buttonPress(Stage stage) {
+    private void buttonPress(Stage stage) throws CsvValidationException, IOException {
         //add go back button
         mySize = 800;
         GridScreen firstgrid = new GridScreen(mySize);
@@ -69,15 +69,13 @@ public class FileInput extends SceneCreator {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
-                controller.loadSimulation(primaryStage);
+                cellSocietyController.loadSimFile(dataFile);
+                cellSocietyController.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
-        } catch (CsvValidationException e) {
-            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
     private void showMessage (Alert.AlertType type, String message) {

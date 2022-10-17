@@ -6,6 +6,7 @@ import cellsociety.SimType;
 import cellsociety.model.Cell;
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.model.Model;
+import cellsociety.view.SceneCreator;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -34,25 +35,35 @@ public class CellSocietyController {
   private View myView;
   private File simFile;
   private Map<Integer, Cell> backEndCellsbyID;
+  private Stage stage;
+  private SceneCreator sceneCreator;
+  private List<List<String>> currentGrid;
   //TODO create analogous mapping for the frontend
   //private Map<Integer, Cell> backEndCellsbyID;
 
 
-  public CellSocietyController(File simFile) throws IOException, CsvValidationException {
-    this.simFile = simFile;
+  public CellSocietyController() throws IOException, CsvValidationException {
     getSimData();
+    sceneCreator = new SceneCreator(600.0);
     String csvPath = simMap.get(INITIAL_STATES);
+//    currentGrid =
+//            loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, simMap);
-
   }
+
+  public void loadSimFile(File simFile) throws FileNotFoundException {
+    this.simFile = simFile;
+    getSimData();
+  }
+
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();
     simMap = simParser.parseData(simFile);
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-    stage.setScene(current.createScene(stage, gridView.setUpView(currentGrid)));
+//    stage.setScene(sceneCreator.createScene(stage, gridView.setUpView(currentGrid)));
     stage.show();
   }
 
