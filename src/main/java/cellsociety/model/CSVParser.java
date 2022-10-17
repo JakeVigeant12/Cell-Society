@@ -34,4 +34,9 @@ public class CSVParser extends Parser {
     }
     return grid;
   }
+
+  public String[] parseFirstLine() throws CsvValidationException, IOException {
+    CSVReader csvReader = new CSVReader(myFileReader);
+    return csvReader.readNext();
   }
+}
