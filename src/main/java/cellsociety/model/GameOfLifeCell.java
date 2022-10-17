@@ -10,8 +10,8 @@ public class GameOfLifeCell extends Cell {
     * @param row is the row of the cell
     * @param col is the column of the cell
     */
-    public GameOfLifeCell(int state, int row, int col) {
-        super(state, row, col);
+    public GameOfLifeCell(int state, int id) {
+        super(state, id);
     }
 
     /**

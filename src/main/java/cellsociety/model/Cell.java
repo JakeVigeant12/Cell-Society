@@ -6,19 +6,17 @@ import java.util.List;
 public class Cell {
   private int currentState;
   private int futureState;
-  private int row;
-  private int col;
+  private int id;
+
 
   /**
    * Constructor for Cell class
    * @param state is the state of the cell
-   * @param row is the row of the cell
-   * @param col is the column of the cell
+   * @param id is the identification number for this cell
    */
-  public Cell(int state, int row, int col) {
+  public Cell(int state, int id) {
     this.currentState = state;
-    this.row = row;
-    this.col = col;
+    this.id = id;
   }
 
   /**
@@ -51,37 +49,12 @@ public class Cell {
   public void setFutureStateValue(int nextState) {
     this.futureState = nextState;
   }
-
   /**
-   * Method that returns the row of the cell
-   * @return row of the cell
+   * Method that sets the id of the cell
+   * @param id
    */
-  public int getRow() {
-    return row;
-  }
-
-  /**
-   * Method that returns the column of the cell
-   * @return column of the cell
-   */
-  public int getCol() {
-    return col;
-  }
-
-  /**
-   * Method that sets the row of the cell
-   * @param row
-   */
-  public void setRow(int row) {
-    this.row = row;
-  }
-
-  /**
-   * Method that sets the column of the cell
-   * @param col
-   */
-  public void setCol(int col) {
-    this.col = col;
+  public void setId(int id) {
+    this.id = id;
   }
 
   /**
@@ -96,9 +69,9 @@ public class Cell {
    * @param neighbor
    */
   public void swapCellStates(Cell neighbor) {
-    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getRow(), neighbor.getCol());
-    neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
-    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
+    //Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getRow(), neighbor.getCol());
+    //neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
+    //setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
   }
 
   /**
@@ -112,5 +85,9 @@ public class Cell {
       neighborStates.add(neighbor.getCurrentState());
     }
     return neighborStates;
+  }
+
+  public int getId() {
+    return this.id;
   }
 }

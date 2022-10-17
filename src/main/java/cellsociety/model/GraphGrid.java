@@ -1,5 +1,7 @@
 package cellsociety.model;
 
+import static cellsociety.SimType.GameOfLife;
+
 import cellsociety.SimType;
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +20,29 @@ public class GraphGrid extends Grid{
   //Assume grid values are passed in as expected, sans dimensions
   public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
     //TODO refactor method to generalize neighbor calculation using open/close solution
+    //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
+    int cellCount = 0;
     for(ArrayList<String> currRow : inputLayout){
       //TODO: Implemented enum switch for now, refactor using abstract factory design pattern after functional
-      for(String content : currRow){
+      for(String cellData : currRow){
+        cellCount++;
+        Cell newCell;
+        switch(simType) {
+          case GameOfLife:
+            newCell = new GameOfLifeCell(Integer.parseInt(cellData,cellCount));
+            break;
+          case Fire:
+            break;
+          case Segregation:
+            break;
+          case WatorWorld:
+            break;
+          case RockPaperScissors:
+            break;
+          case Percolation:
+            break;
+        }
+
 
       }
 
