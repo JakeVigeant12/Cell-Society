@@ -13,6 +13,6 @@ public abstract class Grid {
     return;
   }
 
-  public abstract void populateGrid(ArrayList<ArrayList<Integer>> inputLayout);
+  public abstract void populateGrid(ArrayList<ArrayList<String>> inputLayout);
 }
 

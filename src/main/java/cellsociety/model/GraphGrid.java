@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class GraphGrid extends Grid{
 
   public GraphGrid(ArrayList<ArrayList<String>> graphParsing) {
-    super();
+    populateGrid(graphParsing);
   }
 
   @Override
-  public void populateGrid(ArrayList<ArrayList<Integer>> inputLayout) {
+  public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
 
   }
 }

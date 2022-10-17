@@ -19,8 +19,6 @@ public class InitialModelImplementation extends Model{
   public void computeStates(){
     myGrid.computeStates();
   }
-  public Grid constructGrid(){
-    return null;
-  }
+
 
 }
