@@ -15,7 +15,18 @@ public class GraphGrid extends Grid{
   }
 
   @Override
+  //Assume grid values are passed in as expected, sans dimensions
   public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
+    //TODO refactor method to generalize neighbor calculation using open/close solution
+    for(ArrayList<String> currRow : inputLayout){
+      //TODO: Implemented enum switch for now, refactor using abstract factory design pattern after functional
+      for(String content : currRow){
+
+      }
+
+
+    }
+
 
   }
 }

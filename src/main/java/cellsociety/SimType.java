@@ -1,5 +1,5 @@
 package cellsociety;
 
 public enum SimType {
-  GameOfLife, Fire, SchellingSegregation, WaTor, RockPaperScissors
+  GameOfLife, Fire, Segregation, WatorWorld, RockPaperScissors, Percolation
 }
