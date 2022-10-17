@@ -11,43 +11,19 @@
 
 #### Classes, their behavior and relationships (**not** instance variables)
 
- * As CRC
-
-This class's purpose or value is to represent a customer's order:
-
-|Order| |
+|Cell| |
 |---|---|
-|boolean isInStock(OrderLine)         |OrderLine|
-|double getTotalPrice(OrderLine)      |Customer|
-|boolean isValidPayment (Customer)    | |
-|void deliverTo (OrderLine, Customer) | |
+|int getCurrentState()         | currentState |
+|int getFutureState()      | futureState |
+|void setFutureStateValue(int futureState) | futureState |
+|void setFutureState(List<Cell> neighbors)    | neighbors |
+|void setId(int id) | |
+|int getId() | |
+|void List<Integer> getNeighborStates(List<Cell> neighbors) | |
 
-
- *  OR UML in Markdown:
-
-@startuml
-Super <|-- Sub
-
-class Super {
-  void overrideMe()
-  String toString()
-}
-
-class Sub {
-  void overrideMe()
-}
-@enduml
-
-
- * OR UML Image
-
-Here is a graphical look at our design:
-
-![This is cool, too bad you can't see it](online-shopping-uml-example.png "An initial UI")
-
-or made from [a tool that generates UML from existing code](http://staruml.io/).
-
-
+|GameOfLifeCell| extends Cell |
+|---|---|
+|setFutureState(List<Cell> neighbors)         | neighbors |
 
 ## Design Details
 
