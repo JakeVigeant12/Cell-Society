@@ -13,14 +13,16 @@ public class GraphGrid extends Grid{
   private final SimType simType;
   public GraphGrid(ArrayList<ArrayList<String>> gridParsing, SimType simInput) {
     simType = simInput;
-    populateGrid(gridParsing);
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
+    createCells(gridParsing);
+    initializeNeighbors(gridParsing);
+
   }
 
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
+  public void createCells(ArrayList<ArrayList<String>> inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.size(); i++){
@@ -51,15 +53,21 @@ public class GraphGrid extends Grid{
             newCell = new GameOfLifeCell(cellData,cellCount);
             break;
         }
-        myAdjacenyList.put(newCell, initializeNeighbors(inputLayout,i,j));
-        myCells.put(cellCount,newCell);
+        myCells.putIfAbsent(cellCount,newCell);
       }
     }
   }
-  public ArrayList<Cell> initializeNeighbors(ArrayList<ArrayList<String>> gridParsing, int row, int col){
-      ArrayList<Cell> neighbors = new ArrayList<>();
-    //TODO refactor method to generalize neighbor calculation using open/close solution
+  public void initializeNeighbors(ArrayList<ArrayList<String>> gridParsing) {
+    //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
+    //ID of the current cell
+    int currId = 0;
+    for (int i = 0; i < gridParsing.size(); i++) {
+      for (int j = 0; j < gridParsing.get(i).size(); j++) {
+        ArrayList<Cell> neighbors = new ArrayList<>();
+        currId++;
+        Cell currentCell = myCells.get(currId);
 
-      return neighbors;
+      }
+    }
   }
 }
