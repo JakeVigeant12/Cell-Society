@@ -3,16 +3,16 @@ Cell Society
 
 This project implements a cellular automata simulator.
 
-Names:
+Names: Nick Ward, Vaishvi Patel, Jake Vigeant, Eka Ebong, Luyao Wang
 
 
 ### Timeline
 
-Start Date: 
+Start Date: 10/12/22
 
 Finish Date: 
 
-Hours Spent:
+Hours Spent: 
 
 ### Primary Roles
 
