@@ -22,7 +22,7 @@ public class FileInput extends SceneCreator {
     public Pane inputPane;
     public Button input;
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.sim";
+    public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
@@ -69,7 +69,7 @@ public class FileInput extends SceneCreator {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile);
+                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
                 controller.loadSimulation(primaryStage);
             }
         }

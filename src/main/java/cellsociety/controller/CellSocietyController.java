@@ -52,7 +52,11 @@ public class CellSocietyController {
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-    stage.setScene(new Scene(new Group()));
+    stage.setScene(current.createScene(stage, gridView.setUpView(currentGrid)));
     stage.show();
+  }
+
+  public void updateGrid(){
+    //TODO: updateGrid method in controller
   }
 }

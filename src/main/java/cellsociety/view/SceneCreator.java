@@ -25,4 +25,9 @@ public class SceneCreator {
         stage.setWidth(mySize);
         stage.show();
     }
+
+//    public void nextScreen(Stage stage){
+//        stage.setScene(myScene);
+//        stage.show();
+//    }
 }
