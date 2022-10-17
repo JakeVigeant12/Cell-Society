@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+
 public class SceneCreator {
     public double mySize;
     public Scene myScene;
@@ -20,6 +21,8 @@ public class SceneCreator {
 
     public void nextScreen(Stage stage){
         stage.setScene(myScene);
+        stage.setHeight(mySize);
+        stage.setWidth(mySize);
         stage.show();
     }
 }
