@@ -17,6 +17,7 @@ public class GridScreen extends SceneCreator{
     private Pane gridPane;
     private Button play;
     private Button step;
+
     private Rectangle about;
     private Text title;
     private Text type;
@@ -34,9 +35,9 @@ public class GridScreen extends SceneCreator{
 
     public Pane createGridScreen(Stage stage, ResourceBundle label){
         myLabels = label;
-        play = new Button("Play");
-        step = new Button("Next");
-        play.getStyleClass().add("buttons");
+        play = new Button(">");
+        step = new Button(">|");
+        play.getStyleClass().add("play");
 
         Abouttitle = new Text(myLabels.getString("aboutText"));
         title = new Text(myLabels.getString("title"));

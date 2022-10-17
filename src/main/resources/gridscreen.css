@@ -1,9 +1,14 @@
-.button{
+.play{
     -fx-pref-height: 40;
     -fx-pref-width: 40;
 }
 
-.button:hover{
+.step{
+    -fx-pref-height: 40;
+    -fx-pref-width: 40;
+}
+
+.play:pressed{
     -fx-content-display: title;
 }
 
