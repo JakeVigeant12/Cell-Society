@@ -6,6 +6,8 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,10 +27,9 @@ public class FileInput extends SceneCreator {
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
-    // internal configuration file
-    public static final String INTERNAL_CONFIGURATION = "cellsociety.Configuration";
 
     private ResourceBundle label;
+    private Rectangle fileBackground;
     public FileInput(double size){
         super(size);
         inputPane = new Pane();
@@ -36,23 +37,30 @@ public class FileInput extends SceneCreator {
 
     public Pane createFileInput(Stage stage, String language){
         label = ResourceBundle.getBundle(language);
+
         input = new Button(label.getString("buttonText"));
         input.getStyleClass().add("button");
         input.setLayoutY(500);
-        input.setLayoutX(235);
-        Text title = new Text("Select .sim File to upload");
+        input.setLayoutX(250);
+
+        Text title = new Text(label.getString("titleText"));
         title.getStyleClass().add("mainText");
         title.setLayoutY(200);
-        title.setLayoutX(75);
+        title.setLayoutX(90);
 
-        inputPane.getChildren().addAll(input,title);
+        fileBackground = new Rectangle(mySize, mySize, Color.GRAY);
+
+        inputPane.getChildren().addAll(fileBackground, input,title);
         buttonPress(stage);
         return inputPane;
     }
 
     private void buttonPress(Stage stage) {
+        //add go back button
+        GridScreen firstgrid = new GridScreen(800);
         input.setOnAction(event -> {
             filepick(stage);
+            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage), "gridscreen.css"));
             nextScreen(stage);
         });
     }
