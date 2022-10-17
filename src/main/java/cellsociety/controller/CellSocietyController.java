@@ -29,7 +29,7 @@ import org.apache.commons.collections.map.HashedMap;
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
-  private Map<String, String> simMap;
+  public Map<String, String> simMap;
   private Model myModel;
   private View myView;
   private File simFile;

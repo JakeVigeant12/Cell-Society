@@ -26,7 +26,7 @@ public class FileInput extends SceneCreator {
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
+    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ResourceBundle label;
     private Rectangle fileBackground;
@@ -70,6 +70,7 @@ public class FileInput extends SceneCreator {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
                 CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
+                myController = controller;
                 controller.loadSimulation(primaryStage);
             }
         }
@@ -109,7 +110,7 @@ public class FileInput extends SceneCreator {
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
         result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("SIM Files", extensionAccepted));
         return result;
     }
 
