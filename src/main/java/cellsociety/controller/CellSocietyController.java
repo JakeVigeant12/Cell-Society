@@ -2,6 +2,7 @@ package cellsociety.controller;
 
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
+import cellsociety.SimType;
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.model.Model;
 import com.opencsv.CSVReader;
@@ -36,7 +37,7 @@ public class CellSocietyController {
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
     //Specification of model type
-    myModel = new InitialModelImplementation(csvPath, simMap.get("Type"));
+    myModel = new InitialModelImplementation(csvPath, SimType.valueOf(simMap.get("Type")));
 
   }
   public void getSimData() throws FileNotFoundException {

@@ -1,5 +1,5 @@
-package cellsociety.model;
+package cellsociety;
 
-public enum SimTypes {
+public enum SimType {
   GameOfLife, Fire, SchellingSegregation, WaTor, RockPaperScissors
 }

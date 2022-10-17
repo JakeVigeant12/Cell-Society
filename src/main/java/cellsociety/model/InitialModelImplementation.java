@@ -1,5 +1,6 @@
 package cellsociety.model;
 
+import cellsociety.SimType;
 import cellsociety.parser.Parser;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 public class InitialModelImplementation extends Model{
   private final GraphGrid myGrid;
   private final Parser gridParser;
-  private final String simType;
-  public InitialModelImplementation(String csvPath, String simInput) throws IOException, CsvValidationException {
-    this.simType = simInput;
+  private final SimType simType;
+  public InitialModelImplementation(String csvPath, SimType simInput) throws IOException, CsvValidationException {
+    simType = simInput;
     gridParser = new CSVParser(csvPath);
     myGrid = new GraphGrid((ArrayList<ArrayList<String>>)gridParser.parseData(null), simType);
 
