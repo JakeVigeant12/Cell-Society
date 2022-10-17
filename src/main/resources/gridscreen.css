@@ -2,7 +2,28 @@
     -fx-pref-height: 40;
     -fx-pref-width: 40;
 }
+
+.button:hover{
+    -fx-content-display: title;
+}
+
 .allbuttons{
     -fx-alignment: bottom-center;
     -fx-spacing: 10px;
+}
+
+.aboutbox{
+    -fx-pref-height: 600;
+    -fx-pref-width: 200;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.title{
+    -fx-alignment: top;
+    -fx-font-size: 30;
+}
+
+.info{
+    -fx-font-size: 25;
 }
