@@ -3,6 +3,7 @@ package cellsociety.controller;
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
 import cellsociety.SimType;
+import cellsociety.model.CSVParser;
 import cellsociety.model.Cell;
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.model.Model;
@@ -29,7 +30,9 @@ import org.apache.commons.collections.map.HashedMap;
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
-  public Map<String, String> simMap;
+  private final int numRows;
+  private final int numCols;
+  private Map<String, String> simMap;
   private Model myModel;
   private View myView;
   private File simFile;
@@ -38,13 +41,15 @@ public class CellSocietyController {
   //private Map<Integer, Cell> backEndCellsbyID;
 
 
-  public CellSocietyController(File simFile) throws IOException, CsvValidationException {
+  public CellSocietyController(File simFile, Stage primaryStage) throws IOException, CsvValidationException {
     this.simFile = simFile;
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
+    String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
+    numRows = Integer.parseInt(parseRowCol[0]);
+    numCols = Integer.parseInt(parseRowCol[1]);
     myModel = new InitialModelImplementation(csvPath, simMap);
-
   }
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();
@@ -52,11 +57,23 @@ public class CellSocietyController {
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-    stage.setScene(current.createScene(stage, gridView.setUpView(currentGrid)));
+//    stage.setScene(current.createScene(stage, gridView.setUpView(getViewGrid())));
     stage.show();
   }
 
-  public void updateGrid(){
-    //TODO: updateGrid method in controller
+  public List<List<Integer>> getViewGrid() {
+    List<List<Integer>> stateGrid = new ArrayList<>();
+    List<Integer> currentList = new ArrayList<>();
+    stateGrid.add(currentList);
+    for(Integer key : backEndCellsbyID.keySet()) {
+      if(currentList.size() < numCols) {
+        currentList.add(backEndCellsbyID.get(key).getCurrentState());
+      } else {
+        currentList = new ArrayList<>();
+        stateGrid.add(currentList);
+        currentList.add(backEndCellsbyID.get(key).getCurrentState());
+      }
+    }
+    return stateGrid;
   }
 }

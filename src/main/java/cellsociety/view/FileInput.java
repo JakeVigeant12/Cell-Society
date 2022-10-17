@@ -60,12 +60,12 @@ public class FileInput extends SceneCreator {
         mySize = 800;
         GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
-            filepick(stage);
+            filePick(stage);
             stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
             nextScreen(stage);
         });
     }
-    public void filepick(Stage primaryStage) {
+    public void filePick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
