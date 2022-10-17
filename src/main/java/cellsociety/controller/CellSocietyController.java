@@ -22,22 +22,23 @@ import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.text.View;
 import org.apache.commons.collections.map.HashedMap;
 
 public class CellSocietyController {
-  private static final String DATA_FOLDER = "data/";
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
   private Map<String, String> simMap;
   private Model myModel;
+  private View myView;
   private File simFile;
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     this.simFile = simFile;
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
-    //Specification of model type
-    myModel = new InitialModelImplementation(csvPath, SimType.valueOf(simMap.get("Type")));
+    //TODO handle model type selection more elegantly, hardcoded for now
+    myModel = new InitialModelImplementation(csvPath, simMap);
 
   }
   public void getSimData() throws FileNotFoundException {
