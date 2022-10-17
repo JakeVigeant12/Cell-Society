@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -8,9 +9,12 @@ import javafx.stage.Stage;
 public class SceneCreator {
     public double mySize;
     public Scene myScene;
+
+    public CellSocietyController myController;
     public SceneCreator(double size){
         mySize = size;
     }
+
 
     public Scene createScene(Stage stage, Pane myPane, String css){
         Scene scene  = new Scene(myPane, mySize, mySize);

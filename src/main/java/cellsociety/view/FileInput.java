@@ -70,6 +70,7 @@ public class FileInput extends SceneCreator {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
                 CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
+                myController = controller;
                 controller.loadSimulation(primaryStage);
             }
         }
@@ -109,7 +110,7 @@ public class FileInput extends SceneCreator {
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
         result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("SIM Files", extensionAccepted));
         return result;
     }
 

@@ -1,20 +1,15 @@
-.play{
-    -fx-pref-height: 40;
-    -fx-pref-width: 40;
-}
-
-.step{
-    -fx-pref-height: 40;
-    -fx-pref-width: 40;
+.button{
+    -fx-pref-width: 100;
+    -fx-pref-height: 30;
 }
 
 .play:pressed{
-    -fx-content-display: title;
+    -fx-background-color: blue;
 }
 
 .allbuttons{
     -fx-alignment: bottom-center;
-    -fx-spacing: 10px;
+    -fx-spacing: 15px;
 }
 
 .aboutbox{
@@ -22,6 +17,12 @@
     -fx-pref-width: 200;
     -fx-text-alignment: center;
     -fx-alignment: center;
+    -fx-border-color: black;
+}
+
+.buttonbox{
+    -fx-border-color: black;
+    -fx-fill: light gray;
 }
 
 .title{
