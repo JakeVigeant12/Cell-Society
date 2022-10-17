@@ -10,11 +10,10 @@ public class FireCell extends Cell {
     /**
      * Constructor for FireCell class
      * @param state is the state of the cell
-     * @param row is the row of the cell
-     * @param col is the column of the cell
+     * @param id is the id of the cell
      */
-    public FireCell(int state, int row, int col, double probCatch){
-        super(state, row, col);
+    public FireCell(int state, int id, double probCatch){
+        super(state, id);
         turns = 0;
 
         if (probCatch > 1){

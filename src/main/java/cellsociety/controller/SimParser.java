@@ -1,14 +1,14 @@
 package cellsociety.controller;
 
+import cellsociety.parser.Parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+public class SimParser extends Parser {
 
-public class SimParser {
-
-  public Map<String, String> parseSimFile(File simFile) throws FileNotFoundException {
+  public Map<String, String> parseData(File simFile) throws FileNotFoundException {
     Map<String, String> simInfoMap = new HashMap<>();
     Scanner fileScanner = new Scanner(simFile); //TODO: Fix exception handling
     while(fileScanner.hasNextLine()) {
