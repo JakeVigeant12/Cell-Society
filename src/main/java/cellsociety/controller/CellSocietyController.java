@@ -3,6 +3,7 @@ package cellsociety.controller;
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
 import cellsociety.SimType;
+import cellsociety.model.Cell;
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.model.Model;
 import com.opencsv.CSVReader;
@@ -32,6 +33,10 @@ public class CellSocietyController {
   private Model myModel;
   private View myView;
   private File simFile;
+  private Map<Integer, Cell> backEndCellsbyID;
+  //TODO create analogous mapping for the frontend
+  //private Map<Integer, Cell> backEndCellsbyID;
+
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     this.simFile = simFile;
