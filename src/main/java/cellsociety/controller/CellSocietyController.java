@@ -2,6 +2,8 @@ package cellsociety.controller;
 
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
+import cellsociety.view.GridView;
+import cellsociety.view.SceneCreator;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -27,12 +29,16 @@ public class CellSocietyController {
   public static final String TITLE = "Title";
   private final Map<String, String> simMap;
   private List<List<String>> currentGrid;
+  private GridView gridView;
+  private SceneCreator current;
 
-  public CellSocietyController(File simFile) throws IOException, CsvValidationException {
+  public CellSocietyController(File simFile, Stage stage) throws IOException, CsvValidationException {
+    current = new SceneCreator(600.0);
     SimParser simParser = new SimParser();
     simMap = simParser.parseSimFile(simFile);
     String csvPath = simMap.get(INITIAL_STATES);
     currentGrid = loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
+    gridView = new GridView(600, this);
   }
 
   private List<List<String>> loadInitialStates(Reader fileReader) throws CsvValidationException, IOException {
@@ -49,7 +55,11 @@ public class CellSocietyController {
 
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-    stage.setScene(new Scene(new Group()));
+    stage.setScene(current.createScene(stage, gridView.setUpView(currentGrid)));
     stage.show();
+  }
+
+  public void updateGrid(){
+    //TODO: updateGrid method in controller
   }
 }

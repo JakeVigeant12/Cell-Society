@@ -20,11 +20,11 @@ public class FileInput extends SceneCreator {
     public Pane inputPane;
     public Button input;
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.csv";
+    public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
+    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
     // internal configuration file
     public static final String INTERNAL_CONFIGURATION = "cellsociety.Configuration";
 
@@ -51,18 +51,16 @@ public class FileInput extends SceneCreator {
     }
 
     private void buttonPress(Stage stage) {
-        GridView gridView = new GridView(600);
         input.setOnAction(event -> {
             filepick(stage);
-            stage.setScene(createScene(stage, gridView.setUpGrid(stage)));
-//            nextScreen(stage);
+            //            nextScreen(stage);
         });
     }
     public void filepick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile);
+                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
                 controller.loadSimulation(primaryStage);
             }
         }

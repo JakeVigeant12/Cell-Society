@@ -1,4 +1,4 @@
-    package cellsociety;
+    package cellsociety.view;
 
     import javafx.scene.control.Label;
     import javafx.scene.layout.StackPane;
@@ -19,8 +19,8 @@
             Label label = new Label(name);
 
             // set position
-            setTranslateX(x);
-            setTranslateY(y);
+//            setTranslateX(x);
+//            setTranslateY(y);
 
             getChildren().addAll(rectangle, label);
 

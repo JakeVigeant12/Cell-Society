@@ -45,7 +45,7 @@ public class Main extends Application {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile);
+                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
                 controller.loadSimulation(primaryStage);
             }
         }
