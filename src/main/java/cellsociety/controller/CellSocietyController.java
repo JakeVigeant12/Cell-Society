@@ -2,6 +2,10 @@ package cellsociety.controller;
 
 import static cellsociety.Main.DATA_FILE_FOLDER;
 
+import cellsociety.SimType;
+import cellsociety.model.Cell;
+import cellsociety.model.InitialModelImplementation;
+import cellsociety.model.Model;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
@@ -19,34 +23,33 @@ import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.text.View;
 import org.apache.commons.collections.map.HashedMap;
 
 public class CellSocietyController {
-  private static final String DATA_FOLDER = "data/";
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
-  private final Map<String, String> simMap;
-  private List<List<String>> currentGrid;
+  private Map<String, String> simMap;
+  private Model myModel;
+  private View myView;
+  private File simFile;
+  private Map<Integer, Cell> backEndCellsbyID;
+  //TODO create analogous mapping for the frontend
+  //private Map<Integer, Cell> backEndCellsbyID;
+
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
-    SimParser simParser = new SimParser();
-    simMap = simParser.parseSimFile(simFile);
+    this.simFile = simFile;
+    getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
-    currentGrid = loadInitialStates(new FileReader(DATA_FOLDER + csvPath));
-  }
+    //TODO handle model type selection more elegantly, hardcoded for now
+    myModel = new InitialModelImplementation(csvPath, simMap);
 
-  private List<List<String>> loadInitialStates(Reader fileReader) throws CsvValidationException, IOException {
-    List<List<String>> grid = new ArrayList<>();
-    CSVReader csvReader = new CSVReader(fileReader);
-    csvReader.readNext();
-    String[] states = csvReader.readNext();
-    while(states != null) {
-      grid.add(Arrays.asList(states));
-      states = csvReader.readNext();
-    }
-    return grid;
   }
-
+  public void getSimData() throws FileNotFoundException {
+    SimParser simParser = new SimParser();
+    simMap = simParser.parseData(simFile);
+  }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
     stage.setScene(new Scene(new Group()));
