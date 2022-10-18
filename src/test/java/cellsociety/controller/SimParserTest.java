@@ -26,9 +26,9 @@ class SimParserTest {
     expected.put("Title", "SimulationTitle");
     expected.put("Author", "First Last");
     expected.put("Description", "A sentence describing how this game works");
-    expected.put("InitialStates", "path_to/initial.csv");
+    expected.put("InitialStates", "test/test_square.csv");
 
-    Map<String, String> actual = simParser.parseSimFile(new File("src/test/resources/validFile.sim"));
+    Map<String, String> actual = simParser.parseData(new File("data/test/validFile.sim"));
 
     Assertions.assertEquals(expected.get("Type"), actual.get("Type"));
     Assertions.assertEquals(expected.get("Title"), actual.get("Title"));
@@ -44,9 +44,9 @@ class SimParserTest {
     expected.put("Title", "SimulationTitle");
     expected.put("Author", "First Last");
     expected.put("Description", "A sentence describing how this game works");
-    expected.put("InitialStates", "path_to/initial.csv");
+    expected.put("InitialStates", "test/test_square.csv");
 
-    Map<String, String> actual = simParser.parseSimFile(new File("src/test/resources/validFileWithComments.sim"));
+    Map<String, String> actual = simParser.parseData(new File("data/test/validFileWithComments.sim"));
 
     Assertions.assertEquals(expected.get("Type"), actual.get("Type"));
     Assertions.assertEquals(expected.get("Title"), actual.get("Title"));

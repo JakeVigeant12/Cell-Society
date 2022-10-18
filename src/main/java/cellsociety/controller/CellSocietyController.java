@@ -41,7 +41,7 @@ public class CellSocietyController {
   //private Map<Integer, Cell> backEndCellsbyID;
 
 
-  public CellSocietyController(File simFile, Stage primaryStage) throws IOException, CsvValidationException {
+  public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     this.simFile = simFile;
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
@@ -49,7 +49,7 @@ public class CellSocietyController {
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
     numRows = Integer.parseInt(parseRowCol[0]);
     numCols = Integer.parseInt(parseRowCol[1]);
-    myModel = new InitialModelImplementation(csvPath, simMap);
+//    myModel = new InitialModelImplementation(csvPath, simMap);
   }
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();
@@ -75,5 +75,10 @@ public class CellSocietyController {
       }
     }
     return stateGrid;
+  }
+
+  public void setBackEndCellsbyID(
+      Map<Integer, Cell> backEndCellsbyID) {
+    this.backEndCellsbyID = backEndCellsbyID;
   }
 }
