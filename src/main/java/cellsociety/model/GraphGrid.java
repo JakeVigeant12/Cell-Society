@@ -103,7 +103,7 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  public boolean isInBounds(int row, int col, List<List<String>> gridParsing){
+  public static boolean isInBounds(int row, int col, List<List<String>> gridParsing){
     return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
   }
   @Override

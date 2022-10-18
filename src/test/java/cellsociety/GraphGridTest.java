@@ -19,12 +19,18 @@ public class GraphGridTest {
     constructTestArrayList(4,4);
     GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife);
     HashMap<Integer, Cell> testCells = new HashMap<>();
-    for(int i = 1; i <= 16; i++){
+    for(int i = 0; i <= 16; i++){
 
       testCells.put(i, new GameOfLifeCell(1,i));
     }
     assertEquals(testCells.get(1).getCurrentState(),gameOfLifeGrid.getCells().get(16).getCurrentState());
     assertEquals(testCells.size(), gameOfLifeGrid.getCells().size());
+
+  }
+  @Test
+  void testBounds(){
+    constructTestArrayList(12,12);
+    assertEquals(true , GraphGrid.isInBounds(1,1,gridParsing));
 
   }
   public void constructTestArrayList(int rows, int cols){
