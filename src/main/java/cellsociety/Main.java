@@ -1,12 +1,10 @@
 package cellsociety;
 
-import cellsociety.controller.CellSocietyController;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
 
-import cellsociety.view.SceneCreator;
 import cellsociety.view.StartSplash;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
@@ -34,12 +32,11 @@ public class Main extends Application {
      * @see Application#start(Stage)
      */
 
-    public void start(Stage start) throws CsvValidationException, IOException {
-        StartSplash ss = new StartSplash(600.0);
-        start.setTitle("CellSociety");
-        SceneCreator current = new SceneCreator(600.0);
-        start.setScene(current.createScene(start,ss.createStart(start),"startsplash.css" ));
-        start.show();
+    public void start(Stage stage) throws CsvValidationException, IOException {
+        StartSplash ss = new StartSplash(600.0, stage, "startsplash.css");
+        stage.setTitle("CellSociety");
+        stage.setScene(ss.getScene());
+        stage.show();
     }
 //    public void filepick(Stage primaryStage) {
 //        try {

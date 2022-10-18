@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -34,14 +35,16 @@ public class GridScreen extends SceneCreator{
     private ResourceBundle myLabels;
     private GridView gridView;
 
-    public GridScreen(double size, CellSocietyController controller)throws CsvValidationException, IOException {
+    public GridScreen(double size, CellSocietyController controller, ResourceBundle label, String style)throws CsvValidationException, IOException {
         super(size);
         this.myController = controller;
         root = new BorderPane();
+        myLabels = label;
+        createGridScreen();
+        myScene.getStylesheets().add(style);
     }
 
-    public Pane createGridScreen(Stage stage, ResourceBundle label){
-        myLabels = label;
+    private void createGridScreen(){
         play = new Button(myLabels.getString("playText"));
         pause = new Button(myLabels.getString("pauseText"));
         step = new Button(myLabels.getString("stepText"));
@@ -71,7 +74,8 @@ public class GridScreen extends SceneCreator{
         root.setTop(fileinfo);
         root.setBottom(controls);
         root.setCenter(gridView.getGrid());
-        return root;
+
+        myScene = new Scene(root);
     }
 
     public void handleButtons(Stage stage){
@@ -82,8 +86,8 @@ public class GridScreen extends SceneCreator{
         //{ update grid once}
         );
         exit.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600);
-            stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+            StartSplash beginning = new StartSplash(600,stage,"startsplash.css");
+            stage.setScene(beginning.getScene());
         });
     }
 
