@@ -3,6 +3,7 @@ package cellsociety.view;
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -34,11 +35,9 @@ public class FileInput extends SceneCreator {
         super(size);
         inputPane = new Pane();
     }
-
     public Pane createFileInput(Stage stage, String language){
         //add back button
         label = ResourceBundle.getBundle(language);
-
         input = new Button(label.getString("buttonText"));
         input.getStyleClass().add("button");
         input.setLayoutY(450);
@@ -53,8 +52,7 @@ public class FileInput extends SceneCreator {
         fileBackground.setY(50);
         fileBackground.setX(50);
 
-
-        inputPane.getChildren().addAll(fileBackground, input,title);
+        inputPane.getChildren().addAll(fileBackground, input, title);
         buttonPress(stage);
         return inputPane;
     }
@@ -76,18 +74,16 @@ public class FileInput extends SceneCreator {
                 GridScreen firstgrid = new GridScreen(mySize);
                 stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, controller), "gridscreen.css"));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
         } catch (CsvValidationException e) {
-            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
-    private void showMessage (Alert.AlertType type, String message) {
+    private void showMessage(Alert.AlertType type, String message) {
         new Alert(type, message).showAndWait();
     }
-    public int sumCSVData (Reader dataReader) {
+    public int sumCSVData(Reader dataReader) {
         // this syntax automatically close file resources if an exception occurs
         try (CSVReader csvReader = new CSVReader(dataReader)) {
             int total = 0;
@@ -101,14 +97,13 @@ public class FileInput extends SceneCreator {
                 }
             }
             return total;
-        }
-        catch (IOException | CsvValidationException e) {
+        } catch (IOException | CsvValidationException e) {
             showMessage(Alert.AlertType.ERROR, "Invalid CSV Data");
             return 0;
         }
     }
 
-    private static FileChooser makeChooser (String extensionAccepted) {
+    private static FileChooser makeChooser(String extensionAccepted) {
         FileChooser result = new FileChooser();
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
