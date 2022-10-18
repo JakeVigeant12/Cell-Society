@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.Cell;
 import cellsociety.model.Model;
@@ -33,10 +34,12 @@ public class CellSocietyController {
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
+    myModel = new InitialModelImplementation(csvPath, simMap);
+    backEndCellsbyID = myModel.getCells();
+
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
     numRows = Integer.parseInt(parseRowCol[0]);
     numCols = Integer.parseInt(parseRowCol[1]);
-//    myModel = new InitialModelImplementation(csvPath, simMap);
   }
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();
@@ -44,8 +47,11 @@ public class CellSocietyController {
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-//    stage.setScene(current.createScene(stage, gridView.setUpView(getViewGrid())));
     stage.show();
+  }
+
+  public Map<String, String> getSimMap() {
+    return simMap;
   }
 
   public List<List<Integer>> getViewGrid() {
@@ -64,8 +70,7 @@ public class CellSocietyController {
     return stateGrid;
   }
 
-  public void setBackEndCellsbyID(
-      Map<Integer, Cell> backEndCellsbyID) {
+  public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
     this.backEndCellsbyID = backEndCellsbyID;
   }
 }
