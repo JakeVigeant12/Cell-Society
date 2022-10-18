@@ -14,6 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator{
@@ -21,6 +23,9 @@ public class GridScreen extends SceneCreator{
     private Pane gridPane;
     private Button play;
     private Button step;
+    private Button pause;
+    private Button reset;
+    private Button exit;
 
     private Rectangle about;
     private Text title;
@@ -31,25 +36,26 @@ public class GridScreen extends SceneCreator{
     private Paint jid = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
     private GridView gridView;
-    private CellSocietyController controller;
 
     public GridScreen(double size, CellSocietyController controller)throws CsvValidationException, IOException {
         super(size);
-        this.controller = controller;
+        this.myController = controller;
         gridPane = new Pane();
     }
 
     public Pane createGridScreen(Stage stage, ResourceBundle label){
         myLabels = label;
-        play = new Button(">");
-        step = new Button(">|");
-        play.getStyleClass().add("play");
+        play = new Button(myLabels.getString("playText"));
+        pause = new Button(myLabels.getString("pauseText"));
+        step = new Button(myLabels.getString("stepText"));
+        reset = new Button(myLabels.getString("resetText"));
+        exit = new Button(myLabels.getString("exitText"));
 
         Abouttitle = new Text(myLabels.getString("aboutText"));
-        title = new Text(myLabels.getString("title"));
-        type = new Text(myLabels.getString("typeText"));
-        author = new Text(myLabels.getString("authorText"));
-        description = new Text(myLabels.getString("descriptionText"));
+        title = new Text(myLabels.getString("title") + myController.simMap.get("Title"));
+        type = new Text(myLabels.getString("typeText") + myController.simMap.get("Type"));
+        author = new Text(myLabels.getString("authorText") +  myController.simMap.get("Author"));
+        description = new Text(myLabels.getString("descriptionText") + myController.simMap.get("Description"));
         Abouttitle.getStyleClass().add("title");
         title.getStyleClass().add("info");
         type.getStyleClass().add("info");
@@ -66,7 +72,7 @@ public class GridScreen extends SceneCreator{
         controls.getStyleClass().add("allbuttons");
 
         gridPane.getChildren().addAll(controls, fileinfo);
-        gridView = new GridView(mySize, controller);
+        gridView = new GridView(mySize, myController);
         //gridView.setUpView(controller.getViewGrid());
         controls.getChildren().add(gridView.getGrid());
         return gridPane;
@@ -79,6 +85,10 @@ public class GridScreen extends SceneCreator{
         step.setOnAction(event ->{}
         //{ update grid once}
         );
+        exit.setOnAction(event -> {
+            StartSplash beginning = new StartSplash(600);
+            stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+        });
     }
 
 

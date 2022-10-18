@@ -33,7 +33,7 @@ public class CellSocietyController {
   public static final String TITLE = "Title";
   private int numRows;
   private int numCols;
-  private Map<String, String> simMap;
+  public Map<String, String> simMap;
   private Model myModel;
   private View myView;
   private File simFile;

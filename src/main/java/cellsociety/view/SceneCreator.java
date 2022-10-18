@@ -13,10 +13,11 @@ public class SceneCreator {
     public double mySize;
     public Scene myScene;
     protected Stage stage;
-    protected CellSocietyController cellSocietyController;
+    public CellSocietyController myController;
     public SceneCreator(double size){
         mySize = size;
     }
+
 
     public Scene createScene(Stage stage, Pane myPane, String css){
         Scene scene  = new Scene(myPane, mySize, mySize);

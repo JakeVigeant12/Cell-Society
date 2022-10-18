@@ -58,8 +58,8 @@ public class FileInput extends SceneCreator {
     private void buttonPress(Stage stage) throws CsvValidationException, IOException {
         //add go back button
         mySize = 800;
-        cellSocietyController = new CellSocietyController();
-        GridScreen firstgrid = new GridScreen(mySize, cellSocietyController);
+        myController = new CellSocietyController();
+        GridScreen firstgrid = new GridScreen(mySize, myController);
         input.setOnAction(event -> {
             filePick(stage);
             stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
@@ -70,7 +70,7 @@ public class FileInput extends SceneCreator {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                cellSocietyController.loadSimFile(dataFile);
+                myController.loadSimFile(dataFile);
             }
         }
         catch (IOException e) {
@@ -109,7 +109,7 @@ public class FileInput extends SceneCreator {
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
         result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("SIM Files", extensionAccepted));
         return result;
     }
 
