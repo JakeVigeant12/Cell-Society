@@ -34,12 +34,12 @@ public class Main extends Application {
      * @see Application#start(Stage)
      */
 
-    public void start(Stage start){
+    public void start(Stage stage){
         StartSplash ss = new StartSplash(600.0);
-        start.setTitle("CellSociety");
+        stage.setTitle("CellSociety");
         SceneCreator current = new SceneCreator(600.0);
-        start.setScene(current.createScene(start,ss.createStart(start),"startsplash.css" ));
-        start.show();
+        stage.setScene(current.createScene(stage,ss.createStart(stage),"startsplash.css" ));
+        stage.show();
     }
     public void filepick(Stage primaryStage) {
         try {

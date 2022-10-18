@@ -14,7 +14,7 @@
 
 .aboutbox{
     -fx-pref-height: 150;
-    -fx-pref-width: 200;
+    -fx-max-width: 760;
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-border-color: black;

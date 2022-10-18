@@ -1,15 +1,19 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ResourceBundle;
 
@@ -27,17 +31,28 @@ public class GridScreen extends SceneCreator {
     private Text title;
     private Text type;
     private Text author;
-    private Text description;
+    private TextArea description;
     private Text Abouttitle;
     private Paint jid = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
     private GridView gridView;
-
+    private Timeline timeline;
+    private double refreshRate = 1;
 
     public GridScreen(double size) {
         super(size);
         root = new Pane();
         borderPane = new BorderPane();
+        setUpTimeline();
+    }
+
+    private void setUpTimeline() {
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+            //TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
+        }));
+        timeline.pause();
     }
 
     public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) {
@@ -53,7 +68,10 @@ public class GridScreen extends SceneCreator {
         title = new Text(myLabels.getString("title") + myController.getSimMap().get("Title"));
         type = new Text(myLabels.getString("typeText") + myController.getSimMap().get("Type"));
         author = new Text(myLabels.getString("authorText") + myController.getSimMap().get("Author"));
-        description = new Text(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"));
+        description = new TextArea();
+        description.setText(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"));
+        description.setEditable(false);
+        description.setWrapText(true);
         Abouttitle.getStyleClass().add("title");
         title.getStyleClass().add("info");
         type.getStyleClass().add("info");
@@ -64,11 +82,13 @@ public class GridScreen extends SceneCreator {
         fileinfo.setBackground(Background.fill(jid));
         fileinfo.getStyleClass().add("aboutbox");
         borderPane.setTop(fileinfo);
-        HBox controls = new HBox(play, pause, step, reset);
+        HBox controls = new HBox(play, pause, step, reset, exit);
         borderPane.setBottom(controls);
         controls.getStyleClass().add("allbuttons");
+        handleButtons(stage);
 
         gridView = new GridView(mySize);
+        //TODO: gridView.setUpView(myController.get2DArrayList);
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
@@ -79,16 +99,13 @@ public class GridScreen extends SceneCreator {
     }
 
     public void handleButtons(Stage stage) {
-        play.setOnAction(event -> {
+        play.setOnAction(event -> timeline.play());
+        step.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
                 }
-                //call the grid view once every 60 seconds
         );
-        step.setOnAction(event -> {
-                }
-                //{ update grid once}
-        );
+        pause.setOnAction(event -> timeline.pause());
         exit.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600);
+            StartSplash beginning = new StartSplash(800);
             stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
         });
     }

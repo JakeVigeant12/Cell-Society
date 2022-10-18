@@ -192,7 +192,7 @@ taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://o
 
  * Vaishvi Patel
 
- * Luyao Wang
+ * Luyao Wang UI
 
  * Eka Ebong
 
@@ -204,7 +204,7 @@ taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://o
 
  * Vaishvi Patel
 
- * Luyao Wang
+ * Luyao Wang connection between UI and controller
 
  * Eka Ebong
 
