@@ -50,7 +50,8 @@ public class GridScreen extends SceneCreator {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-            //TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
+            //TODO: update grid once:
+        gridView.updateGrid(myController.updateGrid());
         }));
         timeline.pause();
     }

@@ -73,4 +73,9 @@ public class CellSocietyController {
   public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
     this.backEndCellsbyID = backEndCellsbyID;
   }
+
+  public List<List<Integer>> updateGrid() {
+    myModel.computeStates();
+    return getViewGrid();
+  }
 }
