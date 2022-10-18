@@ -38,7 +38,7 @@ public class FileInput extends SceneCreator {
     public Pane createFileInput(Stage stage, String language){
         //add back button
         label = ResourceBundle.getBundle(language);
-        input = new Button(label.getString("buttonText"));
+        input = makeButton("buttonText");
         input.getStyleClass().add("button");
         input.setLayoutY(450);
         input.setLayoutX(250);
@@ -113,5 +113,11 @@ public class FileInput extends SceneCreator {
         return result;
     }
 
-
+    public Button makeButton(String property) {
+        Button result = new Button();
+        String labelText = label.getString(property);
+        result.setText(labelText);
+        result.setId(property);
+        return result;
+    }
 }

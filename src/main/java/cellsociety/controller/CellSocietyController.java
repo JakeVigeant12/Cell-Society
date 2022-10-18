@@ -71,8 +71,7 @@ public class CellSocietyController {
     return stateGrid;
   }
 
-  public void setBackEndCellsbyID(
-      Map<Integer, Cell> backEndCellsbyID) {
+  public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
     this.backEndCellsbyID = backEndCellsbyID;
   }
 }

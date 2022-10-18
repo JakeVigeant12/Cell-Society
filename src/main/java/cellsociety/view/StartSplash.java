@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -30,9 +32,9 @@ public class StartSplash extends SceneCreator {
     }
 
     public Pane createStart(Stage stage){
-        english = new Button(startinfo.getString("englishText"));
-        spanish = new Button(startinfo.getString("spanishText"));
-        anotherlanguage = new Button(startinfo.getString("thirdText"));
+        english = makeButton("englishText");
+        spanish = makeButton("spanishText");
+        anotherlanguage = makeButton("thirdText");
 
         mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");
@@ -59,6 +61,14 @@ public class StartSplash extends SceneCreator {
         handleEvents(stage);
 
         return startPane;
+    }
+
+    public Button makeButton(String property) {
+        Button result = new Button();
+        String label = startinfo.getString(property);
+        result.setText(label);
+        result.setId(property);
+        return result;
     }
 
     public void handleEvents(Stage stage){
