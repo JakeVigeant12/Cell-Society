@@ -27,12 +27,14 @@ public class GridScreen extends SceneCreator {
     private Text fileTitle;
     private Text simulationType;
     private Text author;
-    private TextArea description;
+    private TextArea descriptionBox;
+    private TextArea statusBox;
     private Text aboutTitle;
     private Paint mainColor = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
     private GridView gridView;
     private Timeline timeline;
+    private CellSocietyController myController;
     private double refreshRate = 1;
 
     /**
@@ -66,53 +68,93 @@ public class GridScreen extends SceneCreator {
      * @param myController
      * @return borderPane
      */
-    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) {
-        this.myController = myController;
+    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController controller) {
+        this.myController = controller;
         myLabels = label;
 
         createButtons();
 
-        aboutTitle = createAndStyleText(myLabels.getString("aboutText"), "title");
-        fileTitle = createAndStyleText(myLabels.getString("title") + myController.getSimMap().get("Title"), "info");
-        simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
-        author = createAndStyleText(myLabels.getString("authorText") + myController.getSimMap().get("Author"), "info");
+        createLeftPanel();
+        createRightPanel();
+        createBottomPanel();
+        createTopPanel();
 
-        description = createAndStyleTextBox(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"), "info");
-        description.setEditable(false);
-        description.setWrapText(true);
+        setupGrid();
 
-        VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, description);
-        fileInfoBox.setBackground(Background.fill(mainColor));
-        fileInfoBox.getStyleClass().add("aboutbox");
-        borderPane.setLeft(fileInfoBox);
+        handleButtons(stage);
 
-        // TODO: FIX THIS TO DISPLAY ON RIGHT SIDE
-        VBox rightUIElement = new VBox();
-        rightUIElement.setBackground(Background.fill(mainColor));
-        rightUIElement.getStyleClass().add("rightbox");
-        borderPane.setRight(rightUIElement);
+        return borderPane;
+    }
 
-        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
-        controls.setBackground(Background.fill(mainColor));
-        controls.getStyleClass().add("allbuttons");
-        borderPane.setBottom(controls);
-
-        HBox exitButtons = new HBox(backButton, exitButton);
-        exitButtons.setBackground(Background.fill(mainColor));
-        exitButtons.getStyleClass().add("exitbox");
-        borderPane.setTop(exitButtons);
-
+    /**
+     * Sets up the grid with properties
+     */
+    private void setupGrid() {
         gridView = new GridView(600);
         gridView.setUpView(myController.getViewGrid());
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
-
-        handleButtons(stage);
-
         borderPane.setPadding(new Insets(10));
+    }
 
-        return borderPane;
+    /**
+     * Sets up the left panel of the Grid Screen UI
+     */
+    private void createLeftPanel() {
+        aboutTitle = createAndStyleText(myLabels.getString("aboutText"), "title");
+        fileTitle = createAndStyleText(myLabels.getString("title") + myController.getSimMap().get("Title"), "info");
+        simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
+        author = createAndStyleText(myLabels.getString("authorText") + myController.getSimMap().get("Author"), "info");
+
+        statusBox = createAndStyleTextBox(myLabels.getString("statusText"), "info");
+        statusBox.setBackground(Background.fill(mainColor));
+        statusBox.setEditable(false);
+        statusBox.setWrapText(true);
+
+        descriptionBox = createAndStyleTextBox(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"), "info");
+        descriptionBox.setBackground(Background.fill(mainColor));
+        descriptionBox.setEditable(false);
+        descriptionBox.setWrapText(true);
+
+        VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
+        fileInfoBox.setBackground(Background.fill(mainColor));
+        fileInfoBox.getStyleClass().add("aboutbox");
+        borderPane.setLeft(fileInfoBox);
+    }
+
+    /**
+     * Creates the right panel of the Grid Screen
+     */
+    private void createRightPanel() {
+        // TODO: FIX THIS TO DISPLAY ON RIGHT SIDE
+        VBox rightUIElement = new VBox();
+        rightUIElement.setBackground(Background.fill(mainColor));
+        rightUIElement.getStyleClass().add("rightbox");
+        borderPane.setRight(rightUIElement);
+    }
+
+    /**
+     * Creates the bottom panel with the buttons
+     */
+    private void createBottomPanel() {
+        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
+        controls.setBackground(Background.fill(mainColor));
+        controls.getStyleClass().add("allbuttons");
+        borderPane.setBottom(controls);
+    }
+
+    /**
+     * Creates the top panel with the title and the exit button
+     */
+    private void createTopPanel() {
+        AnchorPane topPanel = new AnchorPane();
+        AnchorPane.setRightAnchor(backButton, 0d);
+        AnchorPane.setTopAnchor(exitButton, 0d);
+        topPanel.getChildren().addAll(backButton, exitButton);
+        topPanel.setBackground(Background.fill(mainColor));
+        topPanel.getStyleClass().add("exitbox");
+        borderPane.setTop(topPanel);
     }
 
     /**
