@@ -183,7 +183,7 @@ In the end, we decided on the two separate representations, which will allow for
 
 Here is our amazing UI:
 
-![This is cool, too bad you can't see it](images/29-sketched-ui-wireframe.jpg "An alternate design")
+![UI Design](images/UI_Setup.jpg "Our UI design")
 
 
 ## Team Responsibilities
