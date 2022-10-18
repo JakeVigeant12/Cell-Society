@@ -65,7 +65,7 @@ public class FileInput extends SceneCreator {
         GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
             filePick(stage);
-            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
+            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
         });
     }

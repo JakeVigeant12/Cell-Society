@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -40,7 +41,7 @@ public class GridScreen extends SceneCreator{
         gridPane = new Pane();
     }
 
-    public Pane createGridScreen(Stage stage, ResourceBundle label){
+    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController){
         myLabels = label;
         play = new Button(myLabels.getString("playText"));
         pause = new Button(myLabels.getString("pauseText"));

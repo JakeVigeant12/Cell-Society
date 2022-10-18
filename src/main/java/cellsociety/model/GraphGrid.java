@@ -57,6 +57,7 @@ public class GraphGrid extends Grid{
     }
   }
 
+  @Override
   public void initializeNeighbors(List<List<String>> gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
     //ID of the current cell
@@ -112,6 +113,7 @@ public class GraphGrid extends Grid{
     }
   }
 
+  @Override
   public Map<Integer, Cell> getCells(){
     return myCells;
   }
