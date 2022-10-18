@@ -26,6 +26,7 @@ public class GridScreen extends SceneCreator {
     private Button pause;
     private Button reset;
     private Button exit;
+    private Button back;
 
     private Rectangle about;
     private Text title;
@@ -64,6 +65,7 @@ public class GridScreen extends SceneCreator {
         step = new Button(myLabels.getString("stepText"));
         reset = new Button(myLabels.getString("resetText"));
         exit = new Button(myLabels.getString("exitText"));
+        back = new Button(myLabels.getString("backText"));
 
         Abouttitle = new Text(myLabels.getString("aboutText"));
         title = new Text(myLabels.getString("title") + myController.getSimMap().get("Title"));
@@ -82,11 +84,16 @@ public class GridScreen extends SceneCreator {
         VBox fileinfo = new VBox(Abouttitle, title, type, author, description);
         fileinfo.setBackground(Background.fill(maincolor));
         fileinfo.getStyleClass().add("aboutbox");
-        borderPane.setTop(fileinfo);
-        HBox controls = new HBox(play, pause, step, reset, exit);
+        borderPane.setLeft(fileinfo);
+        HBox controls = new HBox(play, pause, step, reset);
+        controls.setBackground(Background.fill(maincolor));
         borderPane.setBottom(controls);
         controls.getStyleClass().add("allbuttons");
         handleButtons(stage);
+
+        HBox exitButtons = new HBox(back, exit);
+        exitButtons.getStyleClass().add("exitbox");
+        borderPane.setTop(exitButtons);
 
         gridView = new GridView(600);
         gridView.setUpView(myController.getViewGrid());
@@ -109,6 +116,12 @@ public class GridScreen extends SceneCreator {
         exit.setOnAction(event -> {
             StartSplash beginning = new StartSplash(600.0);
             stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+            stage.setHeight(600);
+            stage.setWidth(600);
+        });
+        back.setOnAction(event -> {
+            FileInput backinput = new FileInput(600);
+            stage.setScene(createScene(stage, backinput.createFileInput(stage, myLabels.getBaseBundleName()), "fileinput.css"));
             stage.setHeight(600);
             stage.setWidth(600);
         });

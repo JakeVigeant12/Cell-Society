@@ -13,10 +13,9 @@
 }
 
 .uploadbox{
+    -fx-padding: 100;
     -fx-text-alignment: center;
     -fx-alignment: center;
-    -fx-fill: white;
-    -fx-border-color: black;
-    -fx-border-radius: 5;
-    -fx-spacing: 40px;
+    -fx-spacing: 35px;
+    -fx-pref-width: 400;
 }

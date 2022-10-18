@@ -7,10 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -24,8 +21,9 @@ import java.util.ResourceBundle;
 
 public class FileInput extends SceneCreator {
     public double screenSize;
-    public Pane inputPane;
+    public BorderPane inputPane;
     public Button input;
+    public Button back;
     // kind of data files to look for
     public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
@@ -38,7 +36,7 @@ public class FileInput extends SceneCreator {
     private ResourceBundle label;
     public FileInput(double size){
         super(size);
-        inputPane = new Pane();
+        inputPane = new BorderPane();
         inputBackground = new ImageView();
     }
     public Pane createFileInput(Stage stage, String language){
@@ -47,31 +45,35 @@ public class FileInput extends SceneCreator {
         input = makeButton("buttonText");
         input.getStyleClass().add("button");
 
+        back = makeButton("backText");
+
         Text title = new Text(label.getString("titleText"));
         title.getStyleClass().add("mainText");
 
         inputBackground.setImage(new Image(label.getString("uploadgif")));
         inputBackground.setFitHeight(mySize);
         inputBackground.setFitWidth(mySize);
+        inputPane.getChildren().addAll(inputBackground);
 
-        VBox upload = new VBox(title, input);
-        upload.setLayoutX(130);
-        upload.setLayoutY(100);
+        VBox upload = new VBox(title, input,back);
         upload.getStyleClass().add("uploadbox");
-        upload.setBackground(Background.fill(Color.LIGHTGRAY));
+        inputPane.setTop(upload);
 
-        inputPane.getChildren().addAll(inputBackground, upload);
         buttonPress(stage);
         return inputPane;
     }
 
     private void buttonPress(Stage stage) {
         //add go back button
-        mySize = 800;
         input.setOnAction(event -> {
+            mySize = 850;
             filePick(stage);
 //            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
+        });
+        back.setOnAction(event -> {
+            StartSplash beginning = new StartSplash(600.0);
+            stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
         });
     }
     public void filePick(Stage stage) {
