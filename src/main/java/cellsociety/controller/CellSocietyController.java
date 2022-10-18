@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.Cell;
 import cellsociety.model.Model;
