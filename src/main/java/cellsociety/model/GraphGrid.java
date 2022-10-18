@@ -3,12 +3,14 @@ package cellsociety.model;
 import cellsociety.SimType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, ArrayList<Cell>> myAdjacenyList;
   private final SimType simType;
-  public GraphGrid(ArrayList<ArrayList<String>> gridParsing, SimType simInput) {
+  public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
     simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
@@ -19,7 +21,7 @@ public class GraphGrid extends Grid{
 
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void createCells(ArrayList<ArrayList<String>> inputLayout) {
+  public void createCells(List<List<String>> inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.size(); i++){
@@ -54,8 +56,8 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  @Override
-  public void initializeNeighbors(ArrayList<ArrayList<String>> gridParsing) {
+
+  public void initializeNeighbors(List<List<String>> gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
     //ID of the current cell
     int currId = 0;
@@ -100,7 +102,7 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  public boolean isInBounds(int row, int col, ArrayList<ArrayList<String>> gridParsing){
+  public boolean isInBounds(int row, int col, List<List<String>> gridParsing){
     return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
   }
   @Override
@@ -109,8 +111,8 @@ public class GraphGrid extends Grid{
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
   }
-  @Override
-  public HashMap<Integer, Cell> getCells(){
+
+  public Map<Integer, Cell> getCells(){
     return myCells;
   }
 }

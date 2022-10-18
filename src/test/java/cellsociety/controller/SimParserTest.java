@@ -20,7 +20,7 @@ class SimParserTest {
   @Test
   void parseValidSimFileTest() throws FileNotFoundException {
     Map<String, String> expected = new HashMap<>();
-    expected.put("Type", "GameType");
+    expected.put("Type", "GameOfLife");
     expected.put("Title", "SimulationTitle");
     expected.put("Author", "First Last");
     expected.put("Description", "A sentence describing how this game works");
@@ -38,7 +38,7 @@ class SimParserTest {
   @Test
   void parseValidSimFileWithCommentsTest() throws FileNotFoundException {
     Map<String, String> expected = new HashMap<>();
-    expected.put("Type", "GameType");
+    expected.put("Type", "GameOfLife");
     expected.put("Title", "SimulationTitle");
     expected.put("Author", "First Last");
     expected.put("Description", "A sentence describing how this game works");
