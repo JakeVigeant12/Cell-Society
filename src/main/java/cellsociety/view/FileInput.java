@@ -36,11 +36,12 @@ public class FileInput extends SceneCreator {
     }
 
     public Pane createFileInput(Stage stage, String language){
+        //add back button
         label = ResourceBundle.getBundle(language);
 
         input = new Button(label.getString("buttonText"));
         input.getStyleClass().add("button");
-        input.setLayoutY(500);
+        input.setLayoutY(450);
         input.setLayoutX(250);
 
         Text title = new Text(label.getString("titleText"));
@@ -48,7 +49,10 @@ public class FileInput extends SceneCreator {
         title.setLayoutY(200);
         title.setLayoutX(90);
 
-        fileBackground = new Rectangle(mySize, mySize, Color.GRAY);
+        fileBackground = new Rectangle(mySize - 100, mySize - 100, Color.LIGHTGRAY);
+        fileBackground.setY(50);
+        fileBackground.setX(50);
+
 
         inputPane.getChildren().addAll(fileBackground, input,title);
         buttonPress(stage);

@@ -36,13 +36,13 @@ public class StartSplash extends SceneCreator {
 
         mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");
-        mainTitle.setLayoutX(160);
+        mainTitle.setLayoutX(170);
         mainTitle.setLayoutY(70);
 
         selectLanguage = new Text("Select Language");
         selectLanguage.getStyleClass().add("startSelectLanguage");
-        selectLanguage.setLayoutX(250);
-        selectLanguage.setLayoutY(430);
+        selectLanguage.setLayoutX(240);
+        selectLanguage.setLayoutY(460);
 
         myBackground.setImage(new Image(startinfo.getString("startgif")));
         myBackground.setFitWidth(mySize);
