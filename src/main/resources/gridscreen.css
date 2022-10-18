@@ -17,7 +17,6 @@
     -fx-max-width: 150;
     -fx-text-alignment: center;
     -fx-alignment: center;
-    -fx-border-color: black;
     -fx-spacing: 10px;
 }
 
@@ -32,9 +31,9 @@
 
 .title{
     -fx-alignment: top;
-    -fx-font-size: 30;
+    -fx-font-size: 20;
 }
 
 .info{
-    -fx-font-size: 18;
+    -fx-font-size: 12;
 }

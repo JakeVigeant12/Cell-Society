@@ -10,36 +10,35 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator {
-
     private Pane root;
     private BorderPane borderPane;
-    private Button play;
-    private Button step;
-    private Button pause;
-    private Button reset;
-    private Button exit;
-    private Button back;
-
-    private Rectangle about;
-    private Text title;
-    private Text type;
+    private Button playButton;
+    private Button stepButton;
+    private Button pauseButton;
+    private Button resetButton;
+    private Button exitButton;
+    private Button backButton;
+    private Text fileTitle;
+    private Text simulationType;
     private Text author;
     private TextArea description;
-    private Text Abouttitle;
-    private Paint maincolor = Color.LIGHTGRAY;
+    private Text aboutTitle;
+    private Paint mainColor = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
     private GridView gridView;
     private Timeline timeline;
     private double refreshRate = 1;
 
+    /**
+     * Constructor for GridScreen, sets up the root, borderPane and the timeline
+     * @param size
+     */
     public GridScreen(double size) {
         super(size);
         root = new Pane();
@@ -47,6 +46,9 @@ public class GridScreen extends SceneCreator {
         setUpTimeline();
     }
 
+    /**
+     * Sets up the timeline for the animation
+     */
     private void setUpTimeline() {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -57,41 +59,42 @@ public class GridScreen extends SceneCreator {
         timeline.pause();
     }
 
+    /**
+     * Sets up the buttons, labels, text boxes, the Grid Screen UI
+     * @param stage
+     * @param label
+     * @param myController
+     * @return borderPane
+     */
     public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) {
         this.myController = myController;
         myLabels = label;
-        play = new Button(myLabels.getString("playText"));
-        pause = new Button(myLabels.getString("pauseText"));
-        step = new Button(myLabels.getString("stepText"));
-        reset = new Button(myLabels.getString("resetText"));
-        exit = new Button(myLabels.getString("exitText"));
-        back = new Button(myLabels.getString("backText"));
 
-        Abouttitle = new Text(myLabels.getString("aboutText"));
-        title = new Text(myLabels.getString("title") + myController.getSimMap().get("Title"));
-        type = new Text(myLabels.getString("typeText") + myController.getSimMap().get("Type"));
-        author = new Text(myLabels.getString("authorText") + myController.getSimMap().get("Author"));
+        createButtons();
+
+        aboutTitle = createAndStyleText(myLabels.getString("aboutText"), "title");
+        fileTitle = createAndStyleText(myLabels.getString("title") + myController.getSimMap().get("Title"), "info");
+        simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
+        author = createAndStyleText(myLabels.getString("authorText") + myController.getSimMap().get("Author"), "info");
+
         description = new TextArea();
         description.setText(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"));
+        description.getStyleClass().add("info");
         description.setEditable(false);
         description.setWrapText(true);
-        Abouttitle.getStyleClass().add("title");
-        title.getStyleClass().add("info");
-        type.getStyleClass().add("info");
-        author.getStyleClass().add("info");
-        description.getStyleClass().add("info");
 
-        VBox fileinfo = new VBox(Abouttitle, title, type, author, description);
-        fileinfo.setBackground(Background.fill(maincolor));
-        fileinfo.getStyleClass().add("aboutbox");
-        borderPane.setLeft(fileinfo);
-        HBox controls = new HBox(play, pause, step, reset);
-        controls.setBackground(Background.fill(maincolor));
+        VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, description);
+        fileInfoBox.setBackground(Background.fill(mainColor));
+        fileInfoBox.getStyleClass().add("aboutbox");
+
+        borderPane.setLeft(fileInfoBox);
+        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
+        controls.setBackground(Background.fill(mainColor));
         borderPane.setBottom(controls);
         controls.getStyleClass().add("allbuttons");
         handleButtons(stage);
 
-        HBox exitButtons = new HBox(back, exit);
+        HBox exitButtons = new HBox(backButton, exitButton);
         exitButtons.getStyleClass().add("exitbox");
         borderPane.setTop(exitButtons);
 
@@ -106,26 +109,52 @@ public class GridScreen extends SceneCreator {
         return borderPane;
     }
 
+    /**
+     * Creates and stylizes the text based on a resource bundle label
+     * @param myLabels
+     * @param title
+     * @return text
+     */
+    private Text createAndStyleText(String myLabels, String title) {
+        Text text = new Text(myLabels);
+        text.getStyleClass().add(title);
+        return text;
+    }
+
+    /**
+     * Creates the buttons for the Grid Screen
+     */
+    private void createButtons() {
+        playButton = new Button(myLabels.getString("playText"));
+        pauseButton = new Button(myLabels.getString("pauseText"));
+        stepButton = new Button(myLabels.getString("stepText"));
+        resetButton = new Button(myLabels.getString("resetText"));
+        exitButton = new Button(myLabels.getString("exitText"));
+        backButton = new Button(myLabels.getString("backText"));
+    }
+
+    /**
+     * Handles the action events for buttons
+     * @param stage
+     */
     public void handleButtons(Stage stage) {
-        play.setOnAction(event -> timeline.play());
-        step.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
+        playButton.setOnAction(event -> timeline.play());
+        stepButton.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
                 }
         );
-        reset.setOnAction(event -> timeline.playFromStart());
-        pause.setOnAction(event -> timeline.pause());
-        exit.setOnAction(event -> {
+        resetButton.setOnAction(event -> timeline.playFromStart());
+        pauseButton.setOnAction(event -> timeline.pause());
+        exitButton.setOnAction(event -> {
             StartSplash beginning = new StartSplash(600.0);
             stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
             stage.setHeight(600);
             stage.setWidth(600);
         });
-        back.setOnAction(event -> {
-            FileInput backinput = new FileInput(600);
-            stage.setScene(createScene(stage, backinput.createFileInput(stage, myLabels.getBaseBundleName()), "fileinput.css"));
+        backButton.setOnAction(event -> {
+            FileInput backInput = new FileInput(600);
+            stage.setScene(createScene(stage, backInput.createFileInput(stage, myLabels.getBaseBundleName()), "fileinput.css"));
             stage.setHeight(600);
             stage.setWidth(600);
         });
     }
-
-
 }
