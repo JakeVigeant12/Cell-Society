@@ -15,6 +15,11 @@ Finish Date:
 Hours Spent: 
 
 ### Primary Roles
+Eka Ebong: GUI, User input side 
+Luyao Wang: GUI, Grid side
+Jake Vigeant: Grid and Model
+Vaishvi Patel: Controller 
+Nick Ward: Cells
 
 
 ### Resources Used

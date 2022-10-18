@@ -56,12 +56,12 @@ public class StartSplash extends SceneCreator {
         buttons.getStyleClass().add("allbuttons");
 
         startPane.getChildren().addAll(myBackground, buttons, mainTitle, selectLanguage);
-        handleEvents(stage);
+        handleButtons(stage);
 
         return startPane;
     }
 
-    public void handleEvents(Stage stage){
+    public void handleButtons(Stage stage){
         FileInput fi = new FileInput(mySize);
         english.setOnAction(event->{
             stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));

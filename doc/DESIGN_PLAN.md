@@ -12,6 +12,8 @@ The subclasses of Cell will override the setFutureState method by taking in a li
  * Grid Class:
 
  * UI/view:
+The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
+one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid. 
 
  * Controller:
 
@@ -53,6 +55,45 @@ The overall design goals for the project are not only to implement the skills we
 |------------------------------------------------------------------|----------------|
 | parseData(File input) throws IOException, CsvValidationException |                |
 | parseFirstLine() throws CsvValidationException, IOException      |                |
+
+|SceneCreator| |
+|------------|--|
+|Scene createScene(Stage stage, Pane myPane, String css)||
+|nextScreen(Stage stage)||
+|previousScreen(Stage stage)||
+
+| SceneCreator                                            |     |
+|---------------------------------------------------------|-----|
+| Scene createScene(Stage stage, Pane myPane, String css) |     |
+| nextScreen(Stage stage)                                 |     |
+| previousScreen(Stage stage)                             |     |
+
+
+| StartSplash                | extends Scene Creator |
+|----------------------------|-----------------------|
+| StartSplash(double size)   |                       |
+| createStart(Stage stage)   |                       | 
+| handleButtons(Stage stage) |                       | 
+
+| FileInput                                         | extends Scene Creator |
+|---------------------------------------------------|-----------------------|
+| FileInput(double size)                            |                       |
+| createFileInput(Stage stage)                      |                       | 
+| buttonPress(Stage stage)                          |                       | 
+| filePick(Stage primaryStage)                      | CellSocietyController |
+| showMessage(Alert.AlertType type, String message) |                       |
+| makeChooser(String extensionAccepted)             |                       |
+
+| GridScreen                                          | extends Scene Creator |
+|-----------------------------------------------------|-----------------------|
+| createGridScreen(Stage stage, ResourceBundle label) |                       |
+| createStart(Stage stage)                            |                       | 
+| handleButtons(Stage stage)                          |                       | 
+
+
+
+
+
 
 
 ## Design Details

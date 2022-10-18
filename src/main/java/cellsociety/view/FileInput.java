@@ -87,26 +87,6 @@ public class FileInput extends SceneCreator {
     private void showMessage (Alert.AlertType type, String message) {
         new Alert(type, message).showAndWait();
     }
-    public int sumCSVData (Reader dataReader) {
-        // this syntax automatically close file resources if an exception occurs
-        try (CSVReader csvReader = new CSVReader(dataReader)) {
-            int total = 0;
-            // get headers separately
-            String[] headers = csvReader.readNext();
-            // read rest of data line by line
-            String[] nextRecord;
-            while ((nextRecord = csvReader.readNext()) != null) {
-                for (String value : nextRecord) {
-                    total += Integer.parseInt(value);
-                }
-            }
-            return total;
-        }
-        catch (IOException | CsvValidationException e) {
-            showMessage(Alert.AlertType.ERROR, "Invalid CSV Data");
-            return 0;
-        }
-    }
 
     private static FileChooser makeChooser (String extensionAccepted) {
         FileChooser result = new FileChooser();

@@ -11,8 +11,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator{
@@ -30,7 +28,7 @@ public class GridScreen extends SceneCreator{
     private Text author;
     private Text description;
     private Text Abouttitle;
-    private Paint jid = Color.LIGHTGRAY;
+    private Paint maincolor = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
 
 
@@ -60,13 +58,14 @@ public class GridScreen extends SceneCreator{
         description.getStyleClass().add("info");
 
         VBox fileinfo = new VBox(Abouttitle, title, type, author, description);
-        fileinfo.setBackground(Background.fill(jid));
+        fileinfo.setBackground(Background.fill(maincolor));
         fileinfo.getStyleClass().add("aboutbox");
 
         HBox controls = new HBox(play,pause,step, reset);
         controls.setLayoutX(400);
         controls.setLayoutY(690);
         controls.getStyleClass().add("allbuttons");
+        handleButtons(stage);
 
         gridPane.getChildren().addAll(controls, fileinfo);
         return gridPane;
