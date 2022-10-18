@@ -16,6 +16,6 @@ public abstract class Model {
   }
 
   public Map<Integer, Cell> getCells() {
-    return myGrid.getCells();
+    return null;
   }
 }
