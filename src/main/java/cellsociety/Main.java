@@ -34,28 +34,28 @@ public class Main extends Application {
      * @see Application#start(Stage)
      */
 
-    public void start(Stage start) throws CsvValidationException, IOException {
+    public void start(Stage start){
         StartSplash ss = new StartSplash(600.0);
         start.setTitle("CellSociety");
         SceneCreator current = new SceneCreator(600.0);
         start.setScene(current.createScene(start,ss.createStart(start),"startsplash.css" ));
         start.show();
     }
-//    public void filepick(Stage primaryStage) {
-//        try {
-//            File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
-//            if (dataFile != null) {
-//                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage, current);
-//                controller.loadSimulation(primaryStage);
-//            }
-//        }
-//        catch (IOException e) {
-//            // should never happen since user selected the file
-//            showMessage(AlertType.ERROR, "Invalid Data File Given");
-//        } catch (CsvValidationException e) {
-//            showMessage(AlertType.ERROR, "Invalid CSV Format");
-//        }
-//    }
+    public void filepick(Stage primaryStage) {
+        try {
+            File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
+            if (dataFile != null) {
+                CellSocietyController controller = new CellSocietyController(dataFile, primaryStage);
+                controller.loadSimulation(primaryStage);
+            }
+        }
+        catch (IOException e) {
+            // should never happen since user selected the file
+            showMessage(AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(AlertType.ERROR, "Invalid CSV Format");
+        }
+    }
 
     /**
      * Returns sum of values in the given CSV data source (could be anything that is readable).

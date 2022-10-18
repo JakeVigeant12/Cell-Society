@@ -35,12 +35,13 @@ public class FileInput extends SceneCreator {
         inputPane = new Pane();
     }
 
-    public Pane createFileInput(Stage stage, String language) throws CsvValidationException, IOException {
+    public Pane createFileInput(Stage stage, String language){
+        //add back button
         label = ResourceBundle.getBundle(language);
 
         input = new Button(label.getString("buttonText"));
         input.getStyleClass().add("button");
-        input.setLayoutY(500);
+        input.setLayoutY(450);
         input.setLayoutX(250);
 
         Text title = new Text(label.getString("titleText"));
@@ -48,34 +49,39 @@ public class FileInput extends SceneCreator {
         title.setLayoutY(200);
         title.setLayoutX(90);
 
-        fileBackground = new Rectangle(mySize, mySize, Color.GRAY);
+        fileBackground = new Rectangle(mySize - 100, mySize - 100, Color.LIGHTGRAY);
+        fileBackground.setY(50);
+        fileBackground.setX(50);
+
 
         inputPane.getChildren().addAll(fileBackground, input,title);
         buttonPress(stage);
         return inputPane;
     }
 
-    private void buttonPress(Stage stage) throws CsvValidationException, IOException {
+    private void buttonPress(Stage stage) {
         //add go back button
         mySize = 800;
-        GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
-            filepick(stage);
-            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
+            filePick(stage);
             nextScreen(stage);
         });
     }
-    public void filepick(Stage primaryStage) {
+    public void filePick(Stage stage) {
         try {
-            File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
+            File dataFile = FILE_CHOOSER.showOpenDialog(stage);
             if (dataFile != null) {
-                cellSocietyController.loadSimFile(dataFile);
-                cellSocietyController.loadSimulation(primaryStage);
+                CellSocietyController controller = new CellSocietyController(dataFile, stage);
+                controller.loadSimulation(stage);
+                GridScreen firstgrid = new GridScreen(mySize);
+                stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, controller), "gridscreen.css"));
             }
         }
         catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
+        } catch (CsvValidationException e) {
+            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
     private void showMessage (Alert.AlertType type, String message) {
@@ -107,7 +113,7 @@ public class FileInput extends SceneCreator {
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
         result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("SIM Files", extensionAccepted));
         return result;
     }
 
