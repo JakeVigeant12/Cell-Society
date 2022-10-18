@@ -183,7 +183,7 @@ In the end, we decided on the two separate representations, which will allow for
 
 Here is our amazing UI:
 
-![UI Design](doc/images/UI_Setup.jpg "Our UI design")
+![UI Design](images/UI_Setup.png "Our UI design")
 
 
 ## Team Responsibilities
