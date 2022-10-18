@@ -9,5 +9,5 @@
     -fx-background-color: white;
     -fx-fill: black;
     -fx-font-size: 30pt;
-    margin: auto;
+    -fx-font-weight: Bold;
 }

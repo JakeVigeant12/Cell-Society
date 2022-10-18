@@ -1,6 +1,6 @@
 .startSelectLanguage{
     -fx-font-size: 14pt;
-    -fx-fill: darkblue;
+    -fx-fill: black;
     -fx-alignment: center;
 }
 .button{
@@ -16,6 +16,6 @@
 
 .mainTitle{
     -fx-alignment: center;
-    -fx-fill: black;
+    -fx-fill: white;
     -fx-font-size: 48pt;
 }
