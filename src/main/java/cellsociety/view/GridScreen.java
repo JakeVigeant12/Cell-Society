@@ -34,6 +34,7 @@ public class GridScreen extends SceneCreator {
     private ResourceBundle myLabels;
     private GridView gridView;
     private Timeline timeline;
+    private CellSocietyController myController;
     private double refreshRate = 1;
 
     /**
@@ -67,26 +68,18 @@ public class GridScreen extends SceneCreator {
      * @param myController
      * @return borderPane
      */
-    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) {
-        this.myController = myController;
+    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController controller) {
+        this.myController = controller;
         myLabels = label;
 
         createButtons();
 
-        createLeftPanel(myController);
-
+        createLeftPanel();
         createRightPanel();
-
         createBottomPanel();
-
         createTopPanel();
 
-        gridView = new GridView(600);
-        gridView.setUpView(myController.getViewGrid());
-        GridPane grid = gridView.getGrid();
-        grid.setAlignment(Pos.CENTER);
-        borderPane.setCenter(gridView.getGrid());
-        borderPane.setPadding(new Insets(10));
+        setupGrid();
 
         handleButtons(stage);
 
@@ -94,10 +87,21 @@ public class GridScreen extends SceneCreator {
     }
 
     /**
-     * Sets up the left panel of the Grid Screen UI
-     * @param myController
+     * Sets up the grid with properties
      */
-    private void createLeftPanel(CellSocietyController myController) {
+    private void setupGrid() {
+        gridView = new GridView(600);
+        gridView.setUpView(myController.getViewGrid());
+        GridPane grid = gridView.getGrid();
+        grid.setAlignment(Pos.CENTER);
+        borderPane.setCenter(gridView.getGrid());
+        borderPane.setPadding(new Insets(10));
+    }
+
+    /**
+     * Sets up the left panel of the Grid Screen UI
+     */
+    private void createLeftPanel() {
         aboutTitle = createAndStyleText(myLabels.getString("aboutText"), "title");
         fileTitle = createAndStyleText(myLabels.getString("title") + myController.getSimMap().get("Title"), "info");
         simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
