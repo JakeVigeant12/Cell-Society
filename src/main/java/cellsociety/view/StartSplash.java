@@ -58,7 +58,7 @@ public class StartSplash extends SceneCreator {
         buttons.getStyleClass().add("allbuttons");
 
         startPane.getChildren().addAll(myBackground, buttons, mainTitle, selectLanguage);
-        handleButtons(stage);
+        handleEvents(stage);
 
         return startPane;
     }
