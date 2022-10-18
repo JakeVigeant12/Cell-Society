@@ -11,6 +11,8 @@
  * Grid Class:
     * There is an abstract grid class that wraps the implementation of the grid with data structures below. This grid is created by the model and is told to populate itself given the information read in from a CSV, and to loop through the Cells that it holds and tell them to change their state at each step of the simulation's execution. 
  * UI/view:
+The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
+one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid. 
 
  * Controller: 
    * The controller is responsible for creating the calling the parser classes and extracting useful information about the initial state of the grid and the metadata about the simulation including its type and game parameters. It creates the appropriate model and view classes giving them only the information they need.
@@ -80,6 +82,35 @@ The overall design goals for the project are not only to implement the skills we
 |----------------------------------------------|---|
 | void computeStates()                         |   |
 | Map<Integer, Cell> getCells()                |   |
+
+| SceneCreator                                           |     |
+|--------------------------------------------------------|-----|
+| void createScene(Stage stage, Pane myPane, String css) |     |
+| void nextScreen(Stage stage)                           |     |
+
+| StartSplash                        | extends SceneCreator |
+|------------------------------------|----------------------|
+| Pane createStart(Stage stage)      |                      |
+| Button makeButton(String property) |                      |
+| void handleEvents(Stage stage)     |                      |
+
+| GridScreen                                                                                   | extends StackPane |
+|----------------------------------------------------------------------------------------------|-------------------|
+| void setUpTimeline()                                                                         |                   |
+| Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) |                   |
+| void handleEvents(Stage stage)                                                               |                   |
+
+| CellView                        | extends CellView |
+|---------------------------------|------------------|
+| void updateState(Integer state) |                  |
+
+| FileInput                                              | extends SceneCreator |
+|--------------------------------------------------------|----------------------|
+| Pane createFileInput(Stage stage, String language)     |                      |
+| void buttonPress(Stage stage)                          |                      |
+| void showMessage(Alert.AlertType type, String message) |                      |
+| FileChooser makeChooser(String extensionAccepted)      |                      |
+| Button makeButton(String property)                     |                      |
 
 
 ## Design Details
@@ -228,9 +259,9 @@ Here is our amazing UI:
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
- * Luyao Wang UI
+ * Luyao Wang: UI
 
- * Eka Ebong
+ * Eka Ebong: UI
 
 
 #### Secondary Responsibilities
@@ -240,7 +271,7 @@ Here is our amazing UI:
 
  * Vaishvi Patel: UI testing and file parsing
 
- * Luyao Wang connection between UI and controller
+ * Luyao Wang connection between UI and controller, UI testing
 
  * Eka Ebong
 
