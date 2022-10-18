@@ -11,3 +11,12 @@
     -fx-font-size: 30pt;
     -fx-font-weight: Bold;
 }
+
+.uploadbox{
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-fill: white;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-spacing: 40px;
+}
