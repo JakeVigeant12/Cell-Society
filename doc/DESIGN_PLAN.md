@@ -4,10 +4,19 @@
 
 
 ## Design Overview
+ * Cell Class:
 
+For the cells, there should be one master Cell class that can return parameters about it such as its state, ID/position, and setting/changing the future state of the cell.
+The subclasses of Cell will override the setFutureState method by taking in a list of neighbors, setting the future state to a new integer based on those neighbors.
+
+ * Grid Class:
+
+ * UI/view:
+
+ * Controller:
 
 #### Overall design goals
-
+The overall design goals for the project are not only to implement the skills we learned last project, including abstraction and testing, but also spending a lot of time focusing on the design of the project at the beginning. Our design should not just work for the requirements given to us, but should follow the Open-Closed Principal to allow for new features without major changes to our base code, have separation of view and model with a proper View-Model controller.
 
 #### Classes, their behavior and relationships (**not** instance variables)
 
@@ -17,9 +26,9 @@
 |int getFutureState()      | futureState |
 |void setFutureStateValue(int futureState) | futureState |
 |void setFutureState(List<Cell> neighbors)    | neighbors |
-|void setId(int id) | |
-|int getId() | |
-|void List<Integer> getNeighborStates(List<Cell> neighbors) | |
+|void setId(int id) | id |
+|int getId() | id |
+|void List<Integer> getNeighborStates(List<Cell> neighbors) | neighbors |
 
 |GameOfLifeCell| extends Cell |
 |---|---|
@@ -29,16 +38,11 @@
 
 #### Use Cases
 
- * A new game is started with five players, their scores are reset to 0.
- ```java
- Something thing = new Something();
- Value v = thing.getValue();
- v.update(13);
- ```
-
 #### Extension Cases
 
  * What commonalities will be factored out into superclasses?
+
+The cell class is a great example of having a few common methods, and the subclasses are the cells for each type of game with different rules being contained in those cells.
  
  * How will differences be handled when superclasses are extended?
  
