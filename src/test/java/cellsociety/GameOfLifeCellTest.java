@@ -26,7 +26,7 @@ public class GameOfLifeCellTest {
     }
 
     @Test
-    void testNeighbors () {
+    void testNeighborsGood () {
         GameOfLifeCell c1 = new GameOfLifeCell(1, 0);
         GameOfLifeCell c2 = new GameOfLifeCell(0, 1);
         GameOfLifeCell c3 = new GameOfLifeCell(1, 1);
@@ -35,6 +35,18 @@ public class GameOfLifeCellTest {
         c.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(1, c.getFutureState());
+    }
+
+    @Test
+    void testNeighborsBad () {
+        GameOfLifeCell c1 = new GameOfLifeCell(23124, 0);
+        GameOfLifeCell c2 = new GameOfLifeCell(13, 1);
+        GameOfLifeCell c3 = new GameOfLifeCell(2132, 1);
+        GameOfLifeCell c4 = new GameOfLifeCell(213, 1);
+
+        c.setFutureState(List.of(c1, c2, c3, c4));
+
+        assertEquals(0, c.getFutureState());
     }
 
     @Test
