@@ -3,6 +3,7 @@ import cellsociety.model.Cell;
 import cellsociety.model.GameOfLifeCell;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import cellsociety.model.GraphGrid;
 
@@ -10,7 +11,7 @@ import static cellsociety.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {
-  ArrayList<ArrayList<String>> gridParsing = new ArrayList<>();
+  List<List<String>> gridParsing = new ArrayList<>();
 
 
   @Test

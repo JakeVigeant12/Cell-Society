@@ -54,7 +54,6 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  @Override
   public void initializeNeighbors(ArrayList<ArrayList<String>> gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
     //ID of the current cell
@@ -103,13 +102,11 @@ public class GraphGrid extends Grid{
   public boolean isInBounds(int row, int col, ArrayList<ArrayList<String>> gridParsing){
     return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
   }
-  @Override
   public void computeStates() {
     for(Cell currentCell  : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
   }
-  @Override
   public HashMap<Integer, Cell> getCells(){
     return myCells;
   }
