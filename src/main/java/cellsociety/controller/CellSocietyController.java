@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.Cell;
 import cellsociety.model.Model;
@@ -35,6 +36,7 @@ public class CellSocietyController {
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, simMap);
     backEndCellsbyID = myModel.getCells();
+
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
     numRows = Integer.parseInt(parseRowCol[0]);
     numCols = Integer.parseInt(parseRowCol[1]);
