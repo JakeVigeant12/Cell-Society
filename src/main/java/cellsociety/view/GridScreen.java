@@ -3,10 +3,7 @@ package cellsociety.view;
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -20,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator{
 
-    private Pane gridPane;
+    private BorderPane root;
     private Button play;
     private Button step;
     private Button pause;
@@ -40,7 +37,7 @@ public class GridScreen extends SceneCreator{
     public GridScreen(double size, CellSocietyController controller)throws CsvValidationException, IOException {
         super(size);
         this.myController = controller;
-        gridPane = new Pane();
+        root = new BorderPane();
     }
 
     public Pane createGridScreen(Stage stage, ResourceBundle label){
@@ -67,15 +64,14 @@ public class GridScreen extends SceneCreator{
         fileinfo.getStyleClass().add("aboutbox");
 
         HBox controls = new HBox(play,step);
-        controls.setLayoutX(150);
-        controls.setLayoutY(10);
         controls.getStyleClass().add("allbuttons");
 
-        gridPane.getChildren().addAll(controls, fileinfo);
-        gridView = new GridView(mySize, myController);
+        gridView = new GridView(600, myController);
         //gridView.setUpView(controller.getViewGrid());
-        controls.getChildren().add(gridView.getGrid());
-        return gridPane;
+        root.setTop(fileinfo);
+        root.setBottom(controls);
+        root.setCenter(gridView.getGrid());
+        return root;
     }
 
     public void handleButtons(Stage stage){

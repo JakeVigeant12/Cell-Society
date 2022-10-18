@@ -13,7 +13,7 @@
 }
 
 .aboutbox{
-    -fx-pref-height: 600;
+    -fx-pref-height: 150;
     -fx-pref-width: 200;
     -fx-text-alignment: center;
     -fx-alignment: center;
@@ -31,5 +31,5 @@
 }
 
 .info{
-    -fx-font-size: 25;
+    -fx-font-size: 20;
 }
