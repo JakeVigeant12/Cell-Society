@@ -62,7 +62,6 @@ public class GridView extends SceneCreator {
         hBox.setPadding(new Insets(0.8 * rem));
         root.setTop(hBox);
         //TODO: updateGrid method in controller
-        nextButton.setOnAction(e -> controller.updateGrid());
     }
 
 }

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class SceneCreator {
     public double mySize;
     public Scene myScene;
+    public Scene previousScene;
 
     public CellSocietyController myController;
     public SceneCreator(double size){
@@ -17,6 +18,7 @@ public class SceneCreator {
 
 
     public Scene createScene(Stage stage, Pane myPane, String css){
+        previousScene = stage.getScene();
         Scene scene  = new Scene(myPane, mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
@@ -27,6 +29,11 @@ public class SceneCreator {
         stage.setScene(myScene);
         stage.setHeight(mySize);
         stage.setWidth(mySize);
+        stage.show();
+    }
+
+    public void previousScreen(Stage stage){
+        stage.setScene(previousScene);
         stage.show();
     }
 
