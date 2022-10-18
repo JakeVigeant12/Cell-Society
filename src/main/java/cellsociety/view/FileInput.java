@@ -70,7 +70,7 @@ public class FileInput extends SceneCreator {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(stage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile, stage);
+                CellSocietyController controller = new CellSocietyController(dataFile);
                 controller.loadSimulation(stage);
                 GridScreen firstgrid = new GridScreen(mySize);
                 stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, controller), "gridscreen.css"));
