@@ -9,11 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CellView extends StackPane {
-    private Color color;
     public static Map<Integer, Color> colorMap = Map.of(0, Color.DARKGRAY, 1, Color.GREEN);
     Rectangle rectangle;
 
-
+    /**
+     * Constructor for CellView
+     * @param state
+     * @param width
+     */
     public CellView(Integer state, double width) {
 
         // create rectangle
@@ -33,6 +36,10 @@ public class CellView extends StackPane {
 
     }
 
+    /**
+     * Updates the visual representation of the cell
+     * @param state
+     */
     public void updateState(Integer state) {
         rectangle.setFill(colorMap.get(state));
     }

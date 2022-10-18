@@ -20,6 +20,14 @@
     -fx-spacing: 10px;
 }
 
+.rightbox{
+    -fx-pref-height: 650;
+    -fx-max-width: 60;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
 .buttonbox{
     -fx-border-color: black;
     -fx-fill: light gray;

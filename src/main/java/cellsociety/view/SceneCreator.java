@@ -10,13 +10,23 @@ public class SceneCreator {
     public double mySize;
     public Scene myScene;
     public Scene previousScene;
-
     public CellSocietyController myController;
+
+    /**
+     * Constructor for SceneCreator
+     * @param size
+     */
     public SceneCreator(double size){
         mySize = size;
     }
 
-
+    /**
+     * Sets up the scene
+     * @param stage
+     * @param myPane
+     * @param css
+     * @return
+     */
     public Scene createScene(Stage stage, Pane myPane, String css){
         previousScene = stage.getScene();
         Scene scene  = new Scene(myPane, mySize, mySize);
@@ -25,6 +35,10 @@ public class SceneCreator {
         return scene;
     }
 
+    /**
+     * Sets a new stage to display
+     * @param stage
+     */
     public void nextScreen(Stage stage){
         stage.setScene(myScene);
         stage.setHeight(mySize);
@@ -32,6 +46,10 @@ public class SceneCreator {
         stage.show();
     }
 
+    /**
+     * Sets the previous scene to display
+     * @param stage
+     */
     public void previousScreen(Stage stage){
         stage.setScene(previousScene);
         stage.show();

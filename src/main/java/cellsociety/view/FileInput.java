@@ -8,8 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -73,7 +71,7 @@ public class FileInput extends SceneCreator {
         });
         back.setOnAction(event -> {
             StartSplash beginning = new StartSplash(600.0);
-            stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+            stage.setScene(createScene(stage, beginning.createStart(stage), "startSplash.css"));
         });
     }
     public void filePick(Stage stage) {

@@ -77,24 +77,28 @@ public class GridScreen extends SceneCreator {
         simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
         author = createAndStyleText(myLabels.getString("authorText") + myController.getSimMap().get("Author"), "info");
 
-        description = new TextArea();
-        description.setText(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"));
-        description.getStyleClass().add("info");
+        description = createAndStyleTextBox(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"), "info");
         description.setEditable(false);
         description.setWrapText(true);
 
         VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, description);
         fileInfoBox.setBackground(Background.fill(mainColor));
         fileInfoBox.getStyleClass().add("aboutbox");
-
         borderPane.setLeft(fileInfoBox);
+
+        // TODO: FIX THIS TO DISPLAY ON RIGHT SIDE
+        VBox rightUIElement = new VBox();
+        rightUIElement.setBackground(Background.fill(mainColor));
+        rightUIElement.getStyleClass().add("rightbox");
+        borderPane.setRight(rightUIElement);
+
         HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
         controls.setBackground(Background.fill(mainColor));
-        borderPane.setBottom(controls);
         controls.getStyleClass().add("allbuttons");
-        handleButtons(stage);
+        borderPane.setBottom(controls);
 
         HBox exitButtons = new HBox(backButton, exitButton);
+        exitButtons.setBackground(Background.fill(mainColor));
         exitButtons.getStyleClass().add("exitbox");
         borderPane.setTop(exitButtons);
 
@@ -103,6 +107,8 @@ public class GridScreen extends SceneCreator {
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
+
+        handleButtons(stage);
 
         borderPane.setPadding(new Insets(10));
 
@@ -119,6 +125,12 @@ public class GridScreen extends SceneCreator {
         Text text = new Text(myLabels);
         text.getStyleClass().add(title);
         return text;
+    }
+
+    private TextArea createAndStyleTextBox(String myLabels, String title) {
+        TextArea textBox = new TextArea(myLabels);
+        textBox.getStyleClass().add(title);
+        return textBox;
     }
 
     /**
@@ -146,7 +158,7 @@ public class GridScreen extends SceneCreator {
         pauseButton.setOnAction(event -> timeline.pause());
         exitButton.setOnAction(event -> {
             StartSplash beginning = new StartSplash(600.0);
-            stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+            stage.setScene(createScene(stage, beginning.createStart(stage), "startSplash.css"));
             stage.setHeight(600);
             stage.setWidth(600);
         });

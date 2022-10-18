@@ -20,14 +20,21 @@ public class GridView{
     private int n;
     private int m;
     CellView[][] cells;
-    CellSocietyController controller;
     final double rem = new Text("").getLayoutBounds().getHeight();
 
+    /**
+     * Constructor for GridView, sets up the grid and the cells
+     * @param size
+     */
     public GridView(double size) {
         this.size = size;
         grid = new GridPane();
     }
 
+    /**
+     * Sets up the grid and the cells
+     * @param gridData
+     */
     public void setUpView(List<List<Integer>> gridData) {
         n = gridData.size();
         m = gridData.get(0).size();
@@ -45,6 +52,10 @@ public class GridView{
         }
     }
 
+    /**
+     * Updates the grid
+     * @param gridData
+     */
     public void updateGrid(List<List<Integer>> gridData) {
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
@@ -53,6 +64,10 @@ public class GridView{
         }
     }
 
+    /**
+     * Returns the grid
+     * @return grid
+     */
     public GridPane getGrid() {
         return grid;
     }

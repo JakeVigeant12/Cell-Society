@@ -38,10 +38,15 @@ public class Main extends Application {
         StartSplash ss = new StartSplash(600.0);
         stage.setTitle("CellSociety");
         SceneCreator current = new SceneCreator(600.0);
-        stage.setScene(current.createScene(stage,ss.createStart(stage),"startsplash.css" ));
+        stage.setScene(current.createScene(stage,ss.createStart(stage), "startSplash.css"));
         stage.show();
     }
-    public void filepick(Stage primaryStage) {
+
+    /**
+     * Filer picker method
+     * @param primaryStage
+     */
+    public void filePick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
