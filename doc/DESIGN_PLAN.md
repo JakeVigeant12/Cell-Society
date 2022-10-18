@@ -11,8 +11,11 @@
  * Grid Class:
     * There is an abstract grid class that wraps the implementation of the grid with data structures below. This grid is created by the model and is told to populate itself given the information read in from a CSV, and to loop through the Cells that it holds and tell them to change their state at each step of the simulation's execution. 
  * UI/view:
-The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
-one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid. 
+   * UI holds the instance variable of the controller, but not the model. UI calls the controller to get the updated status of cells
+   regularly using a timeline or manually click button.
+
+   * The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
+one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid.
 
  * Controller: 
    * The controller is responsible for creating the calling the parser classes and extracting useful information about the initial state of the grid and the metadata about the simulation including its type and game parameters. It creates the appropriate model and view classes giving them only the information they need.
@@ -57,31 +60,31 @@ The overall design goals for the project are not only to implement the skills we
 | parseData(File input) throws IOException, CsvValidationException |                |
 | parseFirstLine() throws CsvValidationException, IOException      |                |
 
-| Grid                                                       |   |
-|------------------------------------------------------------|---|
-| void computeStates()                                       |   |
-| void createCells()                                         |   |
-| void initializeNeighbors                                   |   |
-| void setFutureState(List<Cell> neighbors)                  |   |
-| Map<Integer, Cell> getCells()                              |   |
+| Grid                                      |     |
+|-------------------------------------------|-----|
+| void computeStates()                      |     |
+| void createCells()                        |     |
+| void initializeNeighbors                  |     |
+| void setFutureState(List<Cell> neighbors) |     |
+| Map<Integer, Cell> getCells()             |     |
 
-| Model                                     |   |
-|-------------------------------------------|---|
-| void computeStates()                      |   |
-| Map<Integer, Cell> getCells()             |   |
+| Model                         |     |
+|-------------------------------|-----|
+| void computeStates()          |     |
+| Map<Integer, Cell> getCells() |     |
 
-| GraphGrid                            extends Grid |   |
-|---------------------------------------------------|---|
-| void computeStates()                              |   |
-| void createCells()                                |   |
-| void initializeNeighbors                          |   |
-| boolean isInBounds                                |   |
-| Map<Integer, Cell> getCells()                     |   |
+| GraphGrid                            extends Grid |     |
+|---------------------------------------------------|-----|
+| void computeStates()                              |     |
+| void createCells()                                |     |
+| void initializeNeighbors                          |     |
+| boolean isInBounds                                |     |
+| Map<Integer, Cell> getCells()                     |     |
 
-| InitialModelImplementation extends Model     |   |
-|----------------------------------------------|---|
-| void computeStates()                         |   |
-| Map<Integer, Cell> getCells()                |   |
+| InitialModelImplementation extends Model |     |
+|------------------------------------------|-----|
+| void computeStates()                     |     |
+| Map<Integer, Cell> getCells()            |     |
 
 | SceneCreator                                           |     |
 |--------------------------------------------------------|-----|
@@ -116,6 +119,16 @@ The overall design goals for the project are not only to implement the skills we
 ## Design Details
 
 #### Use Cases
+
+* Create a frontend cell with status 0 of width 20
+ ```java
+CellView cellView = new CellView(0, 20);
+ ```
+
+* Update a frontend cell with status 1
+ ```java
+cellView.updateState(1);
+ ```
 
 #### Extension Cases
 
@@ -245,7 +258,9 @@ Another design issue we faced was how we were going to have the view and model a
 
 ## User Interface
 
-Here is our amazing UI:
+Here is the design plan of our UI:
+We have a information panel displaying essential information about the simulation, buttons controlling the program, and
+an area for displaying the grid of cells.
 
 ![UI Design](images/UI_Setup.png "Our UI design")
 
@@ -255,7 +270,7 @@ Here is our amazing UI:
 #### Primary Responsibilities
  * Nick Ward: Cell class and subclass creation
 
- * Jake Vigeant: Creat the Model of the application.
+ * Jake Vigeant: Create the Model of the application.
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
