@@ -1,4 +1,4 @@
-package cellsociety.controller;
+package cellsociety.parser;
 
 import cellsociety.parser.Parser;
 import java.io.File;

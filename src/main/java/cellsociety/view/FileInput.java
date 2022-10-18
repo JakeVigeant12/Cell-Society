@@ -6,6 +6,8 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,48 +22,59 @@ public class FileInput extends SceneCreator {
     public Pane inputPane;
     public Button input;
     // kind of data files to look for
-    public static final String DATA_FILE_CSV_EXTENSION = "*.sim";
+    public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_CSV_EXTENSION);
-    // internal configuration file
-    public static final String INTERNAL_CONFIGURATION = "cellsociety.Configuration";
+    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ResourceBundle label;
+    private Rectangle fileBackground;
     public FileInput(double size){
         super(size);
         inputPane = new Pane();
     }
 
     public Pane createFileInput(Stage stage, String language){
+        //add back button
         label = ResourceBundle.getBundle(language);
+
         input = new Button(label.getString("buttonText"));
         input.getStyleClass().add("button");
-        input.setLayoutY(500);
-        input.setLayoutX(235);
-        Text title = new Text("Select .sim File to upload");
+        input.setLayoutY(450);
+        input.setLayoutX(250);
+
+        Text title = new Text(label.getString("titleText"));
         title.getStyleClass().add("mainText");
         title.setLayoutY(200);
-        title.setLayoutX(75);
+        title.setLayoutX(90);
 
-        inputPane.getChildren().addAll(input,title);
+        fileBackground = new Rectangle(mySize - 100, mySize - 100, Color.LIGHTGRAY);
+        fileBackground.setY(50);
+        fileBackground.setX(50);
+
+
+        inputPane.getChildren().addAll(fileBackground, input,title);
         buttonPress(stage);
         return inputPane;
     }
 
     private void buttonPress(Stage stage) {
+        //add go back button
+        mySize = 800;
+        GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
-            filepick(stage);
+            filePick(stage);
+            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
             nextScreen(stage);
         });
     }
-    public void filepick(Stage primaryStage) {
+    public void filePick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile);
-                controller.loadSimulation(primaryStage);
+                myController = new CellSocietyController(dataFile);
+                myController.loadSimulation(primaryStage);
             }
         }
         catch (IOException e) {
@@ -100,7 +113,7 @@ public class FileInput extends SceneCreator {
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
         result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("CSV Files", extensionAccepted));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("SIM Files", extensionAccepted));
         return result;
     }
 
