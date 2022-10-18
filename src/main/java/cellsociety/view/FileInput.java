@@ -18,7 +18,6 @@ import java.io.Reader;
 import java.util.ResourceBundle;
 
 public class FileInput extends SceneCreator {
-    public double screenSize;
     public BorderPane inputPane;
     public Button input;
     public Button back;
@@ -30,13 +29,24 @@ public class FileInput extends SceneCreator {
     private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
-
     private ResourceBundle label;
+
+    /**
+     * Constructor for FileInput
+     * @param size
+     */
     public FileInput(double size){
         super(size);
         inputPane = new BorderPane();
         inputBackground = new ImageView();
     }
+
+    /**
+     * Sets up the file input screen
+     * @param stage
+     * @param language
+     * @return
+     */
     public Pane createFileInput(Stage stage, String language){
         //add back button
         label = ResourceBundle.getBundle(language);
@@ -61,6 +71,10 @@ public class FileInput extends SceneCreator {
         return inputPane;
     }
 
+    /**
+     * Sets up the button press handling
+     * @param stage
+     */
     private void buttonPress(Stage stage) {
         //add go back button
         input.setOnAction(event -> {
@@ -74,6 +88,11 @@ public class FileInput extends SceneCreator {
             stage.setScene(createScene(stage, beginning.createStart(stage), "startSplash.css"));
         });
     }
+
+    /**
+     * Sets up the file picker
+     * @param stage
+     */
     public void filePick(Stage stage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(stage);
@@ -89,9 +108,21 @@ public class FileInput extends SceneCreator {
         } catch (CsvValidationException e) {
         }
     }
+
+    /**
+     * Sets up the alert message
+     * @param type
+     * @param message
+     */
     private void showMessage(Alert.AlertType type, String message) {
         new Alert(type, message).showAndWait();
     }
+
+    /**
+     * CSV reader method
+     * @param dataReader
+     * @return
+     */
     public int sumCSVData(Reader dataReader) {
         // this syntax automatically close file resources if an exception occurs
         try (CSVReader csvReader = new CSVReader(dataReader)) {
@@ -112,6 +143,11 @@ public class FileInput extends SceneCreator {
         }
     }
 
+    /**
+     * Sets up the file chooser
+     * @param extension
+     * @return
+     */
     private static FileChooser makeChooser(String extensionAccepted) {
         FileChooser result = new FileChooser();
         result.setTitle("Open Data File");
@@ -121,6 +157,11 @@ public class FileInput extends SceneCreator {
         return result;
     }
 
+    /**
+     * Make a button and sets properties
+     * @param property
+     * @return
+     */
     public Button makeButton(String property) {
         Button result = new Button();
         String labelText = label.getString(property);

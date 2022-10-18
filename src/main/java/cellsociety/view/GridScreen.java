@@ -16,7 +16,6 @@ import javafx.util.Duration;
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator {
-    private Pane root;
     private BorderPane borderPane;
     private Button playButton;
     private Button stepButton;
@@ -43,7 +42,6 @@ public class GridScreen extends SceneCreator {
      */
     public GridScreen(double size) {
         super(size);
-        root = new Pane();
         borderPane = new BorderPane();
         setUpTimeline();
     }
@@ -65,7 +63,6 @@ public class GridScreen extends SceneCreator {
      * Sets up the buttons, labels, text boxes, the Grid Screen UI
      * @param stage
      * @param label
-     * @param myController
      * @return borderPane
      */
     public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController controller) {
@@ -149,8 +146,8 @@ public class GridScreen extends SceneCreator {
      */
     private void createTopPanel() {
         AnchorPane topPanel = new AnchorPane();
-        AnchorPane.setRightAnchor(backButton, 0d);
-        AnchorPane.setTopAnchor(exitButton, 0d);
+        AnchorPane.setRightAnchor(exitButton, 0d);
+        AnchorPane.setTopAnchor(backButton, 0d);
         topPanel.getChildren().addAll(backButton, exitButton);
         topPanel.setBackground(Background.fill(mainColor));
         topPanel.getStyleClass().add("exitbox");
