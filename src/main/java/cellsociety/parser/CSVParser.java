@@ -23,7 +23,7 @@ public class CSVParser extends Parser {
     myFileReader = new FileReader(DATA_FOLDER + csvPath);
   }
   @Override
-  public Object parseData(File input) throws IOException, CsvValidationException {
+  public List<List<String>> parseData(File input) throws IOException, CsvValidationException {
     CSVReader csvReader = new CSVReader(myFileReader);
     csvReader.readNext();
     grid = new ArrayList<>();

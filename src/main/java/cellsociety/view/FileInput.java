@@ -34,12 +34,10 @@ public class FileInput extends SceneCreator {
         super(size);
         inputPane = new Pane();
     }
-
     public Pane createFileInput(Stage stage, String language){
         //add back button
         label = ResourceBundle.getBundle(language);
-
-        input = new Button(label.getString("buttonText"));
+        input = makeButton("buttonText");
         input.getStyleClass().add("button");
         input.setLayoutY(450);
         input.setLayoutX(250);
@@ -54,7 +52,7 @@ public class FileInput extends SceneCreator {
         fileBackground.setX(50);
 
 
-        inputPane.getChildren().addAll(fileBackground, input,title);
+        inputPane.getChildren().addAll(fileBackground, input, title);
         buttonPress(stage);
         return inputPane;
     }
@@ -62,33 +60,51 @@ public class FileInput extends SceneCreator {
     private void buttonPress(Stage stage) {
         //add go back button
         mySize = 800;
-        GridScreen firstgrid = new GridScreen(mySize);
         input.setOnAction(event -> {
             filePick(stage);
-            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label), "gridscreen.css"));
+//            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
         });
     }
-    public void filePick(Stage primaryStage) {
+    public void filePick(Stage stage) {
         try {
-            File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
+            File dataFile = FILE_CHOOSER.showOpenDialog(stage);
             if (dataFile != null) {
-                myController = new CellSocietyController(dataFile);
-                myController.loadSimulation(primaryStage);
+                CellSocietyController controller = new CellSocietyController(dataFile);
+                controller.loadSimulation(stage);
+                GridScreen firstgrid = new GridScreen(mySize);
+                stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, controller), "gridscreen.css"));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             // should never happen since user selected the file
             showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");
         } catch (CsvValidationException e) {
-            showMessage(Alert.AlertType.ERROR, "Invalid CSV File Given");
         }
     }
-    private void showMessage (Alert.AlertType type, String message) {
+    private void showMessage(Alert.AlertType type, String message) {
         new Alert(type, message).showAndWait();
     }
+    public int sumCSVData(Reader dataReader) {
+        // this syntax automatically close file resources if an exception occurs
+        try (CSVReader csvReader = new CSVReader(dataReader)) {
+            int total = 0;
+            // get headers separately
+            String[] headers = csvReader.readNext();
+            // read rest of data line by line
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                for (String value : nextRecord) {
+                    total += Integer.parseInt(value);
+                }
+            }
+            return total;
+        } catch (IOException | CsvValidationException e) {
+            showMessage(Alert.AlertType.ERROR, "Invalid CSV Data");
+            return 0;
+        }
+    }
 
-    private static FileChooser makeChooser (String extensionAccepted) {
+    private static FileChooser makeChooser(String extensionAccepted) {
         FileChooser result = new FileChooser();
         result.setTitle("Open Data File");
         // pick a reasonable place to start searching for files
@@ -97,5 +113,11 @@ public class FileInput extends SceneCreator {
         return result;
     }
 
-
+    public Button makeButton(String property) {
+        Button result = new Button();
+        String labelText = label.getString(property);
+        result.setText(labelText);
+        result.setId(property);
+        return result;
+    }
 }
