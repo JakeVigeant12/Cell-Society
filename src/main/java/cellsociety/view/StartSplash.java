@@ -82,7 +82,7 @@ public class StartSplash extends SceneCreator {
             nextScreen(stage);
         });
         anotherlanguage.setOnAction(event -> {
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "FrenchLabels"), "fileinput.css"));
 //            nextScreen(stage);
         });
     }
