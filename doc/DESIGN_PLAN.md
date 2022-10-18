@@ -225,3 +225,7 @@ Goal for Week 2:
 
 Goal for Week 3:
  * TBD
+
+#### Extras
+Here's a early hierarchy diagram:
+![Block Diagram for System](images/CS307_Assignment_3_Hierarchy.png "System Block Diagram")
