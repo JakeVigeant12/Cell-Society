@@ -3,7 +3,6 @@ package cellsociety.view;
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -63,6 +62,7 @@ public class FileInput extends SceneCreator {
         mySize = 800;
         input.setOnAction(event -> {
             filePick(stage);
+//            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
         });
     }

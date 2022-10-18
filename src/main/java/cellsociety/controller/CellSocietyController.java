@@ -47,7 +47,6 @@ public class CellSocietyController {
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-//    stage.setScene(current.createScene(stage, gridView.setUpView(getViewGrid())));
     stage.show();
   }
 
