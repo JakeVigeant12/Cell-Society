@@ -11,6 +11,8 @@
  * Grid Class:
 
  * UI/view:
+The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
+one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid. 
 
  * Controller: 
    * The controller is responsible for creating the calling the parser classes and extracting useful information about the initial state of the grid and the metadata about the simulation including its type and game parameters. It creates the appropriate model and view classes giving them only the information they need.
