@@ -66,8 +66,43 @@ public class GraphGrid extends Grid{
         ArrayList<Cell> neighbors = new ArrayList<>();
         currId++;
         Cell currentCell = myCells.get(currId);
-
+        myAdjacenyList.putIfAbsent(currentCell, neighbors);
+        if(isInBounds(i - 1, j, gridParsing)){
+          int topNeighborId = currId - gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
+        }
+        if(isInBounds(i, j+1, gridParsing)){
+          int rightNeighborId = currId +1;
+          myAdjacenyList.get(currentCell).add(myCells.get(rightNeighborId));
+        }
+        if(isInBounds(i, j-1, gridParsing)){
+          int leftNeighborId = currId - 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(leftNeighborId));
+        }
+        if(isInBounds(i+1, j, gridParsing)){
+          int bottomNeighborId = currId + gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
+        }
+        if(isInBounds(i+1, j+1, gridParsing)){
+          int bottomRightNeighborId = currId + gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
+        }
+        if(isInBounds(i-1, j-1, gridParsing)){
+          int upperLeftNeighborId = currId - gridParsing.get(i).size() -1;
+          myAdjacenyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+        }
+        if(isInBounds(i-1, j+1, gridParsing)){
+          int upperRightNeighborId = currId - gridParsing.get(i).size() + 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(upperRightNeighborId));
+        }
+        if(isInBounds(i+1, j-1, gridParsing)){
+          int lowerLeftNeighborId = currId + gridParsing.get(i).size() - 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
+        }
       }
     }
+  }
+  public boolean isInBounds(int row, int col, ArrayList<ArrayList<String>> gridParsing){
+    return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
   }
 }
