@@ -13,8 +13,8 @@
 }
 
 .aboutbox{
-    -fx-pref-height: 600;
-    -fx-pref-width: 200;
+    -fx-pref-height: 150;
+    -fx-max-width: 760;
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-border-color: black;
@@ -31,5 +31,5 @@
 }
 
 .info{
-    -fx-font-size: 25;
+    -fx-font-size: 18;
 }

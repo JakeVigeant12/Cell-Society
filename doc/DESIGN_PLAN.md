@@ -202,7 +202,7 @@ Here is our amazing UI:
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
- * Luyao Wang
+ * Luyao Wang UI
 
  * Eka Ebong
 
@@ -214,7 +214,7 @@ Here is our amazing UI:
 
  * Vaishvi Patel: UI testing and file parsing
 
- * Luyao Wang
+ * Luyao Wang connection between UI and controller
 
  * Eka Ebong
 

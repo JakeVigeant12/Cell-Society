@@ -51,6 +51,10 @@ public class CellSocietyController {
     stage.show();
   }
 
+  public Map<String, String> getSimMap() {
+    return simMap;
+  }
+
   public List<List<Integer>> getViewGrid() {
     List<List<Integer>> stateGrid = new ArrayList<>();
     List<Integer> currentList = new ArrayList<>();
