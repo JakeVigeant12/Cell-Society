@@ -30,6 +30,23 @@ public class GridView{
         grid.setPadding(new Insets(0.8 * rem));
         grid.setGridLinesVisible(true);
 //        setUpButton();
+
+        n = 20;
+        m = 20;
+        int width = (int) Math.min((size - 2 * rem - 50) / n, (size - 1.6 * rem) / m);
+
+        cells = new CellView[n][m];
+        for (int y = 0; y < n; y++) {
+            for (int x = 0; x < m; x++) {
+                CellView node = new CellView(1, x * width, 50 + y * width, width, Color.AZURE);
+                // add cells to group
+                grid.add(node, x * width, 50 + y * width);
+                // add to grid for further reference using an array
+                cells[y][x] = node;
+            }
+        }
+
+
     }
 
     public void setUpView(List<List<Integer>> gridData) {

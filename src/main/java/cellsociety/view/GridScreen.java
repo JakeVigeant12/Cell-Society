@@ -61,13 +61,13 @@ public class GridScreen extends SceneCreator{
         fileinfo.getStyleClass().add("aboutbox");
 
         HBox controls = new HBox(play,step);
-        controls.setLayoutX(400);
-        controls.setLayoutY(690);
+        controls.setLayoutX(150);
+        controls.setLayoutY(10);
         controls.getStyleClass().add("allbuttons");
 
         gridPane.getChildren().addAll(controls, fileinfo);
         gridView = new GridView(mySize, controller);
-        gridView.setUpView(controller.getViewGrid());
+        //gridView.setUpView(controller.getViewGrid());
         controls.getChildren().add(gridView.getGrid());
         return gridPane;
     }
