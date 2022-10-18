@@ -1,0 +1,5 @@
+Type=GameType
+Title=SimulationTitle
+Author=First Last
+Description=A sentence describing how this game works
+InitialStates=test/test_square.csv

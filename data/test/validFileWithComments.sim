@@ -1,0 +1,6 @@
+#Comment=shouldn't be parsed
+Type=GameType
+Title=SimulationTitle
+Author=First Last
+Description=A sentence describing how this game works
+InitialStates=path_to/initial.csv

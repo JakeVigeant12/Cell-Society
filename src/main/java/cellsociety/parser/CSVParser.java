@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.parser;
 
 import cellsociety.parser.Parser;
 import com.opencsv.CSVReader;
@@ -16,7 +16,7 @@ public class CSVParser extends Parser {
 
   private static final String DATA_FOLDER = "data/";
   private FileReader myFileReader;
-  private ArrayList<ArrayList<String>> grid;
+  private List<List<String>> grid;
 
   public CSVParser(String csvPath)
       throws FileNotFoundException, CsvValidationException, IOException {
@@ -29,9 +29,14 @@ public class CSVParser extends Parser {
     grid = new ArrayList<>();
     String[] states = csvReader.readNext();
     while (states != null) {
-      grid.add((ArrayList<String>) Arrays.asList(states));
+      grid.add(Arrays.asList(states));
       states = csvReader.readNext();
     }
     return grid;
   }
+
+  public String[] parseFirstLine() throws CsvValidationException, IOException {
+    CSVReader csvReader = new CSVReader(myFileReader);
+    return csvReader.readNext();
   }
+}
