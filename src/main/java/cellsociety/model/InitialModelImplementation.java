@@ -1,13 +1,11 @@
 package cellsociety.model;
 
 import cellsociety.SimType;
+import cellsociety.parser.CSVParser;
 import cellsociety.parser.Parser;
 import com.opencsv.exceptions.CsvValidationException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 //Default implementation of the model

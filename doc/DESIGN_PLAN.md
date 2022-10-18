@@ -20,19 +20,40 @@ The overall design goals for the project are not only to implement the skills we
 
 #### Classes, their behavior and relationships (**not** instance variables)
 
-|Cell| |
-|---|---|
-|int getCurrentState()         | currentState |
-|int getFutureState()      | futureState |
-|void setFutureStateValue(int futureState) | futureState |
-|void setFutureState(List<Cell> neighbors)    | neighbors |
-|void setId(int id) | id |
-|int getId() | id |
-|void List<Integer> getNeighborStates(List<Cell> neighbors) | neighbors |
+| Cell                                                       |              |
+|------------------------------------------------------------|--------------|
+| int getCurrentState()                                      | currentState |
+| int getFutureState()                                       | futureState  |
+| void setFutureStateValue(int futureState)                  | futureState  |
+| void setFutureState(List<Cell> neighbors)                  | neighbors    |
+| void setId(int id)                                         | id           |
+| int getId()                                                | id           |
+| void List<Integer> getNeighborStates(List<Cell> neighbors) | neighbors    |
 
-|GameOfLifeCell| extends Cell |
-|---|---|
-|setFutureState(List<Cell> neighbors)         | neighbors |
+| GameOfLifeCell                       | extends Cell |
+|--------------------------------------|--------------|
+| setFutureState(List<Cell> neighbors) | neighbors    |
+
+| CellSocietyController                                    |       |
+|----------------------------------------------------------|-------|
+| getSimData()                                             | Model |
+| loadSimulation(Stage stage)                              | View  |
+| getViewGrid() - translates backend grid to frontend grid |       |
+| setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) |       |
+
+| Parser                                                 |     |
+|--------------------------------------------------------|-----|
+| parseData(File simFile) throws FileNotFoundException() |     |
+
+| SimParser                                              | extends Parser |
+|--------------------------------------------------------|----------------|
+| parseData(File simFile) throws FileNotFoundException   |                |
+
+| CSVParser                                                        | extends Parser |
+|------------------------------------------------------------------|----------------|
+| parseData(File input) throws IOException, CsvValidationException |                |
+| parseFirstLine() throws CsvValidationException, IOException      |                |
+
 
 ## Design Details
 

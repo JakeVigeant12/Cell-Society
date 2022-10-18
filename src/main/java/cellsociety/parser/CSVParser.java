@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.parser;
 
 import cellsociety.parser.Parser;
 import com.opencsv.CSVReader;

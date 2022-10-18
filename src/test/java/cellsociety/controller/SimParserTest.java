@@ -1,12 +1,10 @@
 package cellsociety.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import cellsociety.parser.SimParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
