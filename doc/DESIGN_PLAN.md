@@ -55,6 +55,35 @@ The overall design goals for the project are not only to implement the skills we
 | parseData(File input) throws IOException, CsvValidationException |                |
 | parseFirstLine() throws CsvValidationException, IOException      |                |
 
+| SceneCreator                                           |     |
+|--------------------------------------------------------|-----|
+| void createScene(Stage stage, Pane myPane, String css) |     |
+| void nextScreen(Stage stage)                           |     |
+
+| StartSplash                        | extends SceneCreator |
+|------------------------------------|----------------------|
+| Pane createStart(Stage stage)      |                      |
+| Button makeButton(String property) |                      |
+| void handleEvents(Stage stage)     |                      |
+
+| GridScreen                                                                                   | extends StackPane |
+|----------------------------------------------------------------------------------------------|-------------------|
+| void setUpTimeline()                                                                         |                   |
+| Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) |                   |
+| void handleEvents(Stage stage)                                                               |                   |
+
+| CellView                        | extends CellView |
+|---------------------------------|------------------|
+| void updateState(Integer state) |                  |
+
+| FileInput                                              | extends SceneCreator |
+|--------------------------------------------------------|----------------------|
+| Pane createFileInput(Stage stage, String language)     |                      |
+| void buttonPress(Stage stage)                          |                      |
+| void showMessage(Alert.AlertType type, String message) |                      |
+| FileChooser makeChooser(String extensionAccepted)      |                      |
+| Button makeButton(String property)                     |                      |
+
 
 ## Design Details
 
@@ -202,9 +231,9 @@ Here is our amazing UI:
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
- * Luyao Wang UI
+ * Luyao Wang: UI
 
- * Eka Ebong
+ * Eka Ebong: UI
 
 
 #### Secondary Responsibilities
@@ -214,7 +243,7 @@ Here is our amazing UI:
 
  * Vaishvi Patel: UI testing and file parsing
 
- * Luyao Wang connection between UI and controller
+ * Luyao Wang connection between UI and controller, UI testing
 
  * Eka Ebong
 

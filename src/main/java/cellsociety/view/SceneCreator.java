@@ -36,9 +36,4 @@ public class SceneCreator {
         stage.setScene(previousScene);
         stage.show();
     }
-
-//    public void nextScreen(Stage stage){
-//        stage.setScene(myScene);
-//        stage.show();
-//    }
 }

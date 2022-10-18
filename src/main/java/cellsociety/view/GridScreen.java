@@ -87,7 +87,7 @@ public class GridScreen extends SceneCreator {
         controls.getStyleClass().add("allbuttons");
         handleButtons(stage);
 
-        gridView = new GridView(mySize);
+        gridView = new GridView(600);
         gridView.setUpView(myController.getViewGrid());
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
