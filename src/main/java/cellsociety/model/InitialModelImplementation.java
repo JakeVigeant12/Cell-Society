@@ -18,7 +18,7 @@ public class InitialModelImplementation extends Model{
   public InitialModelImplementation(String csvPath, Map<String,String> simParameters) throws IOException, CsvValidationException {
     simType = SimType.valueOf(simParameters.get("Type"));
     gridParser = new CSVParser(csvPath);
-    myGrid = new GraphGrid((ArrayList<ArrayList<String>>)gridParser.parseData(null), simType);
+    myGrid = new GraphGrid((ArrayList<ArrayList<String>>) gridParser.parseData(null), simType);
 
   }
   public void computeStates(){
