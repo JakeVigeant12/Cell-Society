@@ -1,23 +1,26 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-public class GridScreen extends SceneCreator{
+public class GridScreen extends SceneCreator {
 
-    private Pane gridPane;
+    private Pane root;
+    private BorderPane borderPane;
     private Button play;
     private Button step;
     private Button pause;
@@ -28,19 +31,32 @@ public class GridScreen extends SceneCreator{
     private Text title;
     private Text type;
     private Text author;
-    private Text description;
+    private TextArea description;
     private Text Abouttitle;
     private Paint jid = Color.LIGHTGRAY;
     private ResourceBundle myLabels;
+    private GridView gridView;
+    private Timeline timeline;
+    private double refreshRate = 1;
 
-
-
-    public GridScreen(double size){
+    public GridScreen(double size) {
         super(size);
-        gridPane = new Pane();
+        root = new Pane();
+        borderPane = new BorderPane();
+        setUpTimeline();
     }
 
-    public Pane createGridScreen(Stage stage, ResourceBundle label){
+    private void setUpTimeline() {
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+            //TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
+        }));
+        timeline.pause();
+    }
+
+    public Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) {
+        this.myController = myController;
         myLabels = label;
         play = new Button(myLabels.getString("playText"));
         pause = new Button(myLabels.getString("pauseText"));
@@ -49,10 +65,13 @@ public class GridScreen extends SceneCreator{
         exit = new Button(myLabels.getString("exitText"));
 
         Abouttitle = new Text(myLabels.getString("aboutText"));
-        title = new Text(myLabels.getString("title") + myController.simMap.get("Title"));
-        type = new Text(myLabels.getString("typeText") + myController.simMap.get("Type"));
-        author = new Text(myLabels.getString("authorText") +  myController.simMap.get("Author"));
-        description = new Text(myLabels.getString("descriptionText") + myController.simMap.get("Description"));
+        title = new Text(myLabels.getString("title") + myController.getSimMap().get("Title"));
+        type = new Text(myLabels.getString("typeText") + myController.getSimMap().get("Type"));
+        author = new Text(myLabels.getString("authorText") + myController.getSimMap().get("Author"));
+        description = new TextArea();
+        description.setText(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"));
+        description.setEditable(false);
+        description.setWrapText(true);
         Abouttitle.getStyleClass().add("title");
         title.getStyleClass().add("info");
         type.getStyleClass().add("info");
@@ -62,29 +81,34 @@ public class GridScreen extends SceneCreator{
         VBox fileinfo = new VBox(Abouttitle, title, type, author, description);
         fileinfo.setBackground(Background.fill(jid));
         fileinfo.getStyleClass().add("aboutbox");
-
-        HBox controls = new HBox(play,pause,step, reset);
-        controls.setLayoutX(400);
-        controls.setLayoutY(690);
+        borderPane.setTop(fileinfo);
+        HBox controls = new HBox(play, pause, step, reset, exit);
+        borderPane.setBottom(controls);
         controls.getStyleClass().add("allbuttons");
+        handleButtons(stage);
 
-        gridPane.getChildren().addAll(controls, fileinfo);
-        return gridPane;
+        gridView = new GridView(mySize);
+        //TODO: gridView.setUpView(myController.get2DArrayList);
+        GridPane grid = gridView.getGrid();
+        grid.setAlignment(Pos.CENTER);
+        borderPane.setCenter(gridView.getGrid());
+
+        borderPane.setPadding(new Insets(10));
+
+        return borderPane;
     }
 
-    public void handleButtons(Stage stage){
-        play.setOnAction(event -> {}
-                //call the grid view once every 60 seconds
-                );
-        step.setOnAction(event ->{}
-        //{ update grid once}
+    public void handleButtons(Stage stage) {
+        play.setOnAction(event -> timeline.play());
+        step.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
+                }
         );
+        pause.setOnAction(event -> timeline.pause());
         exit.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600);
+            StartSplash beginning = new StartSplash(800);
             stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
         });
     }
-
 
 
 }
