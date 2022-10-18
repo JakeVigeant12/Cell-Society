@@ -44,6 +44,7 @@ public class CellSocietyController {
     String csvPath = simMap.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, simMap);
+    backEndCellsbyID = myModel.getCells();
 
   }
   public void getSimData() throws FileNotFoundException {

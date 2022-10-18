@@ -1,9 +1,6 @@
 package cellsociety.model;
 
-import static cellsociety.SimType.GameOfLife;
-
 import cellsociety.SimType;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -109,5 +106,8 @@ public class GraphGrid extends Grid{
     for(Cell currentCell  : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
+  }
+  public HashMap<Integer, Cell> getCells(){
+    return myCells;
   }
 }
