@@ -14,7 +14,7 @@ public class CellView extends StackPane {
     Rectangle rectangle;
 
 
-    public CellView(Integer state, double x, double y, double width) {
+    public CellView(Integer state, double width) {
 
         // create rectangle
         Rectangle rectangle = new Rectangle(width, width);

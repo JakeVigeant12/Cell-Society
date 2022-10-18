@@ -36,7 +36,7 @@ public class GridView{
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                CellView node = new CellView(gridData.get(y).get(x), x * width, 50 + y * width, width);
+                CellView node = new CellView(gridData.get(y).get(x), width);
                 // add cells to group
                 grid.add(node, x * width, 50 + y * width);
                 // add to grid for further reference using an array
