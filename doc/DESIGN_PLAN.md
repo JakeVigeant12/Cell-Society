@@ -185,15 +185,13 @@ Here is our amazing UI:
 
 ![This is cool, too bad you can't see it](images/29-sketched-ui-wireframe.jpg "An alternate design")
 
-taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://onextrapixel.com/40-brilliant-examples-of-sketched-ui-wireframes-and-mock-ups/).
-
-
-
 
 ## Team Responsibilities
 
 #### Primary Responsibilities
- * Nick Ward
+ * Nick Ward:
+
+ Cell class and subclass creation
 
  * Jake Vigeant
 
@@ -206,6 +204,8 @@ taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://o
 
 #### Secondary Responsibilities
  * Nick Ward
+ 
+ UI development/functionality and grid methods
 
  * Jake Vigeant
 
@@ -217,4 +217,11 @@ taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://o
 
 
 #### Schedule Plan
+Goal for Week 1:
+ * Get the basic functionality to work, focus on good design over functionality (for now)
 
+Goal for Week 2:
+ * Refactor current methods and implement most, if not all, of the simulation types
+
+Goal for Week 3:
+ * TBD
