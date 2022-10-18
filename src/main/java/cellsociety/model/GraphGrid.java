@@ -1,9 +1,6 @@
 package cellsociety.model;
 
-import static cellsociety.SimType.GameOfLife;
-
 import cellsociety.SimType;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,14 +10,16 @@ public class GraphGrid extends Grid{
   private final SimType simType;
   public GraphGrid(ArrayList<ArrayList<String>> gridParsing, SimType simInput) {
     simType = simInput;
-    populateGrid(gridParsing);
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
+    createCells(gridParsing);
+    initializeNeighbors(gridParsing);
+
   }
 
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void populateGrid(ArrayList<ArrayList<String>> inputLayout) {
+  public void createCells(ArrayList<ArrayList<String>> inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.size(); i++){
@@ -51,15 +50,64 @@ public class GraphGrid extends Grid{
             newCell = new GameOfLifeCell(cellData,cellCount);
             break;
         }
-        myAdjacenyList.put(newCell, initializeNeighbors(inputLayout,i,j));
-        myCells.put(cellCount,newCell);
+        myCells.putIfAbsent(cellCount,newCell);
       }
     }
   }
-  public ArrayList<Cell> initializeNeighbors(ArrayList<ArrayList<String>> gridParsing, int row, int col){
-      ArrayList<Cell> neighbors = new ArrayList<>();
-    //TODO refactor method to generalize neighbor calculation using open/close solution
-
-      return neighbors;
+  public void initializeNeighbors(ArrayList<ArrayList<String>> gridParsing) {
+    //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
+    //ID of the current cell
+    int currId = 0;
+    for (int i = 0; i < gridParsing.size(); i++) {
+      for (int j = 0; j < gridParsing.get(i).size(); j++) {
+        ArrayList<Cell> neighbors = new ArrayList<>();
+        currId++;
+        Cell currentCell = myCells.get(currId);
+        myAdjacenyList.putIfAbsent(currentCell, neighbors);
+        if(isInBounds(i - 1, j, gridParsing)){
+          int topNeighborId = currId - gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
+        }
+        if(isInBounds(i, j+1, gridParsing)){
+          int rightNeighborId = currId +1;
+          myAdjacenyList.get(currentCell).add(myCells.get(rightNeighborId));
+        }
+        if(isInBounds(i, j-1, gridParsing)){
+          int leftNeighborId = currId - 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(leftNeighborId));
+        }
+        if(isInBounds(i+1, j, gridParsing)){
+          int bottomNeighborId = currId + gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
+        }
+        if(isInBounds(i+1, j+1, gridParsing)){
+          int bottomRightNeighborId = currId + gridParsing.get(i).size();
+          myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
+        }
+        if(isInBounds(i-1, j-1, gridParsing)){
+          int upperLeftNeighborId = currId - gridParsing.get(i).size() -1;
+          myAdjacenyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+        }
+        if(isInBounds(i-1, j+1, gridParsing)){
+          int upperRightNeighborId = currId - gridParsing.get(i).size() + 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(upperRightNeighborId));
+        }
+        if(isInBounds(i+1, j-1, gridParsing)){
+          int lowerLeftNeighborId = currId + gridParsing.get(i).size() - 1;
+          myAdjacenyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
+        }
+      }
+    }
+  }
+  public boolean isInBounds(int row, int col, ArrayList<ArrayList<String>> gridParsing){
+    return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
+  }
+  public void computeStates() {
+    for(Cell currentCell  : myAdjacenyList.keySet()){
+      currentCell.setFutureState(myAdjacenyList.get(currentCell));
+    }
+  }
+  public HashMap<Integer, Cell> getCells(){
+    return myCells;
   }
 }

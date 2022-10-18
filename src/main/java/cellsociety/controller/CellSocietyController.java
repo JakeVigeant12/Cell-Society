@@ -33,10 +33,11 @@ public class CellSocietyController {
     getSimData();
     String csvPath = simMap.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
+    myModel = new InitialModelImplementation(csvPath, simMap);
+    backEndCellsbyID = myModel.getCells();
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
     numRows = Integer.parseInt(parseRowCol[0]);
     numCols = Integer.parseInt(parseRowCol[1]);
-//    myModel = new InitialModelImplementation(csvPath, simMap);
   }
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();

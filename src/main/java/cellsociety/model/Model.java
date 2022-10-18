@@ -1,6 +1,7 @@
 package cellsociety.model;
 
 import cellsociety.parser.Parser;
+import java.util.Map;
 
 public abstract class Model {
   private Parser inputGrid;
@@ -12,5 +13,9 @@ public abstract class Model {
   //Tell grid to loop through its implementation and find new cell states
   public void computeStates(){
     myGrid.computeStates();
+  }
+
+  public Map<Integer, Cell> getCells() {
+    return myGrid.getCells();
   }
 }
