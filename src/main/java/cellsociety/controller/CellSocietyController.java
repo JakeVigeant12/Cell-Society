@@ -26,7 +26,6 @@ public class CellSocietyController {
   private File simFile;
   private Map<Integer, Cell> backEndCellsbyID;
   //TODO create analogous mapping for the frontend
-  //private Map<Integer, Cell> backEndCellsbyID;
 
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
