@@ -1,0 +1,6 @@
+#Comment=shouldn't be parsed
+Type=GameOfLife
+Title=SimulationTitle
+Author=First Last
+Description=A sentence describing how this game works
+InitialStates=test/test_square.csv

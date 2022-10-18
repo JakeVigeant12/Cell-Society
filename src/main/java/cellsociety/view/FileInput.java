@@ -52,6 +52,7 @@ public class FileInput extends SceneCreator {
         fileBackground.setY(50);
         fileBackground.setX(50);
 
+
         inputPane.getChildren().addAll(fileBackground, input, title);
         buttonPress(stage);
         return inputPane;
