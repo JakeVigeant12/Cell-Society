@@ -42,11 +42,11 @@ The overall design goals for the project are not only to implement the skills we
 
  * What commonalities will be factored out into superclasses?
 
-The cell class is a great example of having a few common methods, and the subclasses are the cells for each type of game with different rules being contained in those cells.
+The cell class is a great example of having a few common methods, and the subclasses are the cells for each type of game with different rules being contained in those cells. Those cells can also override those main methods too if needed and can hold different types of data based on the cell type.
  
  * How will differences be handled when superclasses are extended?
  
- 
+New methods would be added if necessary, but public methods such as changing the state, will be overriden based on the different cell type and rules for each corresponding simulation.
 
 ## Design Considerations
 
@@ -71,6 +71,7 @@ This would require more memory and parameters to keep track of, as each cell wou
 
  * Design #2 Tradeoffs
    * Description
+
 The other way would be to use a cell ID, and then have a map that maps the ID to the row and column (in the current case of a rectangular visual representation).
 
    * Pros
@@ -82,6 +83,7 @@ The ID approach would allow for non-rectangular grids, as numbers could be mappe
 The ID approach would make it difficult to implement the front-end and visual representation.
 
  * Justification for choice
+
 In the end, even though it would be more difficult to initially implement, the ID approach is the best way to add more representations and makes our design more open to new changes, even if it isn't completely necessary for this upcoming deadline.
 
 #### Design Issue #2
@@ -102,6 +104,7 @@ However, this would contradict the ideas we discussed in class about how the cod
 
  * Design #2 Tradeoffs
    * Description
+
 Another idea was to have two different representations of the grid in the model and the view, and the controller would pass only necessary information to each side.
    
    * Pros
