@@ -5,7 +5,12 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -28,31 +33,34 @@ public class FileInput extends SceneCreator {
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
+    private ImageView inputBackground;
+
     private ResourceBundle label;
-    private Rectangle fileBackground;
     public FileInput(double size){
         super(size);
         inputPane = new Pane();
+        inputBackground = new ImageView();
     }
     public Pane createFileInput(Stage stage, String language){
         //add back button
         label = ResourceBundle.getBundle(language);
         input = makeButton("buttonText");
         input.getStyleClass().add("button");
-        input.setLayoutY(450);
-        input.setLayoutX(250);
 
         Text title = new Text(label.getString("titleText"));
         title.getStyleClass().add("mainText");
-        title.setLayoutY(200);
-        title.setLayoutX(90);
 
-        fileBackground = new Rectangle(mySize - 100, mySize - 100, Color.LIGHTGRAY);
-        fileBackground.setY(50);
-        fileBackground.setX(50);
+        inputBackground.setImage(new Image(label.getString("uploadgif")));
+        inputBackground.setFitHeight(mySize);
+        inputBackground.setFitWidth(mySize);
 
+        VBox upload = new VBox(title, input);
+        upload.setLayoutX(130);
+        upload.setLayoutY(100);
+        upload.getStyleClass().add("uploadbox");
+        upload.setBackground(Background.fill(Color.LIGHTGRAY));
 
-        inputPane.getChildren().addAll(fileBackground, input, title);
+        inputPane.getChildren().addAll(inputBackground, upload);
         buttonPress(stage);
         return inputPane;
     }

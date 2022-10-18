@@ -103,10 +103,13 @@ public class GridScreen extends SceneCreator {
         step.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
                 }
         );
+        reset.setOnAction(event -> timeline.playFromStart());
         pause.setOnAction(event -> timeline.pause());
         exit.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(800);
+            StartSplash beginning = new StartSplash(600.0);
             stage.setScene(createScene(stage, beginning.createStart(stage), "startsplash.css"));
+            stage.setHeight(600);
+            stage.setWidth(600);
         });
     }
 
