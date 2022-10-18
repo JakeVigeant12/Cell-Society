@@ -9,7 +9,7 @@
    * The subclasses of Cell will override the setFutureState method by taking in a list of neighbors, setting the future state to a new integer based on those neighbors.
 
  * Grid Class:
-
+    * There is an abstract grid class that wraps the implementation of the grid with data structures below. This grid is created by the model and is told to populate itself given the information read in from a CSV, and to loop through the Cells that it holds and tell them to change their state at each step of the simulation's execution. 
  * UI/view:
 
  * Controller: 
@@ -54,6 +54,32 @@ The overall design goals for the project are not only to implement the skills we
 |------------------------------------------------------------------|----------------|
 | parseData(File input) throws IOException, CsvValidationException |                |
 | parseFirstLine() throws CsvValidationException, IOException      |                |
+
+| Grid                                                       |   |
+|------------------------------------------------------------|---|
+| void computeStates()                                       |   |
+| void createCells()                                         |   |
+| void initializeNeighbors                                   |   |
+| void setFutureState(List<Cell> neighbors)                  |   |
+| Map<Integer, Cell> getCells()                              |   |
+
+| Model                                     |   |
+|-------------------------------------------|---|
+| void computeStates()                      |   |
+| Map<Integer, Cell> getCells()             |   |
+
+| GraphGrid                            extends Grid |   |
+|---------------------------------------------------|---|
+| void computeStates()                              |   |
+| void createCells()                                |   |
+| void initializeNeighbors                          |   |
+| boolean isInBounds                                |   |
+| Map<Integer, Cell> getCells()                     |   |
+
+| InitialModelImplementation extends Model     |   |
+|----------------------------------------------|---|
+| void computeStates()                         |   |
+| Map<Integer, Cell> getCells()                |   |
 
 
 ## Design Details
@@ -130,11 +156,11 @@ Another design issue we faced was how we were going to have the view and model a
 
  * Implementation #1
    * Description
-   
-   * Classes possibly affected
- 
+   We used a graph (adjacency list) to represent the Cells after reading in the values in the CSV file.
+ * Classes possibly affected
+    The Grid is an abstract class, and then each implementation of the grid shares the same methods to interface with other parts of our program. So, if the underlying data structure were to be changed, then we would need to create a new class for the new implementation and override the defined methods (open).
    * Methods possibly affected
-
+    The structure of the controller relies on a mapping of cell ID to cell type. Although this isn't the graph itslef, changing this assumption and using another storage mechanism would lead to making substantial change.
  * Implementation #2
    * Description
    
@@ -198,7 +224,7 @@ Here is our amazing UI:
 #### Primary Responsibilities
  * Nick Ward: Cell class and subclass creation
 
- * Jake Vigeant
+ * Jake Vigeant: Creat the Model of the application.
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
@@ -210,7 +236,7 @@ Here is our amazing UI:
 #### Secondary Responsibilities
  * Nick Ward: UI development/functionality and grid methods
 
- * Jake Vigeant
+ * Jake Vigeant: Work with controller to enable appropriate access to model functionality
 
  * Vaishvi Patel: UI testing and file parsing
 
