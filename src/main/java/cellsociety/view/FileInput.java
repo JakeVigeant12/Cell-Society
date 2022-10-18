@@ -3,7 +3,6 @@ package cellsociety.view;
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -63,7 +62,7 @@ public class FileInput extends SceneCreator {
         mySize = 800;
         input.setOnAction(event -> {
             filePick(stage);
-            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
+//            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
         });
     }
@@ -71,7 +70,7 @@ public class FileInput extends SceneCreator {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(stage);
             if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile, stage);
+                CellSocietyController controller = new CellSocietyController(dataFile);
                 controller.loadSimulation(stage);
                 GridScreen firstgrid = new GridScreen(mySize);
                 stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, controller), "gridscreen.css"));
