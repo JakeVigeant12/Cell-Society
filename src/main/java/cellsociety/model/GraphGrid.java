@@ -85,7 +85,7 @@ public class GraphGrid extends Grid{
           myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
         }
         if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.get(i).size();
+          int bottomRightNeighborId = currId + gridParsing.get(i).size() + 1;
           myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
         }
         if(isInBounds(i-1, j-1, gridParsing)){
