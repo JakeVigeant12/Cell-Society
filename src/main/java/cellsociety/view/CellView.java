@@ -11,6 +11,7 @@ import java.util.Map;
 public class CellView extends StackPane {
     public static Map<Integer, Color> colorMap = Map.of(0, Color.DARKGRAY, 1, Color.GREEN);
     private Rectangle rectangle;
+    private Label label;
 
     /**
      * Constructor for CellView
@@ -21,12 +22,12 @@ public class CellView extends StackPane {
 
         // create rectangle
         rectangle = new Rectangle(width, width);
-        rectangle.setStroke(Color.BLACK);
+        rectangle.setStroke(Color.BROWN);
 
         rectangle.setFill(colorMap.get(state));
 
         // create label
-        Label label = new Label(state + "");
+        label = new Label(String.valueOf(state));
 
         // set position
 //            setTranslateX(x);
@@ -42,6 +43,7 @@ public class CellView extends StackPane {
      */
     public void updateState(Integer state) {
         rectangle.setFill(colorMap.get(state));
+        label.setText(String.valueOf(state));
     }
 }
 

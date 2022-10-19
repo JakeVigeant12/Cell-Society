@@ -38,7 +38,7 @@ public class GridView{
     public void setUpView(List<List<Integer>> gridData) {
         n = gridData.size();
         m = gridData.get(0).size();
-        int width = (int) Math.min((size - 2 * rem - 50) / n, (size - 1.6 * rem) / m);
+        int width = (int) Math.min(600 / n, 570 / m);
 
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {

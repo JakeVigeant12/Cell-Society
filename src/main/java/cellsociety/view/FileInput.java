@@ -3,6 +3,7 @@ package cellsociety.view;
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -64,6 +65,7 @@ public class FileInput extends SceneCreator {
         inputPane.getChildren().addAll(inputBackground);
 
         VBox upload = new VBox(title, input,back);
+        upload.setAlignment(Pos.CENTER);
         upload.getStyleClass().add("uploadbox");
         inputPane.setTop(upload);
 
@@ -78,7 +80,7 @@ public class FileInput extends SceneCreator {
     private void buttonPress(Stage stage) {
         //add go back button
         input.setOnAction(event -> {
-            mySize = 850;
+            mySize = 800;
             filePick(stage);
 //            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridscreen.css"));
             nextScreen(stage);
@@ -145,7 +147,7 @@ public class FileInput extends SceneCreator {
 
     /**
      * Sets up the file chooser
-     * @param extension
+     * @param extensionAccepted
      * @return
      */
     private static FileChooser makeChooser(String extensionAccepted) {
