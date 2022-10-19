@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
-  private HashMap<Cell, List<Cell>> myAdjacenyList;
+  private Map<Cell, List<Cell>> myAdjacenyList;
   private final SimType simType;
   public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
     simType = simInput;
