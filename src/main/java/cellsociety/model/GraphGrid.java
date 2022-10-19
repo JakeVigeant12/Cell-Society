@@ -4,10 +4,11 @@ import cellsociety.SimType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
-  private HashMap<Cell, ArrayList<Cell>> myAdjacenyList;
+  private HashMap<Cell, List<Cell>> myAdjacenyList;
   private final SimType simType;
   public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
     simType = simInput;
@@ -55,6 +56,7 @@ public class GraphGrid extends Grid{
       }
     }
   }
+
   @Override
   public void initializeNeighbors(List<List<String>> gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
@@ -101,15 +103,19 @@ public class GraphGrid extends Grid{
       }
     }
   }
-  public boolean isInBounds(int row, int col, List<List<String>> gridParsing){
-    return (row >= 0 && row < gridParsing.size())&&(col >= 0 && col >= gridParsing.get(row).size()-1);
+  public static boolean isInBounds(int row, int col, List<List<String>> gridParsing){
+    boolean res = (row >= 0 && row < gridParsing.size()) && (col >= 0 && col < gridParsing.get(row).size());
+    return res;
   }
+  @Override
   public void computeStates() {
     for(Cell currentCell  : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
   }
-  public HashMap<Integer, Cell> getCells(){
+
+  @Override
+  public Map<Integer, Cell> getCells(){
     return myCells;
   }
 }

@@ -1,11 +1,11 @@
 package cellsociety;
 
-import cellsociety.controller.CellSocietyController;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
 
+import cellsociety.controller.CellSocietyController;
 import cellsociety.view.SceneCreator;
 import cellsociety.view.StartSplash;
 import javafx.application.Application;
@@ -34,14 +34,19 @@ public class Main extends Application {
      * @see Application#start(Stage)
      */
 
-    public void start(Stage start){
+    public void start(Stage stage){
         StartSplash ss = new StartSplash(600.0);
-        start.setTitle("CellSociety");
+        stage.setTitle("CellSociety");
         SceneCreator current = new SceneCreator(600.0);
-        start.setScene(current.createScene(start,ss.createStart(start),"startsplash.css" ));
-        start.show();
+        stage.setScene(current.createScene(stage,ss.createStart(stage), "startSplash.css"));
+        stage.show();
     }
-    public void filepick(Stage primaryStage) {
+
+    /**
+     * Filer picker method
+     * @param primaryStage
+     */
+    public void filePick(Stage primaryStage) {
         try {
             File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
             if (dataFile != null) {

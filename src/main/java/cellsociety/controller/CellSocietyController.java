@@ -46,8 +46,11 @@ public class CellSocietyController {
   }
   public void loadSimulation(Stage stage) {
     stage.setTitle(simMap.get(TITLE));
-//    stage.setScene(current.createScene(stage, gridView.setUpView(getViewGrid())));
     stage.show();
+  }
+
+  public Map<String, String> getSimMap() {
+    return simMap;
   }
 
   public List<List<Integer>> getViewGrid() {
@@ -66,8 +69,12 @@ public class CellSocietyController {
     return stateGrid;
   }
 
-  public void setBackEndCellsbyID(
-      Map<Integer, Cell> backEndCellsbyID) {
+  public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
     this.backEndCellsbyID = backEndCellsbyID;
+  }
+
+  public List<List<Integer>> updateGrid() {
+    myModel.computeStates();
+    return getViewGrid();
   }
 }

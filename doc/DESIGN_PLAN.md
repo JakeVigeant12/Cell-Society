@@ -9,8 +9,13 @@
    * The subclasses of Cell will override the setFutureState method by taking in a list of neighbors, setting the future state to a new integer based on those neighbors.
 
  * Grid Class:
-
+    * There is an abstract grid class that wraps the implementation of the grid with data structures below. This grid is created by the model and is told to populate itself given the information read in from a CSV, and to loop through the Cells that it holds and tell them to change their state at each step of the simulation's execution. 
  * UI/view:
+   * UI holds the instance variable of the controller, but not the model. UI calls the controller to get the updated status of cells
+   regularly using a timeline or manually click button.
+
+   * The different scenes are all subclasses of a SceneCreator class that has common functions that actually render the scenes and set the stage. The scene that shows the grid is split into two classes, 
+one that shows information about the grid and ways to step the gridview forward and another that actually parses through the file from the backend and returns a view of the grid.
 
  * Controller: 
    * The controller is responsible for creating the calling the parser classes and extracting useful information about the initial state of the grid and the metadata about the simulation including its type and game parameters. It creates the appropriate model and view classes giving them only the information they need.
@@ -55,10 +60,75 @@ The overall design goals for the project are not only to implement the skills we
 | parseData(File input) throws IOException, CsvValidationException |                |
 | parseFirstLine() throws CsvValidationException, IOException      |                |
 
+| Grid                                      |     |
+|-------------------------------------------|-----|
+| void computeStates()                      |     |
+| void createCells()                        |     |
+| void initializeNeighbors                  |     |
+| void setFutureState(List<Cell> neighbors) |     |
+| Map<Integer, Cell> getCells()             |     |
+
+| Model                         |     |
+|-------------------------------|-----|
+| void computeStates()          |     |
+| Map<Integer, Cell> getCells() |     |
+
+| GraphGrid                            extends Grid |     |
+|---------------------------------------------------|-----|
+| void computeStates()                              |     |
+| void createCells()                                |     |
+| void initializeNeighbors                          |     |
+| boolean isInBounds                                |     |
+| Map<Integer, Cell> getCells()                     |     |
+
+| InitialModelImplementation extends Model |     |
+|------------------------------------------|-----|
+| void computeStates()                     |     |
+| Map<Integer, Cell> getCells()            |     |
+
+| SceneCreator                                           |     |
+|--------------------------------------------------------|-----|
+| void createScene(Stage stage, Pane myPane, String css) |     |
+| void nextScreen(Stage stage)                           |     |
+
+| StartSplash                        | extends SceneCreator |
+|------------------------------------|----------------------|
+| Pane createStart(Stage stage)      |                      |
+| Button makeButton(String property) |                      |
+| void handleEvents(Stage stage)     |                      |
+
+| GridScreen                                                                                   | extends StackPane |
+|----------------------------------------------------------------------------------------------|-------------------|
+| void setUpTimeline()                                                                         |                   |
+| Pane createGridScreen(Stage stage, ResourceBundle label, CellSocietyController myController) |                   |
+| void handleEvents(Stage stage)                                                               |                   |
+
+| CellView                        | extends CellView |
+|---------------------------------|------------------|
+| void updateState(Integer state) |                  |
+
+| FileInput                                              | extends SceneCreator |
+|--------------------------------------------------------|----------------------|
+| Pane createFileInput(Stage stage, String language)     |                      |
+| void buttonPress(Stage stage)                          |                      |
+| void showMessage(Alert.AlertType type, String message) |                      |
+| FileChooser makeChooser(String extensionAccepted)      |                      |
+| Button makeButton(String property)                     |                      |
+
 
 ## Design Details
 
 #### Use Cases
+
+* Create a frontend cell with status 0 of width 20
+ ```java
+CellView cellView = new CellView(0, 20);
+ ```
+
+* Update a frontend cell with status 1
+ ```java
+cellView.updateState(1);
+ ```
 
 #### Extension Cases
 
@@ -130,11 +200,11 @@ Another design issue we faced was how we were going to have the view and model a
 
  * Implementation #1
    * Description
-   
-   * Classes possibly affected
- 
+   We used a graph (adjacency list) to represent the Cells after reading in the values in the CSV file.
+ * Classes possibly affected
+    The Grid is an abstract class, and then each implementation of the grid shares the same methods to interface with other parts of our program. So, if the underlying data structure were to be changed, then we would need to create a new class for the new implementation and override the defined methods (open).
    * Methods possibly affected
-
+    The structure of the controller relies on a mapping of cell ID to cell type. Although this isn't the graph itslef, changing this assumption and using another storage mechanism would lead to making substantial change.
  * Implementation #2
    * Description
    
@@ -188,7 +258,9 @@ Another design issue we faced was how we were going to have the view and model a
 
 ## User Interface
 
-Here is our amazing UI:
+Here is the design plan of our UI:
+We have a information panel displaying essential information about the simulation, buttons controlling the program, and
+an area for displaying the grid of cells.
 
 ![UI Design](images/UI_Setup.png "Our UI design")
 
@@ -198,23 +270,23 @@ Here is our amazing UI:
 #### Primary Responsibilities
  * Nick Ward: Cell class and subclass creation
 
- * Jake Vigeant
+ * Jake Vigeant: Create the Model of the application.
 
  * Vaishvi Patel: Create the controller class which connects the backend and frontend
 
- * Luyao Wang
+ * Luyao Wang: UI
 
- * Eka Ebong
+ * Eka Ebong: UI
 
 
 #### Secondary Responsibilities
  * Nick Ward: UI development/functionality and grid methods
 
- * Jake Vigeant
+ * Jake Vigeant: Work with controller to enable appropriate access to model functionality
 
  * Vaishvi Patel: UI testing and file parsing
 
- * Luyao Wang
+ * Luyao Wang connection between UI and controller, UI testing
 
  * Eka Ebong
 

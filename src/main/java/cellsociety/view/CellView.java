@@ -1,30 +1,47 @@
-    package cellsociety.view;
+package cellsociety.view;
 
-    import javafx.scene.control.Label;
-    import javafx.scene.layout.StackPane;
-    import javafx.scene.paint.Color;
-    import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-    public class CellView extends StackPane {
+import java.util.HashMap;
+import java.util.Map;
 
+public class CellView extends StackPane {
+    public static Map<Integer, Color> colorMap = Map.of(0, Color.DARKGRAY, 1, Color.GREEN);
+    Rectangle rectangle;
 
-        public CellView(String name, double x, double y, double width, Color color) {
+    /**
+     * Constructor for CellView
+     * @param state
+     * @param width
+     */
+    public CellView(Integer state, double width) {
 
-            // create rectangle
-            Rectangle rectangle = new Rectangle(width, width);
-            rectangle.setStroke(Color.BLACK);
-            rectangle.setFill(color);
+        // create rectangle
+        Rectangle rectangle = new Rectangle(width, width);
+        rectangle.setStroke(Color.BLACK);
 
-            // create label
-            Label label = new Label(name);
+        rectangle.setFill(colorMap.get(state));
 
-            // set position
+        // create label
+        Label label = new Label(state + "");
+
+        // set position
 //            setTranslateX(x);
 //            setTranslateY(y);
 
-            getChildren().addAll(rectangle, label);
-
-        }
+        getChildren().addAll(rectangle, label);
 
     }
+
+    /**
+     * Updates the visual representation of the cell
+     * @param state
+     */
+    public void updateState(Integer state) {
+        rectangle.setFill(colorMap.get(state));
+    }
+}
 

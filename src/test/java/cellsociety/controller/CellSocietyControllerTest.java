@@ -1,7 +1,5 @@
 package cellsociety.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import cellsociety.model.Cell;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
@@ -11,8 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.stage.Stage;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -24,5 +24,8 @@ public class InitialModelImplementation extends Model{
     myGrid.computeStates();
   }
 
-
+  @Override
+  public Map<Integer, Cell> getCells() {
+    return myGrid.getCells();
+  }
 }
