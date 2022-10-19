@@ -53,7 +53,6 @@ public class GridScreen extends SceneCreator {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-            //TODO: update grid once:
         gridView.updateGrid(myController.updateGrid());
         }));
         timeline.pause();
@@ -190,9 +189,9 @@ public class GridScreen extends SceneCreator {
      */
     public void handleButtons(Stage stage) {
         playButton.setOnAction(event -> timeline.play());
-        stepButton.setOnAction(event -> {//TODO: update grid once:  gridView.updateGrid(myController.get2DArrayList);
-                }
-        );
+        stepButton.setOnAction(event -> {
+            gridView.updateGrid(myController.updateGrid());
+        });
         resetButton.setOnAction(event -> timeline.playFromStart());
         pauseButton.setOnAction(event -> timeline.pause());
         exitButton.setOnAction(event -> {
