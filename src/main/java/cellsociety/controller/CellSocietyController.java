@@ -38,8 +38,8 @@ public class CellSocietyController {
     backEndCellsbyID = myModel.getCells();
 
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
-    numRows = Integer.parseInt(parseRowCol[0]);
-    numCols = Integer.parseInt(parseRowCol[1]);
+    numCols = Integer.parseInt(parseRowCol[0]);
+    numRows = Integer.parseInt(parseRowCol[1]);
   }
   public void getSimData() throws FileNotFoundException {
     SimParser simParser = new SimParser();

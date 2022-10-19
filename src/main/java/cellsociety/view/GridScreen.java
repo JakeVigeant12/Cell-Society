@@ -86,7 +86,7 @@ public class GridScreen extends SceneCreator {
      * Sets up the grid with properties
      */
     private void setupGrid() {
-        gridView = new GridView(600);
+        gridView = new GridView(800);
         gridView.setUpView(myController.getViewGrid());
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);

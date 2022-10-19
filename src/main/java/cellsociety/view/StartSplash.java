@@ -1,9 +1,13 @@
 package cellsociety.view;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -11,7 +15,7 @@ import javafx.scene.control.Button;
 import java.util.ResourceBundle;
 
 public class StartSplash extends SceneCreator {
-    public Pane startPane;
+    public BorderPane startPane;
     private Text mainTitle;
     private Text selectLanguage;
     private Button englishButton;
@@ -23,7 +27,7 @@ public class StartSplash extends SceneCreator {
 
     public StartSplash(double size){
         super(size);
-        startPane = new Pane();
+        startPane = new BorderPane();
         myBackground = new ImageView();
     }
 
@@ -34,24 +38,29 @@ public class StartSplash extends SceneCreator {
 
         mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");
-        mainTitle.setLayoutX(170);
-        mainTitle.setLayoutY(70);
+        VBox vBoxTop = new VBox(mainTitle);
+        vBoxTop.setAlignment(Pos.CENTER);
+
 
         selectLanguage = new Text("Select Language");
         selectLanguage.getStyleClass().add("startSelectLanguage");
-        selectLanguage.setLayoutX(240);
-        selectLanguage.setLayoutY(460);
+
 
         myBackground.setImage(new Image(startInfo.getString("startgif")));
         myBackground.setFitWidth(mySize);
         myBackground.setFitHeight(mySize);
 
         HBox buttons = new HBox(englishButton, spanishButton, frenchButton);
-        buttons.setLayoutY(490);
-        buttons.setLayoutX(130);
         buttons.getStyleClass().add("allbuttons");
 
-        startPane.getChildren().addAll(myBackground, buttons, mainTitle, selectLanguage);
+        VBox vBoxBot = new VBox(selectLanguage, buttons);
+        vBoxBot.setSpacing(20);
+        vBoxBot.setAlignment(Pos.CENTER);
+
+        startPane.getChildren().add(myBackground);
+        startPane.setTop(vBoxTop);
+        startPane.setBottom(vBoxBot);
+        startPane.setPadding(new Insets(25));
         handleEvents(stage);
 
         return startPane;
