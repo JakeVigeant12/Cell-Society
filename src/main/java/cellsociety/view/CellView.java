@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CellView extends StackPane {
     public static Map<Integer, Color> colorMap = Map.of(0, Color.DARKGRAY, 1, Color.GREEN);
-    Rectangle rectangle;
+    private Rectangle rectangle;
 
     /**
      * Constructor for CellView
@@ -20,7 +20,7 @@ public class CellView extends StackPane {
     public CellView(Integer state, double width) {
 
         // create rectangle
-        Rectangle rectangle = new Rectangle(width, width);
+        rectangle = new Rectangle(width, width);
         rectangle.setStroke(Color.BLACK);
 
         rectangle.setFill(colorMap.get(state));
