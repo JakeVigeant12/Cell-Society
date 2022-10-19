@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -13,6 +14,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class GridScreen extends SceneCreator {
@@ -192,7 +195,17 @@ public class GridScreen extends SceneCreator {
         stepButton.setOnAction(event -> {
             gridView.updateGrid(myController.updateGrid());
         });
-        resetButton.setOnAction(event -> timeline.playFromStart());
+        resetButton.setOnAction(event -> {
+            try {
+                myController.resetController();
+                gridView.updateGrid(myController.getViewGrid());
+            } catch (CsvValidationException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
         pauseButton.setOnAction(event -> timeline.pause());
         exitButton.setOnAction(event -> {
             StartSplash beginning = new StartSplash(600.0);
