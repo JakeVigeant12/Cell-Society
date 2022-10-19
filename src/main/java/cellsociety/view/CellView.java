@@ -18,7 +18,6 @@ public class CellView extends StackPane {
      * @param width
      */
     public CellView(Integer state, double width) {
-
         // create rectangle
         rectangle = new Rectangle(width, width);
         rectangle.setStroke(Color.BLACK);
@@ -26,13 +25,13 @@ public class CellView extends StackPane {
         rectangle.setFill(colorMap.get(state));
 
         // create label
-        Label label = new Label(state + "");
+        // Label label = new Label(state + "");
 
         // set position
-//            setTranslateX(x);
-//            setTranslateY(y);
+        // setTranslateX(x);
+        // setTranslateY(y);
 
-        getChildren().addAll(rectangle, label);
+        getChildren().addAll(rectangle);
 
     }
 
