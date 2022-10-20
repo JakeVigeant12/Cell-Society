@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.model;
 
 import cellsociety.model.Cell;
 import org.junit.jupiter.api.Test;
