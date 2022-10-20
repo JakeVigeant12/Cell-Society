@@ -46,12 +46,12 @@ public class StartSplash extends SceneCreator {
         selectLanguage.getStyleClass().add("startSelectLanguage");
 
 
-        myBackground.setImage(new Image(startInfo.getString("startgif")));
+        myBackground.setImage(new Image(startInfo.getString("startGif")));
         myBackground.setFitWidth(mySize);
         myBackground.setFitHeight(mySize);
 
         HBox buttons = new HBox(englishButton, spanishButton, frenchButton);
-        buttons.getStyleClass().add("allbuttons");
+        buttons.getStyleClass().add("allButtons");
 
         VBox vBoxBot = new VBox(selectLanguage, buttons);
         vBoxBot.setSpacing(20);
@@ -77,13 +77,16 @@ public class StartSplash extends SceneCreator {
     public void handleEvents(Stage stage){
         FileInput fi = new FileInput(mySize);
         englishButton.setOnAction(event->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"),
+                "fileInput.css"));
         });
         spanishButton.setOnAction(event ->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"), "fileinput.css"));
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"),
+                "fileInput.css"));
         });
         frenchButton.setOnAction(event -> {
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "FrenchLabels"), "fileinput.css"));
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "FrenchLabels"),
+                "fileInput.css"));
         });
     }
 

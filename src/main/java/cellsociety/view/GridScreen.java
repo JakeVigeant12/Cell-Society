@@ -115,7 +115,7 @@ public class GridScreen extends SceneCreator {
 
         VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
         fileInfoBox.setBackground(Background.fill(mainColor));
-        fileInfoBox.getStyleClass().add("aboutbox");
+        fileInfoBox.getStyleClass().add("aboutBox");
         borderPane.setLeft(fileInfoBox);
     }
 
@@ -126,7 +126,7 @@ public class GridScreen extends SceneCreator {
         // TODO: FIX THIS TO DISPLAY ON RIGHT SIDE
         VBox rightUIElement = new VBox();
         rightUIElement.setBackground(Background.fill(mainColor));
-        rightUIElement.getStyleClass().add("rightbox");
+        rightUIElement.getStyleClass().add("rightBox");
         borderPane.setRight(rightUIElement);
     }
 
@@ -136,7 +136,7 @@ public class GridScreen extends SceneCreator {
     private void createBottomPanel() {
         HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
         controls.setBackground(Background.fill(mainColor));
-        controls.getStyleClass().add("allbuttons");
+        controls.getStyleClass().add("allButtons");
         borderPane.setBottom(controls);
     }
 
@@ -149,7 +149,7 @@ public class GridScreen extends SceneCreator {
         AnchorPane.setTopAnchor(backButton, 0d);
         topPanel.getChildren().addAll(backButton, exitButton);
         topPanel.setBackground(Background.fill(mainColor));
-        topPanel.getStyleClass().add("exitbox");
+        topPanel.getStyleClass().add("exitBox");
         borderPane.setTop(topPanel);
     }
 
@@ -202,7 +202,8 @@ public class GridScreen extends SceneCreator {
         });
         backButton.setOnAction(event -> {
             FileInput backInput = new FileInput(600);
-            stage.setScene(createScene(stage, backInput.createFileInput(stage, myLabels.getBaseBundleName()), "fileinput.css"));
+            stage.setScene(createScene(stage, backInput.createFileInput(stage, myLabels.getBaseBundleName()),
+                "fileInput.css"));
             stage.setHeight(600);
             stage.setWidth(600);
         });
