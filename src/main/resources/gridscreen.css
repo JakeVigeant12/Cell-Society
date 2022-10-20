@@ -45,3 +45,10 @@
 .info{
     -fx-font-size: 12;
 }
+
+.GameOfLife0{
+    -fx-fill: darkgray;
+}
+.GameOfLife1{
+    -fx-fill: green;
+}

@@ -5,12 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 
 public class SceneCreator {
     public double mySize;
     public Scene myScene;
     public Scene previousScene;
     public CellSocietyController myController;
+    protected File myDataFile;
 
     /**
      * Constructor for SceneCreator

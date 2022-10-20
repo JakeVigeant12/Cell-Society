@@ -35,7 +35,7 @@ public class GridView{
      * Sets up the grid and the cells
      * @param gridData
      */
-    public void setUpView(List<List<Integer>> gridData) {
+    public void setUpView(List<List<Integer>> gridData, String simultionGenre) {
         n = gridData.size();
         m = gridData.get(0).size();
         int width = (int) Math.min(600 / n, 570 / m);
@@ -43,7 +43,7 @@ public class GridView{
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                CellView node = new CellView(gridData.get(y).get(x), width);
+                CellView node = new CellView(gridData.get(y).get(x), width, simultionGenre);
                 // add cells to group
                 grid.add(node, x * width, 50 + y * width);
                 // add to grid for further reference using an array

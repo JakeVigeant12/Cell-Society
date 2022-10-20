@@ -75,4 +75,15 @@ public class CellSocietyController {
     myModel.computeStates();
     return getViewGrid();
   }
+
+  /**
+   * Resets the cells to the original file inputed
+   * @throws CsvValidationException
+   * @throws IOException
+   */
+  public void resetController() throws CsvValidationException, IOException {
+    String csvPath = simMap.get(INITIAL_STATES);
+    myModel = new InitialModelImplementation(csvPath, simMap);
+    backEndCellsbyID = myModel.getCells();
+  }
 }
