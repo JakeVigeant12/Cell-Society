@@ -22,7 +22,10 @@ public class StartSplash extends SceneCreator {
     private Button spanishButton;
     private Button frenchButton;
     private ImageView myBackground;
-    ResourceBundle startInfo = ResourceBundle.getBundle("startInfo");
+
+    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
+    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+    ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
     public StartSplash(double size){
@@ -77,7 +80,7 @@ public class StartSplash extends SceneCreator {
     public void handleEvents(Stage stage){
         FileInput fi = new FileInput(mySize);
         englishButton.setOnAction(event->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"), "fileinput.css"));
+            stage.setScene(createScene(stage, fi.createFileInput(stage, "EnglishLabels"), "fileinput.css"));
         });
         spanishButton.setOnAction(event ->{
             stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"), "fileinput.css"));

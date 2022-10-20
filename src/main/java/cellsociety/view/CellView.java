@@ -36,6 +36,8 @@ public class CellView extends StackPane {
 
         getChildren().addAll(rectangle);
 
+        this.setOnMouseClicked(e -> rectangle.setFill(Color.RED));
+
     }
 
     /**
