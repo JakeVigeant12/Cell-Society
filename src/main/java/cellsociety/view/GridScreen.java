@@ -39,6 +39,8 @@ public class GridScreen extends SceneCreator {
     private CellSocietyController myController;
     private double refreshRate = 1;
 
+
+
     /**
      * Constructor for GridScreen, sets up the root, borderPane and the timeline
      * @param size
@@ -90,7 +92,7 @@ public class GridScreen extends SceneCreator {
      */
     private void setupGrid() {
         gridView = new GridView(800);
-        gridView.setUpView(myController.getViewGrid());
+        gridView.setUpView(myController.getViewGrid(), myController.simMap.get("Type"));
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
