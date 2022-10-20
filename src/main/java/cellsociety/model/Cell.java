@@ -58,6 +58,14 @@ public class Cell {
   }
 
   /**
+   * Method that returns the id of the cell
+   * @return id of the cell
+   */
+  public int getId() {
+    return this.id;
+  }
+
+  /**
    * Method that manually updates the state of the cell
    */
   public void updateState() {
@@ -69,9 +77,9 @@ public class Cell {
    * @param neighbor
    */
   public void swapCellStates(Cell neighbor) {
-    //Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getRow(), neighbor.getCol());
-    //neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
-    //setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
+    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getId());
+    neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
+    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
   }
 
   /**
@@ -85,9 +93,5 @@ public class Cell {
       neighborStates.add(neighbor.getCurrentState());
     }
     return neighborStates;
-  }
-
-  public int getId() {
-    return this.id;
   }
 }

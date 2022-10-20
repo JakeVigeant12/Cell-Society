@@ -31,10 +31,10 @@ public class CellView extends StackPane {
         label = new Label(String.valueOf(state));
 
         // set position
-//            setTranslateX(x);
-//            setTranslateY(y);
+        // setTranslateX(x);
+        // setTranslateY(y);
 
-        getChildren().addAll(rectangle, label);
+        getChildren().addAll(rectangle);
 
     }
 

@@ -21,9 +21,7 @@ public class StartSplash extends SceneCreator {
     private Button englishButton;
     private Button spanishButton;
     private Button frenchButton;
-
     private ImageView myBackground;
-
     ResourceBundle startInfo = ResourceBundle.getBundle("startInfo");
 
 
