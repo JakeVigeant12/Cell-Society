@@ -99,16 +99,16 @@ public class GridScreen extends SceneCreator {
      */
     private void createLeftPanel() {
         aboutTitle = createAndStyleText(myLabels.getString("aboutText"), "title");
-        fileTitle = createAndStyleText(myLabels.getString("title") + myController.getSimMap().get("Title"), "info");
-        simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getSimMap().get("Type"), "info");
-        author = createAndStyleText(myLabels.getString("authorText") + myController.getSimMap().get("Author"), "info");
+        fileTitle = createAndStyleText(myLabels.getString("title") + myController.getProperties().get("Title"), "info");
+        simulationType = createAndStyleText(myLabels.getString("typeText") + myController.getProperties().get("Type"), "info");
+        author = createAndStyleText(myLabels.getString("authorText") + myController.getProperties().get("Author"), "info");
 
         statusBox = createAndStyleTextBox(myLabels.getString("statusText"), "info");
         statusBox.setBackground(Background.fill(mainColor));
         statusBox.setEditable(false);
         statusBox.setWrapText(true);
 
-        descriptionBox = createAndStyleTextBox(myLabels.getString("descriptionText") + myController.getSimMap().get("Description"), "info");
+        descriptionBox = createAndStyleTextBox(myLabels.getString("descriptionText") + myController.getProperties().get("Description"), "info");
         descriptionBox.setBackground(Background.fill(mainColor));
         descriptionBox.setEditable(false);
         descriptionBox.setWrapText(true);
