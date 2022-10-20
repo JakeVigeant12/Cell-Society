@@ -82,8 +82,8 @@ public class CellSocietyController {
    * @throws IOException
    */
   public void resetController() throws CsvValidationException, IOException {
-    String csvPath = simMap.get(INITIAL_STATES);
-    myModel = new InitialModelImplementation(csvPath, simMap);
+    String csvPath = (String) properties.get(INITIAL_STATES);
+    myModel = new InitialModelImplementation(csvPath, properties);
     backEndCellsbyID = myModel.getCells();
   }
 }
