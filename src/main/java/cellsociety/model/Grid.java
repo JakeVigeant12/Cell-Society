@@ -1,5 +1,7 @@
 package cellsociety.model;
 
+import cellsociety.model.cells.Cell;
+
 import java.util.*;
 
 //abstraction of grid to allow flexibility in implementation

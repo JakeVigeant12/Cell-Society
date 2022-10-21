@@ -1,6 +1,6 @@
 package cellsociety.controller;
 
-import cellsociety.model.Cell;
+import cellsociety.model.cells.Cell;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.IOException;

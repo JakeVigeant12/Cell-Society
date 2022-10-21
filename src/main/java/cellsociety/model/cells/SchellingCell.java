@@ -1,12 +1,21 @@
-package cellsociety.model;
+package cellsociety.model.cells;
+
+import cellsociety.model.cells.Cell;
 
 import java.util.List;
 
-public class SchellingCell extends Cell{
+public class SchellingCell extends Cell {
     private double myThreshold;
     private double totalNeighbors;
     private double sameNeighborsAgent1;
     private double sameNeighborsAgent2;
+
+    // Key States
+    // 0 = empty
+    // 1 = Agent 1
+    // 2 = Agent 2
+    // 3 = Agent 1 unhappy and wants to be moved to open spot
+    // 4 = Agent 2 unhappy and wants to be moved to open spot
 
     /**
      * Constructor for SchellingCell class

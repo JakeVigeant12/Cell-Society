@@ -1,4 +1,6 @@
-package cellsociety.model;
+package cellsociety.model.cells;
+
+import cellsociety.model.cells.Cell;
 
 import java.util.List;
 
@@ -7,6 +9,12 @@ public class RockPaperScissorsCell extends Cell {
     private int numRockNeighbors;
     private int numPaperNeighbors;
     private int numScissorsNeighbors;
+
+    // Key States
+    // 0 = Empty
+    // 1 = Rock
+    // 2 = Paper
+    // 3 = Scissors
 
     /**
      * Constructor for RockPaperScissorsCell class
