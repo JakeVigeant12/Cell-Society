@@ -13,17 +13,10 @@ public class SchellingCell extends Cell{
      * @param state is the state of the cell
      * @param id is the id of the cell
      */
-    public SchellingCell(int state, int id){
+    public SchellingCell(int state, int id, double threshold){
         super(state, id);
         sameNeighborsAgent1 = 0;
         sameNeighborsAgent2 = 0;
-    }
-
-    /**
-     * Method that sets the threshold of the cell
-     * @param threshold
-     */
-    public void setThreshold(double threshold){
         myThreshold = threshold;
     }
 
