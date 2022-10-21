@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.model;
 
 import cellsociety.model.Cell;
 import org.junit.jupiter.api.Test;
@@ -51,11 +51,16 @@ public class CellTest {
 
     @Test
     void testSwapCellStates () {
-        Cell cell1 = new Cell(2, 0);
-        Cell cell2 = new Cell(15, 1);
+        Cell cell1 = new Cell(64, 0);
+        Cell cell2 = new Cell(32, 1);
+
         cell1.swapCellStates(cell2);
-        assertEquals(15, cell1.getFutureState());
-        assertEquals(2, cell2.getFutureState());
+
+        assertEquals(64, cell1.getCurrentState());
+        assertEquals(32, cell2.getCurrentState());
+
+        assertEquals(32, cell1.getFutureState());
+        assertEquals(64, cell2.getFutureState());
     }
 
 

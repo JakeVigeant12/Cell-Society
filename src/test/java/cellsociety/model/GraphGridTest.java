@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.model;
 import cellsociety.model.Cell;
 import cellsociety.model.GameOfLifeCell;
 import java.util.ArrayList;
