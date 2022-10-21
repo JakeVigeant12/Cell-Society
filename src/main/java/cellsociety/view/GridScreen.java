@@ -124,7 +124,7 @@ public class GridScreen extends SceneCreator {
     private void createBottomPanel() {
         HBox sliderBox = new HBox(sliderLabel, speedSlider);
         sliderBox.getStyleClass().add("slider");
-        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton, sliderBox);
+        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton, sliderBox, saveButton);
         controls.setBackground(Background.fill(mainColor));
         controls.getStyleClass().add("allbuttons");
         borderPane.setBottom(controls);
@@ -178,9 +178,15 @@ public class GridScreen extends SceneCreator {
         resetButton = makeButton("resetText");
         exitButton = makeButton("exitText");
         backButton = makeButton("backText");
+        saveButton = makeButton("saveText");
         speedSlider = makeSlider("speedText");
     }
 
+    /**
+     * Method that creates and stylizes a slider
+     * @param property resource bundle label
+     * @return slider
+     */
     private Slider makeSlider(String property) {
         Slider slider = new Slider();
         sliderLabel = new Label(myResource.getString(property));
@@ -210,18 +216,14 @@ public class GridScreen extends SceneCreator {
         return result;
     }
 
-
     /**
      * Handles the action events for buttons
-     *
      * @param stage
      */
     public void handleButtons(Stage stage) {
         playButton.setOnAction(event -> timeline.play());
         stepButton.setOnAction(event -> {
             gridView.updateGrid(myController.updateGrid());
-//            gridView.updateWidth(20);
-//            gridView.print();
         });
         resetButton.setOnAction(event -> {
             try {
