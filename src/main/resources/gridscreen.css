@@ -8,8 +8,13 @@
 }
 
 .allbuttons{
-    -fx-alignment: bottom-center;
+    -fx-alignment: center;
     -fx-spacing: 15px;
+}
+
+.slider{
+    -fx-alignment: center;
+    -fx-spacing: 10px;
 }
 
 .aboutbox{
