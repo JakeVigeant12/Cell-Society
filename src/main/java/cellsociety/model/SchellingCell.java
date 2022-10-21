@@ -4,9 +4,9 @@ import java.util.List;
 
 public class SchellingCell extends Cell{
     private double myThreshold;
-    private int totalNeighbors;
-    private int sameNeighborsAgent1;
-    private int sameNeighborsAgent2;
+    private double totalNeighbors;
+    private double sameNeighborsAgent1;
+    private double sameNeighborsAgent2;
 
     /**
      * Constructor for SchellingCell class
@@ -17,6 +17,7 @@ public class SchellingCell extends Cell{
         super(state, id);
         sameNeighborsAgent1 = 0;
         sameNeighborsAgent2 = 0;
+        totalNeighbors = 0;
         myThreshold = threshold;
     }
 
@@ -42,7 +43,7 @@ public class SchellingCell extends Cell{
             }
 
             if (getCurrentState() == 1){
-                if (sameNeighborsAgent1/totalNeighbors < myThreshold){
+                if (sameNeighborsAgent1/totalNeighbors < myThreshold){ // if the percentage of same neighbors is less than the threshold, then the agent will move
                     setFutureStateValue(3);
                 }
                 else {
