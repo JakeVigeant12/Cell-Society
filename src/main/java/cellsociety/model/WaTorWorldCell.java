@@ -6,6 +6,13 @@ public class WaTorWorldCell extends Cell {
     private int fishTurns;
     private int sharkTurns;
     private int sharkStarve;
+    private boolean wantsToMove;
+
+    // Cell Key
+    // 0 = water
+    // 1 = fish
+    // 2 = shark that eats fish
+    // 3 = shark that doesn't eat fish
 
     /**
      * Constructor for WaTorWorldCell class
@@ -17,6 +24,7 @@ public class WaTorWorldCell extends Cell {
         fishTurns = 0;
         sharkTurns = 0;
         sharkStarve = 0;
+        wantsToMove = false;
     }
 
     public WaTorWorldCell(int state, int id, int fTurn, int sTurn, int sStarve){
@@ -24,6 +32,7 @@ public class WaTorWorldCell extends Cell {
         fishTurns = fTurn;
         sharkTurns = sTurn;
         sharkStarve = sStarve;
+        wantsToMove = false;
     }
 
     /**
@@ -33,38 +42,52 @@ public class WaTorWorldCell extends Cell {
      */
     @Override
     public void setFutureState(List<Cell> neighbors) {
-        if(getCurrentState() == 1){ // If current cell is a fish
-            fishTurns++;
-            if (fishTurns == 3){
-                setFutureStateValue(0);
-            }
-            else {
-                setFutureStateValue(1);
+        if (getCurrentState() == 0) { // if the current cell is water
+            setFutureStateValue(0); // do nothing
+        }
+        else { // if the current cell is a fish or shark
+            if (getNeighborStates(neighbors).contains(0)) { // if there is water in the neighborhood
+                // An animal can move to an empty cell
+                if (getCurrentState() == 1){ // If current cell is a fish
+                    fishTurns++;
+                    if (fishTurns == 3){
+                        setFutureStateValue(1);
+                        fishTurns = 0;
+                        // TODO: Make a new fish in neighboring cell
+                    }
+                    else {
+                        setFutureStateValue(1); // Needs to swap with a water cell
+                        wantsToMove = true;
+                    }
+                }
+                else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
+                    sharkTurns++;
+                    if (sharkTurns == 3) {
+                        setFutureStateValue(2); // Shark breeds
+                        sharkTurns = 0;
+                        // TODO: Make a new shark in neighboring cell
+                    }
+                    else {
+                        setFutureStateValue(2);
+                        wantsToMove = true;
+                    }
+                }
+                else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
+                    sharkStarve++;
+                    if (sharkStarve == 3) {
+                        setFutureStateValue(0); // Shark dies
+                        setSharkStarve(0);
+                        wantsToMove = false;
+                    }
+                    else {
+                        setFutureStateValue(3); // Shark stays alive
+                        wantsToMove = true;
+                    }
+                }
+            } else {
+                setFutureStateValue(getCurrentState()); // Animal cannot move
             }
         }
-        else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
-            sharkTurns++;
-            if (sharkTurns == 3) {
-                setFutureStateValue(0);
-            }
-            else {
-                setFutureStateValue(2);
-            }
-        }
-        else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
-            sharkStarve++;
-            if (sharkStarve == 3) {
-                setFutureStateValue(0); // Shark dies
-            }
-            else {
-                setFutureStateValue(3); // Shark does not die, but does not eat
-            }
-        }
-    }
-
-    @Override
-    public void updateState() {
-        super.updateState();
     }
 
     /**
