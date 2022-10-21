@@ -11,9 +11,8 @@ class FileInputTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
 
-        FileInput fileInput = new FileInput(600);
-        SceneCreator current = new SceneCreator(600.0);
-        stage.setScene(current.createScene(stage, fileInput.createFileInput(stage, "LangLabels"), "fileinput.css"));
+        FileInput fi = new FileInput(600);
+            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileinput.css"));
         stage.show();
     }
 

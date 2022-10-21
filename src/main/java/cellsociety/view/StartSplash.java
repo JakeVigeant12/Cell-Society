@@ -28,13 +28,13 @@ public class StartSplash extends SceneCreator {
     ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
-    public StartSplash(double size){
+    public StartSplash(double size) {
         super(size);
         startPane = new BorderPane();
         myBackground = new ImageView();
     }
 
-    public Pane createStart(Stage stage){
+    public Pane setScene(Stage stage) {
         englishButton = makeButton("englishText");
         spanishButton = makeButton("spanishText");
         frenchButton = makeButton("frenchText");
@@ -77,17 +77,16 @@ public class StartSplash extends SceneCreator {
         return result;
     }
 
-    public void handleEvents(Stage stage){
+    public void handleEvents(Stage stage) {
         FileInput fi = new FileInput(mySize);
-        englishButton.setOnAction(event->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "EnglishLabels"), "fileinput.css"));
+        englishButton.setOnAction(event -> {
+            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileinput.css"));
         });
-        spanishButton.setOnAction(event ->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"), "fileinput.css"));
+        spanishButton.setOnAction(event -> {
+            stage.setScene(fi.createScene(stage, "SpanishLabels", "fileinput.css"));
         });
         frenchButton.setOnAction(event -> {
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "FrenchLabels"), "fileinput.css"));
+            stage.setScene(fi.createScene(stage, "FrenchLabels", "fileinput.css"));
         });
     }
-
 }

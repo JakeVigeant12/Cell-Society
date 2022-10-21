@@ -18,12 +18,11 @@ public class CellView extends StackPane {
     /**
      * Constructor for CellView
      * @param state
-     * @param width
      */
-    public CellView(Integer state, double width, String simulationType) {
+    public CellView(Integer state, String simulationType) {
         myType = simulationType;
         // create rectangle
-        rectangle = new Rectangle(width, width);
+        rectangle = new Rectangle();
         rectangle.setStroke(Color.BROWN);
         rectangle.getStyleClass().add(myType + state);
 
@@ -48,6 +47,11 @@ public class CellView extends StackPane {
         rectangle.getStyleClass().remove(0);
         rectangle.getStyleClass().add(myType + state);
         label.setText(String.valueOf(state));
+    }
+
+    public void updateSize(double size){
+        rectangle.setWidth(size);
+        rectangle.setHeight(size);
     }
 }
 
