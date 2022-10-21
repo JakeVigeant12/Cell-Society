@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.model.cells;
 
 import java.util.List;
 
@@ -6,6 +6,11 @@ public class FireCell extends Cell {
     private static final int BURNING_TIME = 3;
     private int turns;
     private double myProbCatch;
+
+    // Key States
+    // 0 = Empty
+    // 1 = Tree
+    // 2 = Burning
 
     /**
      * Constructor for FireCell class

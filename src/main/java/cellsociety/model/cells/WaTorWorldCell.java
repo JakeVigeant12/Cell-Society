@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.model.cells;
 
 import java.util.List;
 

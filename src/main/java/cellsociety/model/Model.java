@@ -1,5 +1,6 @@
 package cellsociety.model;
 
+import cellsociety.model.cells.Cell;
 import cellsociety.parser.Parser;
 import java.util.Map;
 

@@ -1,14 +1,17 @@
-package cellsociety.model;
+package cellsociety.model.cells;
 
 import java.util.List;
 
 public class GameOfLifeCell extends Cell {
 
+    // Key States
+    // 0 = Dead
+    // 1 = Alive
+
     /**
     * Constructor for GameOfLifeCell class
     * @param state is the state of the cell
-    * @param row is the row of the cell
-    * @param col is the column of the cell
+    * @param id is the id of the cell
     */
     public GameOfLifeCell(int state, int id) {
         super(state, id);

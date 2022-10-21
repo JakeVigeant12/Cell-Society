@@ -1,5 +1,6 @@
 package cellsociety.model;
 
+import cellsociety.model.cells.SchellingCell;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
