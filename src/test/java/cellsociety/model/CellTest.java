@@ -55,7 +55,7 @@ public class CellTest {
         Cell cell2 = new Cell(32, 1);
 
         cell1.swapCellStates(cell2);
-        
+
         assertEquals(64, cell1.getCurrentState());
         assertEquals(32, cell2.getCurrentState());
 
