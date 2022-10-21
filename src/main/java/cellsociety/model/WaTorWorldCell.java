@@ -10,8 +10,7 @@ public class WaTorWorldCell extends Cell {
     /**
      * Constructor for WaTorWorldCell class
      * @param state is the state of the cell
-     * @param row is the row of the cell
-     * @param col is the column of the cell
+     * @param id is the id of the cell
      */
     public WaTorWorldCell(int state, int id){
         super(state, id);
@@ -34,7 +33,7 @@ public class WaTorWorldCell extends Cell {
      */
     @Override
     public void setFutureState(List<Cell> neighbors) {
-        if(getCurrentState() == 1){
+        if(getCurrentState() == 1){ // If current cell is a fish
             fishTurns++;
             if (fishTurns == 3){
                 setFutureStateValue(0);
@@ -43,7 +42,7 @@ public class WaTorWorldCell extends Cell {
                 setFutureStateValue(1);
             }
         }
-        else if (getCurrentState() == 2) {
+        else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
             sharkTurns++;
             if (sharkTurns == 3) {
                 setFutureStateValue(0);
@@ -52,15 +51,20 @@ public class WaTorWorldCell extends Cell {
                 setFutureStateValue(2);
             }
         }
-        else if (getCurrentState() == 3){
+        else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
             sharkStarve++;
             if (sharkStarve == 3) {
-                setFutureStateValue(0);
+                setFutureStateValue(0); // Shark dies
             }
             else {
-                setFutureStateValue(3);
+                setFutureStateValue(3); // Shark does not die, but does not eat
             }
         }
+    }
+
+    @Override
+    public void updateState() {
+        super.updateState();
     }
 
     /**
@@ -103,7 +107,11 @@ public class WaTorWorldCell extends Cell {
         this.fishTurns = fishTurns;
     }
 
-    private void setSharkTurns(int turns) {
+    /**
+     * Method that sets the shark turns of the cell
+     * @param turns is the shark turns of the cell
+     */
+    public void setSharkTurns(int turns) {
         this.sharkTurns = turns;
     }
 
@@ -114,7 +122,7 @@ public class WaTorWorldCell extends Cell {
     public void swapCell(WaTorWorldCell cell) {
         WaTorWorldCell tempCell = new WaTorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
 
-        cell.setFutureStateValue(getCurrentState());
+        cell.setFutureStateValue(getFutureState());
         cell.setFishTurns(getFishTurns());
         cell.setSharkTurns(getSharkTurns());
         cell.setSharkStarve(getSharkStarve());
@@ -125,6 +133,10 @@ public class WaTorWorldCell extends Cell {
         setSharkStarve(tempCell.getSharkStarve());
     }
 
+    /**
+     * Method that is used for when a shark moves to a cell and leaves behind nothing
+     * @param cell is the cell that the shark moves to
+     */
     public void swapAndEmptyCell(WaTorWorldCell cell) {
         WaTorWorldCell tempCell = new WaTorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
 
@@ -137,5 +149,18 @@ public class WaTorWorldCell extends Cell {
         setFishTurns(tempCell.getFishTurns());
         setSharkTurns(tempCell.getSharkTurns());
         setSharkStarve(tempCell.getSharkStarve());
+    }
+
+    /**
+     * Method that creates a new animal type
+     * @param cell is the cell that is being changed
+     */
+    public void spawnNewCell(WaTorWorldCell cell, int newState) {
+        if (cell.getCurrentState() == 0) { // if cell is empty, then spawn new animal
+            cell.setFutureStateValue(newState);
+            cell.setFishTurns(0); // reset counters
+            cell.setSharkTurns(0);
+            cell.setSharkStarve(0);
+        }
     }
 }
