@@ -38,7 +38,7 @@ public class GraphGrid extends Grid{
             //TODO: Implement simParameters this is a dummy value
             newCell = new FireCell(cellData,cellCount, 0.1);//Get pcatch
             break;
-            //TODO: implmentations for these other cells
+            //TODO: implementations for these other cells
           case Segregation:
             newCell = new GameOfLifeCell(cellData,cellCount);
             break;
