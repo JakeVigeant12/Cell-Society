@@ -4,9 +4,11 @@ import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
+import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +79,7 @@ public class CellSocietyController {
   }
 
   /**
-   * Resets the cells to the original file inputed
+   * Resets the cells to the original file inputted
    * @throws CsvValidationException
    * @throws IOException
    */
@@ -85,5 +87,18 @@ public class CellSocietyController {
     String csvPath = (String) properties.get(INITIAL_STATES);
     myModel = new InitialModelImplementation(csvPath, properties);
     backEndCellsbyID = myModel.getCells();
+  }
+
+  public void saveGrid(File file) throws IOException {
+    try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
+      List<List<Integer>> grid = getViewGrid();
+      for (List<Integer> row : grid) {
+        String[] rowArray = new String[row.size()];
+        for (int i = 0; i < row.size(); i++) {
+          rowArray[i] = row.get(i).toString();
+        }
+        writer.writeNext(rowArray);
+      }
+    }
   }
 }

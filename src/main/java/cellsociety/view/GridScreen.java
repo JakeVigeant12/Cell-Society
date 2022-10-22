@@ -6,22 +6,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
+
+import static cellsociety.view.FileInput.FILE_CHOOSER;
 
 public class GridScreen extends SceneCreator {
     private BorderPane borderPane;
-    private Pane pane;
     private Button playButton;
     private Button stepButton;
     private Button pauseButton;
@@ -248,6 +248,18 @@ public class GridScreen extends SceneCreator {
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             refreshRate = newValue.doubleValue();
             timeline.setRate(refreshRate);
+        });
+        saveButton.setOnAction(event -> {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+            FILE_CHOOSER.getExtensionFilters().add(extFilter);
+            File file = FILE_CHOOSER.showSaveDialog(stage);
+            if (file != null) {
+                try {
+                    myController.saveGrid(file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
     }
 }

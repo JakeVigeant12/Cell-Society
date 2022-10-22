@@ -29,7 +29,7 @@ public class FileInput extends SceneCreator {
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
     public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
+    public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
 
