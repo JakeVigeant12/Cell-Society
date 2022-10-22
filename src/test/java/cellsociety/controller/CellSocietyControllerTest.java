@@ -1,6 +1,7 @@
 package cellsociety.controller;
 
-import cellsociety.model.Cell;
+import cellsociety.model.cells.Cell;
+import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.IOException;
@@ -43,16 +44,13 @@ class CellSocietyControllerTest {
     cellMap.put(7, cell7);
     cellMap.put(8, cell8);
     cellMap.put(9, cell9);
-
-    List<List<Integer>> expected = new ArrayList<>();
-    expected.add(Arrays.asList(0, 0, 1));
-    expected.add(Arrays.asList(1, 0, 0));
-    expected.add(Arrays.asList(0, 1, 0));
     myController.setBackEndCellsbyID(cellMap);
-
-    List<List<Integer>> actual = myController.getViewGrid();
+    GridWrapper expected = new GridWrapper(3, 3);
+    for(Integer key : cellMap.keySet()) {
+      expected.set((key -1)/ 3, (key - 1)  % 3, cellMap.get(key).getCurrentState());
+    }
+    GridWrapper actual = myController.getViewGrid();
     Assertions.assertArrayEquals(expected.toArray(), actual.toArray());
-
   }
 
 }

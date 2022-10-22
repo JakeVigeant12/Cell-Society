@@ -1,13 +1,12 @@
 package cellsociety;
 
+import cellsociety.controller.CellSocietyController;
+import cellsociety.view.StartSplash;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
 
-import cellsociety.controller.CellSocietyController;
-import cellsociety.view.SceneCreator;
-import cellsociety.view.StartSplash;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -37,8 +36,7 @@ public class Main extends Application {
     public void start(Stage stage){
         StartSplash ss = new StartSplash(600.0);
         stage.setTitle("CellSociety");
-        SceneCreator current = new SceneCreator(600.0);
-        stage.setScene(current.createScene(stage,ss.createStart(stage), "startSplash.css"));
+        stage.setScene(ss.createScene(stage, "startSplash.css"));
         stage.show();
     }
 

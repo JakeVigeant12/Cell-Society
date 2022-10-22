@@ -1,6 +1,6 @@
-package cellsociety;
+package cellsociety.model;
 
-import cellsociety.model.GameOfLifeCell;
+import cellsociety.model.cells.GameOfLifeCell;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

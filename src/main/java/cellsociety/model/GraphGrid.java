@@ -1,6 +1,8 @@
 package cellsociety.model;
 
 import cellsociety.SimType;
+import cellsociety.model.cells.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,15 +12,24 @@ public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private Map<Cell, List<Cell>> myAdjacenyList;
   private final SimType simType;
+
+  /**
+   * Constructor for GraphGrid class
+   * @param gridParsing is the layout of the grid
+   * @param simInput is the type of simulation
+   */
   public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
     simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
     createCells(gridParsing);
     initializeNeighbors(gridParsing);
-
   }
 
+  /**
+   * Method that creates the cells for the grid
+   * @param inputLayout
+   */
   @Override
   //Assume grid values are passed in as expected, sans dimensions
   public void createCells(List<List<String>> inputLayout) {
@@ -32,31 +43,35 @@ public class GraphGrid extends Grid{
         Integer cellData  = Integer.parseInt(inputLayout.get(i).get(j));
         switch(simType) {
           case GameOfLife:
-            newCell = new GameOfLifeCell(cellData,cellCount);
+            newCell = new WaTorWorldCell(cellData,cellCount);
             break;
           case Fire:
             //TODO: Implement simParameters this is a dummy value
-            newCell = new FireCell(cellData,cellCount, 0.1);//Get pcatch
+            newCell = new FireCell(cellData, cellCount, 0.1); // TODO: Get probCatch
             break;
-            //TODO: implmentations for these other cells
+            //TODO: implementations for these other cells
           case Segregation:
-            newCell = new GameOfLifeCell(cellData,cellCount);
+            newCell = new SchellingCell(cellData, cellCount, 0.5); // TODO: Get threshold
             break;
           case WatorWorld:
-            newCell = new GameOfLifeCell(cellData,cellCount);
+            newCell = new WaTorWorldCell(cellData, cellCount);
             break;
           case RockPaperScissors:
-            newCell = new GameOfLifeCell(cellData,cellCount);
+            newCell = new RockPaperScissorsCell(cellData, cellCount);
             break;
           case Percolation:
-            newCell = new GameOfLifeCell(cellData,cellCount);
+            newCell = new PercolationCell(cellData, cellCount);
             break;
         }
-        myCells.putIfAbsent(cellCount,newCell);
+        myCells.putIfAbsent(cellCount, newCell);
       }
     }
   }
 
+  /**
+   * Method that initializes the neighbors for the grid
+   * @param gridParsing is the layout of the grid from the parser
+   */
   @Override
   public void initializeNeighbors(List<List<String>> gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
@@ -64,7 +79,7 @@ public class GraphGrid extends Grid{
     int currId = 0;
     for (int i = 0; i < gridParsing.size(); i++) {
       for (int j = 0; j < gridParsing.get(i).size(); j++) {
-        ArrayList<Cell> neighbors = new ArrayList<>();
+        List<Cell> neighbors = new ArrayList<>();
         currId++;
         Cell currentCell = myCells.get(currId);
         myAdjacenyList.putIfAbsent(currentCell, neighbors);
@@ -85,7 +100,7 @@ public class GraphGrid extends Grid{
           myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
         }
         if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.get(i).size();
+          int bottomRightNeighborId = currId + gridParsing.get(i).size() + 1;
           myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
         }
         if(isInBounds(i-1, j-1, gridParsing)){
@@ -103,17 +118,36 @@ public class GraphGrid extends Grid{
       }
     }
   }
+
+  /**
+   * Method that checks if the cell is in bounds
+   * @param row
+   * @param col
+   * @param gridParsing
+   * @return
+   */
   public static boolean isInBounds(int row, int col, List<List<String>> gridParsing){
     boolean res = (row >= 0 && row < gridParsing.size()) && (col >= 0 && col < gridParsing.get(row).size());
     return res;
   }
+
+  /**
+   * Method that does two passes, the first sets the state, the second updates the state
+   */
   @Override
   public void computeStates() {
-    for(Cell currentCell  : myAdjacenyList.keySet()){
+    for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
+    }
+    for (Cell currentCell : myAdjacenyList.keySet()){
+      currentCell.updateState();
     }
   }
 
+  /**
+   * Method that returns the map of cells
+   * @return myCells
+   */
   @Override
   public Map<Integer, Cell> getCells(){
     return myCells;

@@ -5,15 +5,11 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class FileInputTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
-
-        FileInput fileInput = new FileInput(600);
-        SceneCreator current = new SceneCreator(600.0);
-        stage.setScene(current.createScene(stage, fileInput.createFileInput(stage, "LangLabels"), "fileinput.css"));
+        FileInput fi = new FileInput(600);
+            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileInput.css"));
         stage.show();
     }
 
