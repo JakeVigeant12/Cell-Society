@@ -18,8 +18,13 @@ class GridScreenTest extends DukeApplicationTest {
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
-        SimulationView firstGrid = new SimulationView(800, controller);
+<<<<<<< HEAD
+        AppView firstGrid = new AppView(800, controller);
         stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridscreen.css"));
+=======
+        AppView firstGrid = new AppView(800, controller);
+        stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridScreen.css"));
+>>>>>>> master
     }
 
     @Test

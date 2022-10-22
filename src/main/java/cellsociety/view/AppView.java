@@ -6,22 +6,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 
-public class SimulationView extends SceneCreator {
+import static cellsociety.view.FileSelectionView.FILE_CHOOSER;
+
+public class AppView extends SceneCreator {
     private BorderPane borderPane;
-    private Pane pane;
     private Button playButton;
     private Button stepButton;
     private Button pauseButton;
@@ -51,7 +51,7 @@ public class SimulationView extends SceneCreator {
      *
      * @param size
      */
-    public SimulationView(double size, CellSocietyController controller) {
+    public AppView(double size, CellSocietyController controller) {
         super(size);
         this.myController = controller;
         borderPane = new BorderPane();
@@ -114,7 +114,7 @@ public class SimulationView extends SceneCreator {
 
         VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
         fileInfoBox.setBackground(Background.fill(mainColor));
-        fileInfoBox.getStyleClass().add("aboutbox");
+        fileInfoBox.getStyleClass().add("aboutBox");
         borderPane.setLeft(fileInfoBox);
     }
 
@@ -126,7 +126,7 @@ public class SimulationView extends SceneCreator {
         sliderBox.getStyleClass().add("slider");
         HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton, sliderBox, saveButton);
         controls.setBackground(Background.fill(mainColor));
-        controls.getStyleClass().add("allbuttons");
+        controls.getStyleClass().add("allButtons");
         borderPane.setBottom(controls);
     }
 
@@ -139,7 +139,7 @@ public class SimulationView extends SceneCreator {
         AnchorPane.setTopAnchor(backButton, 0d);
         topPanel.getChildren().addAll(backButton, exitButton);
         topPanel.setBackground(Background.fill(mainColor));
-        topPanel.getStyleClass().add("exitbox");
+        topPanel.getStyleClass().add("exitBox");
         borderPane.setTop(topPanel);
     }
 
@@ -242,11 +242,23 @@ public class SimulationView extends SceneCreator {
         });
         backButton.setOnAction(event -> {
             FileSelectionView backInput = new FileSelectionView(600);
-            stage.setScene(backInput.createScene(stage, language, "fileinput.css"));
+            stage.setScene(backInput.createScene(stage, language, "fileInput.css"));
         });
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             refreshRate = newValue.doubleValue();
             timeline.setRate(refreshRate);
+        });
+        saveButton.setOnAction(event -> {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+            FILE_CHOOSER.getExtensionFilters().add(extFilter);
+            File file = FILE_CHOOSER.showSaveDialog(stage);
+            if (file != null) {
+                try {
+                    myController.saveGrid(file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
     }
 }

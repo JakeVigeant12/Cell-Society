@@ -8,9 +8,14 @@ import util.DukeApplicationTest;
 class FileInputTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
+<<<<<<< HEAD
 
         FileSelectionView fi = new FileSelectionView(600);
             stage.setScene(fi.createScene(stage, "EnglishLabels", "fileinput.css"));
+=======
+        FileSelectionView fi = new FileSelectionView(600);
+            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileInput.css"));
+>>>>>>> master
         stage.show();
     }
 

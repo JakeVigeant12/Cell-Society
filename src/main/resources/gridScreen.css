@@ -7,7 +7,7 @@
     -fx-background-color: blue;
 }
 
-.allbuttons{
+.allButtons{
     -fx-alignment: center;
     -fx-spacing: 15px;
 }
@@ -17,7 +17,7 @@
     -fx-spacing: 10px;
 }
 
-.aboutbox{
+.aboutBox{
     -fx-pref-height: 650;
     -fx-max-width: 150;
     -fx-text-alignment: center;
@@ -25,7 +25,7 @@
     -fx-spacing: 10px;
 }
 
-.rightbox{
+.rightBox{
     -fx-pref-height: 650;
     -fx-max-width: 60;
     -fx-text-alignment: center;
@@ -33,12 +33,12 @@
     -fx-spacing: 10px;
 }
 
-.buttonbox{
+.buttonBox{
     -fx-border-color: black;
     -fx-fill: light gray;
 }
 
-.exitbox{
+.exitBox{
     -fx-spacing: 600;
 }
 
