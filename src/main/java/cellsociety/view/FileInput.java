@@ -30,16 +30,18 @@ public class FileInput extends SceneCreator {
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    private final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
+    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
+    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+    public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
-    private ResourceBundle label;
 
     /**
      * Constructor for FileInput
+     *
      * @param size
      */
-    public FileInput(double size){
+    public FileInput(double size) {
         super(size);
         inputPane = new BorderPane();
         inputBackground = new ImageView();
@@ -47,27 +49,26 @@ public class FileInput extends SceneCreator {
 
     /**
      * Sets up the file input screen
+     *
      * @param stage
-     * @param language
      * @return
      */
-    public Pane createFileInput(Stage stage, String language){
+    public Pane setScene(Stage stage) {
         //add back button
-        label = ResourceBundle.getBundle(language);
         input = makeButton("buttonText");
         input.getStyleClass().add("button");
 
         back = makeButton("backText");
 
-        Text title = new Text(label.getString("titleText"));
+        Text title = new Text(myResource.getString("titleText"));
         title.getStyleClass().add("mainText");
 
-        inputBackground.setImage(new Image(label.getString("uploadGif")));
+        inputBackground.setImage(new Image(myResource.getString("uploadGif")));
         inputBackground.setFitHeight(mySize);
         inputBackground.setFitWidth(mySize);
         inputPane.getChildren().addAll(inputBackground);
 
-        VBox upload = new VBox(title, input,back);
+        VBox upload = new VBox(title, input, back);
         upload.setAlignment(Pos.CENTER);
         upload.getStyleClass().add("uploadBox");
         inputPane.setTop(upload);
@@ -78,35 +79,34 @@ public class FileInput extends SceneCreator {
 
     /**
      * Sets up the button press handling
+     *
      * @param stage
      */
     private void buttonPress(Stage stage) {
         //add go back button
         input.setOnAction(event -> {
-            mySize = 800;
             filePick(stage);
-//            stage.setScene(createScene(stage, firstgrid.createGridScreen(stage, label, myController), "gridScreen.css"));
-            nextScreen(stage);
+//            nextScreen(stage);
         });
         back.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600.0);
-            stage.setScene(createScene(stage, beginning.createStart(stage), START_SPLASH_CSS));
+            StartSplash beginning = new StartSplash(600);
+            stage.setScene(beginning.createScene(stage, START_SPLASH_CSS));
         });
     }
 
     /**
      * Sets up the file picker
+     *
      * @param stage
      */
     public void filePick(Stage stage) {
         try {
-            File dataFile = FILE_CHOOSER.showOpenDialog(stage);
-            if (dataFile != null) {
-                CellSocietyController controller = new CellSocietyController(dataFile);
+            myDataFile = FILE_CHOOSER.showOpenDialog(stage);
+            if (myDataFile != null) {
+                CellSocietyController controller = new CellSocietyController(myDataFile);
                 controller.loadSimulation(stage);
-                GridScreen firstGrid = new GridScreen(mySize);
-                stage.setScene(createScene(stage, firstGrid.createGridScreen(stage, label, controller),
-                    GRID_SCREEN_CSS));
+                GridScreen firstGrid = new GridScreen(800, controller);
+                stage.setScene(firstGrid.createScene(stage, language, GRID_SCREEN_CSS));
             }
         } catch (IOException e) {
             // should never happen since user selected the file
@@ -117,6 +117,7 @@ public class FileInput extends SceneCreator {
 
     /**
      * Sets up the alert message
+     *
      * @param type
      * @param message
      */
@@ -126,6 +127,7 @@ public class FileInput extends SceneCreator {
 
     /**
      * Sets up the file chooser
+     *
      * @param extensionAccepted
      * @return
      */
@@ -140,12 +142,13 @@ public class FileInput extends SceneCreator {
 
     /**
      * Make a button and sets properties
+     *
      * @param property
      * @return
      */
     public Button makeButton(String property) {
         Button result = new Button();
-        String labelText = label.getString(property);
+        String labelText = myResource.getString(property);
         result.setText(labelText);
         result.setId(property);
         return result;

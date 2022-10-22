@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.model.cells;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,6 @@ public class Cell {
   private int currentState;
   private int futureState;
   private int id;
-
 
   /**
    * Constructor for Cell class
@@ -78,7 +77,15 @@ public class Cell {
    */
   public void swapCellStates(Cell neighbor) {
     Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getId());
-    neighbor.setFutureStateValue(currentState); // set neighbor's future state to current state
+
+    neighbor.setFutureStateValue(getCurrentState()); // set neighbor's future state to current state
+    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
+  }
+
+  public void swapCells(Cell neighbor) {
+    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getId());
+
+    neighbor.setFutureStateValue(getCurrentState()); // set neighbor's future state to current state
     setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
   }
 

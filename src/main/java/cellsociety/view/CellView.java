@@ -7,23 +7,24 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.spi.ResourceBundleControlProvider;
 
 public class CellView extends StackPane {
-    public static Map<Integer, Color> colorMap = Map.of(0, Color.DARKGRAY, 1, Color.GREEN);
     private Rectangle rectangle;
     private Label label;
+    private String myType;
 
     /**
      * Constructor for CellView
      * @param state
-     * @param width
      */
-    public CellView(Integer state, double width) {
+    public CellView(Integer state, String simulationType) {
+        myType = simulationType;
         // create rectangle
-        rectangle = new Rectangle(width, width);
+        rectangle = new Rectangle();
         rectangle.setStroke(Color.BROWN);
-
-        rectangle.setFill(colorMap.get(state));
+        rectangle.getStyleClass().add(myType + state);
 
         // create label
         label = new Label(String.valueOf(state));
@@ -34,6 +35,8 @@ public class CellView extends StackPane {
 
         getChildren().addAll(rectangle);
 
+        this.setOnMouseClicked(e -> rectangle.setFill(Color.RED));
+
     }
 
     /**
@@ -41,8 +44,14 @@ public class CellView extends StackPane {
      * @param state
      */
     public void updateState(Integer state) {
-        rectangle.setFill(colorMap.get(state));
+        rectangle.getStyleClass().remove(0);
+        rectangle.getStyleClass().add(myType + state);
         label.setText(String.valueOf(state));
+    }
+
+    public void updateSize(double size){
+        rectangle.setWidth(size);
+        rectangle.setHeight(size);
     }
 }
 

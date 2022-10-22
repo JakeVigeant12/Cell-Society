@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.model.cells;
 
 import java.util.List;
 
@@ -6,6 +6,11 @@ public class FireCell extends Cell {
     private static final int BURNING_TIME = 3;
     private int turns;
     private double myProbCatch;
+
+    // Key States
+    // 0 = Empty
+    // 1 = Tree
+    // 2 = Burning
 
     /**
      * Constructor for FireCell class
@@ -30,8 +35,7 @@ public class FireCell extends Cell {
      */
     @Override
     public void setFutureState(List<Cell> neighbors) {
-        List<Integer> states = getNeighborStates(neighbors);
-        if (getCurrentState() == 1 || states.contains(2)) { // If current cell is a tree or has a burning neighbor
+        if (getCurrentState() == 1 && getNeighborStates(neighbors).contains(2)) { // If current cell is a tree and has a burning neighbor
             if (Math.random() < myProbCatch) { // If random number is less than probability of catching fire
                 setFutureStateValue(2); // Set current cell to burning
             }
@@ -47,6 +51,9 @@ public class FireCell extends Cell {
                 turns++;
                 setFutureStateValue(2); // Keep current cell burning
             }
+        }
+        else {
+            setFutureStateValue(getCurrentState()); // Keep current cell empty or tree
         }
     }
 }

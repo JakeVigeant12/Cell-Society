@@ -22,16 +22,19 @@ public class StartSplash extends SceneCreator {
     private Button spanishButton;
     private Button frenchButton;
     private ImageView myBackground;
-    ResourceBundle startInfo = ResourceBundle.getBundle("startInfo");
+
+    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
+    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+    ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
-    public StartSplash(double size){
+    public StartSplash(double size) {
         super(size);
         startPane = new BorderPane();
         myBackground = new ImageView();
     }
 
-    public Pane createStart(Stage stage){
+    public Pane setScene(Stage stage) {
         englishButton = makeButton("englishText");
         spanishButton = makeButton("spanishText");
         frenchButton = makeButton("frenchText");
@@ -74,20 +77,16 @@ public class StartSplash extends SceneCreator {
         return result;
     }
 
-    public void handleEvents(Stage stage){
+    public void handleEvents(Stage stage) {
         FileInput fi = new FileInput(mySize);
-        englishButton.setOnAction(event->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "LangLabels"),
-                "fileInput.css"));
+        englishButton.setOnAction(event -> {
+            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileInput.css"));
         });
-        spanishButton.setOnAction(event ->{
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "SpanishLabels"),
-                "fileInput.css"));
+        spanishButton.setOnAction(event -> {
+            stage.setScene(fi.createScene(stage, "SpanishLabels", "fileInput.css"));
         });
         frenchButton.setOnAction(event -> {
-            stage.setScene(createScene(stage, fi.createFileInput(stage, "FrenchLabels"),
-                "fileInput.css"));
+            stage.setScene(fi.createScene(stage, "FrenchLabels", "fileInput.css"));
         });
     }
-
 }
