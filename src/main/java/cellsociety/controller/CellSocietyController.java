@@ -4,7 +4,7 @@ import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
-import com.opencsv.CSVWriter;
+import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
@@ -53,27 +53,20 @@ public class CellSocietyController {
     return properties;
   }
 
-  public List<List<Integer>> getViewGrid() {
-    List<List<Integer>> stateGrid = new ArrayList<>();
-    List<Integer> currentList = new ArrayList<>();
-    stateGrid.add(currentList);
+  public GridWrapper getViewGrid() {
+    GridWrapper stateGrid = new GridWrapper(numRows, numCols);
     for(Integer key : backEndCellsbyID.keySet()) {
-      if(currentList.size() < numCols) {
-        currentList.add(backEndCellsbyID.get(key).getCurrentState());
-      } else {
-        currentList = new ArrayList<>();
-        stateGrid.add(currentList);
-        currentList.add(backEndCellsbyID.get(key).getCurrentState());
-      }
+      stateGrid.set((key -1)/ numCols, (key - 1)  % numCols, backEndCellsbyID.get(key).getCurrentState());
     }
     return stateGrid;
   }
 
+  //For test purpose
   public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
     this.backEndCellsbyID = backEndCellsbyID;
   }
 
-  public List<List<Integer>> updateGrid() {
+  public GridWrapper updateGrid() {
     myModel.computeStates();
     return getViewGrid();
   }
