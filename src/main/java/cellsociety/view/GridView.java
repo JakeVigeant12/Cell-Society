@@ -16,7 +16,8 @@ public class GridView {
     private final DoubleProperty sizeProperty = new SimpleDoubleProperty();
     private int n;
     private int m;
-    CellView[][] cells;
+    //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
+    private CellView[][] cells;
     final double rem = new Text("").getLayoutBounds().getHeight();
 
     /**
@@ -50,14 +51,14 @@ public class GridView {
      *
      * @param gridData
      */
-    public void setUpView(List<List<Integer>> gridData, String simultionGenre) {
-        n = gridData.size();
-        m = gridData.get(0).size();
+    public void setUpView(GridWrapper gridData, String simultionGenre) {
+        n = gridData.row();
+        m = gridData.column();
 
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                CellView node = new CellView(gridData.get(y).get(x), simultionGenre);
+                CellView node = new CellView(gridData.get(y, x), simultionGenre);
                 // add cells to group
                 grid.add(node, x, y);
                 // add to grid for further reference using an array
@@ -71,10 +72,10 @@ public class GridView {
      *
      * @param gridData
      */
-    public void updateGrid(List<List<Integer>> gridData) {
+    public void updateGrid(GridWrapper gridData) {
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                cells[y][x].updateState(gridData.get(y).get(x));
+                cells[y][x].updateState(gridData.get(y, x));
             }
         }
     }

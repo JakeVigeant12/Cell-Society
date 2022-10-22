@@ -146,7 +146,6 @@ public class GridScreen extends SceneCreator {
     /**
      * Creates and stylizes the text based on a resource bundle label
      *
-     * @param myLabels
      * @param title
      * @return text
      */
