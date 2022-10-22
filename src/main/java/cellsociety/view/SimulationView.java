@@ -19,7 +19,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class GridScreen extends SceneCreator {
+public class SimulationView extends SceneCreator {
     private BorderPane borderPane;
     private Pane pane;
     private Button playButton;
@@ -51,7 +51,7 @@ public class GridScreen extends SceneCreator {
      *
      * @param size
      */
-    public GridScreen(double size, CellSocietyController controller) {
+    public SimulationView(double size, CellSocietyController controller) {
         super(size);
         this.myController = controller;
         borderPane = new BorderPane();
@@ -241,7 +241,7 @@ public class GridScreen extends SceneCreator {
             stage.setScene(beginning.createScene(stage, "startSplash.css"));
         });
         backButton.setOnAction(event -> {
-            FileInput backInput = new FileInput(600);
+            FileSelectionView backInput = new FileSelectionView(600);
             stage.setScene(backInput.createScene(stage, language, "fileinput.css"));
         });
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

@@ -10,8 +10,6 @@ import util.DukeApplicationTest;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GridScreenTest extends DukeApplicationTest {
     Stage stage;
     @Override
@@ -20,7 +18,7 @@ class GridScreenTest extends DukeApplicationTest {
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
-        GridScreen firstGrid = new GridScreen(800, controller);
+        SimulationView firstGrid = new SimulationView(800, controller);
         stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridscreen.css"));
     }
 

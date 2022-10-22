@@ -78,7 +78,7 @@ public class StartSplash extends SceneCreator {
     }
 
     public void handleEvents(Stage stage) {
-        FileInput fi = new FileInput(mySize);
+        FileSelectionView fi = new FileSelectionView(mySize);
         englishButton.setOnAction(event -> {
             stage.setScene(fi.createScene(stage, "EnglishLabels", "fileinput.css"));
         });

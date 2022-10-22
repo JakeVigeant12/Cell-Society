@@ -16,9 +16,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ResourceBundle;
 
-public class FileInput extends SceneCreator {
+public class FileSelectionView extends SceneCreator {
     public BorderPane inputPane;
     public Button input;
     public Button back;
@@ -38,7 +37,7 @@ public class FileInput extends SceneCreator {
      *
      * @param size
      */
-    public FileInput(double size) {
+    public FileSelectionView(double size) {
         super(size);
         inputPane = new BorderPane();
         inputBackground = new ImageView();
@@ -102,7 +101,7 @@ public class FileInput extends SceneCreator {
             if (myDataFile != null) {
                 CellSocietyController controller = new CellSocietyController(myDataFile);
                 controller.loadSimulation(stage);
-                GridScreen firstGrid = new GridScreen(800, controller);
+                SimulationView firstGrid = new SimulationView(800, controller);
                 stage.setScene(firstGrid.createScene(stage, language, "gridscreen.css"));
             }
         } catch (IOException e) {
