@@ -1,6 +1,6 @@
 package cellsociety.model;
 
-import cellsociety.model.Cell;
+import cellsociety.model.cells.Cell;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,9 +14,30 @@ public class CellTest {
 
 
     @Test
-    void testCellBasics () {
+    void testCellState () {
         assertEquals(state, c.getCurrentState());
+    }
+    @Test
+    void testCellStateChange () {
+        c.setFutureState(List.of());
+        assertEquals(state, c.getFutureState());
+    }
+    @Test
+    void testCellStateUpdate () {
+        c.setFutureStateValue(32);
+        c.updateState();
+        assertEquals(32, c.getCurrentState());
+    }
+
+    @Test
+    void testCellId () {
         assertEquals(id, c.getId());
+    }
+
+    @Test
+    void testCellIdChange () {
+        c.setId(32);
+        assertEquals(32, c.getId());
     }
 
     @Test
@@ -61,6 +82,20 @@ public class CellTest {
 
         assertEquals(32, cell1.getFutureState());
         assertEquals(64, cell2.getFutureState());
+    }
+
+    @Test
+    void testSwapCells () {
+        Cell cell1 = new Cell(5234, 0);
+        Cell cell2 = new Cell(2, 1);
+
+        cell1.swapCells(cell2);
+
+        assertEquals(5234, cell1.getCurrentState());
+        assertEquals(2, cell2.getCurrentState());
+
+        assertEquals(2, cell1.getFutureState());
+        assertEquals(5234, cell2.getFutureState());
     }
 
 

@@ -1,11 +1,10 @@
 package cellsociety.model;
-import cellsociety.model.Cell;
-import cellsociety.model.GameOfLifeCell;
+import cellsociety.model.cells.Cell;
+import cellsociety.model.cells.GameOfLifeCell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import cellsociety.model.GraphGrid;
 
 import static cellsociety.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;

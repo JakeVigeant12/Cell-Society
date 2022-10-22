@@ -7,6 +7,8 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -26,6 +28,9 @@ public class GridScreen extends SceneCreator {
     private Button resetButton;
     private Button exitButton;
     private Button backButton;
+    private Button saveButton;
+    private Slider speedSlider;
+    private Label sliderLabel;
     private Text fileTitle;
     private Text simulationType;
     private Text author;
@@ -72,7 +77,6 @@ public class GridScreen extends SceneCreator {
         createButtons();
 
         createLeftPanel();
-        createRightPanel();
         createBottomPanel();
         createTopPanel();
 
@@ -115,21 +119,12 @@ public class GridScreen extends SceneCreator {
     }
 
     /**
-     * Creates the right panel of the Grid Screen
-     */
-    private void createRightPanel() {
-        // TODO: FIX THIS TO DISPLAY ON RIGHT SIDE
-        VBox rightUIElement = new VBox();
-        rightUIElement.setBackground(Background.fill(mainColor));
-        rightUIElement.getStyleClass().add("rightbox");
-        borderPane.setRight(rightUIElement);
-    }
-
-    /**
      * Creates the bottom panel with the buttons
      */
     private void createBottomPanel() {
-        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton);
+        HBox sliderBox = new HBox(sliderLabel, speedSlider);
+        sliderBox.getStyleClass().add("slider");
+        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton, sliderBox, saveButton);
         controls.setBackground(Background.fill(mainColor));
         controls.getStyleClass().add("allbuttons");
         borderPane.setBottom(controls);
@@ -151,7 +146,6 @@ public class GridScreen extends SceneCreator {
     /**
      * Creates and stylizes the text based on a resource bundle label
      *
-     * @param myLabels
      * @param title
      * @return text
      */
@@ -161,6 +155,12 @@ public class GridScreen extends SceneCreator {
         return text;
     }
 
+    /**
+     * Creates and stylizes the text box based on a resource bundle label
+     * @param myLabels resource bundle label
+     * @param title title of the text box
+     * @return text box
+     */
     private TextArea createAndStyleTextBox(String myLabels, String title) {
         TextArea textBox = new TextArea(myLabels);
         textBox.getStyleClass().add(title);
@@ -177,8 +177,36 @@ public class GridScreen extends SceneCreator {
         resetButton = makeButton("resetText");
         exitButton = makeButton("exitText");
         backButton = makeButton("backText");
+        saveButton = makeButton("saveText");
+        speedSlider = makeSlider("speedText");
     }
 
+    /**
+     * Method that creates and stylizes a slider
+     * @param property resource bundle label
+     * @return slider
+     */
+    private Slider makeSlider(String property) {
+        Slider slider = new Slider();
+        sliderLabel = new Label(myResource.getString(property));
+        slider.setMin(0);
+        slider.setMax(10);
+        slider.setValue(1);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(1);
+        slider.setMinorTickCount(0);
+        slider.setBlockIncrement(1);
+        slider.setSnapToTicks(true);
+        slider.setId(property);
+        return slider;
+    }
+
+    /**
+     * Creates a button based on a resource bundle property
+     * @param property - property of the resource bundle
+     * @return button
+     */
     public Button makeButton(String property) {
         Button result = new Button();
         String labelText = myResource.getString(property);
@@ -187,18 +215,14 @@ public class GridScreen extends SceneCreator {
         return result;
     }
 
-
     /**
      * Handles the action events for buttons
-     *
      * @param stage
      */
     public void handleButtons(Stage stage) {
         playButton.setOnAction(event -> timeline.play());
         stepButton.setOnAction(event -> {
             gridView.updateGrid(myController.updateGrid());
-//            gridView.updateWidth(20);
-//            gridView.print();
         });
         resetButton.setOnAction(event -> {
             try {
@@ -219,6 +243,10 @@ public class GridScreen extends SceneCreator {
         backButton.setOnAction(event -> {
             FileInput backInput = new FileInput(600);
             stage.setScene(backInput.createScene(stage, language, "fileinput.css"));
+        });
+        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            refreshRate = newValue.doubleValue();
+            timeline.setRate(refreshRate);
         });
     }
 }
