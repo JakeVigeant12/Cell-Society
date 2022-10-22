@@ -5,6 +5,7 @@ import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.view.GridWrapper;
+import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
@@ -84,11 +85,12 @@ public class CellSocietyController {
 
   public void saveGrid(File file) throws IOException {
     try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-      List<List<Integer>> grid = getViewGrid();
-      for (List<Integer> row : grid) {
+      GridWrapper grid = getViewGrid();
+      for (int i = 0; i < grid.row(); i++) {
+        List<Integer> row = grid.getRow(i);
         String[] rowArray = new String[row.size()];
-        for (int i = 0; i < row.size(); i++) {
-          rowArray[i] = row.get(i).toString();
+        for (int j = 0; j < row.size(); j++) {
+          rowArray[j] = row.get(j).toString();
         }
         writer.writeNext(rowArray);
       }

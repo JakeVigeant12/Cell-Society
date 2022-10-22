@@ -32,6 +32,14 @@ public class GridWrapper {
         return column;
     }
 
+    public List<Integer> getRow(int row) {
+        List<Integer> rowList = new ArrayList<>();
+        for (int i = 0; i < column; i++) {
+            rowList.add(grid[row][i]);
+        }
+        return rowList;
+    }
+
     /**
      * For test purposes
      * @return
