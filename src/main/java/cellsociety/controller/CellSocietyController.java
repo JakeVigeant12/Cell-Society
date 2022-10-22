@@ -37,7 +37,7 @@ public class CellSocietyController {
     myModel = new InitialModelImplementation(csvPath, properties);
     backEndCellsbyID = myModel.getCells();
 
-    String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
+    String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
     numCols = Integer.parseInt(parseRowCol[0]);
     numRows = Integer.parseInt(parseRowCol[1]);
   }

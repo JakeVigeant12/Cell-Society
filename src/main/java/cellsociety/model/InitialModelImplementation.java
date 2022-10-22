@@ -5,6 +5,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.parser.CSVParser;
 import cellsociety.parser.Parser;
 import com.opencsv.exceptions.CsvValidationException;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,8 @@ public class InitialModelImplementation extends Model {
   public InitialModelImplementation(String csvPath, Properties simParameters)
       throws IOException, CsvValidationException {
     simType = SimType.valueOf((String) simParameters.get("Type"));
-    gridParser = new CSVParser(csvPath);
-    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(null), simType);
+    gridParser = new CSVParser();
+    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(csvPath), simType);
 
   }
 

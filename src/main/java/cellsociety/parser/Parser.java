@@ -8,5 +8,5 @@ import java.io.IOException;
 //abstraction of parsing to allow multiple filetypes/parsing methods
 public abstract class Parser {
 
-  public abstract Object parseData(File input) throws IOException, CsvValidationException;
+  public abstract Object parseData(String filePath) throws IOException, CsvValidationException;
 }
