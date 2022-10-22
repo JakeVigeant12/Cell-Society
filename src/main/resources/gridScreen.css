@@ -1,5 +1,5 @@
 .button{
-    -fx-pref-width: 80;
+    -fx-pref-width: 100;
     -fx-pref-height: 30;
 }
 
@@ -8,13 +8,8 @@
 }
 
 .allButtons{
-    -fx-alignment: center;
+    -fx-alignment: bottom-center;
     -fx-spacing: 15px;
-}
-
-.slider{
-    -fx-alignment: center;
-    -fx-spacing: 10px;
 }
 
 .aboutBox{
@@ -49,11 +44,4 @@
 
 .info{
     -fx-font-size: 12;
-}
-
-.GameOfLife0{
-    -fx-fill: darkgray;
-}
-.GameOfLife1{
-    -fx-fill: green;
 }
