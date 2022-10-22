@@ -139,8 +139,8 @@ public class GraphGrid extends Grid{
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
-    for (Cell currentCell : myAdjacenyList.keySet()){
-      currentCell.updateState();
+    for (Integer currentCell : myCells.keySet()){
+      myCells.get(currentCell).updateState();
     }
   }
 
