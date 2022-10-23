@@ -38,10 +38,6 @@
     -fx-fill: light gray;
 }
 
-.exitBox{
-    -fx-spacing: 600;
-}
-
 .title{
     -fx-alignment: top;
     -fx-font-size: 20;
@@ -57,3 +53,64 @@
 .GameOfLife1{
     -fx-fill: green;
 }
+.Fire0{
+    -fx-fill: yellow;
+}
+.Fire1{
+    -fx-fill: green;
+}
+.Fire2{
+    -fx-fill: red;
+}
+.SpreadingOfFire0{
+    -fx-fill: yellow;
+}
+.SpreadingOfFire1{
+    -fx-fill: green;
+}
+.SpreadingOfFire2{
+    -fx-fill: red;
+}
+.Percolation0{
+    -fx-fill: white;
+}
+.Percolation1{
+    -fx-fill: blue;
+}
+.Percolation2{
+    -fx-fill: black;
+}
+.Segregation0{
+    -fx-fill: white;
+}
+.Segregation1{
+    -fx-fill: red;
+}
+.Segregation2{
+    -fx-fill: blue;
+}
+.WatorWorld0{
+    -fx-fill: lightblue;
+}
+.WatorWorld1{
+    -fx-fill: orange;
+}
+.WatorWorld2{
+    -fx-fill: darkblue;
+}
+.WatorWorld3{
+    -fx-fill: darkblue;
+}
+.RockPaperScissors0{
+    -fx-fill: darkgray;
+}
+.RockPaperScissors1{
+    -fx-fill: black;
+}
+.RockPaperScissors2{
+    -fx-fill: white;
+}
+.RockPaperScissors3{
+    -fx-fill: green;
+}
+

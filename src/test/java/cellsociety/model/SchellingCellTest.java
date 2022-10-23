@@ -41,6 +41,7 @@ public class SchellingCellTest {
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
         assertEquals(1, mainAgent.getFutureState());
+        assertEquals(false, mainAgent.getWantsToMove());
     }
 
     @Test
@@ -57,7 +58,8 @@ public class SchellingCellTest {
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
-        assertEquals(3, mainAgent.getFutureState());
+        assertEquals(1, mainAgent.getFutureState());
+        assertEquals(true, mainAgent.getWantsToMove());
     }
 
     @Test
@@ -75,6 +77,8 @@ public class SchellingCellTest {
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
         assertEquals(2, mainAgent.getFutureState());
+        assertEquals(false, mainAgent.getWantsToMove());
+
     }
 
     @Test
@@ -91,7 +95,8 @@ public class SchellingCellTest {
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
-        assertEquals(4, mainAgent.getFutureState());
+        assertEquals(2, mainAgent.getFutureState());
+        assertEquals(true, mainAgent.getWantsToMove());
     }
 
     @Test
@@ -103,7 +108,8 @@ public class SchellingCellTest {
 
         c.setFutureState(List.of(c1, c2, c3, c4));
 
-        assertEquals(3, c.getFutureState());
+        assertEquals(1, c.getFutureState());
+        assertEquals(true, c.getWantsToMove());
     }
 
     @Test

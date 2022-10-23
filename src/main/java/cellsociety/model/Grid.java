@@ -1,6 +1,7 @@
 package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
+import cellsociety.view.GridWrapper;
 
 import java.util.*;
 
@@ -9,8 +10,8 @@ public abstract class Grid {
   public void computeStates() {
     return;
   }
-  public abstract void createCells(List<List<String>> inputLayout);
-  public abstract void initializeNeighbors(List<List<String>> inputLayout);
+  public abstract void createCells(GridWrapper inputLayout);
+  public abstract void initializeNeighbors(GridWrapper inputLayout);
   public Map<Integer, Cell> getCells() {
     return null;
   }

@@ -46,11 +46,11 @@ public class WaTorWorldCell extends Cell {
             setFutureStateValue(0); // do nothing
         }
         else { // if the current cell is a fish or shark
-            if (getNeighborStates(neighbors).contains(0)) { // if there is water in the neighborhood
-                // An animal can move to an empty cell
-                if (getCurrentState() == 1){ // If current cell is a fish
+            // An animal can move to an empty cell
+            if (getCurrentState() == 1){ // If current cell is a fish
+                if (getNeighborStates(neighbors).contains(0)){
                     fishTurns++;
-                    if (fishTurns == 3){
+                    if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
                         setFutureStateValue(1);
                         fishTurns = 0;
                         // TODO: Make a new fish in neighboring cell
@@ -60,34 +60,47 @@ public class WaTorWorldCell extends Cell {
                         wantsToMove = true;
                     }
                 }
-                else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
+                else {
+                    setFutureStateValue(1);
+                }
+            }
+            else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
+                if (!getNeighborStates(neighbors).contains(0) && !getNeighborStates(neighbors).contains(1)) { // if there are no empty cells or fish, then the shark will starve
+                    setFutureStateValue(3);
+                }
+                else if (getNeighborStates(neighbors).contains(1)) { // if there is a fish, then the shark will eat it
                     sharkTurns++;
-                    if (sharkTurns == 3) {
-                        setFutureStateValue(2); // Shark breeds
-                        sharkTurns = 0;
-                        // TODO: Make a new shark in neighboring cell
-                    }
-                    else {
+                    sharkStarve = 0;
+                    if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
                         setFutureStateValue(2);
+                        sharkTurns = 0;
+                    } else {
+                        setFutureStateValue(2); // Needs to swap with a water cell
                         wantsToMove = true;
                     }
                 }
-                else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
-                    sharkStarve++;
-                    if (sharkStarve == 3) {
-                        setFutureStateValue(0); // Shark dies
-                        setSharkStarve(0);
-                        wantsToMove = false;
-                    }
-                    else {
-                        setFutureStateValue(3); // Shark stays alive
-                        wantsToMove = true;
-                    }
+            }
+            else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
+                sharkStarve++;
+                if (sharkStarve == 3) {
+                    setFutureStateValue(0); // Shark dies
+                    setSharkStarve(0);
+                    wantsToMove = false;
                 }
-            } else {
-                setFutureStateValue(getCurrentState()); // Animal cannot move
+                else {
+                    setFutureStateValue(3); // Shark stays alive
+                    wantsToMove = true;
+                }
             }
         }
+    }
+
+    /**
+     * Method that returns if the cell wants to move
+     * @return true if the cell wants to move, false otherwise
+     */
+    public boolean getWantsToMove(){
+        return wantsToMove;
     }
 
     /**

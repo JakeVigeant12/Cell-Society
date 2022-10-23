@@ -34,9 +34,9 @@ public class Main extends Application {
      */
 
     public void start(Stage stage){
-        StartSplash ss = new StartSplash(600.0);
+        StartSplash ss = new StartSplash(600.0, stage);
         stage.setTitle("CellSociety");
-        stage.setScene(ss.createScene(stage, "startSplash.css"));
+        stage.setScene(ss.createScene("startSplash.css"));
         stage.show();
     }
 
