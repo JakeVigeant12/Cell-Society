@@ -8,7 +8,7 @@ import java.util.List;
 import cellsociety.view.GridWrapper;
 import org.junit.jupiter.api.Test;
 
-import static cellsociety.SimType.GameOfLife;
+import static cellsociety.model.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {
@@ -18,8 +18,12 @@ public class GraphGridTest {
   @Test
   void testBasicObject(){
     constructTestArrayList(4,4);
+<<<<<<< HEAD
 //    System.out.println(gridParsing.column(0));
     GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife);
+=======
+    GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife, null);
+>>>>>>> master
     HashMap<Integer, Cell> testCells = new HashMap<>();
     for(int i = 0; i < 16; i++){
 

@@ -1,6 +1,5 @@
 package cellsociety.model;
 
-import cellsociety.SimType;
 import cellsociety.model.cells.*;
 import cellsociety.view.GridWrapper;
 
@@ -8,18 +7,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
+  private List<Cell> emptyCells;
   private final SimType simType;
+  private Properties myProperties;
 
   /**
    * Constructor for GraphGrid class
    * @param gridParsing is the layout of the grid
    * @param simInput is the type of simulation
    */
-  public GraphGrid(GridWrapper gridParsing, SimType simInput) {
+  public GraphGrid(GridWrapper gridParsing, SimType simInput, Properties properties) {
+      myProperties = properties;
     simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
@@ -42,17 +45,24 @@ public class GraphGrid extends Grid{
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
+        double probCatch = 0.1;
         switch(simType) {
           case GameOfLife:
             newCell = new GameOfLifeCell(cellData,cellCount);
             break;
           case Fire:
-            //TODO: Implement simParameters this is a dummy value
-            newCell = new FireCell(cellData, cellCount, 0.1); // TODO: Get probCatch
+          case SpreadingOfFire: // TODO: FIX THIS!!
+            if(myProperties.containsKey("Parameters")) {
+              probCatch = Double.parseDouble(myProperties.getProperty("Parameters"));
+            }
+            newCell = new FireCell(cellData, cellCount, probCatch);
             break;
-            //TODO: implementations for these other cells
           case Segregation:
-            newCell = new SchellingCell(cellData, cellCount, 0.5); // TODO: Get threshold
+            Double threshold = 0.1;
+            if(myProperties.containsKey("Parameters")) {
+              threshold = Double.parseDouble(myProperties.getProperty("Parameters"));
+            }
+            newCell = new SchellingCell(cellData, cellCount, threshold); // TODO: Get threshold
             break;
           case WatorWorld:
             newCell = new WaTorWorldCell(cellData, cellCount);
@@ -89,7 +99,7 @@ public class GraphGrid extends Grid{
           myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
         }
         if(isInBounds(i, j+1, gridParsing)){
-          int rightNeighborId = currId +1;
+          int rightNeighborId = currId + 1;
           myAdjacenyList.get(currentCell).add(myCells.get(rightNeighborId));
         }
         if(isInBounds(i, j-1, gridParsing)){
@@ -136,8 +146,12 @@ public class GraphGrid extends Grid{
    */
   @Override
   public void computeStates() {
+    emptyCells = new ArrayList<>();
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
+      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
+        emptyCells.add(currentCell);
+      }
     }
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.updateState();

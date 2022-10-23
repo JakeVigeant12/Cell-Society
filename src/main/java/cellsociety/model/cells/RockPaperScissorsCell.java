@@ -5,10 +5,10 @@ import cellsociety.model.cells.Cell;
 import java.util.List;
 
 public class RockPaperScissorsCell extends Cell {
-    private int numNeighbors;
-    private int numRockNeighbors;
-    private int numPaperNeighbors;
-    private int numScissorsNeighbors;
+    private double numNeighbors;
+    private double numRockNeighbors;
+    private double numPaperNeighbors;
+    private double numScissorsNeighbors;
 
     // Key States
     // 0 = Empty
@@ -47,37 +47,37 @@ public class RockPaperScissorsCell extends Cell {
                 numScissorsNeighbors++;
             }
             numNeighbors++;
-        }
-        if (getCurrentState() == 1){
-            if (numRockNeighbors/numNeighbors > 0.5){
+        } // gets number of neighbors of each type
+        if (getCurrentState() == 1){ // if cell is a rock
+            if (numRockNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are rock, then rock stays
                 setFutureStateValue(1);
             }
-            else if (numPaperNeighbors/numNeighbors > 0.5){
+            else if (numPaperNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are paper, then paper wins
                 setFutureStateValue(2);
             }
-            else if (numScissorsNeighbors/numNeighbors > 0.5){
+            else if (numScissorsNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are scissors, then rock wins
+                setFutureStateValue(1);
+            }
+        }
+        else if (getCurrentState() == 2){ // if cell is paper
+            if (numRockNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are rock, then paper wins
+                setFutureStateValue(2);
+            }
+            else if (numPaperNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are paper, then paper stays
+                setFutureStateValue(2);
+            }
+            else if (numScissorsNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are scissors, then scissors wins
                 setFutureStateValue(3);
             }
         }
-        else if (getCurrentState() == 2){
-            if (numRockNeighbors/numNeighbors > 0.5){
+        else if (getCurrentState() == 3){ // if cell is scissors
+            if (numRockNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are rock, then rock wins
                 setFutureStateValue(1);
             }
-            else if (numPaperNeighbors/numNeighbors > 0.5){
-                setFutureStateValue(2);
-            }
-            else if (numScissorsNeighbors/numNeighbors > 0.5){
+            else if (numPaperNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are paper, then scissors wins
                 setFutureStateValue(3);
             }
-        }
-        else if (getCurrentState() == 3){
-            if (numRockNeighbors/numNeighbors > 0.5){
-                setFutureStateValue(1);
-            }
-            else if (numPaperNeighbors/numNeighbors > 0.5){
-                setFutureStateValue(2);
-            }
-            else if (numScissorsNeighbors/numNeighbors > 0.5){
+            else if (numScissorsNeighbors/numNeighbors > 0.5){ // if more than 50% of neighbors are scissors, then scissors stays
                 setFutureStateValue(3);
             }
         }

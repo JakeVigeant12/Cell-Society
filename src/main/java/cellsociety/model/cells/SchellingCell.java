@@ -9,13 +9,12 @@ public class SchellingCell extends Cell {
     private double totalNeighbors;
     private double sameNeighborsAgent1;
     private double sameNeighborsAgent2;
+    private boolean wantsToMove;
 
     // Key States
     // 0 = empty
     // 1 = Agent 1
     // 2 = Agent 2
-    // 3 = Agent 1 unhappy and wants to be moved to open spot
-    // 4 = Agent 2 unhappy and wants to be moved to open spot
 
     /**
      * Constructor for SchellingCell class
@@ -28,6 +27,7 @@ public class SchellingCell extends Cell {
         sameNeighborsAgent2 = 0;
         totalNeighbors = 0;
         myThreshold = threshold;
+        wantsToMove = false;
     }
 
     /**
@@ -53,22 +53,34 @@ public class SchellingCell extends Cell {
 
             if (getCurrentState() == 1){
                 if (sameNeighborsAgent1/totalNeighbors < myThreshold){ // if the percentage of same neighbors is less than the threshold, then the agent will move
-                    setFutureStateValue(3);
+                    setFutureStateValue(1);
+                    wantsToMove = true;
                 }
                 else {
                     setFutureStateValue(1);
+                    wantsToMove = false;
                 }
             }
 
             if (getCurrentState() == 2){
                 if (sameNeighborsAgent2/totalNeighbors < myThreshold){
-                    setFutureStateValue(4);
+                    setFutureStateValue(2);
+                    wantsToMove = true;
                 }
                 else {
                     setFutureStateValue(2);
+                    wantsToMove = false;
                 }
             }
         }
+    }
+
+    /**
+     * Method that returns whether the cell wants to move
+     * @return true if the cell wants to move, false otherwise
+     */
+    public boolean getWantsToMove(){
+        return wantsToMove;
     }
 
 }
