@@ -19,37 +19,37 @@ class GridScreenTest extends DukeApplicationTest {
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
         GridScreen firstGrid = new GridScreen(800, stage, controller);
-        stage.setScene(firstGrid.createScene("EnglishLabels", "gridScreen.css"));
+        stage.setScene(firstGrid.createScene("English", "gridScreen.css"));
     }
 
     @Test
     void testPlayButton() {
-        Button button = lookup("#playText").query();
+        Button button = lookup("#playButton").query();
         clickOn(button);
     }
     @Test
     void testPauseButton() {
-        Button button = lookup("#pauseText").query();
+        Button button = lookup("#pauseButton").query();
         clickOn(button);
     }
     @Test
     void testStepButton() {
-        Button button = lookup("#stepText").query();
+        Button button = lookup("#stepButton").query();
         clickOn(button);
     }
     @Test
     void testResetButton() {
-        Button button = lookup("#resetText").query();
+        Button button = lookup("#resetButton").query();
         clickOn(button);
     }
     @Test
     void testExitButton() {
-        Button button = lookup("#exitText").query();
+        Button button = lookup("#exitButton").query();
         clickOn(button);
     }
     @Test
     void testBackButton() {
-        Button button = lookup("#backText").query();
+        Button button = lookup("#backButton").query();
         clickOn(button);
     }
     @Test

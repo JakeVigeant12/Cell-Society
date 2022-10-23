@@ -9,13 +9,13 @@ class FileInputTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
         FileInput fi = new FileInput(600, stage);
-            stage.setScene(fi.createScene("EnglishLabels", "fileInput.css"));
+            stage.setScene(fi.createScene("English", "fileInput.css"));
         stage.show();
     }
 
     @Test
     void testTextFieldAction() {
-        Button button = lookup("#buttonText").query();
+        Button button = lookup("#uploadButton").query();
         clickOn(button);
     }
 

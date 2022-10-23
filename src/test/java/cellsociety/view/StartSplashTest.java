@@ -16,7 +16,7 @@ class StartSplashTest extends DukeApplicationTest {
 
     @Test
     void testTextFieldAction() {
-        Button button = lookup("#englishText").query();
+        Button button = lookup("#English").query();
         clickOn(button);
     }
 
