@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.util.List;
+import java.util.Properties;
 
 public class WaTorWorldCell extends Cell {
     private int fishTurns;

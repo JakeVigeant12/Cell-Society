@@ -16,6 +16,7 @@ public class GraphGrid extends Grid{
   private HashMap<Cell, List<Cell>> myAdjacenyList;
   private List<Cell> emptyCells;
   private Properties myProperties;
+  private final String cellPackagePath = "cellsociety.model.cells.";
 
   /**
    * Constructor for GraphGrid class
@@ -39,15 +40,20 @@ public class GraphGrid extends Grid{
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.row(); i++){
-      //TODO: Implemented enum switch for now, refactor using abstract factory design pattern after functional
       for(int j = 0; j < inputLayout.column(0); j++){
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
         try {
-          Class<?> cellClass = Class.forName("cellsociety.model.cells."+ myProperties.get("Type")+"Cell");
+          Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
           Constructor<?>[] makeNewCell = cellClass.getConstructors();
-          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+          if(makeNewCell[0].getParameterCount() == 3){
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, myProperties.get("Parameters"));
+          }
+          else{
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+          }
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
           throw new RuntimeException(e);

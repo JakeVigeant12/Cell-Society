@@ -3,6 +3,7 @@ package cellsociety.model.cells;
 import cellsociety.model.cells.Cell;
 
 import java.util.List;
+import java.util.Properties;
 
 public class RockPaperScissorsCell extends Cell {
     private double numNeighbors;
