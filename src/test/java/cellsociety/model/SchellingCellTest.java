@@ -1,6 +1,6 @@
 package cellsociety.model;
 
-import cellsociety.model.cells.SchellingCell;
+import cellsociety.model.cells.SegregationCell;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class SchellingCellTest {
     int state = 1;
     int id = 0;
     double threshold = 0.5;
-    SchellingCell c = new SchellingCell(state, id, threshold);
+    SegregationCell c = new SegregationCell(state, id, threshold);
 
 
     @Test
@@ -28,15 +28,15 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborsAgent1Stay () {
-        SchellingCell mainAgent = new SchellingCell(1, 0, 0.25);
-        SchellingCell c1 = new SchellingCell(1, 0, 0.5);
-        SchellingCell c2 = new SchellingCell(1, 1, 0.5);
-        SchellingCell c3 = new SchellingCell(0, 2, 0.5);
-        SchellingCell c4 = new SchellingCell(0, 3, 0.5);
-        SchellingCell c5 = new SchellingCell(0, 0, 0.5);
-        SchellingCell c6 = new SchellingCell(0, 1, 0.5);
-        SchellingCell c7 = new SchellingCell(0, 2, 0.5);
-        SchellingCell c8 = new SchellingCell(0, 3, 0.5);
+        SegregationCell mainAgent = new SegregationCell(1, 0, 0.25);
+        SegregationCell c1 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(0, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(0, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -46,15 +46,15 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborsAgent1Leave () {
-        SchellingCell mainAgent = new SchellingCell(1, 0, 0.25);
-        SchellingCell c1 = new SchellingCell(1, 0, 0.5);
-        SchellingCell c2 = new SchellingCell(0, 1, 0.5);
-        SchellingCell c3 = new SchellingCell(0, 2, 0.5);
-        SchellingCell c4 = new SchellingCell(0, 3, 0.5);
-        SchellingCell c5 = new SchellingCell(2, 0, 0.5);
-        SchellingCell c6 = new SchellingCell(2, 1, 0.5);
-        SchellingCell c7 = new SchellingCell(2, 2, 0.5);
-        SchellingCell c8 = new SchellingCell(2, 3, 0.5);
+        SegregationCell mainAgent = new SegregationCell(1, 0, 0.25);
+        SegregationCell c1 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(0, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(2, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -64,15 +64,15 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborsAgent2Stay () {
-        SchellingCell mainAgent = new SchellingCell(2, 0, 0.5);
-        SchellingCell c1 = new SchellingCell(2, 0, 0.5);
-        SchellingCell c2 = new SchellingCell(2, 1, 0.5);
-        SchellingCell c3 = new SchellingCell(2, 2, 0.5);
-        SchellingCell c4 = new SchellingCell(2, 3, 0.5);
-        SchellingCell c5 = new SchellingCell(2, 0, 0.5);
-        SchellingCell c6 = new SchellingCell(1, 1, 0.5);
-        SchellingCell c7 = new SchellingCell(0, 2, 0.5);
-        SchellingCell c8 = new SchellingCell(0, 3, 0.5);
+        SegregationCell mainAgent = new SegregationCell(2, 0, 0.5);
+        SegregationCell c1 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(2, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -83,15 +83,15 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborsAgent2Leave () {
-        SchellingCell mainAgent = new SchellingCell(2, 0, 0.5);
-        SchellingCell c1 = new SchellingCell(2, 0, 0.5);
-        SchellingCell c2 = new SchellingCell(2, 1, 0.5);
-        SchellingCell c3 = new SchellingCell(1, 2, 0.5);
-        SchellingCell c4 = new SchellingCell(0, 3, 0.5);
-        SchellingCell c5 = new SchellingCell(1, 0, 0.5);
-        SchellingCell c6 = new SchellingCell(1, 1, 0.5);
-        SchellingCell c7 = new SchellingCell(2, 2, 0.5);
-        SchellingCell c8 = new SchellingCell(0, 3, 0.5);
+        SegregationCell mainAgent = new SegregationCell(2, 0, 0.5);
+        SegregationCell c1 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(1, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -101,10 +101,10 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborsBad () {
-        SchellingCell c1 = new SchellingCell(23124, 0, 1);
-        SchellingCell c2 = new SchellingCell(13, 1, 1);
-        SchellingCell c3 = new SchellingCell(2132, 2, 1);
-        SchellingCell c4 = new SchellingCell(213, 3, 1);
+        SegregationCell c1 = new SegregationCell(23124, 0, 1);
+        SegregationCell c2 = new SegregationCell(13, 1, 1);
+        SegregationCell c3 = new SegregationCell(2132, 2, 1);
+        SegregationCell c4 = new SegregationCell(213, 3, 1);
 
         c.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -114,10 +114,10 @@ public class SchellingCellTest {
 
     @Test
     void testNeighborStates () {
-        SchellingCell c1 = new SchellingCell(1, 0, 1);
-        SchellingCell c2 = new SchellingCell(0, 1, 1);
-        SchellingCell c3 = new SchellingCell(1, 2, 1);
-        SchellingCell c4 = new SchellingCell(0, 3, 1);
+        SegregationCell c1 = new SegregationCell(1, 0, 1);
+        SegregationCell c2 = new SegregationCell(0, 1, 1);
+        SegregationCell c3 = new SegregationCell(1, 2, 1);
+        SegregationCell c4 = new SegregationCell(0, 3, 1);
 
         List<Integer> neighborStates = c.getNeighborStates(List.of(c1, c2, c3, c4));
 
@@ -126,11 +126,11 @@ public class SchellingCellTest {
 
     @Test
     void testThreshold () {
-        SchellingCell mainCell = new SchellingCell(2, 5, 0);
-        SchellingCell c1 = new SchellingCell(1, 0, 0);
-        SchellingCell c2 = new SchellingCell(0, 1, 0);
-        SchellingCell c3 = new SchellingCell(0, 2, 0);
-        SchellingCell c4 = new SchellingCell(0, 3, 0);
+        SegregationCell mainCell = new SegregationCell(2, 5, 0);
+        SegregationCell c1 = new SegregationCell(1, 0, 0);
+        SegregationCell c2 = new SegregationCell(0, 1, 0);
+        SegregationCell c3 = new SegregationCell(0, 2, 0);
+        SegregationCell c4 = new SegregationCell(0, 3, 0);
 
         mainCell.setFutureState(List.of(c1, c2, c3, c4));
 

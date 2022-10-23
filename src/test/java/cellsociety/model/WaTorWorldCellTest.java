@@ -1,6 +1,6 @@
 package cellsociety.model;
 
-import cellsociety.model.cells.WaTorWorldCell;
+import cellsociety.model.cells.WatorWorldCell;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WaTorWorldCellTest {
     int state = 1;
     int id = 0;
-    WaTorWorldCell c = new WaTorWorldCell(state, id);
+    WatorWorldCell c = new WatorWorldCell(state, id);
 
 
     @Test
@@ -27,11 +27,11 @@ public class WaTorWorldCellTest {
 
     @Test
     void testNeighborsFishesWithFishesMove () {
-        WaTorWorldCell fish = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c1 = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c2 = new WaTorWorldCell(1, 1);
-        WaTorWorldCell c3 = new WaTorWorldCell(0, 2);
-        WaTorWorldCell c4 = new WaTorWorldCell(0, 3);
+        WatorWorldCell fish = new WatorWorldCell(1, 0);
+        WatorWorldCell c1 = new WatorWorldCell(1, 0);
+        WatorWorldCell c2 = new WatorWorldCell(1, 1);
+        WatorWorldCell c3 = new WatorWorldCell(0, 2);
+        WatorWorldCell c4 = new WatorWorldCell(0, 3);
 
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -41,11 +41,11 @@ public class WaTorWorldCellTest {
 
     @Test
     void testNeighborsFishesWithFishesStay () {
-        WaTorWorldCell fish = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c1 = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c2 = new WaTorWorldCell(1, 1);
-        WaTorWorldCell c3 = new WaTorWorldCell(1, 2);
-        WaTorWorldCell c4 = new WaTorWorldCell(1, 3);
+        WatorWorldCell fish = new WatorWorldCell(1, 0);
+        WatorWorldCell c1 = new WatorWorldCell(1, 0);
+        WatorWorldCell c2 = new WatorWorldCell(1, 1);
+        WatorWorldCell c3 = new WatorWorldCell(1, 2);
+        WatorWorldCell c4 = new WatorWorldCell(1, 3);
 
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -55,11 +55,11 @@ public class WaTorWorldCellTest {
 
     @Test
     void testNeighborsShark () {
-        WaTorWorldCell shark = new WaTorWorldCell(2, 0);
-        WaTorWorldCell c1 = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c2 = new WaTorWorldCell(1, 1);
-        WaTorWorldCell c3 = new WaTorWorldCell(1, 2);
-        WaTorWorldCell c4 = new WaTorWorldCell(1, 3);
+        WatorWorldCell shark = new WatorWorldCell(2, 0);
+        WatorWorldCell c1 = new WatorWorldCell(1, 0);
+        WatorWorldCell c2 = new WatorWorldCell(1, 1);
+        WatorWorldCell c3 = new WatorWorldCell(1, 2);
+        WatorWorldCell c4 = new WatorWorldCell(1, 3);
 
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -69,11 +69,11 @@ public class WaTorWorldCellTest {
 
     @Test
     void testNeighborsSharkNoEat () {
-        WaTorWorldCell shark = new WaTorWorldCell(2, 0);
-        WaTorWorldCell c1 = new WaTorWorldCell(2, 0);
-        WaTorWorldCell c2 = new WaTorWorldCell(2, 1);
-        WaTorWorldCell c3 = new WaTorWorldCell(2, 2);
-        WaTorWorldCell c4 = new WaTorWorldCell(2, 3);
+        WatorWorldCell shark = new WatorWorldCell(2, 0);
+        WatorWorldCell c1 = new WatorWorldCell(2, 0);
+        WatorWorldCell c2 = new WatorWorldCell(2, 1);
+        WatorWorldCell c3 = new WatorWorldCell(2, 2);
+        WatorWorldCell c4 = new WatorWorldCell(2, 3);
 
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -84,10 +84,10 @@ public class WaTorWorldCellTest {
 
     @Test
     void testNeighborStates () {
-        WaTorWorldCell c1 = new WaTorWorldCell(1, 0);
-        WaTorWorldCell c2 = new WaTorWorldCell(0, 1);
-        WaTorWorldCell c3 = new WaTorWorldCell(1, 2);
-        WaTorWorldCell c4 = new WaTorWorldCell(0, 3);
+        WatorWorldCell c1 = new WatorWorldCell(1, 0);
+        WatorWorldCell c2 = new WatorWorldCell(0, 1);
+        WatorWorldCell c3 = new WatorWorldCell(1, 2);
+        WatorWorldCell c4 = new WatorWorldCell(0, 3);
 
         List<Integer> neighborStates = c.getNeighborStates(List.of(c1, c2, c3, c4));
 
