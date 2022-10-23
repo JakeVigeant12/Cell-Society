@@ -2,6 +2,10 @@ package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -19,18 +23,10 @@ import java.io.File;
 import java.io.IOException;
 
 import static cellsociety.view.FileInput.FILE_CHOOSER;
+import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 
 public class GridScreen extends SceneCreator {
     private BorderPane borderPane;
-    private Button playButton;
-    private Button stepButton;
-    private Button pauseButton;
-    private Button resetButton;
-    private Button exitButton;
-    private Button backButton;
-    private Button saveButton;
-    private Slider speedSlider;
-    private Label sliderLabel;
     private Text fileTitle;
     private Text simulationType;
     private Text author;
@@ -38,14 +34,12 @@ public class GridScreen extends SceneCreator {
     private TextArea statusBox;
     private Text aboutTitle;
     private Paint mainColor = Color.LIGHTGRAY;
-    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
-    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
     private GridView gridView;
     private Timeline timeline;
     private CellSocietyController myController;
     private double refreshRate = 1;
     private final Stage myStage;
-
+    private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
     /**
      * Constructor for GridScreen, sets up the root, borderPane and the timeline
@@ -67,22 +61,20 @@ public class GridScreen extends SceneCreator {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-            gridView.updateGrid(myController.updateGrid());
+            stepSimulation();
         }));
-        timeline.pause();
+        pauseSimulation();
     }
 
     /**
      * Sets up the grid with properties
      */
     public Pane setScene() {
-        createButtons();
 
         createLeftPanel();
         createBottomPanel();
         createTopPanel();
 
-        handleButtons();
 
         gridView = new GridView();
         gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
@@ -124,9 +116,10 @@ public class GridScreen extends SceneCreator {
      * Creates the bottom panel with the buttons
      */
     private void createBottomPanel() {
-        HBox sliderBox = new HBox(sliderLabel, speedSlider);
-        sliderBox.getStyleClass().add("slider");
-        HBox controls = new HBox(playButton, pauseButton, stepButton, resetButton, sliderBox, saveButton);
+        HBox controls = new HBox(makeSlider("speedSlider"));
+        for(String button : BUTTONS_LIST.get(1)) {
+            controls.getChildren().add(makeButton(button));
+        }
         controls.setBackground(Background.fill(mainColor));
         controls.getStyleClass().add("allButtons");
         borderPane.setBottom(controls);
@@ -136,12 +129,11 @@ public class GridScreen extends SceneCreator {
      * Creates the top panel with the title and the exit button
      */
     private void createTopPanel() {
-        AnchorPane topPanel = new AnchorPane();
-        AnchorPane.setRightAnchor(exitButton, 0d);
-        AnchorPane.setTopAnchor(backButton, 0d);
-        topPanel.getChildren().addAll(backButton, exitButton);
+        HBox topPanel = new HBox();
+        for(String button : BUTTONS_LIST.get(0)) {
+            topPanel.getChildren().add(makeButton(button));
+        }
         topPanel.setBackground(Background.fill(mainColor));
-        topPanel.getStyleClass().add("exitBox");
         borderPane.setTop(topPanel);
     }
 
@@ -170,27 +162,15 @@ public class GridScreen extends SceneCreator {
     }
 
     /**
-     * Creates the buttons for the Grid Screen
-     */
-    private void createButtons() {
-        playButton = makeButton("playText");
-        pauseButton = makeButton("pauseText");
-        stepButton = makeButton("stepText");
-        resetButton = makeButton("resetText");
-        exitButton = makeButton("exitText");
-        backButton = makeButton("backButton");
-        saveButton = makeButton("saveText");
-        speedSlider = makeSlider("speedText");
-    }
-
-    /**
      * Method that creates and stylizes a slider
      * @param property resource bundle label
      * @return slider
      */
     private Slider makeSlider(String property) {
+        HBox sliderBox = new HBox(new Label(property));
+        sliderBox.getStyleClass().add("slider");
         Slider slider = new Slider();
-        sliderLabel = new Label(myResource.getString(property));
+        sliderBox.getChildren().add(slider);
         slider.setMin(0);
         slider.setMax(10);
         slider.setValue(1);
@@ -201,6 +181,15 @@ public class GridScreen extends SceneCreator {
         slider.setBlockIncrement(1);
         slider.setSnapToTicks(true);
         slider.setId(property);
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property),
+                    Number.class);
+                m.invoke(this, newValue);
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return slider;
     }
 
@@ -214,52 +203,82 @@ public class GridScreen extends SceneCreator {
         String labelText = myResource.getString(property);
         result.setText(labelText);
         result.setId(property);
+        result.setOnAction(event -> {
+            try {
+                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
+                m.invoke(this);
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return result;
     }
 
-    /**
-     * Handles the action events for buttons
-     */
-    public void handleButtons() {
-        playButton.setOnAction(event -> timeline.play());
-        stepButton.setOnAction(event -> {
-            gridView.updateGrid(myController.updateGrid());
-        });
-        resetButton.setOnAction(event -> {
+    private void saveSimulation() {
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+        FILE_CHOOSER.getExtensionFilters().add(extFilter);
+        File file = FILE_CHOOSER.showSaveDialog(myStage);
+        if (file != null) {
             try {
-                myController.resetController();
-                gridView.updateGrid(myController.getViewGrid());
-            } catch (CsvValidationException e) {
-                throw new RuntimeException(e);
+                myController.saveGrid(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
 
-        });
-        pauseButton.setOnAction(event -> timeline.pause());
-        exitButton.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600.0, myStage);
-            myStage.setScene(beginning.createScene("startSplash.css"));
-        });
-        backButton.setOnAction(event -> {
-            FileInput backInput = new FileInput(600, myStage);
-            myStage.setScene(backInput.createScene(language, "fileInput.css"));
-        });
-        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            refreshRate = newValue.doubleValue();
-            timeline.setRate(refreshRate);
-        });
-        saveButton.setOnAction(event -> {
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-            FILE_CHOOSER.getExtensionFilters().add(extFilter);
-            File file = FILE_CHOOSER.showSaveDialog(myStage);
-            if (file != null) {
-                try {
-                    myController.saveGrid(file);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+    private void changeSpeed(Number newValue) {
+        refreshRate = newValue.doubleValue();
+        timeline.setRate(refreshRate);
+    }
+
+    private void goBack() {
+        FileInput backInput = new FileInput(600, myStage);
+        myStage.setScene(backInput.createScene(language, "fileInput.css"));
+    }
+
+    /**
+     * Sets up the file picker
+     *
+     */
+    private void uploadFile() {
+        try {
+            myDataFile = FILE_CHOOSER.showOpenDialog(myStage);
+            if (myDataFile != null) {
+                myController = new CellSocietyController(myDataFile);
+                myController.loadSimulation(myStage);
+                myStage.setScene(createScene(language, GRID_SCREEN_CSS));
             }
-        });
+        } catch (IOException e) {
+            // should never happen since user selected the file
+            new Alert(Alert.AlertType.ERROR, "Invalid Data File Given").showAndWait();//TODO: Use a resource bundle for error string
+        } catch (CsvValidationException e) {
+        }
+    }
+
+    private void exitSimulation() {
+        StartSplash beginning = new StartSplash(600.0, myStage);
+        myStage.setScene(beginning.createScene("startSplash.css"));
+    }
+
+    private void pauseSimulation() {
+        timeline.pause();
+    }
+
+    private void resetSimulation() {
+        try {
+            myController.resetController();
+            gridView.updateGrid(myController.getViewGrid());
+        } catch (CsvValidationException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void stepSimulation() {
+        gridView.updateGrid(myController.updateGrid());
+    }
+
+    private void playSimulation() {
+        timeline.play();
     }
 }

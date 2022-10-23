@@ -24,7 +24,7 @@ public class CellSocietyController {
   private Model myModel;
   private View myView;
   private File simFile;
-  private Map<Integer, Cell> backEndCellsbyID;
+  private Map<Integer, Cell> backEndCellsByID;
 
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     this.simFile = simFile;
@@ -32,7 +32,7 @@ public class CellSocietyController {
     String csvPath = (String) properties.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, properties);
-    backEndCellsbyID = myModel.getCells();
+    backEndCellsByID = myModel.getCells();
     myCSVParser = new CSVParser();
     String[] parseRowCol = myCSVParser.parseFirstLine(csvPath);
     numCols = Integer.parseInt(parseRowCol[0]);
@@ -53,15 +53,15 @@ public class CellSocietyController {
 
   public GridWrapper getViewGrid() {
     GridWrapper stateGrid = new GridWrapper(numRows, numCols);
-    for(Integer key : backEndCellsbyID.keySet()) {
-      stateGrid.set((key -1)/ numCols, (key - 1)  % numCols, backEndCellsbyID.get(key).getCurrentState());
+    for(Integer key : backEndCellsByID.keySet()) {
+      stateGrid.set((key -1)/ numCols, (key - 1)  % numCols, backEndCellsByID.get(key).getCurrentState());
     }
     return stateGrid;
   }
 
   //For test purpose
   public void setBackEndCellsByID(Map<Integer, Cell> backEndCellsByID) {
-    this.backEndCellsbyID = backEndCellsByID;
+    this.backEndCellsByID = backEndCellsByID;
   }
 
   public GridWrapper updateGrid() {
@@ -77,7 +77,7 @@ public class CellSocietyController {
   public void resetController() throws CsvValidationException, IOException {
     String csvPath = (String) properties.get(INITIAL_STATES);
     myModel = new InitialModelImplementation(csvPath, properties);
-    backEndCellsbyID = myModel.getCells();
+    backEndCellsByID = myModel.getCells();
   }
 
   public void saveGrid(File file) throws IOException {
