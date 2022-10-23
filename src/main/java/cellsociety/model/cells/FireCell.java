@@ -35,8 +35,9 @@ public class FireCell extends Cell {
      */
     @Override
     public void setFutureState(List<Cell> neighbors) {
-        if (getCurrentState() == 1 && getNeighborStates(neighbors).contains(2)) { // If current cell is a tree and has a burning neighbor
-            if (Math.random() < myProbCatch) { // If random number is less than probability of catching fire
+        if (getCurrentState() == 1 && getNeighborStates(neighbors).contains(2)) {
+            double burnVal = Math.random();// If current cell is a tree and has a burning neighbor
+            if ( burnVal < myProbCatch) { // If random number is less than probability of catching fire
                 setFutureStateValue(2); // Set current cell to burning
             }
             else {
