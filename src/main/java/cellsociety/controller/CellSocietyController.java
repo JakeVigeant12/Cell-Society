@@ -21,6 +21,7 @@ import javax.swing.text.View;
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
+  private final CSVParser myCSVParser;
   private final int numRows;
   private final int numCols;
   public Properties properties;
@@ -36,8 +37,8 @@ public class CellSocietyController {
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, properties);
     backEndCellsbyID = myModel.getCells();
-
-    String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
+    myCSVParser = new CSVParser();
+    String[] parseRowCol = myCSVParser.parseFirstLine(csvPath);
     numCols = Integer.parseInt(parseRowCol[0]);
     numRows = Integer.parseInt(parseRowCol[1]);
   }
@@ -84,16 +85,10 @@ public class CellSocietyController {
   }
 
   public void saveGrid(File file) throws IOException {
-    try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-      GridWrapper grid = getViewGrid();
-      for (int i = 0; i < grid.row(); i++) {
-        List<Integer> row = grid.getRow(i);
-        String[] rowArray = new String[row.size()];
-        for (int j = 0; j < row.size(); j++) {
-          rowArray[j] = row.get(j).toString();
-        }
-        writer.writeNext(rowArray);
-      }
+    try {
+      myCSVParser.saveCurrentGrid(getViewGrid(), file);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 }

@@ -1,6 +1,7 @@
 package cellsociety.parser;
 
 import cellsociety.parser.Parser;
+import cellsociety.view.GridWrapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
@@ -40,11 +41,15 @@ public class CSVParser extends Parser {
     return csvReader.readNext();
   }
 
-  public void saveCurrentGrid(List<List<String>> grid, File file) throws IOException {
+  public void saveCurrentGrid(GridWrapper grid, File file) throws IOException {
     CSVWriter csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-    csvWriter.writeNext(new String[]{String.valueOf(grid.get(0).size()), String.valueOf(grid.size())});
-    for(List<String> row : grid) {
-      csvWriter.writeNext(row.toArray(new String[0]));
+    csvWriter.writeNext(new String[]{String.valueOf(grid.getRow(0).size()), String.valueOf(grid.getColumn(0).size())});
+    for(int[] row : grid.toArray()) {
+      String[] writeArray = new String[row.length];
+      for(int i = 0; i < row.length; i++) {
+        writeArray[i] = String.valueOf(row[i]);
+      }
+      csvWriter.writeNext(writeArray);
     }
     csvWriter.close();
   }
