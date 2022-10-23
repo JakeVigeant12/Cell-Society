@@ -5,14 +5,10 @@ import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.view.GridWrapper;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javafx.stage.Stage;
@@ -21,6 +17,7 @@ import javax.swing.text.View;
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
+  private final CSVParser myCSVParser;
   private final int numRows;
   private final int numCols;
   public Properties properties;
@@ -36,8 +33,8 @@ public class CellSocietyController {
     //TODO handle model type selection more elegantly, hardcoded for now
     myModel = new InitialModelImplementation(csvPath, properties);
     backEndCellsbyID = myModel.getCells();
-
-    String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
+    myCSVParser = new CSVParser();
+    String[] parseRowCol = myCSVParser.parseFirstLine(csvPath);
     numCols = Integer.parseInt(parseRowCol[0]);
     numRows = Integer.parseInt(parseRowCol[1]);
   }
@@ -63,8 +60,8 @@ public class CellSocietyController {
   }
 
   //For test purpose
-  public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
-    this.backEndCellsbyID = backEndCellsbyID;
+  public void setBackEndCellsByID(Map<Integer, Cell> backEndCellsByID) {
+    this.backEndCellsbyID = backEndCellsByID;
   }
 
   public GridWrapper updateGrid() {
@@ -84,16 +81,10 @@ public class CellSocietyController {
   }
 
   public void saveGrid(File file) throws IOException {
-    try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-      GridWrapper grid = getViewGrid();
-      for (int i = 0; i < grid.row(); i++) {
-        List<Integer> row = grid.getRow(i);
-        String[] rowArray = new String[row.size()];
-        for (int j = 0; j < row.size(); j++) {
-          rowArray[j] = row.get(j).toString();
-        }
-        writer.writeNext(rowArray);
-      }
+    try {
+      myCSVParser.saveCurrentGrid(getViewGrid(), file);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 }

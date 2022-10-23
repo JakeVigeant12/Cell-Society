@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
+  private Properties myProperties;
   private final SimType simType;
 
   /**
@@ -18,10 +20,11 @@ public class GraphGrid extends Grid{
    * @param gridParsing is the layout of the grid
    * @param simInput is the type of simulation
    */
-  public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
+  public GraphGrid(List<List<String>> gridParsing, SimType simInput, Properties properties) {
     simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
+    myProperties = properties;
     createCells(gridParsing);
     initializeNeighbors(gridParsing);
   }
@@ -47,11 +50,19 @@ public class GraphGrid extends Grid{
             break;
           case Fire:
             //TODO: Implement simParameters this is a dummy value
-            newCell = new FireCell(cellData, cellCount, 0.1); // TODO: Get probCatch
+            Double probCatch = 0.1;
+            if(myProperties.containsKey("Parameters")) {
+              probCatch = Double.parseDouble(myProperties.getProperty("Parameters"));
+            }
+            newCell = new FireCell(cellData, cellCount, probCatch); // TODO: Get probCatch
             break;
             //TODO: implementations for these other cells
           case Segregation:
-            newCell = new SchellingCell(cellData, cellCount, 0.5); // TODO: Get threshold
+            Double threshold = 0.1;
+            if(myProperties.containsKey("Parameters")) {
+              threshold = Double.parseDouble(myProperties.getProperty("Parameters"));
+            }
+            newCell = new SchellingCell(cellData, cellCount, threshold); // TODO: Get threshold
             break;
           case WatorWorld:
             newCell = new WaTorWorldCell(cellData, cellCount);

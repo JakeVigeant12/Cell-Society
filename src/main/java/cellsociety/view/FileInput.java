@@ -35,25 +35,26 @@ public class FileInput extends SceneCreator {
     public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
+    private final Stage myStage;
 
     /**
      * Constructor for FileInput
      *
      * @param size
      */
-    public FileInput(double size) {
-        super(size);
+    public FileInput(double size, Stage stage) {
+        super(size, stage);
         inputPane = new BorderPane();
         inputBackground = new ImageView();
+        myStage = stage;
     }
 
     /**
      * Sets up the file input screen
      *
-     * @param stage
      * @return
      */
-    public Pane setScene(Stage stage) {
+    public Pane setScene() {
         //add back button
         input = makeButton("buttonText");
         input.getStyleClass().add("button");
@@ -73,40 +74,38 @@ public class FileInput extends SceneCreator {
         upload.getStyleClass().add("uploadBox");
         inputPane.setTop(upload);
 
-        buttonPress(stage);
+        buttonPress();
         return inputPane;
     }
 
     /**
      * Sets up the button press handling
      *
-     * @param stage
      */
-    private void buttonPress(Stage stage) {
+    private void buttonPress() {
         //add go back button
         input.setOnAction(event -> {
-            filePick(stage);
+            filePick();
 //            nextScreen(stage);
         });
         back.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600);
-            stage.setScene(beginning.createScene(stage, START_SPLASH_CSS));
+            StartSplash beginning = new StartSplash(600, myStage);
+            myStage.setScene(beginning.createScene(START_SPLASH_CSS));
         });
     }
 
     /**
      * Sets up the file picker
      *
-     * @param stage
      */
-    public void filePick(Stage stage) {
+    public void filePick() {
         try {
-            myDataFile = FILE_CHOOSER.showOpenDialog(stage);
+            myDataFile = FILE_CHOOSER.showOpenDialog(myStage);
             if (myDataFile != null) {
                 CellSocietyController controller = new CellSocietyController(myDataFile);
-                controller.loadSimulation(stage);
-                GridScreen firstGrid = new GridScreen(800, controller);
-                stage.setScene(firstGrid.createScene(stage, language, GRID_SCREEN_CSS));
+                controller.loadSimulation(myStage);
+                GridScreen firstGrid = new GridScreen(800, myStage, controller);
+                myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
             }
         } catch (IOException e) {
             // should never happen since user selected the file

@@ -19,63 +19,62 @@ public abstract class SceneCreator {
     protected String language;
     protected ResourceBundle myResource;
 
+    private Stage myStage;
     /**
      * Constructor for SceneCreator
      *
      * @param size
      */
-    public SceneCreator(double size) {
+    public SceneCreator(double size, Stage stage) {
+        myStage = stage;
         mySize = size;
     }
 
     /**
      * Sets up the scene
      *
-     * @param stage
      * @param css
      * @return
      */
-    public Scene createScene(Stage stage, String css) {
+    public Scene createScene(String css) {
 //        previousScene = stage.getScene();
-        Scene scene = new Scene(setScene(stage), mySize, mySize);
+        Scene scene = new Scene(setScene(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
         return scene;
     }
 
-    public Scene createScene(Stage stage, String language, String css) {
+    public Scene createScene(String language, String css) {
 //        previousScene = stage.getScene();
         this.language = language;
         myResource = ResourceBundle.getBundle(language);
-        Scene scene = new Scene(setScene(stage), mySize, mySize);
+        Scene scene = new Scene(setScene(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
         return scene;
     }
 
-    protected Pane setScene(Stage stage) {
+    protected Pane setScene() {
         return root;
     }
 
     /**
      * Sets a new stage to display
      *
-     * @param stage
      */
-    public void nextScreen(Stage stage) {
-        stage.setScene(myScene);
-        stage.setHeight(mySize);
-        stage.setWidth(mySize);
-        stage.show();
+    public void nextScreen() {
+        myStage.setScene(myScene);
+        myStage.setHeight(mySize);
+        myStage.setWidth(mySize);
+        myStage.show();
     }
 
     /**
      * Sets the previous scene to display
      *
-     * @param stage
      */
-    public void previousScreen(Stage stage) {
-        stage.setScene(previousScene);
-        stage.show();
+    public void previousScreen() {
+        myStage.setScene(previousScene);
+        myStage.show();
     }
 }
