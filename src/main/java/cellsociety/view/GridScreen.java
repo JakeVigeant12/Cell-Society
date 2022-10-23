@@ -5,7 +5,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.ResourceBundle;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -21,6 +21,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+
 
 import static cellsociety.view.FileInput.FILE_CHOOSER;
 import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
@@ -69,19 +70,20 @@ public class GridScreen extends SceneCreator {
     /**
      * Sets up the grid with properties
      */
-    public Pane setScene() {
+    public Pane setUpRootPane() {
 
         createLeftPanel();
         createBottomPanel();
         createTopPanel();
 
 
-        gridView = new GridView();
+        gridView = new GridView(myController);
         gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
         gridView.setUpGridViewSize();
+        gridView.updateControllerFromListeners();
         borderPane.setPadding(new Insets(10));
 
         return borderPane;
@@ -227,6 +229,7 @@ public class GridScreen extends SceneCreator {
         }
     }
 
+
     private void changeSpeed(Number newValue) {
         refreshRate = newValue.doubleValue();
         timeline.setRate(refreshRate);
@@ -247,12 +250,13 @@ public class GridScreen extends SceneCreator {
             if (myDataFile != null) {
                 myController = new CellSocietyController(myDataFile);
                 myController.loadSimulation(myStage);
-                myStage.setScene(createScene(language, GRID_SCREEN_CSS));
+                GridScreen firstGrid = new GridScreen(800, myStage, myController);
+                myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
             }
         } catch (IOException e) {
             // should never happen since user selected the file
             new Alert(Alert.AlertType.ERROR, "Invalid Data File Given").showAndWait();//TODO: Use a resource bundle for error string
-        } catch (CsvValidationException e) {
+        } catch (CsvValidationException ignored) {
         }
     }
 

@@ -40,7 +40,7 @@ public class StartSplash extends SceneCreator {
         myBackground = new ImageView();
     }
 
-    public Pane setScene() {
+    public Pane setUpRootPane() {
 
         mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");

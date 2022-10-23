@@ -41,7 +41,7 @@ public abstract class SceneCreator {
      */
     public Scene createScene(String css) {
 //        previousScene = stage.getScene();
-        Scene scene = new Scene(setScene(), mySize, mySize);
+        Scene scene = new Scene(setUpRootPane(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
         return scene;
@@ -52,13 +52,13 @@ public abstract class SceneCreator {
         this.language = language;
         myResource = ResourceBundle.getBundle(language);
         myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));;
-        Scene scene = new Scene(setScene(), mySize, mySize);
+        Scene scene = new Scene(setUpRootPane(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
         return scene;
     }
 
-    protected Pane setScene() {
+    protected Pane setUpRootPane() {
         return root;
     }
 

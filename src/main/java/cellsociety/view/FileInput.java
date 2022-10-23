@@ -5,7 +5,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.ResourceBundle;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -54,7 +54,7 @@ public class FileInput extends SceneCreator {
      *
      * @return
      */
-    public Pane setScene() {
+    public Pane setUpRootPane() {
         Text title = new Text(myResource.getString("titleText"));
         title.getStyleClass().add("mainText");
 
@@ -147,3 +147,4 @@ public class FileInput extends SceneCreator {
         return result;
     }
 }
+

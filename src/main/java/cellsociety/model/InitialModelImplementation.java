@@ -3,6 +3,7 @@ package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.parser.CSVParser;
 import cellsociety.parser.Parser;
+import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
@@ -14,14 +15,11 @@ import java.util.Properties;
 public class InitialModelImplementation extends Model {
 
   private final Grid myGrid;
-  private final Parser gridParser;
   private final SimType simType;
 
-  public InitialModelImplementation(String csvPath, Properties simParameters)
-      throws IOException, CsvValidationException {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
     simType = SimType.valueOf((String) simParameters.get("Type"));
-    gridParser = new CSVParser();
-    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(csvPath), simType, simParameters);
+    myGrid = new GraphGrid(gridWrapper, simType, simParameters);
 
   }
 
