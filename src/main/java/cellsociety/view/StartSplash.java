@@ -22,19 +22,21 @@ public class StartSplash extends SceneCreator {
     private Button spanishButton;
     private Button frenchButton;
     private ImageView myBackground;
+    private final Stage myStage;
 
     public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
     public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
     ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
-    public StartSplash(double size) {
-        super(size);
+    public StartSplash(double size, Stage stage) {
+        super(size, stage);
+        myStage = stage;
         startPane = new BorderPane();
         myBackground = new ImageView();
     }
 
-    public Pane setScene(Stage stage) {
+    public Pane setScene() {
         englishButton = makeButton("englishText");
         spanishButton = makeButton("spanishText");
         frenchButton = makeButton("frenchText");
@@ -64,7 +66,7 @@ public class StartSplash extends SceneCreator {
         startPane.setTop(vBoxTop);
         startPane.setBottom(vBoxBot);
         startPane.setPadding(new Insets(25));
-        handleEvents(stage);
+        handleEvents();
 
         return startPane;
     }
@@ -74,19 +76,20 @@ public class StartSplash extends SceneCreator {
         String label = startInfo.getString(property);
         result.setText(label);
         result.setId(property);
+        result.onActionProperty();
         return result;
     }
 
-    public void handleEvents(Stage stage) {
-        FileInput fi = new FileInput(mySize);
+    public void handleEvents() {
+        FileInput fi = new FileInput(mySize, myStage);
         englishButton.setOnAction(event -> {
-            stage.setScene(fi.createScene(stage, "EnglishLabels", "fileInput.css"));
+            myStage.setScene(fi.createScene("EnglishLabels", "fileInput.css"));
         });
         spanishButton.setOnAction(event -> {
-            stage.setScene(fi.createScene(stage, "SpanishLabels", "fileInput.css"));
+            myStage.setScene(fi.createScene("SpanishLabels", "fileInput.css"));
         });
         frenchButton.setOnAction(event -> {
-            stage.setScene(fi.createScene(stage, "FrenchLabels", "fileInput.css"));
+            myStage.setScene(fi.createScene("FrenchLabels", "fileInput.css"));
         });
     }
 }

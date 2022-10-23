@@ -44,6 +44,7 @@ public class GridScreen extends SceneCreator {
     private Timeline timeline;
     private CellSocietyController myController;
     private double refreshRate = 1;
+    private final Stage myStage;
 
 
     /**
@@ -51,10 +52,11 @@ public class GridScreen extends SceneCreator {
      *
      * @param size
      */
-    public GridScreen(double size, CellSocietyController controller) {
-        super(size);
+    public GridScreen(double size, Stage stage, CellSocietyController controller) {
+        super(size, stage);
         this.myController = controller;
         borderPane = new BorderPane();
+        myStage = stage;
         setUpTimeline();
     }
 
@@ -73,14 +75,14 @@ public class GridScreen extends SceneCreator {
     /**
      * Sets up the grid with properties
      */
-    public Pane setScene(Stage stage) {
+    public Pane setScene() {
         createButtons();
 
         createLeftPanel();
         createBottomPanel();
         createTopPanel();
 
-        handleButtons(stage);
+        handleButtons(myStage);
 
         gridView = new GridView();
         gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
@@ -217,9 +219,8 @@ public class GridScreen extends SceneCreator {
 
     /**
      * Handles the action events for buttons
-     * @param stage
      */
-    public void handleButtons(Stage stage) {
+    public void handleButtons() {
         playButton.setOnAction(event -> timeline.play());
         stepButton.setOnAction(event -> {
             gridView.updateGrid(myController.updateGrid());
@@ -237,12 +238,12 @@ public class GridScreen extends SceneCreator {
         });
         pauseButton.setOnAction(event -> timeline.pause());
         exitButton.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600.0);
-            stage.setScene(beginning.createScene(stage, "startSplash.css"));
+            StartSplash beginning = new StartSplash(600.0, myStage);
+            myStage.setScene(beginning.createScene("startSplash.css"));
         });
         backButton.setOnAction(event -> {
-            FileInput backInput = new FileInput(600);
-            stage.setScene(backInput.createScene(stage, language, "fileInput.css"));
+            FileInput backInput = new FileInput(600, myStage);
+            myStage.setScene(backInput.createScene(language, "fileInput.css"));
         });
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             refreshRate = newValue.doubleValue();
@@ -251,7 +252,7 @@ public class GridScreen extends SceneCreator {
         saveButton.setOnAction(event -> {
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
             FILE_CHOOSER.getExtensionFilters().add(extFilter);
-            File file = FILE_CHOOSER.showSaveDialog(stage);
+            File file = FILE_CHOOSER.showSaveDialog(myStage);
             if (file != null) {
                 try {
                     myController.saveGrid(file);
