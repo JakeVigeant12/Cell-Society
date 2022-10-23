@@ -51,14 +51,14 @@ public class GridView {
      *
      * @param gridData
      */
-    public void setUpView(GridWrapper gridData, String simultionGenre) {
+    public void setUpView(GridWrapper gridData, String simulationGenre) {
         n = gridData.row();
         m = gridData.column();
 
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                CellView node = new CellView(gridData.get(y, x), simultionGenre);
+                CellView node = new CellView(gridData.get(y, x), simulationGenre);
                 // add cells to group
                 grid.add(node, x, y);
                 // add to grid for further reference using an array
