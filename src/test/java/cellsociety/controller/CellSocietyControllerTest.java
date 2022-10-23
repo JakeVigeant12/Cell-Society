@@ -5,10 +5,7 @@ import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +41,7 @@ class CellSocietyControllerTest {
     cellMap.put(7, cell7);
     cellMap.put(8, cell8);
     cellMap.put(9, cell9);
-    myController.setBackEndCellsbyID(cellMap);
+    myController.setBackEndCellsByID(cellMap);
     GridWrapper expected = new GridWrapper(3, 3);
     for(Integer key : cellMap.keySet()) {
       expected.set((key -1)/ 3, (key - 1)  % 3, cellMap.get(key).getCurrentState());

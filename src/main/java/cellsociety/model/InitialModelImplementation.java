@@ -22,7 +22,7 @@ public class InitialModelImplementation extends Model {
       throws IOException, CsvValidationException {
     simType = SimType.valueOf((String) simParameters.get("Type"));
     gridParser = new CSVParser();
-    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(csvPath), simType);
+    myGrid = new GraphGrid((List<List<String>>) gridParser.parseData(csvPath), simType, simParameters);
 
   }
 

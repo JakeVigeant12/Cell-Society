@@ -5,14 +5,10 @@ import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.view.GridWrapper;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javafx.stage.Stage;
@@ -64,8 +60,8 @@ public class CellSocietyController {
   }
 
   //For test purpose
-  public void setBackEndCellsbyID(Map<Integer, Cell> backEndCellsbyID) {
-    this.backEndCellsbyID = backEndCellsbyID;
+  public void setBackEndCellsByID(Map<Integer, Cell> backEndCellsByID) {
+    this.backEndCellsbyID = backEndCellsByID;
   }
 
   public GridWrapper updateGrid() {
