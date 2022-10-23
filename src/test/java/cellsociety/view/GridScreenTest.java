@@ -10,6 +10,8 @@ import util.DukeApplicationTest;
 import java.io.File;
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class GridScreenTest extends DukeApplicationTest {
     Stage stage;
     @Override
@@ -18,19 +20,20 @@ class GridScreenTest extends DukeApplicationTest {
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
-<<<<<<< HEAD
         AppView firstGrid = new AppView(800, controller);
         stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridscreen.css"));
-=======
-        AppView firstGrid = new AppView(800, controller);
-        stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridScreen.css"));
->>>>>>> master
     }
 
     @Test
     void testPlayButton() {
         Button button = lookup("#playText").query();
         clickOn(button);
+    }
+    @Test
+    void testClickCell() {
+        CellView cell = lookup("#cell1,2").query();
+        clickOn(cell);
+        assertEquals(1, cell.stateProperty().get());
     }
     @Test
     void testPauseButton() {

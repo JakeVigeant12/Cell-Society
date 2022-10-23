@@ -4,6 +4,8 @@ import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -82,12 +84,13 @@ public class AppView extends SceneCreator {
 
         handleButtons(stage);
 
-        gridView = new GridView();
+        gridView = new GridView(myController);
         gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
         GridPane grid = gridView.getGrid();
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
         gridView.setUpGridViewSize();
+        gridView.updateControllerFromListeners();
         borderPane.setPadding(new Insets(10));
 
         return borderPane;

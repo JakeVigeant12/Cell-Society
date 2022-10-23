@@ -4,21 +4,24 @@ import cellsociety.model.cells.GameOfLifeCell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import cellsociety.view.GridWrapper;
 import org.junit.jupiter.api.Test;
 
 import static cellsociety.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {
-  List<List<String>> gridParsing = new ArrayList<>();
+  GridWrapper gridParsing = new GridWrapper();
 
 
   @Test
   void testBasicObject(){
     constructTestArrayList(4,4);
+//    System.out.println(gridParsing.column(0));
     GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife);
     HashMap<Integer, Cell> testCells = new HashMap<>();
-    for(int i = 0; i <= 16; i++){
+    for(int i = 0; i < 16; i++){
 
       testCells.put(i, new GameOfLifeCell(1,i));
     }
@@ -34,12 +37,12 @@ public class GraphGridTest {
   }
   public void constructTestArrayList(int rows, int cols){
     for(int i = 0; i < rows; i++){
-      gridParsing.add(new ArrayList<String>());
+      gridParsing.addRow();
       for(int j = 0; j < cols; j++){
-        if(i == 0 && j ==0){
-          gridParsing.get(i).add("0");
-        }
-        gridParsing.get(i).add("1");
+        if(i == 0 && j ==0)
+          gridParsing.addValueToRow(i, 0);
+        else
+          gridParsing.addValueToRow(i, 1);
       }
     }
   }

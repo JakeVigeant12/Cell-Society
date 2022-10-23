@@ -2,6 +2,7 @@ package cellsociety.model;
 
 import cellsociety.SimType;
 import cellsociety.model.cells.*;
+import cellsociety.view.GridWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class GraphGrid extends Grid{
    * @param gridParsing is the layout of the grid
    * @param simInput is the type of simulation
    */
-  public GraphGrid(List<List<String>> gridParsing, SimType simInput) {
+  public GraphGrid(GridWrapper gridParsing, SimType simInput) {
     simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
@@ -32,15 +33,15 @@ public class GraphGrid extends Grid{
    */
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void createCells(List<List<String>> inputLayout) {
+  public void createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
-    for(int i = 0; i < inputLayout.size(); i++){
+    for(int i = 0; i < inputLayout.row(); i++){
       //TODO: Implemented enum switch for now, refactor using abstract factory design pattern after functional
-      for(int j = 0; j < inputLayout.get(i).size(); j++){
+      for(int j = 0; j < inputLayout.column(0); j++){
         cellCount++;
         Cell newCell = null;
-        Integer cellData  = Integer.parseInt(inputLayout.get(i).get(j));
+        int cellData  = inputLayout.get(i, j);
         switch(simType) {
           case GameOfLife:
             newCell = new GameOfLifeCell(cellData,cellCount);
@@ -73,18 +74,18 @@ public class GraphGrid extends Grid{
    * @param gridParsing is the layout of the grid from the parser
    */
   @Override
-  public void initializeNeighbors(List<List<String>> gridParsing) {
+  public void initializeNeighbors(GridWrapper gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
     //ID of the current cell
     int currId = 0;
-    for (int i = 0; i < gridParsing.size(); i++) {
-      for (int j = 0; j < gridParsing.get(i).size(); j++) {
+    for (int i = 0; i < gridParsing.row(); i++) {
+      for (int j = 0; j < gridParsing.column(0); j++) {
         List<Cell> neighbors = new ArrayList<>();
         currId++;
         Cell currentCell = myCells.get(currId);
         myAdjacenyList.putIfAbsent(currentCell, neighbors);
         if(isInBounds(i - 1, j, gridParsing)){
-          int topNeighborId = currId - gridParsing.get(i).size();
+          int topNeighborId = currId - gridParsing.column(0);
           myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
         }
         if(isInBounds(i, j+1, gridParsing)){
@@ -96,23 +97,23 @@ public class GraphGrid extends Grid{
           myAdjacenyList.get(currentCell).add(myCells.get(leftNeighborId));
         }
         if(isInBounds(i+1, j, gridParsing)){
-          int bottomNeighborId = currId + gridParsing.get(i).size();
+          int bottomNeighborId = currId + gridParsing.column(0);
           myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
         }
         if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.get(i).size() + 1;
+          int bottomRightNeighborId = currId + gridParsing.column(0) + 1;
           myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
         }
         if(isInBounds(i-1, j-1, gridParsing)){
-          int upperLeftNeighborId = currId - gridParsing.get(i).size() -1;
+          int upperLeftNeighborId = currId - gridParsing.column(0) -1;
           myAdjacenyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
         }
         if(isInBounds(i-1, j+1, gridParsing)){
-          int upperRightNeighborId = currId - gridParsing.get(i).size() + 1;
+          int upperRightNeighborId = currId - gridParsing.column(0) + 1;
           myAdjacenyList.get(currentCell).add(myCells.get(upperRightNeighborId));
         }
         if(isInBounds(i+1, j-1, gridParsing)){
-          int lowerLeftNeighborId = currId + gridParsing.get(i).size() - 1;
+          int lowerLeftNeighborId = currId + gridParsing.column(0) - 1;
           myAdjacenyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
         }
       }
@@ -123,12 +124,11 @@ public class GraphGrid extends Grid{
    * Method that checks if the cell is in bounds
    * @param row
    * @param col
-   * @param gridParsing
+   * @param gridWrapper
    * @return
    */
-  public static boolean isInBounds(int row, int col, List<List<String>> gridParsing){
-    boolean res = (row >= 0 && row < gridParsing.size()) && (col >= 0 && col < gridParsing.get(row).size());
-    return res;
+  public static boolean isInBounds(int row, int col, GridWrapper gridWrapper){
+    return (row >= 0 && row < gridWrapper.row()) && (col >= 0 && col < gridWrapper.column(0));
   }
 
   /**

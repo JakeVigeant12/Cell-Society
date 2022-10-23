@@ -1,8 +1,10 @@
 package cellsociety.parser;
 
 import cellsociety.parser.Parser;
+import cellsociety.view.GridWrapper;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,29 +16,36 @@ import java.util.List;
 
 public class CSVParser extends Parser {
 
-  private static final String DATA_FOLDER = "data/";
-  private FileReader myFileReader;
-  private List<List<String>> grid;
+    private static final String DATA_FOLDER = "data/";
+    private FileReader myFileReader;
+    private List<List<String>> grid;
 
-  public CSVParser(String csvPath)
-      throws FileNotFoundException, CsvValidationException, IOException {
-    myFileReader = new FileReader(DATA_FOLDER + csvPath);
-  }
-  @Override
-  public List<List<String>> parseData(File input) throws IOException, CsvValidationException {
-    CSVReader csvReader = new CSVReader(myFileReader);
-    csvReader.readNext();
-    grid = new ArrayList<>();
-    String[] states = csvReader.readNext();
-    while (states != null) {
-      grid.add(Arrays.asList(states));
-      states = csvReader.readNext();
+    public CSVParser(String csvPath) throws IOException {
+        myFileReader = new FileReader(DATA_FOLDER + csvPath);
     }
-    return grid;
-  }
 
-  public String[] parseFirstLine() throws CsvValidationException, IOException {
-    CSVReader csvReader = new CSVReader(myFileReader);
-    return csvReader.readNext();
-  }
+    @Override
+    public GridWrapper parseData() throws IOException, CsvValidationException {
+        GridWrapper gridWrapper = new GridWrapper();
+        //https://www.geeksforgeeks.org/reading-csv-file-java-using-opencsv/
+        CSVReader csvReader = new CSVReader(myFileReader);
+        String[] nextRecord;
+        //TODO: refactor this (read size of the grid)
+        int row = -1;
+        while ((nextRecord = csvReader.readNext()) != null) {
+            if (row >= 0) {
+                gridWrapper.addRow();
+                for (String cell : nextRecord) {
+                    gridWrapper.addValueToRow(row, Integer.parseInt(cell));
+                }
+            }
+            row++;
+        }
+        return gridWrapper;
+    }
+
+    public String[] parseFirstLine() throws CsvValidationException, IOException {
+        CSVReader csvReader = new CSVReader(myFileReader);
+        return csvReader.readNext();
+    }
 }

@@ -1,10 +1,13 @@
 package cellsociety.controller;
 
+import cellsociety.SimType;
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
+import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
+import cellsociety.view.GridWrapperObservable;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import javafx.beans.property.IntegerProperty;
 import javafx.stage.Stage;
 import javax.swing.text.View;
 
@@ -32,9 +37,12 @@ public class CellSocietyController {
   public CellSocietyController(File simFile) throws IOException, CsvValidationException {
     this.simFile = simFile;
     getSimData();
-    String csvPath = (String) properties.get(INITIAL_STATES);
     //TODO handle model type selection more elegantly, hardcoded for now
-    myModel = new InitialModelImplementation(csvPath, properties);
+    String csvPath = (String) properties.get(INITIAL_STATES);
+    SimType simType = SimType.valueOf((String) properties.get("Type"));
+    Parser gridParser = new CSVParser(csvPath);
+    GridWrapper gridWrapper = gridParser.parseData();
+    myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsbyID = myModel.getCells();
 
     String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
@@ -54,8 +62,14 @@ public class CellSocietyController {
     return properties;
   }
 
-  public GridWrapper getViewGrid() {
-    GridWrapper stateGrid = new GridWrapper(numRows, numCols);
+  public void update (GridWrapperObservable gridWrapperObservable) throws CsvValidationException, IOException {
+
+    myModel = new InitialModelImplementation(gridWrapperObservable.toGridWrapper(), properties);
+    backEndCellsbyID = myModel.getCells();
+  }
+
+  public GridWrapperObservable getViewGrid() {
+    GridWrapperObservable stateGrid = new GridWrapperObservable(numRows, numCols);
     for(Integer key : backEndCellsbyID.keySet()) {
       stateGrid.set((key -1)/ numCols, (key - 1)  % numCols, backEndCellsbyID.get(key).getCurrentState());
     }
@@ -67,7 +81,7 @@ public class CellSocietyController {
     this.backEndCellsbyID = backEndCellsbyID;
   }
 
-  public GridWrapper updateGrid() {
+  public GridWrapperObservable updateGrid() {
     myModel.computeStates();
     return getViewGrid();
   }
@@ -79,15 +93,18 @@ public class CellSocietyController {
    */
   public void resetController() throws CsvValidationException, IOException {
     String csvPath = (String) properties.get(INITIAL_STATES);
-    myModel = new InitialModelImplementation(csvPath, properties);
+    SimType simType = SimType.valueOf((String) properties.get("Type"));
+    Parser gridParser = new CSVParser(csvPath);
+    GridWrapper gridWrapper = gridParser.parseData();
+    myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsbyID = myModel.getCells();
   }
 
   public void saveGrid(File file) throws IOException {
     try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-      GridWrapper grid = getViewGrid();
+      GridWrapperObservable grid = getViewGrid();
       for (int i = 0; i < grid.row(); i++) {
-        List<Integer> row = grid.getRow(i);
+        List<IntegerProperty> row = grid.getRow(i);
         String[] rowArray = new String[row.size()];
         for (int j = 0; j < row.size(); j++) {
           rowArray[j] = row.get(j).toString();

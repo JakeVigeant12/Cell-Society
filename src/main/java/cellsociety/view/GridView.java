@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -11,28 +13,28 @@ import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 
 public class GridView {
     GridPane grid;
     private final DoubleProperty widthProperty = new SimpleDoubleProperty();
     private final DoubleProperty heightProperty = new SimpleDoubleProperty();
     private final DoubleProperty sizeProperty = new SimpleDoubleProperty();
+    private CellSocietyController myController;
     private int n;
     private int m;
     //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
     private CellView[][] cells;
     final double rem = new Text("").getLayoutBounds().getHeight();
-    private GridWrapper gridStates;
-    private ObservableList<ObservableList<IntegerProperty>> grids = FXCollections.observableArrayList();
-    private ObservableList<IntegerProperty> gg = FXCollections.observableArrayList();
-    ObservableList<IntegerProperty> list = FXCollections.observableArrayList(
-            item -> new Observable[] {item});
+    GridWrapperObservable gridStates;
 
     /**
      * Constructor for GridView, sets up the grid and the cells
      */
-    public GridView() {
+    public GridView(CellSocietyController controller) {
         grid = new GridPane();
+        myController = controller;
     }
 
     public void setUpGridViewSize() {
@@ -44,14 +46,22 @@ public class GridView {
         });
     }
 
-    public void setUpGridFeedBack() {
-        list.addListener((ListChangeListener.Change<? extends IntegerProperty> c) -> {
-            while (c.next()) {
-                if (c.wasUpdated()) {
-                    System.out.println("Items from "+c.getFrom()+" to "+c.getTo()+" changed");
-                }
+    public GridWrapperObservable GetGridWrapperObservable() {
+        return gridStates;
+    }
+
+    public void updateControllerFromListeners() {
+        gridStates.setListener(data -> {
+            try {
+                myController.update(data);
+            } catch (CsvValidationException | IOException e) {
+                throw new RuntimeException(e);
             }
         });
+    }
+
+    public GridWrapperObservable getGridStates() {
+        return gridStates;
     }
 
     public void updateCellsWidth(double size) {
@@ -68,25 +78,24 @@ public class GridView {
      *
      * @param gridData
      */
-    public void setUpView(GridWrapper gridData, String simultionGenre) {
+    public void setUpView(GridWrapperObservable gridData, String simultionGenre) {
         n = gridData.row();
         m = gridData.column();
 //        gridStates = new GridWrapper(n, m);
+        gridStates = new GridWrapperObservable(n, m);
 
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
                 CellView node = new CellView(gridData.get(y, x), simultionGenre);
+                node.setId("cell" + y + "," + x);
                 // add cells to group
                 grid.add(node, x, y);
                 // add to grid for further reference using an array
-//                gridStates.set(y, x, gridData.get(y, x));
-//                gridStates.get(y, x).bind(node.stateProperty());
-                list.add(node.stateProperty());
+                gridStates.set(y, x, node.stateProperty());
                 cells[y][x] = node;
             }
         }
-        setUpGridFeedBack();
     }
 
     /**
@@ -94,7 +103,7 @@ public class GridView {
      *
      * @param gridData
      */
-    public void updateGrid(GridWrapper gridData) {
+    public void updateGrid(GridWrapperObservable gridData) {
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
                 cells[y][x].updateState(gridData.get(y, x));
