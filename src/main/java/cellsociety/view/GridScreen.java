@@ -82,7 +82,7 @@ public class GridScreen extends SceneCreator {
         createBottomPanel();
         createTopPanel();
 
-        handleButtons(myStage);
+        handleButtons();
 
         gridView = new GridView();
         gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
