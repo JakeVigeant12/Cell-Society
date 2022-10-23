@@ -5,7 +5,6 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -26,14 +25,8 @@ import static cellsociety.view.FileInput.FILE_CHOOSER;
 import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 
 public class GridScreen extends SceneCreator {
-    private BorderPane borderPane;
-    private Text fileTitle;
-    private Text simulationType;
-    private Text author;
-    private TextArea descriptionBox;
-    private TextArea statusBox;
-    private Text aboutTitle;
-    private Paint mainColor = Color.LIGHTGRAY;
+    private final BorderPane borderPane;
+    private final Paint mainColor = Color.LIGHTGRAY;
     private GridView gridView;
     private Timeline timeline;
     private CellSocietyController myController;
@@ -91,22 +84,29 @@ public class GridScreen extends SceneCreator {
      * Sets up the left panel of the Grid Screen UI
      */
     private void createLeftPanel() {
-        aboutTitle = createAndStyleText(myResource.getString("aboutText"), "title");
-        fileTitle = createAndStyleText(myResource.getString("title") + myController.getProperties().get("Title"), "info");
-        simulationType = createAndStyleText(myResource.getString("typeText") + myController.getProperties().get("Type"), "info");
-        author = createAndStyleText(myResource.getString("authorText") + myController.getProperties().get("Author"), "info");
+        Text aboutTitle = createAndStyleText(myResource.getString("aboutText"), "title");
+        Text fileTitle = createAndStyleText(
+            myResource.getString("title") + myController.getProperties().get("Title"), "info");
+        Text simulationType = createAndStyleText(
+            myResource.getString("typeText") + myController.getProperties().get("Type"), "info");
+        Text author = createAndStyleText(
+            myResource.getString("authorText") + myController.getProperties().get("Author"),
+            "info");
 
-        statusBox = createAndStyleTextBox(myResource.getString("statusText"), "info");
+        TextArea statusBox = createAndStyleTextBox(myResource.getString("statusText"), "info");
         statusBox.setBackground(Background.fill(mainColor));
         statusBox.setEditable(false);
         statusBox.setWrapText(true);
 
-        descriptionBox = createAndStyleTextBox(myResource.getString("descriptionText") + myController.getProperties().get("Description"), "info");
+        TextArea descriptionBox = createAndStyleTextBox(
+            myResource.getString("descriptionText") + myController.getProperties()
+                .get("Description"), "info");
         descriptionBox.setBackground(Background.fill(mainColor));
         descriptionBox.setEditable(false);
         descriptionBox.setWrapText(true);
 
-        VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
+        VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox,
+            statusBox);
         fileInfoBox.setBackground(Background.fill(mainColor));
         fileInfoBox.getStyleClass().add("aboutBox");
         borderPane.setLeft(fileInfoBox);

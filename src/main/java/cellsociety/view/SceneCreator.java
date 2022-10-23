@@ -1,6 +1,5 @@
 package cellsociety.view;
 
-import cellsociety.controller.CellSocietyController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -13,7 +12,6 @@ public abstract class SceneCreator {
     public double mySize;
     public Scene myScene;
     public Scene previousScene;
-    public CellSocietyController myController;
     protected File myDataFile;
     protected Pane root;
     protected String language;
@@ -40,7 +38,6 @@ public abstract class SceneCreator {
      * @return
      */
     public Scene createScene(String css) {
-//        previousScene = stage.getScene();
         Scene scene = new Scene(setScene(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
@@ -48,7 +45,6 @@ public abstract class SceneCreator {
     }
 
     public Scene createScene(String language, String css) {
-//        previousScene = stage.getScene();
         this.language = language;
         myResource = ResourceBundle.getBundle(language);
         myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));;

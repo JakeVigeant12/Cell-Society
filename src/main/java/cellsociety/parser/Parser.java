@@ -1,8 +1,6 @@
 package cellsociety.parser;
 
 import com.opencsv.exceptions.CsvValidationException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 //abstraction of parsing to allow multiple filetypes/parsing methods

@@ -4,10 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-
-import java.util.List;
-
 
 public class GridView {
     GridPane grid;
@@ -18,7 +14,6 @@ public class GridView {
     private int m;
     //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
     private CellView[][] cells;
-    final double rem = new Text("").getLayoutBounds().getHeight();
 
     /**
      * Constructor for GridView, sets up the grid and the cells

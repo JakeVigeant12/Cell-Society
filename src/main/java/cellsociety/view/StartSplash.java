@@ -20,16 +20,10 @@ public class StartSplash extends SceneCreator {
     public static final String FILE_INPUT_CSS = "fileInput.css";
     private final List<String> languageList = List.of("English", "Spanish", "French");
     public BorderPane startPane;
-    private Text mainTitle;
-    private Text selectLanguage;
-    private Button englishButton;
-    private Button spanishButton;
-    private Button frenchButton;
-    private ImageView myBackground;
+    private final ImageView myBackground;
     private final Stage myStage;
 
     public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
-    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
     ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
@@ -42,13 +36,12 @@ public class StartSplash extends SceneCreator {
 
     public Pane setScene() {
 
-        mainTitle = new Text("Team 10");
+        Text mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");
         VBox vBoxTop = new VBox(mainTitle);
         vBoxTop.setAlignment(Pos.CENTER);
 
-
-        selectLanguage = new Text("Select Language");
+        Text selectLanguage = new Text("Select Language");
         selectLanguage.getStyleClass().add("startSelectLanguage");
 
 

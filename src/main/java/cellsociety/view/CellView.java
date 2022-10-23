@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 import java.util.spi.ResourceBundleControlProvider;
 
 public class CellView extends StackPane {
-    private Rectangle rectangle;
-    private Label label;
-    private String myType;
+    private final Rectangle rectangle;
+    private final Label label;
+    private final String myType;
 
     /**
      * Constructor for CellView
@@ -28,10 +28,6 @@ public class CellView extends StackPane {
 
         // create label
         label = new Label(String.valueOf(state));
-
-        // set position
-        // setTranslateX(x);
-        // setTranslateY(y);
 
         getChildren().addAll(rectangle);
 

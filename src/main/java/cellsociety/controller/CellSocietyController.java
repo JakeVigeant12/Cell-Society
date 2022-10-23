@@ -22,7 +22,6 @@ public class CellSocietyController {
   private final int numCols;
   public Properties properties;
   private Model myModel;
-  private View myView;
   private File simFile;
   private Map<Integer, Cell> backEndCellsByID;
 
