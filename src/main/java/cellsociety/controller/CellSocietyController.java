@@ -38,10 +38,7 @@ public class CellSocietyController {
     public CellSocietyController(File simFile) throws IOException, CsvValidationException {
         this.simFile = simFile;
         getSimData();
-        //TODO handle model type selection more elegantly, hardcoded for now
-
         String csvPath = (String) properties.get(INITIAL_STATES);
-        SimType simType = SimType.valueOf((String) properties.get("Type"));
         Parser gridParser = new CSVParser(csvPath);
         GridWrapper gridWrapper = gridParser.parseData();
         myModel = new InitialModelImplementation(gridWrapper, properties);

@@ -3,6 +3,8 @@ package cellsociety.model;
 import cellsociety.model.cells.*;
 import cellsociety.view.GridWrapper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,17 +15,14 @@ public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
   private List<Cell> emptyCells;
-  private final SimType simType;
   private Properties myProperties;
 
   /**
    * Constructor for GraphGrid class
    * @param gridParsing is the layout of the grid
-   * @param simInput is the type of simulation
    */
-  public GraphGrid(GridWrapper gridParsing, SimType simInput, Properties properties) {
+  public GraphGrid(GridWrapper gridParsing, Properties properties) {
       myProperties = properties;
-    simType = simInput;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
     createCells(gridParsing);
@@ -45,34 +44,13 @@ public class GraphGrid extends Grid{
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
-        double probCatch = 0.1;
-        switch(simType) {
-          case GameOfLife:
-            newCell = new GameOfLifeCell(cellData,cellCount);
-            break;
-          case Fire:
-          case SpreadingOfFire: // TODO: FIX THIS!!
-            if(myProperties.containsKey("Parameters")) {
-              probCatch = Double.parseDouble(myProperties.getProperty("Parameters"));
-            }
-            newCell = new FireCell(cellData, cellCount, probCatch);
-            break;
-          case Segregation:
-            Double threshold = 0.1;
-            if(myProperties.containsKey("Parameters")) {
-              threshold = Double.parseDouble(myProperties.getProperty("Parameters"));
-            }
-            newCell = new SchellingCell(cellData, cellCount, threshold); // TODO: Get threshold
-            break;
-          case WatorWorld:
-            newCell = new WaTorWorldCell(cellData, cellCount);
-            break;
-          case RockPaperScissors:
-            newCell = new RockPaperScissorsCell(cellData, cellCount);
-            break;
-          case Percolation:
-            newCell = new PercolationCell(cellData, cellCount);
-            break;
+        try {
+          Class<?> cellClass = Class.forName("cellsociety.model.cells."+ myProperties.get("Type")+"Cell");
+          Constructor<?>[] makeNewCell = cellClass.getConstructors();
+          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+          throw new RuntimeException(e);
         }
         myCells.putIfAbsent(cellCount, newCell);
       }
