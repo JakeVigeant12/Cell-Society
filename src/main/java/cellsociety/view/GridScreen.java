@@ -178,7 +178,7 @@ public class GridScreen extends SceneCreator {
         stepButton = makeButton("stepText");
         resetButton = makeButton("resetText");
         exitButton = makeButton("exitText");
-        backButton = makeButton("backText");
+        backButton = makeButton("backButton");
         saveButton = makeButton("saveText");
         speedSlider = makeSlider("speedText");
     }
