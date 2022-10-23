@@ -2,6 +2,10 @@ package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,7 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class FileInput extends SceneCreator {
 
@@ -23,19 +26,16 @@ public class FileInput extends SceneCreator {
     public static final String GRID_SCREEN_CSS = "gridScreen.css";
     public static final String START_SPLASH_CSS = "startSplash.css";
     public BorderPane inputPane;
-    public Button input;
-    public Button back;
     // kind of data files to look for
     public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
-    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
     public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
     private final Stage myStage;
+    private final List<String> buttonList = List.of("uploadButton", "backButton");
 
     /**
      * Constructor for FileInput
@@ -55,12 +55,6 @@ public class FileInput extends SceneCreator {
      * @return
      */
     public Pane setScene() {
-        //add back button
-        input = makeButton("buttonText");
-        input.getStyleClass().add("button");
-
-        back = makeButton("backText");
-
         Text title = new Text(myResource.getString("titleText"));
         title.getStyleClass().add("mainText");
 
@@ -69,36 +63,26 @@ public class FileInput extends SceneCreator {
         inputBackground.setFitWidth(mySize);
         inputPane.getChildren().addAll(inputBackground);
 
-        VBox upload = new VBox(title, input, back);
+        VBox upload = new VBox(title);
+        for(String button : buttonList) {
+            upload.getChildren().add(makeButton(button));
+        }
         upload.setAlignment(Pos.CENTER);
         upload.getStyleClass().add("uploadBox");
         inputPane.setTop(upload);
-
-        buttonPress();
         return inputPane;
     }
 
-    /**
-     * Sets up the button press handling
-     *
-     */
-    private void buttonPress() {
-        //add go back button
-        input.setOnAction(event -> {
-            filePick();
-//            nextScreen(stage);
-        });
-        back.setOnAction(event -> {
-            StartSplash beginning = new StartSplash(600, myStage);
-            myStage.setScene(beginning.createScene(START_SPLASH_CSS));
-        });
+    private void goBack() {
+        StartSplash beginning = new StartSplash(600, myStage);
+        myStage.setScene(beginning.createScene(START_SPLASH_CSS));
     }
 
     /**
      * Sets up the file picker
      *
      */
-    public void filePick() {
+    public void uploadFile() {
         try {
             myDataFile = FILE_CHOOSER.showOpenDialog(myStage);
             if (myDataFile != null) {
@@ -150,6 +134,16 @@ public class FileInput extends SceneCreator {
         String labelText = myResource.getString(property);
         result.setText(labelText);
         result.setId(property);
+        result.getStyleClass().add("button");
+        result.setOnAction(event -> {
+            try {
+                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
+                m.invoke(this);
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                System.out.println(e.getCause());
+                throw new RuntimeException(e);
+            }
+        });
         return result;
     }
 }

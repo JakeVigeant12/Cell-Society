@@ -18,6 +18,9 @@ public abstract class SceneCreator {
     protected Pane root;
     protected String language;
     protected ResourceBundle myResource;
+    protected ResourceBundle myCommands;
+    private static final String COMMAND_PROPERTIES = "Command";
+    public static final String DEFAULT_RESOURCE_PACKAGE = String.format("%s.", SceneCreator.class.getPackageName());
 
     private Stage myStage;
     /**
@@ -48,6 +51,7 @@ public abstract class SceneCreator {
 //        previousScene = stage.getScene();
         this.language = language;
         myResource = ResourceBundle.getBundle(language);
+        myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));;
         Scene scene = new Scene(setScene(), mySize, mySize);
         scene.getStylesheets().add(css);
         myScene = scene;
