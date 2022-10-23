@@ -54,7 +54,7 @@ public class FileInput extends SceneCreator {
      *
      * @return
      */
-    public Pane setScene() {
+    public Pane setUpRootPane() {
         Text title = new Text(myResource.getString("titleText"));
         title.getStyleClass().add("mainText");
 

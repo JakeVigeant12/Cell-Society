@@ -70,7 +70,7 @@ public class GridScreen extends SceneCreator {
     /**
      * Sets up the grid with properties
      */
-    public Pane setScene() {
+    public Pane setUpRootPane() {
 
         createLeftPanel();
         createBottomPanel();
@@ -250,12 +250,13 @@ public class GridScreen extends SceneCreator {
             if (myDataFile != null) {
                 myController = new CellSocietyController(myDataFile);
                 myController.loadSimulation(myStage);
-                myStage.setScene(createScene(language, GRID_SCREEN_CSS));
+                GridScreen firstGrid = new GridScreen(800, myStage, myController);
+                myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
             }
         } catch (IOException e) {
             // should never happen since user selected the file
             new Alert(Alert.AlertType.ERROR, "Invalid Data File Given").showAndWait();//TODO: Use a resource bundle for error string
-        } catch (CsvValidationException e) {
+        } catch (CsvValidationException ignored) {
         }
     }
 
