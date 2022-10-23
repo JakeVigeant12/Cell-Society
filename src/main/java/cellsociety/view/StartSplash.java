@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -15,6 +16,9 @@ import javafx.scene.control.Button;
 import java.util.ResourceBundle;
 
 public class StartSplash extends SceneCreator {
+
+    public static final String FILE_INPUT_CSS = "fileInput.css";
+    private final List<String> languageList = List.of("Spanish", "French", "English");
     public BorderPane startPane;
     private Text mainTitle;
     private Text selectLanguage;
@@ -37,9 +41,6 @@ public class StartSplash extends SceneCreator {
     }
 
     public Pane setScene() {
-        englishButton = makeButton("englishText");
-        spanishButton = makeButton("spanishText");
-        frenchButton = makeButton("frenchText");
 
         mainTitle = new Text("Team 10");
         mainTitle.getStyleClass().add("mainTitle");
@@ -55,7 +56,10 @@ public class StartSplash extends SceneCreator {
         myBackground.setFitWidth(mySize);
         myBackground.setFitHeight(mySize);
 
-        HBox buttons = new HBox(englishButton, spanishButton, frenchButton);
+        HBox buttons = new HBox();
+        for(String language : languageList) {
+            buttons.getChildren().add(makeButton(language));
+        }
         buttons.getStyleClass().add("allButtons");
 
         VBox vBoxBot = new VBox(selectLanguage, buttons);
@@ -66,7 +70,6 @@ public class StartSplash extends SceneCreator {
         startPane.setTop(vBoxTop);
         startPane.setBottom(vBoxBot);
         startPane.setPadding(new Insets(25));
-        handleEvents();
 
         return startPane;
     }
@@ -76,20 +79,10 @@ public class StartSplash extends SceneCreator {
         String label = startInfo.getString(property);
         result.setText(label);
         result.setId(property);
-        result.onActionProperty();
+        result.setOnAction(event -> {
+            FileInput fileInput = new FileInput(mySize, myStage);
+            myStage.setScene(fileInput.createScene(property, FILE_INPUT_CSS));
+        });
         return result;
-    }
-
-    public void handleEvents() {
-        FileInput fi = new FileInput(mySize, myStage);
-        englishButton.setOnAction(event -> {
-            myStage.setScene(fi.createScene("EnglishLabels", "fileInput.css"));
-        });
-        spanishButton.setOnAction(event -> {
-            myStage.setScene(fi.createScene("SpanishLabels", "fileInput.css"));
-        });
-        frenchButton.setOnAction(event -> {
-            myStage.setScene(fi.createScene("FrenchLabels", "fileInput.css"));
-        });
     }
 }
