@@ -12,6 +12,7 @@ public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
   private Properties myProperties;
+  private List<Cell> emptyCells;
   private final SimType simType;
 
   /**
@@ -145,8 +146,12 @@ public class GraphGrid extends Grid{
    */
   @Override
   public void computeStates() {
+    emptyCells = new ArrayList<>();
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
+      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
+        emptyCells.add(currentCell);
+      }
     }
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.updateState();
