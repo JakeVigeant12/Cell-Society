@@ -15,11 +15,9 @@ import java.util.Properties;
 public class InitialModelImplementation extends Model {
 
   private final Grid myGrid;
-  private final SimType simType;
 
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    simType = SimType.valueOf((String) simParameters.get("Type"));
-    myGrid = new GraphGrid(gridWrapper, simType, simParameters);
+    myGrid = new GraphGrid(gridWrapper, simParameters);
 
   }
 
