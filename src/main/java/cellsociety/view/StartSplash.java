@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class StartSplash extends SceneCreator {
 
     public static final String FILE_INPUT_CSS = "fileInput.css";
-    private final List<String> languageList = List.of("Spanish", "French", "English");
+    private final List<String> languageList = List.of("English", "Spanish", "French");
     public BorderPane startPane;
     private Text mainTitle;
     private Text selectLanguage;
