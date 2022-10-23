@@ -75,3 +75,12 @@
 .SpreadingOfFire2{
     -fx-fill: red;
 }
+.Percolation0{
+    -fx-fill: white;
+}
+.Percolation1{
+    -fx-fill: blue;
+}
+.Percolation2{
+    -fx-fill: black;
+}
