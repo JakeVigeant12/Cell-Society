@@ -16,7 +16,7 @@ public class GraphGridTest {
   @Test
   void testBasicObject(){
     constructTestArrayList(4,4);
-    GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife);
+    GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,GameOfLife, null);
     HashMap<Integer, Cell> testCells = new HashMap<>();
     for(int i = 0; i <= 16; i++){
 

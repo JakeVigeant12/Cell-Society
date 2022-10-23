@@ -57,3 +57,21 @@
 .GameOfLife1{
     -fx-fill: green;
 }
+.Fire0{
+    -fx-fill: yellow;
+}
+.Fire1{
+    -fx-fill: green;
+}
+.Fire2{
+    -fx-fill: red;
+}
+.SpreadingOfFire0{
+    -fx-fill: yellow;
+}
+.SpreadingOfFire1{
+    -fx-fill: green;
+}
+.SpreadingOfFire2{
+    -fx-fill: red;
+}
