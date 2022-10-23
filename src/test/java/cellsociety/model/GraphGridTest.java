@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-import static cellsociety.SimType.GameOfLife;
+import static cellsociety.model.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {

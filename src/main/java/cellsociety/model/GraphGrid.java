@@ -1,6 +1,5 @@
 package cellsociety.model;
 
-import cellsociety.SimType;
 import cellsociety.model.cells.*;
 
 import java.util.ArrayList;
