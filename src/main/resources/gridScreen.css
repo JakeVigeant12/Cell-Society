@@ -38,10 +38,6 @@
     -fx-fill: light gray;
 }
 
-.exitBox{
-    -fx-spacing: 600;
-}
-
 .title{
     -fx-alignment: top;
     -fx-font-size: 20;

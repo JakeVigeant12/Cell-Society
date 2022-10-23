@@ -31,15 +31,12 @@ public class FileInput extends SceneCreator {
     // default to start in the data folder to make it easy on the user to find
     public static final String DATA_FILE_FOLDER = System.getProperty("user.dir") + "/data";
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
-    public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
-    public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
     public final static FileChooser FILE_CHOOSER = makeChooser(DATA_FILE_SIM_EXTENSION);
 
     private ImageView inputBackground;
     private final Stage myStage;
-    private static final String COMMAND_PROPERTIES = "Command";
     private final List<String> buttonList = List.of("uploadButton", "backButton");
-    private final ResourceBundle myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));;
+
     /**
      * Constructor for FileInput
      *
@@ -143,6 +140,7 @@ public class FileInput extends SceneCreator {
                 Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
                 m.invoke(this);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                System.out.println(e.getCause());
                 throw new RuntimeException(e);
             }
         });
