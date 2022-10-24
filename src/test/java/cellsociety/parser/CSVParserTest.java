@@ -50,32 +50,34 @@ class CSVParserTest {
 
   @Test
   void testSaveCurrentSquareGrid() throws IOException, CsvValidationException {
-//    GridWrapper grid = createSquareGrid();
-//    File file = new File("data/test/test_save_square.csv");
-//    myParser.saveCurrentGrid(grid, file);
-//    List<List<String>> parsedCSVGrid = myParser.parseData("test/test_save_square.csv");
-//    assertEquals(grid.row(), parsedCSVGrid.size());
-//    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
-//    for(int i = 0; i < grid.row(); i++) {
-//      for(int j = 0; j < grid.column(0); j++) {
-//        assertEquals(grid.get(i,j), Integer.parseInt(parsedCSVGrid.get(i).get(j)));
-//      }
-//    }
+    GridWrapper grid = createSquareGrid();
+    File file = new File("data/test/test_save_square.csv");
+    myParser.saveCurrentGrid(grid, file);
+    GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_square.csv");
+    List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
+    assertEquals(grid.row(), parsedCSVGrid.size());
+    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
+    for(int i = 0; i < grid.row(); i++) {
+      for(int j = 0; j < grid.column(0); j++) {
+        assertEquals(grid.get(i,j), parsedCSVGrid.get(i).get(j));
+      }
+    }
   }
 
   @Test
   void testSaveCurrentRectangularGrid() throws IOException, CsvValidationException {
-//    GridWrapper grid = createRectangularGrid();
-//    File file = new File("data/test/test_save_rectangle.csv");
-//    myParser.saveCurrentGrid(grid, file);
-//    List<List<String>> parsedCSVGrid = myParser.parseData("test/test_save_rectangle.csv");
-//    assertEquals(grid.row(), parsedCSVGrid.size());
-//    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
-//    for(int i = 0; i < grid.row(); i++) {
-//      for(int j = 0; j < grid.column(0); j++) {
-//        assertEquals(grid.get(i,j), Integer.parseInt(parsedCSVGrid.get(i).get(j)));
-//      }
-//    }
+    GridWrapper grid = createRectangularGrid();
+    File file = new File("data/test/test_save_rectangle.csv");
+    myParser.saveCurrentGrid(grid, file);
+    GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_rectangle.csv");
+    List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
+    assertEquals(grid.row(), parsedCSVGrid.size());
+    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
+    for(int i = 0; i < grid.row(); i++) {
+      for(int j = 0; j < grid.column(0); j++) {
+        assertEquals(grid.get(i,j), parsedCSVGrid.get(i).get(j));
+      }
+    }
   }
 
   private GridWrapper createSquareGrid() {

@@ -118,10 +118,11 @@ public class GridScreen extends SceneCreator {
      * Creates the bottom panel with the buttons
      */
     private void createBottomPanel() {
-        HBox controls = new HBox(makeSlider("speedSlider"));
+        HBox controls = new HBox();
         for(String button : BUTTONS_LIST.get(1)) {
             controls.getChildren().add(makeButton(button));
         }
+        controls.getChildren().add(makeSlider("speedSlider"));
         controls.setBackground(Background.fill(mainColor));
         controls.getStyleClass().add("allButtons");
         borderPane.setBottom(controls);
@@ -168,9 +169,10 @@ public class GridScreen extends SceneCreator {
      * @param property resource bundle label
      * @return slider
      */
-    private Slider makeSlider(String property) {
-        HBox sliderBox = new HBox(new Label(property));
-        sliderBox.getStyleClass().add("slider");
+    private HBox makeSlider(String property) {
+        HBox sliderBox = new HBox();
+        sliderBox.getChildren().add(new Label(myResource.getString(property)));
+        sliderBox.getStyleClass().add("speedSlider");
         Slider slider = new Slider();
         sliderBox.getChildren().add(slider);
         slider.setMin(0);
@@ -192,7 +194,7 @@ public class GridScreen extends SceneCreator {
                 throw new RuntimeException(e);
             }
         });
-        return slider;
+        return sliderBox;
     }
 
     /**

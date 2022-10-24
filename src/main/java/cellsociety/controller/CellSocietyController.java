@@ -32,7 +32,7 @@ public class CellSocietyController {
     private final int numCols;
     public Properties properties;
     private Model myModel;
-    private View myView;
+    private final CSVParser myGridParser;
     private File simFile;
     private Map<Integer, Cell> backEndCellsByID;
 
@@ -40,8 +40,8 @@ public class CellSocietyController {
         this.simFile = simFile;
         getSimData();
         String csvPath = (String) properties.get(INITIAL_STATES);
-        Parser gridParser = new CSVParser();
-        GridWrapper gridWrapper = gridParser.parseData(csvPath);
+        myGridParser = new CSVParser();
+        GridWrapper gridWrapper = myGridParser.parseData(csvPath);
         myModel = new InitialModelImplementation(gridWrapper, properties);
         backEndCellsByID = myModel.getCells();
 
@@ -96,23 +96,12 @@ public class CellSocietyController {
     public void resetController() throws CsvValidationException, IOException {
         String csvPath = (String) properties.get(INITIAL_STATES);
         SimType simType = SimType.valueOf((String) properties.get("Type"));
-        Parser gridParser = new CSVParser();
-        GridWrapper gridWrapper = gridParser.parseData(csvPath);
+        GridWrapper gridWrapper = myGridParser.parseData(csvPath);
         myModel = new InitialModelImplementation(gridWrapper, properties);
         backEndCellsByID = myModel.getCells();
     }
 
     public void saveGrid(File file) throws IOException {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-            GridWrapper grid = getViewGrid();
-            for (int i = 0; i < grid.row(); i++) {
-                List<Integer> row = grid.getRow(i);
-                String[] rowArray = new String[row.size()];
-                for (int j = 0; j < row.size(); j++) {
-                    rowArray[j] = row.get(j).toString();
-                }
-                writer.writeNext(rowArray);
-            }
-        }
+        myGridParser.saveCurrentGrid(getViewGrid(), file);
     }
 }
