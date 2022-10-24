@@ -27,7 +27,7 @@ public class GridView {
     //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
     private CellView[][] cells;
     final double rem = new Text("").getLayoutBounds().getHeight();
-    GridWrapperObservable gridStates;
+    GridWrapper gridStates;
 
     /**
      * Constructor for GridView, sets up the grid and the cells
@@ -46,21 +46,21 @@ public class GridView {
         });
     }
 
-    public GridWrapperObservable GetGridWrapperObservable() {
+    public GridWrapper GetGridWrapper() {
         return gridStates;
     }
 
-    public void updateControllerFromListeners() {
-        gridStates.setListener(data -> {
-            try {
-                myController.update(data);
-            } catch (CsvValidationException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
+//    public void updateControllerFromListeners() {
+//        gridStates.setListener(data -> {
+//            try {
+//                myController.update(data);
+//            } catch (CsvValidationException | IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//    }
 
-    public GridWrapperObservable getGridStates() {
+    public GridWrapper getGridStates() {
         return gridStates;
     }
 
@@ -78,11 +78,11 @@ public class GridView {
      *
      * @param gridData
      */
-    public void setUpView(GridWrapperObservable gridData, String simultionGenre) {
+    public void setUpView(GridWrapper gridData, String simultionGenre) {
         n = gridData.row();
-        m = gridData.column();
+        m = gridData.column(0);
 //        gridStates = new GridWrapper(n, m);
-        gridStates = new GridWrapperObservable(n, m);
+        gridStates = new GridWrapper(n, m);
 
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
@@ -92,7 +92,7 @@ public class GridView {
                 // add cells to group
                 grid.add(node, x, y);
                 // add to grid for further reference using an array
-                gridStates.set(y, x, node.stateProperty());
+                gridStates.set(y, x, node.stateProperty().get());
                 cells[y][x] = node;
             }
         }
@@ -103,7 +103,7 @@ public class GridView {
      *
      * @param gridData
      */
-    public void updateGrid(GridWrapperObservable gridData) {
+    public void updateGrid(GridWrapper gridData) {
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
                 cells[y][x].updateState(gridData.get(y, x));

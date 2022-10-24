@@ -2,12 +2,12 @@ package cellsociety.model.cells;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Cell {
   private int currentState;
   private int futureState;
   private int id;
-
   /**
    * Constructor for Cell class
    * @param state is the state of the cell

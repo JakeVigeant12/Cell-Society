@@ -2,7 +2,7 @@ package cellsociety.model.cells;
 
 import java.util.List;
 
-public class WaTorWorldCell extends Cell {
+public class WatorWorldCell extends Cell {
     private int fishTurns;
     private int sharkTurns;
     private int sharkStarve;
@@ -19,7 +19,7 @@ public class WaTorWorldCell extends Cell {
      * @param state is the state of the cell
      * @param id is the id of the cell
      */
-    public WaTorWorldCell(int state, int id){
+    public WatorWorldCell(int state, int id){
         super(state, id);
         fishTurns = 0;
         sharkTurns = 0;
@@ -27,7 +27,7 @@ public class WaTorWorldCell extends Cell {
         wantsToMove = false;
     }
 
-    public WaTorWorldCell(int state, int id, int fTurn, int sTurn, int sStarve){
+    public WatorWorldCell(int state, int id, int fTurn, int sTurn, int sStarve){
         super(state, id);
         fishTurns = fTurn;
         sharkTurns = sTurn;
@@ -155,8 +155,8 @@ public class WaTorWorldCell extends Cell {
      * Method that swaps a state of a cell with another cell
      * @param cell
      */
-    public void swapCell(WaTorWorldCell cell) {
-        WaTorWorldCell tempCell = new WaTorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
+    public void swapCell(WatorWorldCell cell) {
+        WatorWorldCell tempCell = new WatorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
 
         cell.setFutureStateValue(getFutureState());
         cell.setFishTurns(getFishTurns());
@@ -173,8 +173,8 @@ public class WaTorWorldCell extends Cell {
      * Method that is used for when a shark moves to a cell and leaves behind nothing
      * @param cell is the cell that the shark moves to
      */
-    public void swapAndEmptyCell(WaTorWorldCell cell) {
-        WaTorWorldCell tempCell = new WaTorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
+    public void swapAndEmptyCell(WatorWorldCell cell) {
+        WatorWorldCell tempCell = new WatorWorldCell(cell.getCurrentState(), cell.getId(), cell.getFishTurns(), cell.getSharkTurns(), cell.getSharkStarve());
 
         cell.setFutureStateValue(0);
         cell.setFishTurns(0);
@@ -191,7 +191,7 @@ public class WaTorWorldCell extends Cell {
      * Method that creates a new animal type
      * @param cell is the cell that is being changed
      */
-    public void spawnNewCell(WaTorWorldCell cell, int newState) {
+    public void spawnNewCell(WatorWorldCell cell, int newState) {
         if (cell.getCurrentState() == 0) { // if cell is empty, then spawn new animal
             cell.setFutureStateValue(newState);
             cell.setFishTurns(0); // reset counters

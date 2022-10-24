@@ -1,10 +1,8 @@
 package cellsociety.model.cells;
 
-import cellsociety.model.cells.Cell;
-
 import java.util.List;
 
-public class SchellingCell extends Cell {
+public class SegregationCell extends Cell {
     private double myThreshold;
     private double totalNeighbors;
     private double sameNeighborsAgent1;
@@ -21,12 +19,12 @@ public class SchellingCell extends Cell {
      * @param state is the state of the cell
      * @param id is the id of the cell
      */
-    public SchellingCell(int state, int id, double threshold){
+    public SegregationCell(int state, int id, String parameter){
         super(state, id);
         sameNeighborsAgent1 = 0;
         sameNeighborsAgent2 = 0;
         totalNeighbors = 0;
-        myThreshold = threshold;
+        myThreshold = Double.parseDouble(parameter);
         wantsToMove = false;
     }
 

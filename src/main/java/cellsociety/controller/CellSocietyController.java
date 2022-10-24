@@ -7,7 +7,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
-import cellsociety.view.GridWrapperObservable;
+import cellsociety.view.GridWrapper;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -38,10 +38,7 @@ public class CellSocietyController {
     public CellSocietyController(File simFile) throws IOException, CsvValidationException {
         this.simFile = simFile;
         getSimData();
-        //TODO handle model type selection more elegantly, hardcoded for now
-
         String csvPath = (String) properties.get(INITIAL_STATES);
-        SimType simType = SimType.valueOf((String) properties.get("Type"));
         Parser gridParser = new CSVParser(csvPath);
         GridWrapper gridWrapper = gridParser.parseData();
         myModel = new InitialModelImplementation(gridWrapper, properties);
@@ -77,8 +74,8 @@ public class CellSocietyController {
         backEndCellsByID = myModel.getCells();
     }
 
-    public GridWrapperObservable getViewGrid() {
-        GridWrapperObservable stateGrid = new GridWrapperObservable(numRows, numCols);
+    public GridWrapper getViewGrid() {
+        GridWrapper stateGrid = new GridWrapper(numRows, numCols);
         for (Integer key : backEndCellsByID.keySet()) {
             stateGrid.set((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
         }
@@ -90,7 +87,7 @@ public class CellSocietyController {
         this.backEndCellsByID = backEndCellsByID;
     }
 
-    public GridWrapperObservable updateGrid() {
+    public GridWrapper updateGrid() {
         myModel.computeStates();
         return getViewGrid();
     }
@@ -112,9 +109,9 @@ public class CellSocietyController {
 
     public void saveGrid(File file) throws IOException {
         try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-            GridWrapperObservable grid = getViewGrid();
+            GridWrapper grid = getViewGrid();
             for (int i = 0; i < grid.row(); i++) {
-                List<IntegerProperty> row = grid.getRow(i);
+                List<Integer> row = grid.getRow(i);
                 String[] rowArray = new String[row.size()];
                 for (int j = 0; j < row.size(); j++) {
                     rowArray[j] = row.get(j).toString();

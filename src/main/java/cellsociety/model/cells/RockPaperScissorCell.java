@@ -1,10 +1,8 @@
 package cellsociety.model.cells;
 
-import cellsociety.model.cells.Cell;
-
 import java.util.List;
 
-public class RockPaperScissorsCell extends Cell {
+public class RockPaperScissorCell extends Cell {
     private double numNeighbors;
     private double numRockNeighbors;
     private double numPaperNeighbors;
@@ -21,7 +19,7 @@ public class RockPaperScissorsCell extends Cell {
      * @param state is the state of the cell
      * @param id is the id of the cell
      */
-    public RockPaperScissorsCell(int state, int id){
+    public RockPaperScissorCell(int state, int id){
         super(state, id);
         numNeighbors = 0;
         numRockNeighbors = 0;
