@@ -12,6 +12,7 @@ public abstract class Grid {
   }
   public abstract void createCells(GridWrapper inputLayout);
   public abstract void initializeNeighbors(GridWrapper inputLayout);
+  public void setCellCurrentState (int key, int state){}
   public Map<Integer, Cell> getCells() {
     return null;
   }

@@ -16,6 +16,9 @@ public abstract class Model {
     myGrid.computeStates();
   }
 
+  public void setCellCurrentState (int key, int state){
+  }
+
   public Map<Integer, Cell> getCells() {
     return null;
   }

@@ -26,6 +26,11 @@ public class InitialModelImplementation extends Model {
   }
 
   @Override
+  public void setCellCurrentState (int key, int state){
+    myGrid.setCellCurrentState(key, state);
+  }
+
+  @Override
   public Map<Integer, Cell> getCells() {
     return myGrid.getCells();
   }
