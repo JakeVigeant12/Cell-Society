@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import cellsociety.controller.CellSocietyController;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
@@ -12,19 +13,31 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.spi.ResourceBundleControlProvider;
 
+import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
+
 public class CellView extends StackPane {
     private Rectangle rectangle;
     private Label label;
     private String myType;
     private final IntegerProperty state;
+    private int x;
+    private int y;
+    private ResourceBundle myResources;
+    private String CELLSTATES = "CellView";
+    private int numStates;
 
     /**
      * Constructor for CellView
      *
      * @param state
      */
-    public CellView(int state, String simulationType) {
+    public CellView(int state, String simulationType, int y, int x, CellSocietyController controller) {
+        myResources = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, CELLSTATES));
+
+        this.x = x;
+        this.y = y;
         myType = simulationType;
+        numStates = Integer.parseInt(myResources.getString(myType));
         // create rectangle
         rectangle = new Rectangle();
         rectangle.setStroke(Color.BROWN);
@@ -40,7 +53,7 @@ public class CellView extends StackPane {
 
         getChildren().addAll(rectangle);
 
-        setOnClick();
+        setOnClick(controller);
     }
 
     public IntegerProperty stateProperty() {
@@ -50,15 +63,21 @@ public class CellView extends StackPane {
     /**
      * Change the state of the cell on click
      */
-    public void setOnClick() {
+    public void setOnClick(CellSocietyController controller) {
         this.setOnMouseClicked(e -> {
-            if (state.get() == 0)
-                state.setValue(1);
-            else
-                state.setValue(0);
+            circulateState();
             rectangle.getStyleClass().clear();
             rectangle.getStyleClass().add(myType + state.get());
+
+            controller.updateOneCell(y, x, state.get());
         });
+    }
+
+    private void circulateState() {
+        if (state.get() < numStates - 1)
+            state.set(state.get() + 1);
+        else
+            state.set(0);
     }
 
     /**

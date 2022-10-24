@@ -64,8 +64,13 @@ public class CellSocietyController {
         return properties;
     }
 
-    public void update(GridWrapper GridWrapper) throws CsvValidationException, IOException {
-        myModel = new InitialModelImplementation(GridWrapper, properties);
+    public void updateOneCell(int y, int x, int state) {
+        myModel.setCellCurrentState(numCols * y + x + 1, state);
+    }
+
+    public void update(GridWrapperObservable gridWrapperObservable) throws CsvValidationException, IOException {
+
+        myModel = new InitialModelImplementation(gridWrapperObservable.toGridWrapper(), properties);
         backEndCellsByID = myModel.getCells();
     }
 

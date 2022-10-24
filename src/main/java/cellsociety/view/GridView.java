@@ -87,7 +87,7 @@ public class GridView {
         cells = new CellView[n][m];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
-                CellView node = new CellView(gridData.get(y, x), simultionGenre);
+                CellView node = new CellView(gridData.get(y, x), simultionGenre, y, x, myController);
                 node.setId("cell" + y + "," + x);
                 // add cells to group
                 grid.add(node, x, y);

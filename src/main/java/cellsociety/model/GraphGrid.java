@@ -62,6 +62,10 @@ public class GraphGrid extends Grid{
       }
     }
   }
+  @Override
+  public void setCellCurrentState (int key, int state){
+    myCells.get(key).setCurrentState(state);
+  }
 
   /**
    * Method that initializes the neighbors for the grid
