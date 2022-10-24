@@ -44,8 +44,8 @@ public class CellSocietyController {
 
         String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
 
-        numCols = Integer.parseInt(parseRowCol[0]);
-        numRows = Integer.parseInt(parseRowCol[1]);
+        numCols = Integer.parseInt(parseRowCol[0].trim());
+        numRows = Integer.parseInt(parseRowCol[1].trim());
     }
 
     public void getSimData() throws IOException {
