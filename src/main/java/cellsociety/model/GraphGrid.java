@@ -23,7 +23,7 @@ public class GraphGrid extends Grid{
    * @param gridParsing is the layout of the grid
    */
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
-      myProperties = properties;
+    myProperties = properties;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
     createCells(gridParsing);

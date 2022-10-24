@@ -9,5 +9,5 @@ import java.io.IOException;
 //abstraction of parsing to allow multiple filetypes/parsing methods
 public abstract class Parser {
 
-  public abstract GridWrapper parseData() throws IOException, CsvValidationException;
+  public abstract GridWrapper parseData(String csvPath) throws IOException, CsvValidationException;
 }

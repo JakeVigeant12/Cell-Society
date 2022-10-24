@@ -40,12 +40,12 @@ public class CellSocietyController {
         this.simFile = simFile;
         getSimData();
         String csvPath = (String) properties.get(INITIAL_STATES);
-        Parser gridParser = new CSVParser(csvPath);
-        GridWrapper gridWrapper = gridParser.parseData();
+        Parser gridParser = new CSVParser();
+        GridWrapper gridWrapper = gridParser.parseData(csvPath);
         myModel = new InitialModelImplementation(gridWrapper, properties);
         backEndCellsByID = myModel.getCells();
 
-        String[] parseRowCol = new CSVParser(csvPath).parseFirstLine();
+        String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
 
         numCols = Integer.parseInt(parseRowCol[0]);
         numRows = Integer.parseInt(parseRowCol[1]);
@@ -96,8 +96,8 @@ public class CellSocietyController {
     public void resetController() throws CsvValidationException, IOException {
         String csvPath = (String) properties.get(INITIAL_STATES);
         SimType simType = SimType.valueOf((String) properties.get("Type"));
-        Parser gridParser = new CSVParser(csvPath);
-        GridWrapper gridWrapper = gridParser.parseData();
+        Parser gridParser = new CSVParser();
+        GridWrapper gridWrapper = gridParser.parseData(csvPath);
         myModel = new InitialModelImplementation(gridWrapper, properties);
         backEndCellsByID = myModel.getCells();
     }

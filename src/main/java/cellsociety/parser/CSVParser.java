@@ -22,12 +22,9 @@ public class CSVParser extends Parser {
     private FileReader myFileReader;
     private List<List<String>> grid;
 
-    public CSVParser(String csvPath) throws IOException {
-        myFileReader = new FileReader(DATA_FOLDER + csvPath);
-    }
-
     @Override
-    public GridWrapper parseData() throws IOException, CsvValidationException {
+    public GridWrapper parseData(String csvPath) throws IOException, CsvValidationException {
+        myFileReader = new FileReader(DATA_FOLDER + csvPath);
         GridWrapper gridWrapper = new GridWrapper();
         //https://www.geeksforgeeks.org/reading-csv-file-java-using-opencsv/
         CSVReader csvReader = new CSVReader(myFileReader);
@@ -46,7 +43,8 @@ public class CSVParser extends Parser {
         return gridWrapper;
     }
 
-    public String[] parseFirstLine() throws CsvValidationException, IOException {
+    public String[] parseFirstLine(String csvPath) throws CsvValidationException, IOException {
+        myFileReader = new FileReader(DATA_FOLDER + csvPath);
         CSVReader csvReader = new CSVReader(myFileReader);
         return csvReader.readNext();
     }
