@@ -17,15 +17,14 @@ public class FireCell extends Cell {
      * @param state is the state of the cell
      * @param id is the id of the cell
      */
-    public FireCell(int state, int id, double probCatch){
+    public FireCell(int state, int id, String parameter){
         super(state, id);
         turns = 0;
-
+        double probCatch = Double.parseDouble(parameter);
         if (probCatch > 1){
             throw new IllegalArgumentException("Probability of catching fire must be between 0 and 1");
-        } else {
-            myProbCatch = probCatch;
         }
+        myProbCatch = probCatch;
     }
 
     /**
