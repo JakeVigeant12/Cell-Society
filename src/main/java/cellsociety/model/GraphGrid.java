@@ -48,7 +48,7 @@ public class GraphGrid extends Grid{
           Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
           Constructor<?>[] makeNewCell = cellClass.getConstructors();
           if(makeNewCell[0].getParameterCount() == 3){
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, myProperties.get("Parameters"));
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, Double.parseDouble((String) myProperties.get("Parameters")));
           }
           else{
             newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
