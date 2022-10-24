@@ -101,16 +101,13 @@
 .WatorWorld3{
     -fx-fill: darkblue;
 }
-.RockPaperScissors0{
-    -fx-fill: darkgray;
-}
-.RockPaperScissors1{
+.RockPaperScissor0{
     -fx-fill: black;
 }
-.RockPaperScissors2{
+.RockPaperScissor1{
     -fx-fill: white;
 }
-.RockPaperScissors3{
+.RockPaperScissor2{
     -fx-fill: green;
 }
 
