@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,8 @@ public class GraphGridTest {
 
 
   @Test
-  void testBasicObject() throws IOException {
+  void testBasicObject()
+      throws IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     constructTestArrayList(4,4);
     File myDataFile = new File("./data/game_of_life/blinkers.sim");
     Properties properties = new Properties();

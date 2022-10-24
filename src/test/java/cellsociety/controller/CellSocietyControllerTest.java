@@ -5,6 +5,7 @@ import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,8 @@ class CellSocietyControllerTest {
   private CellSocietyController myController;
 
   @BeforeEach
-  void setUp() throws CsvValidationException, IOException {
+  void setUp()
+      throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     myController = new CellSocietyController(new File("data/test/validFile.sim"));
   }
 

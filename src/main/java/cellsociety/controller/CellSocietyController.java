@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -23,6 +24,7 @@ import java.util.Properties;
 import javafx.beans.property.IntegerProperty;
 import javafx.stage.Stage;
 
+import javax.management.ReflectionException;
 import javax.swing.text.View;
 
 public class CellSocietyController {
@@ -36,7 +38,8 @@ public class CellSocietyController {
     private File simFile;
     private Map<Integer, Cell> backEndCellsByID;
 
-    public CellSocietyController(File simFile) throws IOException, CsvValidationException {
+    public CellSocietyController(File simFile)
+        throws IOException, CsvValidationException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         this.simFile = simFile;
         getSimData();
         String csvPath = (String) properties.get(INITIAL_STATES);
@@ -93,7 +96,8 @@ public class CellSocietyController {
      * @throws CsvValidationException
      * @throws IOException
      */
-    public void resetController() throws CsvValidationException, IOException {
+    public void resetController()
+        throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String csvPath = (String) properties.get(INITIAL_STATES);
         SimType simType = SimType.valueOf((String) properties.get("Type"));
         GridWrapper gridWrapper = myGridParser.parseData(csvPath);
