@@ -46,20 +46,6 @@ public class GridView {
         });
     }
 
-    public GridWrapper GetGridWrapper() {
-        return gridStates;
-    }
-
-//    public void updateControllerFromListeners() {
-//        gridStates.setListener(data -> {
-//            try {
-//                myController.update(data);
-//            } catch (CsvValidationException | IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//    }
-
     public GridWrapper getGridStates() {
         return gridStates;
     }
@@ -81,7 +67,6 @@ public class GridView {
     public void setUpView(GridWrapper gridData, String simultionGenre) {
         n = gridData.row();
         m = gridData.column(0);
-//        gridStates = new GridWrapper(n, m);
         gridStates = new GridWrapper(n, m);
 
         cells = new CellView[n][m];

@@ -8,6 +8,7 @@ import cellsociety.model.Model;
 import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
 import cellsociety.view.GridWrapper;
+import cellsociety.view.GridWrapperObservable;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -66,12 +67,6 @@ public class CellSocietyController {
 
     public void updateOneCell(int y, int x, int state) {
         myModel.setCellCurrentState(numCols * y + x + 1, state);
-    }
-
-    public void update(GridWrapperObservable gridWrapperObservable) throws CsvValidationException, IOException {
-
-        myModel = new InitialModelImplementation(gridWrapperObservable.toGridWrapper(), properties);
-        backEndCellsByID = myModel.getCells();
     }
 
     public GridWrapper getViewGrid() {
