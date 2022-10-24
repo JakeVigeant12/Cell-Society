@@ -7,8 +7,6 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
-import cellsociety.view.GridWrapper;
-import cellsociety.view.GridWrapperObservable;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -20,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.stage.Stage;
 
 import javax.swing.text.View;
