@@ -34,6 +34,10 @@ public class Cell {
     return futureState;
   }
 
+  public void setCurrentState(int state) {
+    currentState = state;
+  }
+
   /**
    * Method that sets the future state of the cell
    */

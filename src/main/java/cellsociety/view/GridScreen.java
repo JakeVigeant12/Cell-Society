@@ -83,7 +83,7 @@ public class GridScreen extends SceneCreator {
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
         gridView.setUpGridViewSize();
-        gridView.updateControllerFromListeners();
+//        gridView.updateControllerFromListeners();
         borderPane.setPadding(new Insets(10));
 
         return borderPane;
