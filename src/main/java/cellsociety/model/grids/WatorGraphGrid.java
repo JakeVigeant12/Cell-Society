@@ -46,7 +46,6 @@ public class WatorGraphGrid extends GraphGrid {
         if(newShark.getId() != currentCell.getId()) {
           //If the shark moves, swap the states and then deal with reproduction or death
           newShark.swapCells(currentCell);
-          newShark.updateState();
           currentCell.setCurrentState(3);
           newShark.setCurrentState(4);
           //if(currentCell.readyToReproduce()){
