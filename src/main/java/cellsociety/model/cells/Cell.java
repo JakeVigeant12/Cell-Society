@@ -77,20 +77,24 @@ public class Cell {
 
   /**
    * Method to swap states with two cells
-   * @param neighbor
+   * @param cellToSwap is the cell to swap with
    */
-  public void swapCellStates(Cell neighbor) {
-    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getId());
+  public void swapCellStates(Cell cellToSwap) {
+    Cell neighborCopy = new Cell(cellToSwap.getCurrentState(), cellToSwap.getId());
 
-    neighbor.setFutureStateValue(getCurrentState()); // set neighbor's future state to current state
-    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
+    cellToSwap.setCurrentState(getCurrentState()); // set neighbor's future state to current state
+    setCurrentState(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current statee
   }
 
-  public void swapCells(Cell neighbor) {
-    Cell neighborCopy = new Cell(neighbor.getCurrentState(), neighbor.getId());
+  /**
+   * Method to swap two cells
+   * @param cellToSwap is the cell to swap with
+   */
+  public void swapCells(Cell cellToSwap) {
+    Cell neighborCopy = new Cell(cellToSwap.getCurrentState(), cellToSwap.getId());
 
-    neighbor.setFutureStateValue(getCurrentState()); // set neighbor's future state to current state
-    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
+    cellToSwap.setCurrentState(getCurrentState()); // set neighbor's future state to current state
+    setCurrentState(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current state
   }
 
   /**
