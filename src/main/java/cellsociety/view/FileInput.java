@@ -56,12 +56,12 @@ public class FileInput extends SceneCreator {
      * @return
      */
     public Pane setUpRootPane() {
-        Text title = new Text(myResource.getString("titleText"));
+        Text title = new Text(getMyResource().getString("titleText"));
         title.getStyleClass().add("mainText");
 
-        inputBackground.setImage(new Image(myResource.getString("uploadGif")));
-        inputBackground.setFitHeight(mySize);
-        inputBackground.setFitWidth(mySize);
+        inputBackground.setImage(new Image(getMyResource().getString("uploadGif")));
+        inputBackground.setFitHeight(getMySize());
+        inputBackground.setFitWidth(getMySize());
         inputPane.getChildren().addAll(inputBackground);
 
         VBox upload = new VBox(title);
@@ -85,18 +85,18 @@ public class FileInput extends SceneCreator {
      */
     public void uploadFile() {
         try {
-            myDataFile = FILE_CHOOSER.showOpenDialog(myStage);
-            if (myDataFile != null) {
-                CellSocietyController controller = new CellSocietyController(myDataFile);
+            setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+            if (getLanguage() != null) {
+                CellSocietyController controller = new CellSocietyController(getMyDataFile());
                 controller.loadSimulation(myStage);
                 GridScreen firstGrid = new GridScreen(800, myStage, controller);
-                myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
+                myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
             }
         } catch (IOException | CsvValidationException e) {
-            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
         }
     }
 
@@ -133,16 +133,16 @@ public class FileInput extends SceneCreator {
      */
     public Button makeButton(String property) {
         Button result = new Button();
-        String labelText = myResource.getString(property);
+        String labelText = getMyResource().getString(property);
         result.setText(labelText);
         result.setId(property);
         result.getStyleClass().add("button");
         result.setOnAction(event -> {
             try {
-                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
+                Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
                 m.invoke(this);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                new Alert(AlertType.ERROR, myResource.getString("createButtonError")).showAndWait();
+                new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
             }
         });
         return result;
