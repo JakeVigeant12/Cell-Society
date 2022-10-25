@@ -6,7 +6,15 @@ import cellsociety.view.StartSplash;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javax.management.ReflectionException;
 
 public class GraphGrid extends Grid{
   private HashMap<Integer, Cell> myCells;
@@ -22,7 +30,8 @@ public class GraphGrid extends Grid{
    * Constructor for GraphGrid class
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) {
+  public GraphGrid(GridWrapper gridParsing, Properties properties)
+      throws  ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     myProperties = properties;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
@@ -36,7 +45,8 @@ public class GraphGrid extends Grid{
    */
   @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public void createCells(GridWrapper inputLayout) {
+  public void createCells(GridWrapper inputLayout)
+      throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     int cellCount = 0;
     for(int i = 0; i < inputLayout.row(); i++){
@@ -44,27 +54,21 @@ public class GraphGrid extends Grid{
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
-        try {
-          Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
-          Constructor<?>[] makeNewCell = cellClass.getConstructors();
-          if(makeNewCell[0].getParameterCount() == 3){
-            double parameter;
-            try {
-              parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-            }
-            catch (Exception e) {
-              ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
-              parameter = Double.parseDouble(defaultResources.getString("Parameters"));
-            }
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+        Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+        Constructor<?>[] makeNewCell = cellClass.getConstructors();
+        if(makeNewCell[0].getParameterCount() == 3){
+          double parameter;
+          try {
+            parameter = Double.parseDouble((String) myProperties.get("Parameters"));
           }
-          else{
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+          catch (Exception e) {
+            ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
+            parameter = Double.parseDouble(defaultResources.getString("Parameters"));
           }
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-          throw new RuntimeException(e);
+          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+        }
+        else{
+          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
         }
         myCells.putIfAbsent(cellCount, newCell);
       }

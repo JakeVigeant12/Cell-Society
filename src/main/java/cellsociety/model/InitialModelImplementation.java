@@ -7,16 +7,19 @@ import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.management.ReflectionException;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
 
   private final Grid myGrid;
 
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
+      throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     myGrid = new GraphGrid(gridWrapper, simParameters);
 
   }

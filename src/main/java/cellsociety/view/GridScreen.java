@@ -11,6 +11,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -191,7 +192,7 @@ public class GridScreen extends SceneCreator {
                     Number.class);
                 m.invoke(this, newValue);
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                new Alert(AlertType.ERROR, myResource.getString("createSliderError")).showAndWait();
             }
         });
         return sliderBox;
@@ -212,7 +213,7 @@ public class GridScreen extends SceneCreator {
                 Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
                 m.invoke(this);
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                new Alert(AlertType.ERROR, myResource.getString("createButtonError")).showAndWait();
             }
         });
         return result;
@@ -226,7 +227,7 @@ public class GridScreen extends SceneCreator {
             try {
                 myController.saveGrid(file);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                new Alert(AlertType.ERROR, myResource.getString("saveSimulationError")).showAndWait();
             }
         }
     }
@@ -255,10 +256,11 @@ public class GridScreen extends SceneCreator {
                 GridScreen firstGrid = new GridScreen(800, myStage, myController);
                 myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
             }
-        } catch (IOException e) {
-            // should never happen since user selected the file
-            new Alert(Alert.AlertType.ERROR, "Invalid Data File Given").showAndWait();//TODO: Use a resource bundle for error string
-        } catch (CsvValidationException ignored) {
+        } catch (IOException | CsvValidationException e) {
+            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
+            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
         }
     }
 
@@ -276,7 +278,10 @@ public class GridScreen extends SceneCreator {
             myController.resetController();
             gridView.updateGrid(myController.getViewGrid());
         } catch (CsvValidationException | IOException e) {
-            throw new RuntimeException(e);
+            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
+            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
         }
     }
 
