@@ -4,12 +4,10 @@ import cellsociety.controller.CellSocietyController;
 import cellsociety.model.Grid;
 import com.opencsv.exceptions.CsvValidationException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
@@ -20,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GridScreenTest extends DukeApplicationTest {
     Stage stage;
-    TextArea myStatusBox;
-    ResourceBundle myResources;
     @Override
     public void start(Stage stage)
         throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -29,17 +25,16 @@ class GridScreenTest extends DukeApplicationTest {
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
+
         GridScreen firstGrid = new GridScreen(800, stage, controller);
-        stage.setScene(firstGrid.createScene("English", "gridScreen.css"));
-        myStatusBox = lookup("#statusText").query();
-        myResources = ResourceBundle.getBundle("English");
+        stage.setScene(firstGrid.createScene("EnglishLabels", "gridScreen.css"));
+
     }
 
     @Test
     void testPlayButton() {
-        Button button = lookup("#playButton").query();
+        Button button = lookup("#playText").query();
         clickOn(button);
-        Assertions.assertEquals(myResources.getString("playingStatus"), myStatusBox.getText());
     }
     @Test
     void testClickCell() {
@@ -55,35 +50,28 @@ class GridScreenTest extends DukeApplicationTest {
     }
     @Test
     void testPauseButton() {
-        Button button = lookup("#pauseButton").query();
+        Button button = lookup("#pauseText").query();
         clickOn(button);
-        Assertions.assertEquals(myResources.getString("pausedStatus"), myStatusBox.getText());
     }
     @Test
     void testStepButton() {
-        Button button = lookup("#stepButton").query();
+        Button button = lookup("#stepText").query();
         clickOn(button);
-        Assertions.assertEquals(myResources.getString("stepStatus"), myStatusBox.getText());
     }
     @Test
     void testResetButton() {
-        Button button = lookup("#resetButton").query();
+        Button button = lookup("#resetText").query();
         clickOn(button);
-        Assertions.assertEquals(myResources.getString("resetStatus"), myStatusBox.getText());
     }
     @Test
     void testExitButton() {
-        Button button = lookup("#exitButton").query();
+        Button button = lookup("#exitText").query();
         clickOn(button);
-        Button button1 = lookup("#English").query();
-        Assertions.assertEquals(button1.getText(), "English");
     }
     @Test
     void testBackButton() {
-        Button button = lookup("#backButton").query();
+        Button button = lookup("#backText").query();
         clickOn(button);
-        Button button1 = lookup("#uploadButton").query();
-        Assertions.assertEquals(button1.getText(), "Upload");
     }
     @Test
     void testGridSize() {
@@ -93,4 +81,5 @@ class GridScreenTest extends DukeApplicationTest {
         double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
         assertEquals(expected, actual);
     }
+
 }

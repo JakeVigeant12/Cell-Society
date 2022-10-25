@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SegregationCellTest {
     int state = 1;
     int id = 0;
-    double threshold = 0.5;
+    Double threshold = 0.5;
     SegregationCell c = new SegregationCell(state, id, threshold);
 
 

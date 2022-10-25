@@ -2,7 +2,7 @@ package cellsociety.parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import cellsociety.model.Grid;
+import cellsociety.model.grids.Grid;
 import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;

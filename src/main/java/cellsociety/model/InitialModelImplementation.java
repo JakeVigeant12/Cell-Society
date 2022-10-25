@@ -1,26 +1,27 @@
 package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.parser.CSVParser;
-import cellsociety.parser.Parser;
+import cellsociety.model.grids.GraphGrid;
+import cellsociety.model.grids.Grid;
+import cellsociety.model.grids.WatorGraphGrid;
 import cellsociety.view.GridWrapper;
-import com.opencsv.exceptions.CsvValidationException;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.management.ReflectionException;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
 
   private final Grid myGrid;
 
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
-      throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
-    myGrid = new GraphGrid(gridWrapper, simParameters);
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
+    System.out.println(simParameters.getProperty("Type"));
+    if(simParameters.getProperty("Type").equals("WatorWorld")){
+      myGrid = new WatorGraphGrid(gridWrapper, simParameters);
+    }
+    else {
+      myGrid = new GraphGrid(gridWrapper, simParameters);
+    }
 
   }
 

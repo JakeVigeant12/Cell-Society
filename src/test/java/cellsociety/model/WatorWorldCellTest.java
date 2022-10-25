@@ -25,23 +25,7 @@ public class WatorWorldCellTest {
         assertEquals(2, c.getFutureState());
     }
 
-    @Test
-    void testGetFishTurns(){
-        c.setFishTurns(3);
-        assertEquals(3, c.getFishTurns());
-    }
 
-    @Test
-    void testGetSharkTurns(){
-        c.setSharkTurns(3);
-        assertEquals(3, c.getSharkTurns());
-    }
-
-    @Test
-    void testSharkStarve() {
-        c.setSharkStarve(3);
-        assertEquals(3, c.getSharkStarve());
-    }
 
     @Test
     void testNeighborsFishesWithFishesMove () {
@@ -54,7 +38,6 @@ public class WatorWorldCellTest {
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(1, fish.getFutureState());
-        assertEquals(true, fish.getWantsToMove());
     }
 
     @Test
@@ -68,7 +51,6 @@ public class WatorWorldCellTest {
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(1, fish.getFutureState());
-        assertEquals(false, fish.getWantsToMove());
     }
 
     @Test
@@ -82,7 +64,6 @@ public class WatorWorldCellTest {
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(2, shark.getFutureState());
-        assertEquals(true, shark.getWantsToMove());
     }
 
     @Test
@@ -96,8 +77,7 @@ public class WatorWorldCellTest {
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(2, shark.getFutureState());
-        assertEquals(false, shark.getWantsToMove());
-        assertEquals(0, shark.getSharkStarve());
+
     }
 
     @Test

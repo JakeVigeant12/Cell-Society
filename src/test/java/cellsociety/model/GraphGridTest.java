@@ -2,6 +2,7 @@ package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.GameOfLifeCell;
 
+import cellsociety.model.grids.GraphGrid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
