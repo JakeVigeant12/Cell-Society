@@ -6,6 +6,7 @@ import cellsociety.view.GridWrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class WatorGraphGrid extends GraphGrid {
@@ -32,32 +33,52 @@ public class WatorGraphGrid extends GraphGrid {
   }
 
   @Override
-  public void createCells(GridWrapper inputLayout) {
-    super.createCells(inputLayout);
+  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+    return super.createCells(inputLayout);
   }
 
   @Override
   public void computeStates() {
     emptyCells = new ArrayList<>();
-    for (Cell currentCell : myAdjacenyList.keySet()) {
+    for (Cell currentCell : super.myAdjacenyList.keySet()) {
       if (currentCell.getCurrentState() == 2) {
         Cell newShark =  moveShark(currentCell);
-        swap(newShark, currentCell);
+        if(newShark.getId() != currentCell.getId()) {
+          //If the shark moves, swap the states and then deal with reproduction or death
+          newShark.swapCells(currentCell);
+          newShark.updateState();
+          currentCell.setCurrentState(3);
+          //if(currentCell.readyToReproduce()){
+            //newShark.setCurrentState(2);
+          //}
+        }
       }
     }
-    for (Cell currentCell : myAdjacenyList.keySet()) {
+    for (Cell currentCell : super.myAdjacenyList.keySet()) {
       if (currentCell.getCurrentState() == 1) {
-        //Deal with fish on second loop through
+        Cell newFish = moveFish(currentCell);
+        if(newFish.getId() != currentCell.getId()) {
+          newFish.swapCells(currentCell);
+          //if(currentCell.readyToReproduce()){
+            //newFish.setCurrentState(1);
+          //}
+        }
       }
     }
-    for (Cell currentCell : myAdjacenyList.keySet()) {
+    //Erase shark placeholders
+    for (Cell currentCell : super.myAdjacenyList.keySet()) {
+      if (currentCell.getCurrentState() == 3) {
+          currentCell.setCurrentState(0);
+      }
+    }
+    for (Cell currentCell : super.myAdjacenyList.keySet()) {
       currentCell.updateState();
     }
   }
 
   public Cell moveShark(Cell sharkCell) {
     //See if any fish may be eaten first
-    Cell newLocation = findCelltoSwap(sharkCell, myAdjacenyList.get(sharkCell),
+    Cell newLocation = findCelltoSwap(sharkCell, super.myAdjacenyList.get(sharkCell),
         1);
     //If the shark can eat a fish, return the fish cell
     if(!(newLocation.getId() == sharkCell.getId())){
@@ -65,7 +86,7 @@ public class WatorGraphGrid extends GraphGrid {
       return newLocation;
     }
     //If no fish, find a new space
-    newLocation = findCelltoSwap(sharkCell, myAdjacenyList.get(sharkCell),0);
+    newLocation = findCelltoSwap(sharkCell, super.myAdjacenyList.get(sharkCell),0);
     //If shark moves to an empty space, return this
     if(!(newLocation.getId() == sharkCell.getId())){
       return newLocation;
@@ -77,7 +98,7 @@ public class WatorGraphGrid extends GraphGrid {
 
   public Cell moveFish(Cell fishCell) {
     //See if there is an adjacent location for the fish to move into
-    Cell newLocation = findCelltoSwap(fishCell, myAdjacenyList.get(fishCell), 0);
+    Cell newLocation = findCelltoSwap(fishCell, super.myAdjacenyList.get(fishCell), 0);
     //If fish can move to a new empty cell, return this
     if(!(newLocation.getId() == fishCell.getId())){
       return newLocation;

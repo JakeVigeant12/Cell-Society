@@ -3,6 +3,7 @@ package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.GraphGrid;
 import cellsociety.model.grids.Grid;
+import cellsociety.model.grids.WatorGraphGrid;
 import cellsociety.view.GridWrapper;
 
 import java.util.Map;
@@ -14,7 +15,13 @@ public class InitialModelImplementation extends Model {
   private final Grid myGrid;
 
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    myGrid = new GraphGrid(gridWrapper, simParameters);
+    System.out.println(simParameters.getProperty("Type"));
+    if(simParameters.getProperty("Type").equals("WatorWorld")){
+      myGrid = new WatorGraphGrid(gridWrapper, simParameters);
+    }
+    else {
+      myGrid = new GraphGrid(gridWrapper, simParameters);
+    }
 
   }
 
