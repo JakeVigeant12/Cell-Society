@@ -10,19 +10,15 @@ import java.util.ResourceBundle;
 
 
 public abstract class SceneCreator {
-    public double mySize;
-    public Scene myScene;
-    public Scene previousScene;
-    public CellSocietyController myController;
-    protected File myDataFile;
-    protected Pane root;
-    protected String language;
-    protected ResourceBundle myResource;
-    protected ResourceBundle myCommands;
+    private double mySize;
+    private File myDataFile;
+    private String language;
+    private ResourceBundle myResource;
+    private ResourceBundle myCommands;
     private static final String COMMAND_PROPERTIES = "Command";
     public static final String DEFAULT_RESOURCE_PACKAGE = String.format("%s.", SceneCreator.class.getPackageName());
-
     private Stage myStage;
+
     /**
      * Constructor for SceneCreator
      *
@@ -40,45 +36,54 @@ public abstract class SceneCreator {
      * @return
      */
     public Scene createScene(String css) {
-//        previousScene = stage.getScene();
         Scene scene = new Scene(setUpRootPane(), mySize, mySize);
         scene.getStylesheets().add(css);
-        myScene = scene;
         return scene;
     }
 
     public Scene createScene(String language, String css) {
-//        previousScene = stage.getScene();
         this.language = language;
         myResource = ResourceBundle.getBundle(language);
-        myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));;
+        myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));
         Scene scene = new Scene(setUpRootPane(), mySize, mySize);
         scene.getStylesheets().add(css);
-        myScene = scene;
         return scene;
     }
 
     protected Pane setUpRootPane() {
-        return root;
+        return new Pane();
     }
 
-    /**
-     * Sets a new stage to display
-     *
-     */
-    public void nextScreen() {
-        myStage.setScene(myScene);
-        myStage.setHeight(mySize);
-        myStage.setWidth(mySize);
-        myStage.show();
+    protected File getMyDataFile() {
+        return myDataFile;
     }
 
-    /**
-     * Sets the previous scene to display
-     *
-     */
-    public void previousScreen() {
-        myStage.setScene(previousScene);
-        myStage.show();
+    protected void setMyDataFile(File myDataFile) {
+        if (myDataFile == null)
+            throw new IllegalStateException();
+        this.myDataFile = myDataFile;
     }
+
+    protected double getMySize() {
+        return mySize;
+    }
+
+    protected void setMySize(double size) {
+        if (size <= 0)
+            throw new IllegalStateException();
+        mySize = size;
+    }
+
+    protected String getLanguage() {
+        return language;
+    }
+
+    protected ResourceBundle getMyResource() {
+        return myResource;
+    }
+
+    protected ResourceBundle getMyCommands() {
+        return myCommands;
+    }
+
 }

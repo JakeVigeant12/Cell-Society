@@ -35,6 +35,7 @@ public class GridView {
     public GridView(CellSocietyController controller) {
         grid = new GridPane();
         myController = controller;
+        grid.setId("gridView");
     }
 
     public void setUpGridViewSize() {
