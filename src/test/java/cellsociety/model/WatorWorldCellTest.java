@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WaTorWorldCellTest {
+public class WatorWorldCellTest {
     int state = 1;
     int id = 0;
     WatorWorldCell c = new WatorWorldCell(state, id);
@@ -23,6 +23,24 @@ public class WaTorWorldCellTest {
     void testSetFutureState () {
         c.setFutureStateValue(2);
         assertEquals(2, c.getFutureState());
+    }
+
+    @Test
+    void testGetFishTurns(){
+        c.setFishTurns(3);
+        assertEquals(3, c.getFishTurns());
+    }
+
+    @Test
+    void testGetSharkTurns(){
+        c.setSharkTurns(3);
+        assertEquals(3, c.getSharkTurns());
+    }
+
+    @Test
+    void testSharkStarve() {
+        c.setSharkStarve(3);
+        assertEquals(3, c.getSharkStarve());
     }
 
     @Test
