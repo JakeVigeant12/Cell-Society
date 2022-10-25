@@ -1,20 +1,13 @@
 package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.GameOfLifeCell;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import cellsociety.model.grids.GraphGrid;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
 
 import cellsociety.view.GridWrapper;
+import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
-import static cellsociety.model.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {
@@ -22,12 +15,11 @@ public class GraphGridTest {
 
 
   @Test
-  void testBasicObject() throws IOException {
+  void testBasicObject(){
     constructTestArrayList(4,4);
-    File myDataFile = new File("./data/game_of_life/blinkers.sim");
     Properties properties = new Properties();
-    properties.load(new FileReader(myDataFile));
-    GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing ,properties);
+    properties.put("Type", "GameOfLife");
+    GraphGrid gameOfLifeGrid = new GraphGrid(gridParsing, properties);
     HashMap<Integer, Cell> testCells = new HashMap<>();
     for(int i = 0; i < 16; i++){
 

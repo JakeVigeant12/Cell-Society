@@ -1,13 +1,10 @@
 package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.parser.CSVParser;
-import cellsociety.parser.Parser;
+import cellsociety.model.grids.GraphGrid;
+import cellsociety.model.grids.Grid;
 import cellsociety.view.GridWrapper;
-import com.opencsv.exceptions.CsvValidationException;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 

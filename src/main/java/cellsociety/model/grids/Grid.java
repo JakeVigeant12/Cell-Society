@@ -1,4 +1,4 @@
-package cellsociety.model;
+package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.view.GridWrapper;

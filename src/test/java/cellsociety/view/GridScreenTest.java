@@ -20,13 +20,18 @@ class GridScreenTest extends DukeApplicationTest {
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
         controller.loadSimulation(stage);
+<<<<<<< HEAD
+        GridScreen firstGrid = new GridScreen(800, controller);
+        stage.setScene(firstGrid.createScene(stage, "EnglishLabels", "gridscreen.css"));
+=======
         GridScreen firstGrid = new GridScreen(800, stage, controller);
-        stage.setScene(firstGrid.createScene("English", "gridScreen.css"));
+        stage.setScene(firstGrid.createScene("EnglishLabels", "gridScreen.css"));
+>>>>>>> master
     }
 
     @Test
     void testPlayButton() {
-        Button button = lookup("#playButton").query();
+        Button button = lookup("#playText").query();
         clickOn(button);
     }
     @Test
@@ -37,27 +42,27 @@ class GridScreenTest extends DukeApplicationTest {
     }
     @Test
     void testPauseButton() {
-        Button button = lookup("#pauseButton").query();
+        Button button = lookup("#pauseText").query();
         clickOn(button);
     }
     @Test
     void testStepButton() {
-        Button button = lookup("#stepButton").query();
+        Button button = lookup("#stepText").query();
         clickOn(button);
     }
     @Test
     void testResetButton() {
-        Button button = lookup("#resetButton").query();
+        Button button = lookup("#resetText").query();
         clickOn(button);
     }
     @Test
     void testExitButton() {
-        Button button = lookup("#exitButton").query();
+        Button button = lookup("#exitText").query();
         clickOn(button);
     }
     @Test
     void testBackButton() {
-        Button button = lookup("#backButton").query();
+        Button button = lookup("#backText").query();
         clickOn(button);
     }
     @Test

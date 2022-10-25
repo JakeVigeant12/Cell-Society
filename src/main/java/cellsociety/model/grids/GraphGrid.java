@@ -1,6 +1,7 @@
-package cellsociety.model;
+package cellsociety.model.grids;
 
 import cellsociety.model.cells.*;
+import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
 
 import java.lang.reflect.Constructor;
@@ -11,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class GraphGrid extends Grid{
+public class GraphGrid extends Grid {
   private HashMap<Integer, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
   private List<Cell> emptyCells;
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
-
+  private Neighborhood simulationNeighbors;
   /**
    * Constructor for GraphGrid class
    * @param gridParsing is the layout of the grid
@@ -26,6 +27,7 @@ public class GraphGrid extends Grid{
     myProperties = properties;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
+
     createCells(gridParsing);
     initializeNeighbors(gridParsing);
   }
@@ -82,37 +84,53 @@ public class GraphGrid extends Grid{
         currId++;
         Cell currentCell = myCells.get(currId);
         myAdjacenyList.putIfAbsent(currentCell, neighbors);
-        if(isInBounds(i - 1, j, gridParsing)){
-          int topNeighborId = currId - gridParsing.column(0);
-          myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
-        }
-        if(isInBounds(i, j+1, gridParsing)){
-          int rightNeighborId = currId + 1;
-          myAdjacenyList.get(currentCell).add(myCells.get(rightNeighborId));
-        }
-        if(isInBounds(i, j-1, gridParsing)){
-          int leftNeighborId = currId - 1;
-          myAdjacenyList.get(currentCell).add(myCells.get(leftNeighborId));
-        }
-        if(isInBounds(i+1, j, gridParsing)){
-          int bottomNeighborId = currId + gridParsing.column(0);
-          myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
-        }
-        if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.column(0) + 1;
-          myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
-        }
         if(isInBounds(i-1, j-1, gridParsing)){
           int upperLeftNeighborId = currId - gridParsing.column(0) -1;
-          myAdjacenyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+          if(simulationNeighbors.countNeighbor(0)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+          }
+        }
+        if(isInBounds(i - 1, j, gridParsing)){
+          int topNeighborId = currId - gridParsing.column(0);
+          if(simulationNeighbors.countNeighbor(1)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(topNeighborId));
+          }
         }
         if(isInBounds(i-1, j+1, gridParsing)){
           int upperRightNeighborId = currId - gridParsing.column(0) + 1;
-          myAdjacenyList.get(currentCell).add(myCells.get(upperRightNeighborId));
+          if(simulationNeighbors.countNeighbor(2)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(upperRightNeighborId));
+          }
+        }
+        if(isInBounds(i, j-1, gridParsing)){
+          int leftNeighborId = currId - 1;
+          if(simulationNeighbors.countNeighbor(3)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(leftNeighborId));
+          }
+        }
+        if(isInBounds(i, j+1, gridParsing)){
+          int rightNeighborId = currId + 1;
+          if(simulationNeighbors.countNeighbor(4)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(rightNeighborId));
+          }
         }
         if(isInBounds(i+1, j-1, gridParsing)){
           int lowerLeftNeighborId = currId + gridParsing.column(0) - 1;
-          myAdjacenyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
+          if(simulationNeighbors.countNeighbor(5)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
+          }
+        }
+        if(isInBounds(i+1, j, gridParsing)){
+          int bottomNeighborId = currId + gridParsing.column(0);
+          if(simulationNeighbors.countNeighbor(6)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(bottomNeighborId));
+          }
+        }
+        if(isInBounds(i+1, j+1, gridParsing)){
+          int bottomRightNeighborId = currId + gridParsing.column(0) + 1;
+          if(simulationNeighbors.countNeighbor(7)) {
+            myAdjacenyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
+          }
         }
       }
     }
