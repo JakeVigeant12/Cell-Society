@@ -77,7 +77,7 @@ public class WaTorWorldCellTest {
 
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
-        assertEquals(3, shark.getFutureState());
+        assertEquals(2, shark.getFutureState());
         assertEquals(false, shark.getWantsToMove());
         assertEquals(0, shark.getSharkStarve());
     }

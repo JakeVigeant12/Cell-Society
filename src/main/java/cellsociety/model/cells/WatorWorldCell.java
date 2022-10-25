@@ -7,6 +7,7 @@ public class WatorWorldCell extends Cell {
     private int sharkTurns;
     private int sharkStarve;
     private boolean wantsToMove;
+    private boolean wantsToBreed;
 
     // Cell Key
     // 0 = water
@@ -25,6 +26,7 @@ public class WatorWorldCell extends Cell {
         sharkTurns = 0;
         sharkStarve = 0;
         wantsToMove = false;
+        wantsToBreed = false;
     }
 
     public WatorWorldCell(int state, int id, int fTurn, int sTurn, int sStarve){
@@ -33,6 +35,7 @@ public class WatorWorldCell extends Cell {
         sharkTurns = sTurn;
         sharkStarve = sStarve;
         wantsToMove = false;
+        wantsToBreed = false;
     }
 
     /**
@@ -46,14 +49,16 @@ public class WatorWorldCell extends Cell {
             setFutureStateValue(0); // do nothing
         }
         else { // if the current cell is a fish or shark
+            List<Integer> neighborStates = getNeighborStates(neighbors);
             // An animal can move to an empty cell
             if (getCurrentState() == 1){ // If current cell is a fish
-                if (getNeighborStates(neighbors).contains(0)){
+                if (neighborStates.contains(0)){
                     fishTurns++;
                     if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
                         setFutureStateValue(1);
                         fishTurns = 0;
-                        // TODO: Make a new fish in neighboring cell
+                        wantsToMove = true;
+                        wantsToBreed = true;
                     }
                     else {
                         setFutureStateValue(1); // Needs to swap with a water cell
@@ -62,34 +67,36 @@ public class WatorWorldCell extends Cell {
                 }
                 else {
                     setFutureStateValue(1);
+                    wantsToMove = false;
                 }
             }
             else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
-                if (!getNeighborStates(neighbors).contains(0) && !getNeighborStates(neighbors).contains(1)) { // if there are no empty cells or fish, then the shark will starve
-                    setFutureStateValue(3);
+                if (neighborStates.contains(0) && !neighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
+                    sharkStarve++;
+                    if (sharkStarve == 3) {
+                        setFutureStateValue(0); // Shark dies
+                        sharkStarve = 0;
+                        wantsToMove = false;
+                    }
+                    else {
+                        setFutureStateValue(2); // Shark stays alive
+                        wantsToMove = true;
+                    }
                 }
-                else if (getNeighborStates(neighbors).contains(1)) { // if there is a fish, then the shark will eat it
+                else if (neighborStates.contains(1)) { // if there is a fish, then the shark will eat it
                     sharkTurns++;
-                    sharkStarve = 0;
                     if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
                         setFutureStateValue(2);
                         sharkTurns = 0;
+                        wantsToMove = true;
                     } else {
                         setFutureStateValue(2); // Needs to swap with a water cell
                         wantsToMove = true;
                     }
                 }
-            }
-            else if (getCurrentState() == 3){ // If current cell is a shark and does not eat a fish
-                sharkStarve++;
-                if (sharkStarve == 3) {
-                    setFutureStateValue(0); // Shark dies
-                    setSharkStarve(0);
-                    wantsToMove = false;
-                }
                 else {
-                    setFutureStateValue(3); // Shark stays alive
-                    wantsToMove = true;
+                    setFutureStateValue(2);
+                    wantsToMove = false;
                 }
             }
         }

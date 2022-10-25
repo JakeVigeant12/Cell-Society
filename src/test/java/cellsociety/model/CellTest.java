@@ -77,11 +77,8 @@ public class CellTest {
 
         cell1.swapCellStates(cell2);
 
-        assertEquals(64, cell1.getCurrentState());
-        assertEquals(32, cell2.getCurrentState());
-
-        assertEquals(32, cell1.getFutureState());
-        assertEquals(64, cell2.getFutureState());
+        assertEquals(32, cell1.getCurrentState());
+        assertEquals(64, cell2.getCurrentState());
     }
 
     @Test
@@ -91,11 +88,8 @@ public class CellTest {
 
         cell1.swapCells(cell2);
 
-        assertEquals(5234, cell1.getCurrentState());
-        assertEquals(2, cell2.getCurrentState());
-
-        assertEquals(2, cell1.getFutureState());
-        assertEquals(5234, cell2.getFutureState());
+        assertEquals(2, cell1.getCurrentState());
+        assertEquals(5234, cell2.getCurrentState());
     }
 
 
