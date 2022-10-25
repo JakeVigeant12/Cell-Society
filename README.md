@@ -57,11 +57,13 @@ Data files needed:
 * A sim file and corresponding csv with the grid states
 
 Features implemented:
+
 Fully working simulations:
  * Conway's Game of Life
  * Spreading of Fire
  * Rock, Paper, Scissors
  * Percolation
+
 Nearly Complete Simulations:
  * Schelling's Model of Segregation
  * Wa-Tor World
