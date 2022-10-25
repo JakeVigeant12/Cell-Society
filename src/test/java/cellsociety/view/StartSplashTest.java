@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
@@ -15,9 +16,11 @@ class StartSplashTest extends DukeApplicationTest {
     }
 
     @Test
-    void testTextFieldAction() {
+    void testEnglish() {
         Button button = lookup("#English").query();
         clickOn(button);
+        Button button1 =  lookup("#uploadButton").query();
+        Assertions.assertEquals(button1.getText(), "Upload");
     }
 
 }

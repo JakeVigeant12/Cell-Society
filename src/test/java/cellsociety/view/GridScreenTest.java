@@ -67,16 +67,19 @@ class GridScreenTest extends DukeApplicationTest {
     void testExitButton() {
         Button button = lookup("#exitButton").query();
         clickOn(button);
+        Button button1 = lookup("#English").query();
+        Assertions.assertEquals(button1.getText(), "English");
     }
     @Test
     void testBackButton() {
         Button button = lookup("#backButton").query();
         clickOn(button);
+        Button button1 = lookup("#uploadButton").query();
+        Assertions.assertEquals(button1.getText(), "Upload");
     }
     @Test
-    void testResize() {
+    void testGridSize() {
         stage.setHeight(600);
         stage.setWidth(600);
     }
-
 }
