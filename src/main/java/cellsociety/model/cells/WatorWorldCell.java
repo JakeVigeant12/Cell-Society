@@ -47,6 +47,11 @@ public class WatorWorldCell extends Cell {
     public void setFutureState(List<Cell> neighbors) {
         if (getCurrentState() == 0) { // if the current cell is water
             setFutureStateValue(0); // do nothing
+            fishTurns = 0;
+            sharkTurns = 0;
+            sharkStarve = 0;
+            wantsToMove = false;
+            wantsToBreed = false;
         }
         else { // if the current cell is a fish or shark
             List<Integer> neighborStates = getNeighborStates(neighbors);
@@ -89,6 +94,7 @@ public class WatorWorldCell extends Cell {
                         setFutureStateValue(2);
                         sharkTurns = 0;
                         wantsToMove = true;
+                        wantsToBreed = true;
                     } else {
                         setFutureStateValue(2); // Needs to swap with a water cell
                         wantsToMove = true;
@@ -138,7 +144,7 @@ public class WatorWorldCell extends Cell {
      * Method that sets the shark starve of the cell
      * @param starve
      */
-    private void setSharkStarve(int starve) {
+    public void setSharkStarve(int starve) {
         this.sharkStarve = starve;
     }
 
