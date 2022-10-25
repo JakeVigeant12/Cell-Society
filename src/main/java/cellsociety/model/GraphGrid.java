@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javax.management.ReflectionException;
@@ -53,27 +54,21 @@ public class GraphGrid extends Grid{
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
-        try {
-          Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
-          Constructor<?>[] makeNewCell = cellClass.getConstructors();
-          if(makeNewCell[0].getParameterCount() == 3){
-            double parameter;
-            try {
-              parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-            }
-            catch (Exception e) {
-              ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
-              parameter = Double.parseDouble(defaultResources.getString("Parameters"));
-            }
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+        Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+        Constructor<?>[] makeNewCell = cellClass.getConstructors();
+        if(makeNewCell[0].getParameterCount() == 3){
+          double parameter;
+          try {
+            parameter = Double.parseDouble((String) myProperties.get("Parameters"));
           }
-          else{
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+          catch (Exception e) {
+            ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
+            parameter = Double.parseDouble(defaultResources.getString("Parameters"));
           }
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-          throw new RuntimeException(e);
+          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+        }
+        else{
+          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
         }
         myCells.putIfAbsent(cellCount, newCell);
       }
