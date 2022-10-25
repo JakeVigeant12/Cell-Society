@@ -12,8 +12,6 @@ public class WatorWorldCell extends Cell {
     // 0 = water
     // 1 = fish
     // 2 = shark
-    // 3 = shark was here but has vacated
-
 
     /**
      * Constructor for WaTorWorldCell class
