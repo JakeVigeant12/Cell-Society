@@ -1,7 +1,9 @@
 package cellsociety.model.grids;
 
 import cellsociety.model.cells.*;
+import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
+import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
 import java.lang.reflect.Constructor;
@@ -27,7 +29,7 @@ public class GraphGrid extends Grid {
     myProperties = properties;
     myAdjacenyList = new HashMap<>();
     myCells = new HashMap<>();
-
+    setNeighbors(properties.getProperty("Type"));
     createCells(gridParsing);
     initializeNeighbors(gridParsing);
   }
@@ -73,6 +75,16 @@ public class GraphGrid extends Grid {
    * Method that initializes the neighbors for the grid
    * @param gridParsing is the layout of the grid from the parser
    */
+
+  //TODO refactor
+  public void setNeighbors(String simType){
+    if(simType.equals("Fire")){
+      simulationNeighbors = new NoDiagonalNeighborhood();
+    }
+    else{
+      simulationNeighbors = new CompleteNeighborhood();
+    }
+  }
   @Override
   public void initializeNeighbors(GridWrapper gridParsing) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
