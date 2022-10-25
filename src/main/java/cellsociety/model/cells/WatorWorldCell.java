@@ -11,8 +11,9 @@ public class WatorWorldCell extends Cell {
     // Cell Key
     // 0 = water
     // 1 = fish
-    // 2 = shark that eats fish
-    // 3 = shark that doesn't eat fish
+    // 2 = shark
+    // 3 = shark was here but has vacated
+
 
     /**
      * Constructor for WaTorWorldCell class
@@ -40,6 +41,9 @@ public class WatorWorldCell extends Cell {
      * @param neighbors is the list of neighbors of the cell
      * @return next state of the cell
      */
+    public int getState(){
+        return getCurrentState();
+    }
     @Override
     public void setFutureState(List<Cell> neighbors) {
         if (getCurrentState() == 0) { // if the current cell is water
