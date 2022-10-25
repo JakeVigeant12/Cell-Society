@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -91,10 +92,11 @@ public class FileInput extends SceneCreator {
                 GridScreen firstGrid = new GridScreen(800, myStage, controller);
                 myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
             }
-        } catch (IOException e) {
-            // should never happen since user selected the file
-            showMessage(Alert.AlertType.ERROR, "Invalid Data File Given");//TODO: Use a resource bundle for error string
-        } catch (CsvValidationException e) {
+        } catch (IOException | CsvValidationException e) {
+            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
+            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
         }
     }
 
@@ -140,8 +142,7 @@ public class FileInput extends SceneCreator {
                 Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
                 m.invoke(this);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                System.out.println(e.getCause());
-                throw new RuntimeException(e);
+                new Alert(AlertType.ERROR, myResource.getString("createButtonError")).showAndWait();
             }
         });
         return result;

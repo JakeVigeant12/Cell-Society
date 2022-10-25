@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
 import com.opencsv.exceptions.CsvValidationException;
+import java.lang.reflect.InvocationTargetException;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GridScreenTest extends DukeApplicationTest {
     Stage stage;
     @Override
-    public void start(Stage stage) throws CsvValidationException, IOException {
+    public void start(Stage stage)
+        throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         this.stage = stage;
         File myDataFile = new File("./data/game_of_life/blinkers.sim");
         CellSocietyController controller = new CellSocietyController(myDataFile);
