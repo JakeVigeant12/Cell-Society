@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SegregationCellTest {
     int state = 1;
     int id = 0;
-    String threshold = "0.5";
+    Double threshold = 0.5;
     SegregationCell c = new SegregationCell(state, id, threshold);
 
 
@@ -28,15 +28,15 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborsAgent1Stay () {
-        SegregationCell mainAgent = new SegregationCell(1, 0, "0.25");
-        SegregationCell c1 = new SegregationCell(1, 0, "0.5");
-        SegregationCell c2 = new SegregationCell(1, 1, "0.5");
-        SegregationCell c3 = new SegregationCell(0, 2, "0.5");
-        SegregationCell c4 = new SegregationCell(0, 3, "0.5");
-        SegregationCell c5 = new SegregationCell(0, 0, "0.5");
-        SegregationCell c6 = new SegregationCell(0, 1, "0.5");
-        SegregationCell c7 = new SegregationCell(0, 2, "0.5");
-        SegregationCell c8 = new SegregationCell(0, 3, "0.5");
+        SegregationCell mainAgent = new SegregationCell(1, 0, 0.25);
+        SegregationCell c1 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(0, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(0, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -46,15 +46,15 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborsAgent1Leave () {
-        SegregationCell mainAgent = new SegregationCell(1, 0, "0.25");
-        SegregationCell c1 = new SegregationCell(1, 0, "0.5");
-        SegregationCell c2 = new SegregationCell(0, 1, "0.5");
-        SegregationCell c3 = new SegregationCell(0, 2, "0.5");
-        SegregationCell c4 = new SegregationCell(0, 3, "0.5");
-        SegregationCell c5 = new SegregationCell(2, 0, "0.5");
-        SegregationCell c6 = new SegregationCell(2, 1, "0.5");
-        SegregationCell c7 = new SegregationCell(2, 2, "0.5");
-        SegregationCell c8 = new SegregationCell(2, 3, "0.5");
+        SegregationCell mainAgent = new SegregationCell(1, 0, 0.25);
+        SegregationCell c1 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(0, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(2, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -64,15 +64,15 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborsAgent2Stay () {
-        SegregationCell mainAgent = new SegregationCell(2, 0, "0.5");
-        SegregationCell c1 = new SegregationCell(2, 0, "0.5");
-        SegregationCell c2 = new SegregationCell(2, 1, "0.5");
-        SegregationCell c3 = new SegregationCell(2, 2, "0.5");
-        SegregationCell c4 = new SegregationCell(2, 3, "0.5");
-        SegregationCell c5 = new SegregationCell(2, 0, "0.5");
-        SegregationCell c6 = new SegregationCell(1, 1, "0.5");
-        SegregationCell c7 = new SegregationCell(0, 2, "0.5");
-        SegregationCell c8 = new SegregationCell(0, 3, "0.5");
+        SegregationCell mainAgent = new SegregationCell(2, 0, 0.5);
+        SegregationCell c1 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(2, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(0, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -83,15 +83,15 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborsAgent2Leave () {
-        SegregationCell mainAgent = new SegregationCell(2, 0, "0.5");
-        SegregationCell c1 = new SegregationCell(2, 0, "0.5");
-        SegregationCell c2 = new SegregationCell(2, 1, "0.5");
-        SegregationCell c3 = new SegregationCell(1, 2, "0.5");
-        SegregationCell c4 = new SegregationCell(0, 3, "0.5");
-        SegregationCell c5 = new SegregationCell(1, 0, "0.5");
-        SegregationCell c6 = new SegregationCell(1, 1, "0.5");
-        SegregationCell c7 = new SegregationCell(2, 2, "0.5");
-        SegregationCell c8 = new SegregationCell(0, 3, "0.5");
+        SegregationCell mainAgent = new SegregationCell(2, 0, 0.5);
+        SegregationCell c1 = new SegregationCell(2, 0, 0.5);
+        SegregationCell c2 = new SegregationCell(2, 1, 0.5);
+        SegregationCell c3 = new SegregationCell(1, 2, 0.5);
+        SegregationCell c4 = new SegregationCell(0, 3, 0.5);
+        SegregationCell c5 = new SegregationCell(1, 0, 0.5);
+        SegregationCell c6 = new SegregationCell(1, 1, 0.5);
+        SegregationCell c7 = new SegregationCell(2, 2, 0.5);
+        SegregationCell c8 = new SegregationCell(0, 3, 0.5);
 
         mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
@@ -101,10 +101,10 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborsBad () {
-        SegregationCell c1 = new SegregationCell(23124, 0, "1");
-        SegregationCell c2 = new SegregationCell(13, 1, "1");
-        SegregationCell c3 = new SegregationCell(2132, 2, "1");
-        SegregationCell c4 = new SegregationCell(213, 3, "1");
+        SegregationCell c1 = new SegregationCell(23124, 0, 1);
+        SegregationCell c2 = new SegregationCell(13, 1, 1);
+        SegregationCell c3 = new SegregationCell(2132, 2, 1);
+        SegregationCell c4 = new SegregationCell(213, 3, 1);
 
         c.setFutureState(List.of(c1, c2, c3, c4));
 
@@ -114,10 +114,10 @@ public class SegregationCellTest {
 
     @Test
     void testNeighborStates () {
-        SegregationCell c1 = new SegregationCell(1, 0, "1");
-        SegregationCell c2 = new SegregationCell(0, 1, "1");
-        SegregationCell c3 = new SegregationCell(1, 2, "1");
-        SegregationCell c4 = new SegregationCell(0, 3, "1");
+        SegregationCell c1 = new SegregationCell(1, 0, 1);
+        SegregationCell c2 = new SegregationCell(0, 1, 1);
+        SegregationCell c3 = new SegregationCell(1, 2, 1);
+        SegregationCell c4 = new SegregationCell(0, 3, 1);
 
         List<Integer> neighborStates = c.getNeighborStates(List.of(c1, c2, c3, c4));
 
@@ -126,11 +126,11 @@ public class SegregationCellTest {
 
     @Test
     void testThreshold () {
-        SegregationCell mainCell = new SegregationCell(2, 5, "0");
-        SegregationCell c1 = new SegregationCell(1, 0, "0");
-        SegregationCell c2 = new SegregationCell(0, 1, "0");
-        SegregationCell c3 = new SegregationCell(0, 2, "0");
-        SegregationCell c4 = new SegregationCell(0, 3, "0");
+        SegregationCell mainCell = new SegregationCell(2, 5, 0);
+        SegregationCell c1 = new SegregationCell(1, 0, 0);
+        SegregationCell c2 = new SegregationCell(0, 1, 0);
+        SegregationCell c3 = new SegregationCell(0, 2, 0);
+        SegregationCell c4 = new SegregationCell(0, 3, 0);
 
         mainCell.setFutureState(List.of(c1, c2, c3, c4));
 
