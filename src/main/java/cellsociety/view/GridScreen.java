@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -53,7 +54,6 @@ public class GridScreen extends SceneCreator {
         this.myController = controller;
         borderPane = new BorderPane();
         myStage = stage;
-        setUpTimeline();
     }
 
     /**
@@ -63,9 +63,9 @@ public class GridScreen extends SceneCreator {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-            stepSimulation();
+            gridView.updateGrid(myController.updateGrid());
         }));
-        pauseSimulation();
+        timeline.pause();
     }
 
     /**
@@ -86,7 +86,7 @@ public class GridScreen extends SceneCreator {
         gridView.setUpGridViewSize();
 //        gridView.updateControllerFromListeners();
         borderPane.setPadding(new Insets(10));
-
+        setUpTimeline();
         return borderPane;
     }
 
@@ -99,7 +99,8 @@ public class GridScreen extends SceneCreator {
         simulationType = createAndStyleText(myResource.getString("typeText") + myController.getProperties().get("Type"), "info");
         author = createAndStyleText(myResource.getString("authorText") + myController.getProperties().get("Author"), "info");
 
-        statusBox = createAndStyleTextBox(myResource.getString("statusText"), "info");
+        statusBox = createAndStyleTextBox(String.format(myResource.getString("statusText"), simulationType), "info");
+        statusBox.setId("statusText");
         statusBox.setBackground(Background.fill(mainColor));
         statusBox.setEditable(false);
         statusBox.setWrapText(true);
@@ -226,6 +227,7 @@ public class GridScreen extends SceneCreator {
         if (file != null) {
             try {
                 myController.saveGrid(file);
+                statusBox.setText(myResource.getString("saveSimulationStatus"));
             } catch (IOException e) {
                 new Alert(AlertType.ERROR, myResource.getString("saveSimulationError")).showAndWait();
             }
@@ -236,6 +238,7 @@ public class GridScreen extends SceneCreator {
     private void changeSpeed(Number newValue) {
         refreshRate = newValue.doubleValue();
         timeline.setRate(refreshRate);
+        statusBox.setText(String.format(myResource.getString("speedStatus"), refreshRate));
     }
 
     private void goBack() {
@@ -271,10 +274,12 @@ public class GridScreen extends SceneCreator {
 
     private void pauseSimulation() {
         timeline.pause();
+        statusBox.setText(myResource.getString("pausedStatus"));
     }
 
     private void resetSimulation() {
         try {
+            statusBox.setText(myResource.getString("resetStatus"));
             myController.resetController();
             gridView.updateGrid(myController.getViewGrid());
         } catch (CsvValidationException | IOException e) {
@@ -287,9 +292,11 @@ public class GridScreen extends SceneCreator {
 
     private void stepSimulation() {
         gridView.updateGrid(myController.updateGrid());
+        statusBox.setText(myResource.getString("stepStatus"));
     }
 
     private void playSimulation() {
         timeline.play();
+        statusBox.setText(myResource.getString("playingStatus"));
     }
 }
