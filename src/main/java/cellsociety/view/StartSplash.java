@@ -1,5 +1,7 @@
 package cellsociety.view;
 
+import java.awt.event.ActionEvent;
+import java.beans.EventHandler;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -62,6 +64,11 @@ public class StartSplash extends SceneCreator {
         }
         buttons.getStyleClass().add("allButtons");
 
+        Button newWindow = new Button("New Window");
+        newWindow.setOnAction(e -> openNewWindow());
+        buttons.getChildren().add(newWindow);
+        //TODO: Create this button with reflection
+
         VBox vBoxBot = new VBox(selectLanguage, buttons);
         vBoxBot.setSpacing(20);
         vBoxBot.setAlignment(Pos.CENTER);
@@ -84,5 +91,21 @@ public class StartSplash extends SceneCreator {
             myStage.setScene(fileInput.createScene(property, FILE_INPUT_CSS));
         });
         return result;
+    }
+
+    private void openNewWindow() {
+        StartSplash newStartSplash = new StartSplash(600.0, myStage);
+
+        // New window (Stage)
+        Stage newStage = new Stage();
+        newStage.setScene(newStartSplash.createScene("startSplash"));
+        newStage.setTitle("CellSociety");
+        newStage.setScene(newStartSplash.createScene("startSplash.css"));
+
+        // Set position of second window, related to primary window.
+        newStage.setX(myStage.getX() + 200);
+        newStage.setY(myStage.getY() + 100);
+
+        newStage.show();
     }
 }

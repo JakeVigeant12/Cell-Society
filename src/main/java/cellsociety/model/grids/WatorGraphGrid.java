@@ -48,6 +48,7 @@ public class WatorGraphGrid extends GraphGrid {
           newShark.swapCells(currentCell);
           newShark.updateState();
           currentCell.setCurrentState(3);
+          newShark.setCurrentState(4);
           //if(currentCell.readyToReproduce()){
             //newShark.setCurrentState(2);
           //}
@@ -69,6 +70,9 @@ public class WatorGraphGrid extends GraphGrid {
     for (Cell currentCell : super.myAdjacenyList.keySet()) {
       if (currentCell.getCurrentState() == 3) {
           currentCell.setCurrentState(0);
+      }
+      if (currentCell.getCurrentState() == 4) {
+        currentCell.setCurrentState(2);
       }
     }
     for (Cell currentCell : super.myAdjacenyList.keySet()) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WaTorWorldCellTest {
+public class WatorWorldCellTest {
     int state = 1;
     int id = 0;
     WatorWorldCell c = new WatorWorldCell(state, id);
@@ -25,6 +25,8 @@ public class WaTorWorldCellTest {
         assertEquals(2, c.getFutureState());
     }
 
+
+
     @Test
     void testNeighborsFishesWithFishesMove () {
         WatorWorldCell fish = new WatorWorldCell(1, 0);
@@ -36,7 +38,6 @@ public class WaTorWorldCellTest {
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(1, fish.getFutureState());
-        assertEquals(true, fish.getWantsToMove());
     }
 
     @Test
@@ -50,7 +51,6 @@ public class WaTorWorldCellTest {
         fish.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(1, fish.getFutureState());
-        assertEquals(false, fish.getWantsToMove());
     }
 
     @Test
@@ -64,7 +64,6 @@ public class WaTorWorldCellTest {
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
         assertEquals(2, shark.getFutureState());
-        assertEquals(true, shark.getWantsToMove());
     }
 
     @Test
@@ -77,9 +76,8 @@ public class WaTorWorldCellTest {
 
         shark.setFutureState(List.of(c1, c2, c3, c4));
 
-        assertEquals(3, shark.getFutureState());
-        assertEquals(false, shark.getWantsToMove());
-        assertEquals(0, shark.getSharkStarve());
+        assertEquals(2, shark.getFutureState());
+
     }
 
     @Test
