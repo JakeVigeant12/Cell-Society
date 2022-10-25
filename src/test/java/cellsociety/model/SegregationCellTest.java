@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SchellingCellTest {
+public class SegregationCellTest {
     int state = 1;
     int id = 0;
     double threshold = 0.5;

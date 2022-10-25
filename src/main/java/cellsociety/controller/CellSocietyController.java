@@ -7,8 +7,6 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
 import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
-import cellsociety.view.GridWrapper;
-import cellsociety.view.GridWrapperObservable;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.stage.Stage;
 
 import javax.management.ReflectionException;
@@ -50,8 +47,8 @@ public class CellSocietyController {
 
         String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
 
-        numCols = Integer.parseInt(parseRowCol[0]);
-        numRows = Integer.parseInt(parseRowCol[1]);
+        numCols = Integer.parseInt(parseRowCol[0].trim());
+        numRows = Integer.parseInt(parseRowCol[1].trim());
     }
 
     public void getSimData() throws IOException {

@@ -2,6 +2,7 @@ package cellsociety.model;
 
 import cellsociety.model.cells.*;
 import cellsociety.view.GridWrapper;
+import cellsociety.view.StartSplash;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +21,9 @@ public class GraphGrid extends Grid{
   private List<Cell> emptyCells;
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
+
+  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -49,13 +53,27 @@ public class GraphGrid extends Grid{
         cellCount++;
         Cell newCell = null;
         int cellData  = inputLayout.get(i, j);
-        Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
-        Constructor<?>[] makeNewCell = cellClass.getConstructors();
-        if(makeNewCell[0].getParameterCount() == 3){
-          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, myProperties.get("Parameters"));
-        }
-        else{
-          newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+        try {
+          Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+          Constructor<?>[] makeNewCell = cellClass.getConstructors();
+          if(makeNewCell[0].getParameterCount() == 3){
+            double parameter;
+            try {
+              parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+            }
+            catch (Exception e) {
+              ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
+              parameter = Double.parseDouble(defaultResources.getString("Parameters"));
+            }
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+          }
+          else{
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+          }
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+          throw new RuntimeException(e);
         }
         myCells.putIfAbsent(cellCount, newCell);
       }

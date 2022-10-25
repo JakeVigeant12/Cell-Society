@@ -35,7 +35,7 @@ public class CSVParser extends Parser {
             if (row >= 0) {
                 gridWrapper.addRow();
                 for (String cell : nextRecord) {
-                    gridWrapper.addValueToRow(row, Integer.parseInt(cell));
+                    gridWrapper.addValueToRow(row, Integer.parseInt(cell.trim()));
                 }
             }
             row++;
