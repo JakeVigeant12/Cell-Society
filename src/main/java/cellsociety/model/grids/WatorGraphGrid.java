@@ -27,11 +27,6 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
   public WatorGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
-
-  public HashMap<Cell, List<Cell>> getMyAdjacenyList() {
-    return myAdjacenyList;
-  }
-
   @Override
   public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
     return super.createCells(inputLayout);
