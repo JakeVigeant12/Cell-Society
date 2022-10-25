@@ -15,7 +15,6 @@ public class InitialModelImplementation extends Model {
   private final Grid myGrid;
 
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    System.out.println(simParameters.getProperty("Type"));
     if(simParameters.getProperty("Type").equals("WatorWorld")){
       myGrid = new WatorGraphGrid(gridWrapper, simParameters);
     }
