@@ -40,6 +40,8 @@ public class StartSplash extends SceneCreator {
         myStage = stage;
         startPane = new BorderPane();
         myBackground = new ImageView();
+        myStage.setMinWidth(200);
+        myStage.setMinHeight(200);
     }
 
     public Pane setUpRootPane() {
