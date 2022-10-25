@@ -96,5 +96,10 @@ public class CellView extends StackPane {
         rectangle.setWidth(size);
         rectangle.setHeight(size);
     }
+
+    //For test purpose
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }
 
