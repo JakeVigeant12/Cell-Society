@@ -1,9 +1,12 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
+import cellsociety.model.Grid;
 import com.opencsv.exceptions.CsvValidationException;
 import java.lang.reflect.InvocationTargetException;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -40,6 +43,12 @@ class GridScreenTest extends DukeApplicationTest {
         assertEquals(1, cell.stateProperty().get());
     }
     @Test
+    void testClickCell2() {
+        CellView cell = lookup("#cell3,0").query();
+        clickOn(cell);
+        assertEquals(0, cell.stateProperty().get());
+    }
+    @Test
     void testPauseButton() {
         Button button = lookup("#pauseText").query();
         clickOn(button);
@@ -65,9 +74,12 @@ class GridScreenTest extends DukeApplicationTest {
         clickOn(button);
     }
     @Test
-    void testResize() {
-        stage.setHeight(600);
-        stage.setWidth(600);
+    void testGridSize() {
+        GridPane gridView = lookup("#gridView").query();
+        CellView cellView = (CellView)gridView.getChildren().get(0);
+        double actual = cellView.getRectangle().getHeight();
+        double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
+        assertEquals(expected, actual);
     }
 
 }

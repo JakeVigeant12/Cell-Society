@@ -84,7 +84,6 @@ public class GridScreen extends SceneCreator {
         grid.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridView.getGrid());
         gridView.setUpGridViewSize();
-//        gridView.updateControllerFromListeners();
         borderPane.setPadding(new Insets(10));
         setUpTimeline();
         return borderPane;
@@ -94,18 +93,18 @@ public class GridScreen extends SceneCreator {
      * Sets up the left panel of the Grid Screen UI
      */
     private void createLeftPanel() {
-        aboutTitle = createAndStyleText(myResource.getString("aboutText"), "title");
-        fileTitle = createAndStyleText(myResource.getString("title") + myController.getProperties().get("Title"), "info");
-        simulationType = createAndStyleText(myResource.getString("typeText") + myController.getProperties().get("Type"), "info");
-        author = createAndStyleText(myResource.getString("authorText") + myController.getProperties().get("Author"), "info");
+        aboutTitle = createAndStyleText(getMyResource().getString("aboutText"), "title");
+        fileTitle = createAndStyleText(getMyResource().getString("title") + myController.getProperties().get("Title"), "info");
+        simulationType = createAndStyleText(getMyResource().getString("typeText") + myController.getProperties().get("Type"), "info");
+        author = createAndStyleText(getMyResource().getString("authorText") + myController.getProperties().get("Author"), "info");
 
-        statusBox = createAndStyleTextBox(String.format(myResource.getString("statusText"), simulationType), "info");
+        statusBox = createAndStyleTextBox(String.format(getMyResource().getString("statusText"), simulationType), "info");
         statusBox.setId("statusText");
         statusBox.setBackground(Background.fill(mainColor));
         statusBox.setEditable(false);
         statusBox.setWrapText(true);
 
-        descriptionBox = createAndStyleTextBox(myResource.getString("descriptionText") + myController.getProperties().get("Description"), "info");
+        descriptionBox = createAndStyleTextBox(getMyResource().getString("descriptionText") + myController.getProperties().get("Description"), "info");
         descriptionBox.setBackground(Background.fill(mainColor));
         descriptionBox.setEditable(false);
         descriptionBox.setWrapText(true);
@@ -173,7 +172,7 @@ public class GridScreen extends SceneCreator {
      */
     private HBox makeSlider(String property) {
         HBox sliderBox = new HBox();
-        sliderBox.getChildren().add(new Label(myResource.getString(property)));
+        sliderBox.getChildren().add(new Label(getMyResource().getString(property)));
         sliderBox.getStyleClass().add("speedSlider");
         Slider slider = new Slider();
         sliderBox.getChildren().add(slider);
@@ -189,11 +188,11 @@ public class GridScreen extends SceneCreator {
         slider.setId(property);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property),
+                Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property),
                     Number.class);
                 m.invoke(this, newValue);
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-                new Alert(AlertType.ERROR, myResource.getString("createSliderError")).showAndWait();
+                new Alert(AlertType.ERROR, getMyResource().getString("createSliderError")).showAndWait();
             }
         });
         return sliderBox;
@@ -206,15 +205,15 @@ public class GridScreen extends SceneCreator {
      */
     public Button makeButton(String property) {
         Button result = new Button();
-        String labelText = myResource.getString(property);
+        String labelText = getMyResource().getString(property);
         result.setText(labelText);
         result.setId(property);
         result.setOnAction(event -> {
             try {
-                Method m = this.getClass().getDeclaredMethod(myCommands.getString(property));
+                Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
                 m.invoke(this);
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-                new Alert(AlertType.ERROR, myResource.getString("createButtonError")).showAndWait();
+                new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
             }
         });
         return result;
@@ -227,9 +226,9 @@ public class GridScreen extends SceneCreator {
         if (file != null) {
             try {
                 myController.saveGrid(file);
-                statusBox.setText(myResource.getString("saveSimulationStatus"));
+                statusBox.setText(getMyResource().getString("saveSimulationStatus"));
             } catch (IOException e) {
-                new Alert(AlertType.ERROR, myResource.getString("saveSimulationError")).showAndWait();
+                new Alert(AlertType.ERROR, getMyResource().getString("saveSimulationError")).showAndWait();
             }
         }
     }
@@ -238,12 +237,12 @@ public class GridScreen extends SceneCreator {
     private void changeSpeed(Number newValue) {
         refreshRate = newValue.doubleValue();
         timeline.setRate(refreshRate);
-        statusBox.setText(String.format(myResource.getString("speedStatus"), refreshRate));
+        statusBox.setText(String.format(getMyResource().getString("speedStatus"), refreshRate));
     }
 
     private void goBack() {
         FileInput backInput = new FileInput(600, myStage);
-        myStage.setScene(backInput.createScene(language, "fileInput.css"));
+        myStage.setScene(backInput.createScene(getLanguage(), "fileInput.css"));
     }
 
     /**
@@ -252,18 +251,18 @@ public class GridScreen extends SceneCreator {
      */
     private void uploadFile() {
         try {
-            myDataFile = FILE_CHOOSER.showOpenDialog(myStage);
-            if (myDataFile != null) {
-                myController = new CellSocietyController(myDataFile);
+            setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+            if (getMyDataFile() != null) {
+                myController = new CellSocietyController(getMyDataFile());
                 myController.loadSimulation(myStage);
                 GridScreen firstGrid = new GridScreen(800, myStage, myController);
-                myStage.setScene(firstGrid.createScene(language, GRID_SCREEN_CSS));
+                myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
             }
         } catch (IOException | CsvValidationException e) {
-            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
         }
     }
 
@@ -274,29 +273,29 @@ public class GridScreen extends SceneCreator {
 
     private void pauseSimulation() {
         timeline.pause();
-        statusBox.setText(myResource.getString("pausedStatus"));
+        statusBox.setText(getMyResource().getString("pausedStatus"));
     }
 
     private void resetSimulation() {
         try {
-            statusBox.setText(myResource.getString("resetStatus"));
+            statusBox.setText(getMyResource().getString("resetStatus"));
             myController.resetController();
             gridView.updateGrid(myController.getViewGrid());
         } catch (CsvValidationException | IOException e) {
-            new Alert(AlertType.ERROR, myResource.getString("fileUploadError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-            new Alert(AlertType.ERROR, myResource.getString("createCellError")).showAndWait();
+            new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
         }
     }
 
     private void stepSimulation() {
         gridView.updateGrid(myController.updateGrid());
-        statusBox.setText(myResource.getString("stepStatus"));
+        statusBox.setText(getMyResource().getString("stepStatus"));
     }
 
     private void playSimulation() {
         timeline.play();
-        statusBox.setText(myResource.getString("playingStatus"));
+        statusBox.setText(getMyResource().getString("playingStatus"));
     }
 }

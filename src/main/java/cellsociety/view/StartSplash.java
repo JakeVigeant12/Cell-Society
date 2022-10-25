@@ -40,6 +40,8 @@ public class StartSplash extends SceneCreator {
         myStage = stage;
         startPane = new BorderPane();
         myBackground = new ImageView();
+        myStage.setMinWidth(200);
+        myStage.setMinHeight(200);
     }
 
     public Pane setUpRootPane() {
@@ -55,8 +57,8 @@ public class StartSplash extends SceneCreator {
 
 
         myBackground.setImage(new Image(startInfo.getString("startGif")));
-        myBackground.setFitWidth(mySize);
-        myBackground.setFitHeight(mySize);
+        myBackground.setFitWidth(getMySize());
+        myBackground.setFitHeight(getMySize());
 
         HBox buttons = new HBox();
         for(String language : languageList) {
@@ -87,7 +89,7 @@ public class StartSplash extends SceneCreator {
         result.setText(label);
         result.setId(property);
         result.setOnAction(event -> {
-            FileInput fileInput = new FileInput(mySize, myStage);
+            FileInput fileInput = new FileInput(getMySize(), myStage);
             myStage.setScene(fileInput.createScene(property, FILE_INPUT_CSS));
         });
         return result;
