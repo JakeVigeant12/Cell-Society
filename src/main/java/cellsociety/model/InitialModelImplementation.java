@@ -3,6 +3,7 @@ package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.GraphGrid;
 import cellsociety.model.grids.Grid;
+import cellsociety.model.grids.SegregationGraphGrid;
 import cellsociety.model.grids.WatorGraphGrid;
 import cellsociety.view.GridWrapper;
 
@@ -19,8 +20,11 @@ public class InitialModelImplementation extends Model {
     if(simParameters.getProperty("Type").equals("WatorWorld")){
       myGrid = new WatorGraphGrid(gridWrapper, simParameters);
     }
+    else if(simParameters.getProperty("Type").equals("Segregation")) {
+      myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
+    }
     else {
-      myGrid = new GraphGrid(gridWrapper, simParameters);
+      myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
     }
 
   }
