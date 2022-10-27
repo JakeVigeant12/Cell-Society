@@ -32,7 +32,7 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
     for (Cell currentCell : myAdjacenyList.keySet()){
       currentCell.setFutureState(myAdjacenyList.get(currentCell));
     }
-    
+
     for (Cell currentCell : myAdjacenyList.keySet()){
       // Pass 2: If a current cell wants to swap, then swap it with the cell in the adjacency list
       FallingSandCell sandWaterCell = (FallingSandCell) currentCell;
