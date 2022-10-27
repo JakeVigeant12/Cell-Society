@@ -1,6 +1,7 @@
 package cellsociety.model.grids;
 
-import cellsociety.model.cells.*;
+
+import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
