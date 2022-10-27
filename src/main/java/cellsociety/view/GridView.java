@@ -1,19 +1,13 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
-import com.opencsv.exceptions.CsvValidationException;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
+import java.awt.*;
 
 
 public class GridView {
@@ -66,22 +60,34 @@ public class GridView {
    * @param gridData
    */
   public void setUpView(GridWrapper gridData, String simultionGenre) {
-    n = gridData.row();
-    m = gridData.column(0);
+    n = gridData.getColumnSize();
+    m = gridData.getRowSize(0);
     gridStates = new GridWrapper(n, m);
 
     cells = new CellView[n][m];
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
-        CellView node = new CellView(gridData.get(y, x), simultionGenre, y, x, myController);
+        CellView node = new CellView(gridData.getState(y, x), simultionGenre,y, x);
         node.setId("cell" + y + "," + x);
         // add cells to group
         grid.add(node, x, y);
         // add to grid for further reference using an array
-        gridStates.set(y, x, node.stateProperty().get());
+        gridStates.setState(y, x, node.getState());
         cells[y][x] = node;
+
+        setCellListener(node, new Point(x, y));
       }
     }
+  }
+
+  private void setCellListener(CellView node, Point point) {
+    node.isClickedProperty().addListener((obs, oldVal, newVal) -> {
+        if (newVal) {
+          myController.updateOneCell(point.y, point.x, node.getState());
+          node.isClickedProperty().set(false);
+        }
+      }
+    );
   }
 
   /**
@@ -92,7 +98,7 @@ public class GridView {
   public void updateGrid(GridWrapper gridData) {
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
-        cells[y][x].updateState(gridData.get(y, x));
+        cells[y][x].updateState(gridData.getState(y, x));
       }
     }
   }

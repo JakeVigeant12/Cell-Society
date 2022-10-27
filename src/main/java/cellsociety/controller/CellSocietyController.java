@@ -5,24 +5,17 @@ import cellsociety.model.SimType;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
-import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javafx.stage.Stage;
-
-import javax.management.ReflectionException;
-import javax.swing.text.View;
 
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
@@ -72,7 +65,7 @@ public class CellSocietyController {
   public GridWrapper getViewGrid() {
     GridWrapper stateGrid = new GridWrapper(numRows, numCols);
     for (Integer key : backEndCellsByID.keySet()) {
-      stateGrid.set((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
+      stateGrid.setState((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
     }
     return stateGrid;
   }

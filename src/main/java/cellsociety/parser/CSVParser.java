@@ -1,19 +1,14 @@
 package cellsociety.parser;
 
-import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CSVParser extends Parser {
@@ -52,7 +47,7 @@ public class CSVParser extends Parser {
 
   public void saveCurrentGrid(GridWrapper grid, File file) throws IOException {
     CSVWriter csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-    csvWriter.writeNext(new String[]{String.valueOf(grid.getRow(0).size()), String.valueOf(grid.getColumn(0).size())});
+    csvWriter.writeNext(new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getColumnSize())});
     for(List<Integer> row : grid.getGrid()) {
       String[] writeArray = new String[row.size()];
       for(int i = 0; i < row.size(); i++) {
