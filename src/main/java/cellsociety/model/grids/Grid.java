@@ -5,7 +5,8 @@ import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import javax.management.ReflectionException;
 
 //abstraction of grid to allow flexibility in implementation
