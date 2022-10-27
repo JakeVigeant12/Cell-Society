@@ -126,6 +126,12 @@ public class GridScreen extends SceneCreator {
     controls.getChildren().add(makeSlider("speedSlider"));
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add("allButtons");
+
+    Button button = new Button("1");
+    button.setOnAction(e -> saveSimulation());
+    controls.getChildren().add(button);
+
+
     borderPane.setBottom(controls);
   }
 
