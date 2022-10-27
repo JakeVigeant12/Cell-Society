@@ -8,6 +8,9 @@ public class SegregationCell extends Cell {
   private double sameNeighborsAgent1;
   private double sameNeighborsAgent2;
   private boolean wantsToMove;
+  private static final int EMPTY = 0;
+  private static final int AGENT1 = 1;
+  private static final int AGENT2 = 2;
 
   // Key States
   // 0 = empty
@@ -35,38 +38,38 @@ public class SegregationCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == 0){
-      setFutureStateValue(0);
+    if (getCurrentState() == EMPTY){
+      setFutureStateValue(EMPTY);
     }
     else {
       for (Cell neighbor : neighbors){
-        if (neighbor.getCurrentState() == 1){
+        if (neighbor.getCurrentState() == AGENT1){
           sameNeighborsAgent1++;
         }
-        if (neighbor.getCurrentState() == 2){
+        if (neighbor.getCurrentState() == AGENT2){
           sameNeighborsAgent2++;
         }
         totalNeighbors++;
       }
 
-      if (getCurrentState() == 1){
+      if (getCurrentState() == AGENT1){
         if (sameNeighborsAgent1/totalNeighbors < myThreshold){ // if the percentage of same neighbors is less than the threshold, then the agent will move
-          setFutureStateValue(1);
+          setFutureStateValue(AGENT1);
           wantsToMove = true;
         }
         else {
-          setFutureStateValue(1);
+          setFutureStateValue(AGENT1);
           wantsToMove = false;
         }
       }
 
-      if (getCurrentState() == 2){
+      if (getCurrentState() == AGENT2){
         if (sameNeighborsAgent2/totalNeighbors < myThreshold){
-          setFutureStateValue(2);
+          setFutureStateValue(AGENT2);
           wantsToMove = true;
         }
         else {
-          setFutureStateValue(2);
+          setFutureStateValue(AGENT2);
           wantsToMove = false;
         }
       }

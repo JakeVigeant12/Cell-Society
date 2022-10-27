@@ -7,11 +7,9 @@ public class FireCell extends Cell {
   private static final int BURNING_TIME = 3;
   private int turns;
   private double myProbCatch;
-
-  // Key States
-  // 0 = Empty
-  // 1 = Tree
-  // 2 = Burning
+  private static final int EMPTY = 0;
+  private static final int TREE = 1;
+  private static final int BURNING = 2;
 
   /**
    * Constructor for FireCell class
@@ -35,22 +33,22 @@ public class FireCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == 1 && getNeighborStates(neighbors).contains(2)) {
+    if (getCurrentState() == TREE && getNeighborStates(neighbors).contains(BURNING)) {
       double burnVal = Math.random();// If current cell is a tree and has a burning neighbor
       if ( burnVal < myProbCatch) { // If random number is less than probability of catching fire
-        setFutureStateValue(2); // Set current cell to burning
+        setFutureStateValue(BURNING); // Set current cell to burning
       }
       else {
-        setFutureStateValue(1); // Set current cell to tree
+        setFutureStateValue(TREE); // Set current cell to tree
       }
     }
-    else if (getCurrentState() == 2) { // If current cell is burning
+    else if (getCurrentState() == BURNING) { // If current cell is burning
       if (turns == BURNING_TIME) { // If current cell has been burning for BURNING_TIME turns
-        setFutureStateValue(0); // Set current cell to empty
+        setFutureStateValue(EMPTY); // Set current cell to empty
       }
       else {
         turns++;
-        setFutureStateValue(2); // Keep current cell burning
+        setFutureStateValue(BURNING); // Keep current cell burning
       }
     }
     else {
