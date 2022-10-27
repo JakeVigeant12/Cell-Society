@@ -92,4 +92,11 @@ class GridScreenTest extends DukeApplicationTest {
     double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
     assertEquals(expected, actual);
   }
+  @Test
+  void testColorChange() {
+    CellView cell = lookup("#cell3,1").query();
+    Button button = lookup("#stepButton").query();
+    clickOn(button);
+    assertEquals(1, cell.stateProperty().get());
+  }
 }

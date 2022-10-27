@@ -141,8 +141,8 @@ public class FileInput extends SceneCreator {
       try {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
-      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-        new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
+      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
+        showMessage(AlertType.ERROR, e.getMessage());
       }
     });
     return result;

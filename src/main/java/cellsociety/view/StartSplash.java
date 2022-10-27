@@ -68,6 +68,7 @@ public class StartSplash extends SceneCreator {
 
     Button newWindow = new Button("New Window");
     newWindow.setOnAction(e -> openNewWindow());
+    newWindow.setId("newWindowButton");
     buttons.getChildren().add(newWindow);
     //TODO: Create this button with reflection
 

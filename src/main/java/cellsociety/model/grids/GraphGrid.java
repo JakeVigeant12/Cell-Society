@@ -47,43 +47,49 @@ public class GraphGrid extends Grid {
     for(int i = 0; i < inputLayout.row(); i++){
       for(int j = 0; j < inputLayout.column(0); j++){
         cellCount++;
-        Cell newCell = null;
-        int cellData  = inputLayout.get(i, j);
-        try {
-          Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
-          Constructor<?>[] makeNewCell = cellClass.getConstructors();
-          if(makeNewCell[0].getParameterCount() == 3){
-            double parameter;
-            try {
-              parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-            }
-            catch (Exception e) {
-              ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
-              parameter = Double.parseDouble(defaultResources.getString("Parameters"));
-            }
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
-          }
-          else{
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
-          }
-
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-          throw new RuntimeException(e);
-        }
-        cellHolder.putIfAbsent(cellCount, newCell);
+        createCell(inputLayout.get(i, j), cellHolder, cellCount);
       }
     }
     return cellHolder;
   }
+
+  private void createCell(int cellData, Map<Integer, Cell> cellHolder, int cellCount) {
+    Cell newCell;
+    try {
+      Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+      Constructor<?>[] makeNewCell = cellClass.getConstructors();
+      if(makeNewCell[0].getParameterCount() == 3){
+        double parameter;
+        try {
+          parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+        }
+        catch (NullPointerException e) {//No parameter specified in .sim file
+          try {//load parameter from .sim file
+            parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
+          }
+          catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
+            e1.printStackTrace();
+            throw new IllegalStateException("Cannot find default resource");
+          }
+        }
+        newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+      }
+      else{
+        newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+      }
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+             InvocationTargetException e) {
+      throw new RuntimeException(e);
+    }
+    cellHolder.putIfAbsent(cellCount, newCell);
+  }
+
   @Override
   public void setCellCurrentState (int key, int state){
     myCells.get(key).setCurrentState(state);
   }
 
-
-
+  
   //TODO refactor
   public Neighborhood setNeighbors(String simType){
     if(simType.equals("Fire")){
