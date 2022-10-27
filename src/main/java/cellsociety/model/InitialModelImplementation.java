@@ -23,7 +23,7 @@ public class InitialModelImplementation extends Model {
       myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
     }
     else {
-      myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
+      myGrid = new GraphGrid(gridWrapper, simParameters);
     }
 
   }
