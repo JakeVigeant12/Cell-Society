@@ -8,11 +8,7 @@ import cellsociety.view.GridWrapper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class GraphGrid extends Grid {
   protected Map<Integer, Cell> myCells;
@@ -21,6 +17,9 @@ public class GraphGrid extends Grid {
   protected Properties myProperties;
   protected final String cellPackagePath = "cellsociety.model.cells.";
   protected Neighborhood simulationNeighbors;
+  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+
   /**
    * Constructor for GraphGrid class
    * @param gridParsing is the layout of the grid
@@ -54,11 +53,20 @@ public class GraphGrid extends Grid {
           Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
           Constructor<?>[] makeNewCell = cellClass.getConstructors();
           if(makeNewCell[0].getParameterCount() == 3){
-            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, Double.parseDouble((String) myProperties.get("Parameters")));
+            double parameter;
+            try {
+              parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+            }
+            catch (Exception e) {
+              ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"));
+              parameter = Double.parseDouble(defaultResources.getString("Parameters"));
+            }
+            newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
           }
           else{
             newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
           }
+
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
