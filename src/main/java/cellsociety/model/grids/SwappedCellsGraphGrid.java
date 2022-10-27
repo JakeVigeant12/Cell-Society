@@ -19,6 +19,14 @@ public class SwappedCellsGraphGrid extends GraphGrid{
       Properties properties) {
     super(gridParsing, properties);
   }
+
+  /**
+   * Finds a cell to swap with the current cell
+   * @param startingCell
+   * @param locations
+   * @param targetState
+   * @return
+   */
   public Cell findCellToSwap(Cell startingCell, List<Cell> locations, int targetState) {
     List<Cell> potentialLocations = new ArrayList();
     for (Cell potentialCell : locations) {
@@ -26,7 +34,7 @@ public class SwappedCellsGraphGrid extends GraphGrid{
         potentialLocations.add(potentialCell);
       }
       //No cells found that match the state we need to swap into
-      if(potentialLocations.isEmpty()){
+      if (potentialLocations.isEmpty()){
         return startingCell;
       }
     }
@@ -34,8 +42,4 @@ public class SwappedCellsGraphGrid extends GraphGrid{
     Random rand = new Random();
     return potentialLocations.get(rand.nextInt(potentialLocations.size()));
   }
-  public int getRandomIndex(int listLength){
-    return (int) Math.floor(Math.random()*(listLength));
-  }
-
 }
