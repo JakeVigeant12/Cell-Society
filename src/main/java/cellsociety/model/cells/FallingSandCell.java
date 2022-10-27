@@ -32,6 +32,8 @@ public class FallingSandCell extends Cell {
     private boolean wantsToSwap;
     private Cell cellToSwap;
 
+    private List<Cell> neighborHood;
+
     public FallingSandCell(int state, int id){
         super(state, id);
     }
@@ -46,24 +48,25 @@ public class FallingSandCell extends Cell {
 
     @Override
     public void setFutureState(List<Cell> neighbors) {
-        emptyCellMovement(neighbors);
+        neighborHood = neighbors;
+        emptyCellMovement();
 
-        sandMovement(neighbors);
+        sandMovement();
 
-        waterMovement(neighbors);
+        waterMovement();
 
         boundaryMovement();
     }
-    private void emptyCellMovement(List<Cell> neighbors) {
+    private void emptyCellMovement() {
         wantsToSwap = false;
         if (getCurrentState() == EMPTY){
-            if (neighbors.get(UPPER).getCurrentState() == SAND){ // if the cell is empty and above is sand
+            if (neighborHood.get(UPPER).getCurrentState() == SAND){ // if the cell is empty and above is sand
                 setFutureStateValue(SAND); // Turn into sand
             }
             else {
                 setFutureStateValue(EMPTY);
             }
-            if (neighbors.get(UPPER).getCurrentState() == WATER){ // if the cell is empty and above is water
+            if (neighborHood.get(UPPER).getCurrentState() == WATER){ // if the cell is empty and above is water
                 setFutureStateValue(WATER); // Turn into water
             }
             else {
@@ -72,41 +75,41 @@ public class FallingSandCell extends Cell {
         }
     }
 
-    private void waterMovement(List<Cell> neighbors) {
+    private void waterMovement() {
         if (getCurrentState() == WATER){
-            if (neighbors.get(LOWER).getCurrentState() == EMPTY){ // if the cell is water and below is empty
+            if (neighborHood.get(LOWER).getCurrentState() == EMPTY){ // if the cell is water and below is empty
                 setFutureStateValue(EMPTY); // Turn into empty
             }
             else {
-                if (neighbors.get(LOWERLEFT).getCurrentState() == EMPTY && neighbors.get(LEFT).getCurrentState() == EMPTY){
+                if (neighborHood.get(LOWERLEFT).getCurrentState() == EMPTY && neighborHood.get(LEFT).getCurrentState() == EMPTY){
                     setFutureStateValue(WATER);
                     wantsToSwap = true;
-                    cellToSwap = neighbors.get(LOWERLEFT);
+                    cellToSwap = neighborHood.get(LOWERLEFT);
                 }
-                else if (neighbors.get(LOWERRIGHT).getCurrentState() == EMPTY && neighbors.get(RIGHT).getCurrentState() == EMPTY){
+                else if (neighborHood.get(LOWERRIGHT).getCurrentState() == EMPTY && neighborHood.get(RIGHT).getCurrentState() == EMPTY){
                     setFutureStateValue(WATER);
                     wantsToSwap = true;
-                    cellToSwap = neighbors.get(LOWERRIGHT);
+                    cellToSwap = neighborHood.get(LOWERRIGHT);
                 }
-                else if (neighbors.get(LEFT).getCurrentState() == EMPTY && neighbors.get(RIGHT).getCurrentState() == EMPTY){ // If the cell is water and the left and right are empty, but lower left and lower right are not empty
+                else if (neighborHood.get(LEFT).getCurrentState() == EMPTY && neighborHood.get(RIGHT).getCurrentState() == EMPTY){ // If the cell is water and the left and right are empty, but lower left and lower right are not empty
                     setFutureStateValue(WATER);
                     wantsToSwap = true;
                     Random rand = new Random();
                     if (rand.nextBoolean()) {
-                        cellToSwap = neighbors.get(LEFT);
+                        cellToSwap = neighborHood.get(LEFT);
                     } else {
-                        cellToSwap = neighbors.get(RIGHT);
+                        cellToSwap = neighborHood.get(RIGHT);
                     }
                 }
-                else if (neighbors.get(LEFT).getCurrentState() == EMPTY){
+                else if (neighborHood.get(LEFT).getCurrentState() == EMPTY){
                     setFutureStateValue(WATER);
                     wantsToSwap = true;
-                    cellToSwap = neighbors.get(LEFT);
+                    cellToSwap = neighborHood.get(LEFT);
                 }
-                else if (neighbors.get(RIGHT).getCurrentState() == EMPTY){
+                else if (neighborHood.get(RIGHT).getCurrentState() == EMPTY){
                     setFutureStateValue(WATER);
                     wantsToSwap = true;
-                    cellToSwap = neighbors.get(RIGHT);
+                    cellToSwap = neighborHood.get(RIGHT);
                 }
                 else {
                     setFutureStateValue(WATER); // Stay the same
@@ -115,11 +118,9 @@ public class FallingSandCell extends Cell {
         }
     }
 
-
-
-    private void sandMovement(List<Cell> neighbors) {
+    private void sandMovement() {
         if (getCurrentState() == SAND){
-            if (neighbors.get(LOWER).getCurrentState() == EMPTY){ // if the cell is sand and below is empty
+            if (neighborHood.get(LOWER).getCurrentState() == EMPTY){ // if the cell is sand and below is empty
                 setFutureStateValue(EMPTY); // Turn into empty
             }
             else {
@@ -133,6 +134,5 @@ public class FallingSandCell extends Cell {
             setFutureStateValue(BOUNDARY);
         }
     }
-
 
 }
