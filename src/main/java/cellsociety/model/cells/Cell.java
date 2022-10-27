@@ -82,8 +82,8 @@ public class Cell {
   public void swapCellStates(Cell cellToSwap) {
     Cell neighborCopy = new Cell(cellToSwap.getCurrentState(), cellToSwap.getId());
 
-    cellToSwap.setCurrentState(getCurrentState()); // set neighbor's future state to current state
-    setCurrentState(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current statee
+    cellToSwap.setFutureStateValue(getCurrentState()); // set neighbor's future state to current state
+    setFutureStateValue(neighborCopy.getCurrentState()); // set current cell's future state to neighbor's current statee
   }
 
   /**
