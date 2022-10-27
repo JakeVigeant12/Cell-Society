@@ -14,7 +14,7 @@ Part 1: 10/12/22
 
 Part 2: 10/18/22
 
-Part 3: TBD
+Part 3: 10/26/22
 
 Finish Date: 
 
@@ -24,7 +24,7 @@ Part 2: 10/18/22
 
 Part 3: TBA
 
-Hours Spent: 50+ hours
+Hours Spent: 80+ hours
 
 ### Primary Roles
 Eka Ebong: GUI, User input side 
@@ -63,9 +63,9 @@ Fully working simulations:
  * Spreading of Fire
  * Rock, Paper, Scissors
  * Percolation
+ * Schelling's Model of Segregation
 
 Nearly Complete Simulations:
- * Schelling's Model of Segregation
  * Wa-Tor World
 
 ### Notes/Assumptions
