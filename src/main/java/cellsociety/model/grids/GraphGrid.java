@@ -112,57 +112,26 @@ public class GraphGrid extends Grid {
         currId++;
         Cell currentCell = myCells.get(currId);
         adjacencyList.putIfAbsent(currentCell, neighbors);
-        if(isInBounds(i-1, j-1, gridParsing)){
-          int upperLeftNeighborId = currId - gridParsing.column(0) -1;
-          if(simulationNeighbors.countNeighbor(0)) {
-            adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
-          }
-        }
-        if(isInBounds(i - 1, j, gridParsing)){
-          int topNeighborId = currId - gridParsing.column(0);
-          if(simulationNeighbors.countNeighbor(1)) {
-            adjacencyList.get(currentCell).add(myCells.get(topNeighborId));
-          }
-        }
-        if(isInBounds(i-1, j+1, gridParsing)){
-          int upperRightNeighborId = currId - gridParsing.column(0) + 1;
-          if(simulationNeighbors.countNeighbor(2)) {
-            adjacencyList.get(currentCell).add(myCells.get(upperRightNeighborId));
-          }
-        }
-        if(isInBounds(i, j-1, gridParsing)){
-          int leftNeighborId = currId - 1;
-          if(simulationNeighbors.countNeighbor(3)) {
-            adjacencyList.get(currentCell).add(myCells.get(leftNeighborId));
-          }
-        }
-        if(isInBounds(i, j+1, gridParsing)){
-          int rightNeighborId = currId + 1;
-          if(simulationNeighbors.countNeighbor(4)) {
-            adjacencyList.get(currentCell).add(myCells.get(rightNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j-1, gridParsing)){
-          int lowerLeftNeighborId = currId + gridParsing.column(0) - 1;
-          if(simulationNeighbors.countNeighbor(5)) {
-            adjacencyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j, gridParsing)){
-          int bottomNeighborId = currId + gridParsing.column(0);
-          if(simulationNeighbors.countNeighbor(6)) {
-            adjacencyList.get(currentCell).add(myCells.get(bottomNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.column(0) + 1;
-          if(simulationNeighbors.countNeighbor(7)) {
-            adjacencyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
-          }
-        }
+        createNeighborhood(i - 1, j - 1, gridParsing, currId - gridParsing.column(0) - 1, simulationNeighbors, 0, adjacencyList, currentCell, myCells);
+        createNeighborhood(i - 1, j, gridParsing, currId - gridParsing.column(0), simulationNeighbors, 1, adjacencyList, currentCell, myCells);
+        createNeighborhood(i - 1, j + 1, gridParsing, currId - gridParsing.column(0) + 1, simulationNeighbors, 2, adjacencyList, currentCell, myCells);
+        createNeighborhood(i, j - 1, gridParsing, currId - 1, simulationNeighbors, 3, adjacencyList, currentCell, myCells);
+        createNeighborhood(i, j + 1, gridParsing, currId + 1, simulationNeighbors, 4, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j - 1, gridParsing, currId + gridParsing.column(0) - 1, simulationNeighbors, 5, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j, gridParsing, currId + gridParsing.column(0), simulationNeighbors, 6, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j + 1, gridParsing, currId + gridParsing.column(0) + 1, simulationNeighbors, 7, adjacencyList, currentCell, myCells);
       }
     }
     return adjacencyList;
+  }
+
+  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, HashMap<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
+    if(isInBounds(i, j, gridParsing)){
+      int upperLeftNeighborId = currId;
+      if(simulationNeighbors.countNeighbor(neighborNumber)) {
+        adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+      }
+    }
   }
 
   /**
