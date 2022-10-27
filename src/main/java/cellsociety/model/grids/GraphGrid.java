@@ -112,14 +112,14 @@ public class GraphGrid extends Grid {
         currId++;
         Cell currentCell = myCells.get(currId);
         adjacencyList.putIfAbsent(currentCell, neighbors);
-        createNeighborhood(i - 1, j - 1, gridParsing, currId - gridParsing.column(0) - 1, simulationNeighbors, 0, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j, gridParsing, currId - gridParsing.column(0), simulationNeighbors, 1, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j + 1, gridParsing, currId - gridParsing.column(0) + 1, simulationNeighbors, 2, adjacencyList, currentCell, myCells);
+        createNeighborhood(i - 1, j - 1, gridParsing, currId - gridParsing.getColumnSize() - 1, simulationNeighbors, 0, adjacencyList, currentCell, myCells);
+        createNeighborhood(i - 1, j, gridParsing, currId - gridParsing.getColumnSize(), simulationNeighbors, 1, adjacencyList, currentCell, myCells);
+        createNeighborhood(i - 1, j + 1, gridParsing, currId - gridParsing.getColumnSize() + 1, simulationNeighbors, 2, adjacencyList, currentCell, myCells);
         createNeighborhood(i, j - 1, gridParsing, currId - 1, simulationNeighbors, 3, adjacencyList, currentCell, myCells);
         createNeighborhood(i, j + 1, gridParsing, currId + 1, simulationNeighbors, 4, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j - 1, gridParsing, currId + gridParsing.column(0) - 1, simulationNeighbors, 5, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j, gridParsing, currId + gridParsing.column(0), simulationNeighbors, 6, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j + 1, gridParsing, currId + gridParsing.column(0) + 1, simulationNeighbors, 7, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j - 1, gridParsing, currId + gridParsing.getColumnSize() - 1, simulationNeighbors, 5, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j, gridParsing, currId + gridParsing.getColumnSize(), simulationNeighbors, 6, adjacencyList, currentCell, myCells);
+        createNeighborhood(i + 1, j + 1, gridParsing, currId + gridParsing.getColumnSize() + 1, simulationNeighbors, 7, adjacencyList, currentCell, myCells);
       }
     }
     return adjacencyList;
