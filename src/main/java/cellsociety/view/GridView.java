@@ -73,13 +73,22 @@ public class GridView {
     cells = new CellView[n][m];
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
-        CellView node = new CellView(gridData.get(y, x), simultionGenre, y, x, myController);
+        CellView node = new CellView(gridData.get(y, x), simultionGenre,y, x);
         node.setId("cell" + y + "," + x);
         // add cells to group
         grid.add(node, x, y);
         // add to grid for further reference using an array
-        gridStates.set(y, x, node.stateProperty().get());
+        gridStates.set(y, x, node.getState());
         cells[y][x] = node;
+        int finalY = y;
+        int finalX = x;
+        node.isClickedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+              myController.updateOneCell(finalY, finalX, node.getState());
+              node.isClickedProperty().set(false);
+            }
+          }
+        );
       }
     }
   }
