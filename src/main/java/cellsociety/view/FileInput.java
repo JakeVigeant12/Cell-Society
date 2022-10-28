@@ -98,7 +98,7 @@ public class FileInput extends SceneCreator {
       new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              IllegalAccessException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
     }
   }
 
@@ -144,7 +144,7 @@ public class FileInput extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        showMessage(AlertType.ERROR, e.getMessage());
+        showMessage(AlertType.ERROR, e.getCause().getMessage());
       }
     });
     return result;

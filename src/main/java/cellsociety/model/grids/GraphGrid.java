@@ -70,7 +70,7 @@ public class GraphGrid extends Grid {
           }
           catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
             e1.printStackTrace();
-            throw new IllegalStateException("Cannot find default resource");
+            throw new IllegalStateException("Missing parameters");
           }
         }
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
@@ -80,7 +80,7 @@ public class GraphGrid extends Grid {
       }
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-      throw new RuntimeException(e);
+      throw new IllegalStateException("Cannot make buttons");
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }

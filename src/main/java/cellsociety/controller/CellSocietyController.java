@@ -1,7 +1,6 @@
 package cellsociety.controller;
 
 import cellsociety.model.InitialModelImplementation;
-import cellsociety.model.SimType;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
@@ -89,7 +88,6 @@ public class CellSocietyController {
   public void resetController()
       throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     String csvPath = (String) properties.get(INITIAL_STATES);
-    SimType simType = SimType.valueOf((String) properties.get("Type"));
     GridWrapper gridWrapper = myGridParser.parseData(csvPath);
     myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsByID = myModel.getCells();

@@ -44,13 +44,13 @@ class GridScreenTest extends DukeApplicationTest {
   void testClickCell() {
     CellView cell = lookup("#cell1,2").query();
     clickOn(cell);
-    assertEquals(1, cell.stateProperty().get());
+    assertEquals(1, cell.getState());
   }
   @Test
   void testClickCell2() {
     CellView cell = lookup("#cell3,0").query();
     clickOn(cell);
-    assertEquals(0, cell.stateProperty().get());
+    assertEquals(0, cell.getState());
   }
   @Test
   void testPauseButton() {
@@ -97,6 +97,6 @@ class GridScreenTest extends DukeApplicationTest {
     CellView cell = lookup("#cell3,1").query();
     Button button = lookup("#stepButton").query();
     clickOn(button);
-    assertEquals(1, cell.stateProperty().get());
+    assertEquals(1, cell.getState());
   }
 }
