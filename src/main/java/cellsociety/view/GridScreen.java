@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import java.util.Properties;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -78,7 +79,7 @@ public class GridScreen extends SceneCreator {
 
 
     gridView = new GridView(myController);
-    gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
+    gridView.setUpView(myController.getViewGrid());
     GridPane grid = gridView.getGrid();
     grid.setAlignment(Pos.CENTER);
     borderPane.setCenter(gridView.getGrid());
