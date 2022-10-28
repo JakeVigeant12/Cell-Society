@@ -73,7 +73,7 @@ public class FallingSandCell extends Cell {
     private void emptyCellMovement() {
         int newState = neighborHood.get(UPPER).getCurrentState();
         if (newState == SAND || newState == WATER){
-            setFutureStateValue(neighborHood.get(UPPER).getCurrentState()); // Turn into sand or water
+            setFutureStateValue(newState); // Turn into sand or water
         }
     }
 
@@ -123,8 +123,8 @@ public class FallingSandCell extends Cell {
 
     private void sandMovement() {
         int newState = neighborHood.get(LOWER).getCurrentState();
-        if (newState == EMPTY){
-            setFutureStateValue(neighborHood.get(LOWER).getCurrentState()); // Turn into empty
+        if (newState == EMPTY || newState == WATER){
+            setFutureStateValue(newState); // Turn into empty
         }
     }
 
