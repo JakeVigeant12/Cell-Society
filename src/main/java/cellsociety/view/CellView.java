@@ -23,14 +23,14 @@ public class CellView extends StackPane {
   private ResourceBundle myResources;
   private String CELLSTATES = "CellView";
   private int numStates;
-  private final String[] myColors;
+  private ColorMap myColors;
 
   /**
    * Constructor for CellView
    *
    * @param state
    */
-  public CellView(int state, String simulationType, int y, int x, String[] colors) {
+  public CellView(int state, String simulationType, int y, int x, ColorMap colors) {
     isClicked = new SimpleBooleanProperty(false);
     myResources = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, CELLSTATES));
     myColors = colors;
@@ -43,7 +43,7 @@ public class CellView extends StackPane {
     rectangle = new Rectangle();
     rectangle.setStroke(Color.BROWN);
     this.state = state;
-    rectangle.setFill(Color.web(myColors[state]));
+    rectangle.setFill(myColors.getColor(state));
 
     // create label
     label = new Label(String.valueOf(this.state));
@@ -69,7 +69,7 @@ public class CellView extends StackPane {
       //circulateState() must be put before isClicked.setValue(true). Otherwise, controller cannot observe the change in state.
       circulateState();
       isClicked.setValue(true);
-      rectangle.setFill(Color.web(myColors[state]));
+      rectangle.setFill(myColors.getColor(state));
     });
   }
 
@@ -91,7 +91,7 @@ public class CellView extends StackPane {
    */
   public void updateState(Integer state) {
     this.state = state;
-    rectangle.setFill(Color.web(myColors[state]));
+    rectangle.setFill(myColors.getColor(state));
     label.setText(String.valueOf(state));
     isClicked.set(false);
   }

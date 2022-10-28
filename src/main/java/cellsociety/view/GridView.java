@@ -3,6 +3,8 @@ package cellsociety.view;
 import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
+
+import java.awt.Point;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -10,9 +12,8 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.awt.*;
 
 
 public class GridView {
@@ -27,7 +28,7 @@ public class GridView {
   private CellView[][] cells;
   final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
-  private final String[] colors;
+  private final ColorMap colors;
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
@@ -38,10 +39,21 @@ public class GridView {
     myController = controller;
     grid.setId("gridView");
     Properties properties = controller.getProperties();
+    colors = new ColorMap();
+    applyColors(properties);
+  }
+
+  private void applyColors(Properties properties) {
     if(properties.containsKey("StateColors")) {
-      colors = properties.get("StateColors").toString().split(",");
+      for (String colorString: properties.get("StateColors").toString().split(",")) {
+        Color color = Color.web(colorString);
+        colors.addColor(color);
+      }
     } else {
-      colors = resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",");
+      for (String colorString: resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",")) {
+        Color color = Color.web(colorString);
+        colors.addColor(color);
+      }
     }
   }
 
