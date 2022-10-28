@@ -1,6 +1,11 @@
 package cellsociety.view;
 
+import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
+
 import cellsociety.controller.CellSocietyController;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -22,6 +27,8 @@ public class GridView {
   private CellView[][] cells;
   final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
+  private final String[] colors;
+  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
    * Constructor for GridView, sets up the grid and the cells
@@ -30,6 +37,12 @@ public class GridView {
     grid = new GridPane();
     myController = controller;
     grid.setId("gridView");
+    Properties properties = controller.getProperties();
+    if(properties.containsKey("StateColors")) {
+      colors = properties.get("StateColors").toString().split(",");
+    } else {
+      colors = resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",");
+    }
   }
 
   public void setUpGridViewSize() {
@@ -59,7 +72,7 @@ public class GridView {
    *
    * @param gridData
    */
-  public void setUpView(GridWrapper gridData, String simultionGenre) {
+  public void setUpView(GridWrapper gridData) {
     n = gridData.getColumnSize();
     m = gridData.getRowSize(0);
     gridStates = new GridWrapper(n, m);
@@ -67,7 +80,8 @@ public class GridView {
     cells = new CellView[n][m];
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
-        CellView node = new CellView(gridData.getState(y, x), simultionGenre,y, x);
+        CellView node = new CellView(gridData.getState(y, x),
+            (String) myController.getProperties().get("Type"), y, x, colors);
         node.setId("cell" + y + "," + x);
         // add cells to group
         grid.add(node, x, y);
