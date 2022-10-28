@@ -110,4 +110,16 @@
 .RockPaperScissor2{
     -fx-fill: green;
 }
+.FallingSand0{
+    -fx-fill: black;
+}
+.FallingSand1{
+    -fx-fill: yellow;
+}
+.FallingSand2{
+    -fx-fill: blue;
+}
+.FallingSand3{
+    -fx-fill: gray;
+}
 

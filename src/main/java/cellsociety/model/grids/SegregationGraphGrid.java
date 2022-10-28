@@ -31,15 +31,15 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
     emptyCells = new ArrayList<>();
 
     // Pass 1: Calculate future cell states and find empty cells
-    for (Cell currentCell : myAdjacenyList.keySet()){
-      currentCell.setFutureState(myAdjacenyList.get(currentCell));
+    for (Cell currentCell : myAdjacencyList.keySet()){
+      currentCell.setFutureState(myAdjacencyList.get(currentCell));
       if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
         emptyCells.add(currentCell);
       }
     }
 
 
-    for (Cell currentCell : myAdjacenyList.keySet()){
+    for (Cell currentCell : myAdjacencyList.keySet()){
       // Pass 2: If a current cell wants to move, then swap it with an empty cell in the list of empty cells
         SegregationCell segregationCell = (SegregationCell) currentCell;
         if (!emptyCells.isEmpty() && currentCell.getCurrentState() != 0 && segregationCell.getWantsToMove()) {
@@ -49,7 +49,7 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
         }
     }
 
-    for (Cell currentCell : myAdjacenyList.keySet()){
+    for (Cell currentCell : myAdjacencyList.keySet()){
       currentCell.updateState();
     }
   }
