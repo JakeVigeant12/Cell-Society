@@ -1,10 +1,7 @@
 package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.model.grids.GraphGrid;
-import cellsociety.model.grids.Grid;
-import cellsociety.model.grids.SegregationGraphGrid;
-import cellsociety.model.grids.WatorGraphGrid;
+import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
 import java.util.Map;
@@ -21,6 +18,9 @@ public class InitialModelImplementation extends Model {
     }
     else if(simParameters.getProperty("Type").equals("Segregation")) {
       myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
+    }
+    else if (simParameters.getProperty("Type").equals("FallingSand")) {
+      myGrid = new FallingSandGraphGrid(gridWrapper, simParameters);
     }
     else {
       myGrid = new GraphGrid(gridWrapper, simParameters);
