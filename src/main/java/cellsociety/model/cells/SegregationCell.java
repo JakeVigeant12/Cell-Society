@@ -42,37 +42,47 @@ public class SegregationCell extends Cell {
       setFutureStateValue(EMPTY);
     }
     else {
-      for (Cell neighbor : neighbors){
-        if (neighbor.getCurrentState() == AGENT1){
-          sameNeighborsAgent1++;
-        }
-        if (neighbor.getCurrentState() == AGENT2){
-          sameNeighborsAgent2++;
-        }
-        totalNeighbors++;
-      }
+      countNeighbors(neighbors);
 
       if (getCurrentState() == AGENT1){
-        if (sameNeighborsAgent1/totalNeighbors < myThreshold){ // if the percentage of same neighbors is less than the threshold, then the agent will move
-          setFutureStateValue(AGENT1);
-          wantsToMove = true;
-        }
-        else {
-          setFutureStateValue(AGENT1);
-          wantsToMove = false;
-        }
+        agentBehavior(sameNeighborsAgent1, AGENT1);
       }
 
       if (getCurrentState() == AGENT2){
-        if (sameNeighborsAgent2/totalNeighbors < myThreshold){
-          setFutureStateValue(AGENT2);
-          wantsToMove = true;
-        }
-        else {
-          setFutureStateValue(AGENT2);
-          wantsToMove = false;
-        }
+        agentBehavior(sameNeighborsAgent2, AGENT2);
       }
+    }
+  }
+
+  /**
+   * Method that controls the behavior of the agents
+   * @param sameNeighborsAgent
+   * @param agent
+   */
+  private void agentBehavior(double sameNeighborsAgent, int agent) {
+    if (sameNeighborsAgent/totalNeighbors < myThreshold){ // if the percentage of same neighbors is less than the threshold, then the agent will move
+      setFutureStateValue(agent);
+      wantsToMove = true;
+    }
+    else {
+      setFutureStateValue(agent);
+      wantsToMove = false;
+    }
+  }
+
+  /**
+   * Method that counts the number of neighbors of the same type
+   * @param neighbors
+   */
+  private void countNeighbors(List<Cell> neighbors) {
+    for (Cell neighbor : neighbors){
+      if (neighbor.getCurrentState() == AGENT1){
+        sameNeighborsAgent1++;
+      }
+      if (neighbor.getCurrentState() == AGENT2){
+        sameNeighborsAgent2++;
+      }
+      totalNeighbors++;
     }
   }
 
