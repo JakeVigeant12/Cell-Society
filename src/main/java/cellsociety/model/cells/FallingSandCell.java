@@ -48,6 +48,10 @@ public class FallingSandCell extends Cell {
         return wantsToSwap;
     }
 
+    /**
+     * Sets the future state of the cell
+     * @param neighbors
+     */
     @Override
     public void setFutureState(List<Cell> neighbors) {
         neighborHood = neighbors;
@@ -70,6 +74,9 @@ public class FallingSandCell extends Cell {
         }
     }
 
+    /**
+     * Special movement for empty cells
+     */
     private void emptyCellMovement() {
         int newState = neighborHood.get(UPPER).getCurrentState();
         if (newState == SAND || newState == WATER){
@@ -77,6 +84,9 @@ public class FallingSandCell extends Cell {
         }
     }
 
+    /**
+     * Special movement for sand cells
+     */
     private void waterMovement() {
         if (neighborHood.get(LOWER).getCurrentState() == EMPTY){ // if the cell is water and below is empty
             setFutureStateValue(EMPTY); // Turn into empty
@@ -121,6 +131,9 @@ public class FallingSandCell extends Cell {
         }
     }
 
+    /**
+     * Special movement for sand cells
+     */
     private void sandMovement() {
         int newState = neighborHood.get(LOWER).getCurrentState();
         if (newState == EMPTY || newState == WATER){
@@ -128,6 +141,9 @@ public class FallingSandCell extends Cell {
         }
     }
 
+    /**
+     * Special movement for boundary cells
+     */
     private void boundaryMovement(){
         setFutureStateValue(BOUNDARY);
     }

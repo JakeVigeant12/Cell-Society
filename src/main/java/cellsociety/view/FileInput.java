@@ -77,7 +77,7 @@ public class FileInput extends SceneCreator {
   }
 
   private void goBack() {
-    StartSplash beginning = new StartSplash(600, myStage);
+    SplashScreen beginning = new SplashScreen(600, myStage);
     myStage.setScene(beginning.createScene(START_SPLASH_CSS));
   }
 

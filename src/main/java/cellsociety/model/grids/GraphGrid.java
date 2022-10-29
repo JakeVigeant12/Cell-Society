@@ -54,6 +54,12 @@ public class GraphGrid extends Grid {
     return cellHolder;
   }
 
+  /**
+   * Method that creates a cell
+   * @param cellData
+   * @param cellHolder
+   * @param cellCount
+   */
   private void createCell(int cellData, Map<Integer, Cell> cellHolder, int cellCount) {
     Cell newCell;
     try {
@@ -85,12 +91,21 @@ public class GraphGrid extends Grid {
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  /**
+   * Method that sets the current cell state of the grid
+   * @param key
+   * @param state
+   */
   @Override
   public void setCellCurrentState (int key, int state){
     myCells.get(key).setCurrentState(state);
   }
 
-  
+  /**
+   * Sets the neighbors for the grid
+   * @param simType
+   * @return
+   */
   //TODO refactor
   public Neighborhood setNeighbors(String simType){
     if(simType.equals("Fire")){
@@ -100,6 +115,14 @@ public class GraphGrid extends Grid {
       return new CompleteNeighborhood();
     }
   }
+
+  /**
+   * Method that initializes the neighbors for the grid
+   * @param gridParsing
+   * @param myCells
+   * @param simulationNeighbors
+   * @return the adjacency list
+   */
   @Override
   public Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
@@ -125,11 +148,22 @@ public class GraphGrid extends Grid {
     return adjacencyList;
   }
 
+  /**
+   * Method that creates the neighborhood for the cell
+   * @param i
+   * @param j
+   * @param gridParsing
+   * @param currId
+   * @param simulationNeighbors
+   * @param neighborNumber
+   * @param adjacencyList
+   * @param currentCell
+   * @param myCells
+   */
   private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, HashMap<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
     if(isInBounds(i, j, gridParsing)){
-      int upperLeftNeighborId = currId;
       if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+        adjacencyList.get(currentCell).add(myCells.get(currId));
       }
     }
   }

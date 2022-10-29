@@ -4,4 +4,4 @@ Title=One Burning Tree
 Author=Robert Duvall
 Description=Begins with a single tree burning in the middle
 InitialStates=fire/one_burning.csv
-StateImages=fire/grass.png,fire/tree.png,fire/fire.png
+StateImages=images/grass.png,images/tree.png,images/fire.png

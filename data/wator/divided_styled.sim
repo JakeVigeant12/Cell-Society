@@ -1,0 +1,7 @@
+# EMPTY, PREY, PREDATOR
+Type=WatorWorld
+Title=Divided to Start
+Author=Former Student
+Description=Predators on one side, prey on the other
+InitialStates=wator/divided.csv
+StateImages=images/sea.png,images/fish.png,images/shark.png
