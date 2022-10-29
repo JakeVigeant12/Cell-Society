@@ -42,8 +42,8 @@ public class AdjacencyList {
         return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0 && col < gridWrapper.getRowSize(0));
     }
 
-    public List<Cell> getCells() {
-        return adjacencyList.keySet().stream().toList();
+    public Set<Cell> getCells() {
+        return adjacencyList.keySet();
     }
 
     public List<Cell> getNeighbors(Cell cell) {

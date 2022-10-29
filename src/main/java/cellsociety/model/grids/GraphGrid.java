@@ -1,6 +1,7 @@
 package cellsociety.model.grids;
 
 
+import cellsociety.model.AdjacencyList;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
@@ -13,7 +14,7 @@ import java.util.*;
 
 public class GraphGrid extends Grid {
   protected Map<Integer, Cell> myCells;
-  protected Map<Cell, List<Cell>> myAdjacencyList;
+  protected AdjacencyList myAdjacencyList;
   protected List<Cell> emptyCells;
   protected Properties myProperties;
   protected final String cellPackagePath = "cellsociety.model.cells.";
@@ -27,10 +28,9 @@ public class GraphGrid extends Grid {
    */
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
-    myAdjacencyList = new HashMap<>();
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    myAdjacencyList = initializeNeighbors(gridParsing, myCells, simulationNeighbors);
+    myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
   /**
@@ -185,13 +185,13 @@ public class GraphGrid extends Grid {
   @Override
   public void computeStates() {
     emptyCells = new ArrayList<>();
-    for (Cell currentCell : myAdjacencyList.keySet()){
-      currentCell.setFutureState(myAdjacencyList.get(currentCell));
+    for (Cell currentCell : myAdjacencyList.getCells()){
+      currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
       if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
         emptyCells.add(currentCell);
       }
     }
-    for (Cell currentCell : myAdjacencyList.keySet()){
+    for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.updateState();
     }
   }
