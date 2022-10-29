@@ -4,12 +4,15 @@ import java.util.Properties;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ResourceBundle;
 
+import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_FOLDER;
 import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 
 public class CellView extends StackPane {
@@ -23,28 +26,29 @@ public class CellView extends StackPane {
   private ResourceBundle myResources;
   private String CELLSTATES = "CellView";
   private int numStates;
-  private final String[] myColors;
+  private final String[] myStateStyles;
+  private final Properties myProperties;
 
   /**
    * Constructor for CellView
    *
    * @param state
    */
-  public CellView(int state, String simulationType, int y, int x, String[] colors) {
+  public CellView(int state, Properties properties, int y, int x, String[] stateStyles) {
     isClicked = new SimpleBooleanProperty(false);
     myResources = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, CELLSTATES));
-    myColors = colors;
+    myStateStyles = stateStyles;
     this.x = x;
     this.y = y;
     //TODO: x, y might not be needed
-    myType = simulationType;
+    myProperties = properties;
+    myType = (String) myProperties.get("Type");
     numStates = Integer.parseInt(myResources.getString(myType));
     // create rectangle
     rectangle = new Rectangle();
     rectangle.setStroke(Color.BROWN);
     this.state = state;
-    rectangle.setFill(Color.web(myColors[state]));
-
+    setStateStyle(state);
     // create label
     label = new Label(String.valueOf(this.state));
 
@@ -55,6 +59,15 @@ public class CellView extends StackPane {
     getChildren().addAll(rectangle);
 
     setOnClick();
+  }
+
+  private void setStateStyle(int state) {
+    if(myProperties.containsKey("StateImages")) {
+      Image image = new Image(String.format("%s%s", DEFAULT_RESOURCE_FOLDER, myStateStyles[state]));
+      rectangle.setFill(new ImagePattern(image));
+    } else {
+      rectangle.setFill(Color.web(myStateStyles[state]));
+    }
   }
 
   public int getState() {
@@ -69,7 +82,7 @@ public class CellView extends StackPane {
       //circulateState() must be put before isClicked.setValue(true). Otherwise, controller cannot observe the change in state.
       circulateState();
       isClicked.setValue(true);
-      rectangle.setFill(Color.web(myColors[state]));
+      rectangle.setFill(Color.web(myStateStyles[state]));
     });
   }
 
@@ -91,7 +104,7 @@ public class CellView extends StackPane {
    */
   public void updateState(Integer state) {
     this.state = state;
-    rectangle.setFill(Color.web(myColors[state]));
+    setStateStyle(state);
     label.setText(String.valueOf(state));
     isClicked.set(false);
   }
