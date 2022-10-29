@@ -5,28 +5,37 @@ import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 import cellsociety.controller.CellSocietyController;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
 public class GridView {
-  GridPane grid;
+  private GridPane grid;
   private final DoubleProperty widthProperty = new SimpleDoubleProperty();
   private final DoubleProperty heightProperty = new SimpleDoubleProperty();
   private final DoubleProperty sizeProperty = new SimpleDoubleProperty();
   private CellSocietyController myController;
-  private int n;
-  private int m;
+  private IntegerProperty row;
+  private IntegerProperty column;
   //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
-  private CellView[][] cells;
+  private List<List<CellView>> cells;
   final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
-  private final String[] stateStyles;
+  private final ColorMap colors;
+  private final ImageMap images;
+  private boolean isUsingColors;
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
@@ -37,34 +46,54 @@ public class GridView {
     myController = controller;
     grid.setId("gridView");
     Properties properties = controller.getProperties();
-    if(properties.containsKey("StateImages")) {
-      stateStyles = properties.get("StateImages").toString().split(",");
+    cells = new ArrayList<>();
+    colors = new ColorMap();
+    images = new ImageMap();
+    applyColors(properties);
+  }
+
+  private void applyColors(Properties properties) {
+    if (properties.containsKey("StateImages")) {
+      for (String imageString : properties.get("StateImages").toString().split(",")) {
+        Image image = new Image(DEFAULT_RESOURCE_FOLDER + imageString);
+        images.addImage(image);
+        isUsingColors = false;
+      }
     } else if (properties.containsKey("StateColors")) {
-      stateStyles = properties.get("StateColors").toString().split(",");
+      for (String colorString : properties.get("StateColors").toString().split(",")) {
+        Color color = Color.web(colorString);
+        colors.addColor(color);
+        isUsingColors = true;
+      }
     } else {
-      stateStyles = resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",");
+      for (String colorString : resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",")) {
+        Color color = Color.web(colorString);
+        colors.addColor(color);
+        isUsingColors = true;
+      }
     }
   }
 
   public void setUpGridViewSize() {
-    widthProperty.bind(grid.widthProperty().subtract(50).divide(m));
-    heightProperty.bind(grid.heightProperty().subtract(50).divide(n));
+    widthProperty.bind(grid.widthProperty().subtract(50).divide(column));
+    heightProperty.bind(grid.heightProperty().subtract(50).divide(row));
     sizeProperty.bind(Bindings.min(widthProperty, heightProperty));
+    int rows = row.get();
+    int cols = column.get();
     sizeProperty.addListener((obs, oldVal, newVal) -> {
-      updateCellsWidth((Double) newVal);
+      for (int y = 0; y < rows; y++) {
+        for (int x = 0; x <cols; x++) {
+          updateCellWidth(x, y, (Double) newVal);
+        }
+      }
     });
   }
-
   public GridWrapper getGridStates() {
     return gridStates;
   }
 
-  public void updateCellsWidth(double size) {
-    for (int y = 0; y < n; y++) {
-      for (int x = 0; x < m; x++) {
-        cells[y][x].updateSize(size);
-      }
-    }
+  public void updateCellWidth(int x, int y, double size) {
+    cells.get(y).get(x).updateSize(size);
   }
 
 
@@ -74,21 +103,24 @@ public class GridView {
    * @param gridData
    */
   public void setUpView(GridWrapper gridData) {
-    n = gridData.getColumnSize();
-    m = gridData.getRowSize(0);
-    gridStates = new GridWrapper(n, m);
+    row = new SimpleIntegerProperty(gridData.getRowCount());
+    column = new SimpleIntegerProperty(gridData.getRowSize(0));
+    gridStates = new GridWrapper(row.get(), column.get());
 
-    cells = new CellView[n][m];
-    for (int y = 0; y < n; y++) {
-      for (int x = 0; x < m; x++) {
-        CellView node = new CellView(gridData.getState(y, x),
-            myController.getProperties(), y, x, stateStyles);
+    for (int y = 0; y < row.get(); y++) {
+      cells.add(new ArrayList<>());
+      for (int x = 0; x < column.get(); x++) {
+        CellView node;
+        if (isUsingColors)
+          node = new CellView(gridData.getState(y, x), colors);
+        else
+          node = new CellView(gridData.getState(y, x), images);
         node.setId("cell" + y + "," + x);
         // add cells to group
         grid.add(node, x, y);
         // add to grid for further reference using an array
         gridStates.setState(y, x, node.getState());
-        cells[y][x] = node;
+        cells.get(y).add(node);
 
         setCellListener(node, new Point(x, y));
       }
@@ -111,9 +143,9 @@ public class GridView {
    * @param gridData
    */
   public void updateGrid(GridWrapper gridData) {
-    for (int y = 0; y < n; y++) {
-      for (int x = 0; x < m; x++) {
-        cells[y][x].updateState(gridData.getState(y, x));
+    for (int y = 0; y < row.get(); y++) {
+      for (int x = 0; x < column.get(); x++) {
+        cells.get(y).get(x).updateState(gridData.getState(y, x));
       }
     }
   }

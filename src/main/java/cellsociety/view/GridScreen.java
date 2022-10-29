@@ -135,10 +135,6 @@ public class GridScreen extends SceneCreator {
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add("allButtons");
 
-    Button button = new Button("1");
-    button.setOnAction(e -> saveSimulation());
-    controls.getChildren().add(button);
-
 
     borderPane.setBottom(controls);
   }
@@ -227,6 +223,7 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+        e.printStackTrace();
         new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
       }
     });
