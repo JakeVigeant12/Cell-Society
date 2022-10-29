@@ -77,8 +77,8 @@ public class CellTest {
 
         cell1.swapCellStates(cell2);
 
-        assertEquals(32, cell1.getCurrentState());
-        assertEquals(64, cell2.getCurrentState());
+        assertEquals(32, cell1.getFutureState());
+        assertEquals(64, cell2.getFutureState());
     }
 
     @Test

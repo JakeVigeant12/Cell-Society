@@ -31,10 +31,14 @@ public class FallingSandCellTest {
         FallingSandCell c2 = new FallingSandCell(0, 1);
         FallingSandCell c3 = new FallingSandCell(1, 1);
         FallingSandCell c4 = new FallingSandCell(0, 1);
+        FallingSandCell c5 = new FallingSandCell(1, 0);
+        FallingSandCell c6 = new FallingSandCell(0, 1);
+        FallingSandCell c7 = new FallingSandCell(1, 1);
+        FallingSandCell c8 = new FallingSandCell(0, 1);
 
-        c.setFutureState(List.of(c1, c2, c3, c4));
+        c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
-        assertEquals(1, c.getFutureState());
+        assertEquals(0, c.getFutureState());
     }
 
     @Test
@@ -43,8 +47,12 @@ public class FallingSandCellTest {
         FallingSandCell c2 = new FallingSandCell(13, 1);
         FallingSandCell c3 = new FallingSandCell(2132, 1);
         FallingSandCell c4 = new FallingSandCell(213, 1);
+        FallingSandCell c5 = new FallingSandCell(23124, 0);
+        FallingSandCell c6 = new FallingSandCell(13, 1);
+        FallingSandCell c7 = new FallingSandCell(2132, 1);
+        FallingSandCell c8 = new FallingSandCell(213, 1);
 
-        c.setFutureState(List.of(c1, c2, c3, c4));
+        c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
         assertEquals(0, c.getFutureState());
     }
