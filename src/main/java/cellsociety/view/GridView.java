@@ -1,5 +1,6 @@
 package cellsociety.view;
 
+import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_FOLDER;
 import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
