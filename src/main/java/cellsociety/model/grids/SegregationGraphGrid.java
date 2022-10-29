@@ -11,7 +11,7 @@ import java.util.Properties;
 public class SegregationGraphGrid extends SwappedCellsGraphGrid{
 
   /**
-   * Constructor for GraphGrid class
+   * Constructor for SegregationGraphGrid class
    *
    * @param gridParsing is the layout of the grid
    * @param properties
@@ -20,11 +20,20 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
       Properties properties) {
     super(gridParsing, properties);
   }
+
+  /**
+   * Method that creates the cells
+   * @param inputLayout
+   * @return Map of cells
+   */
   @Override
   public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
     return super.createCells(inputLayout);
   }
 
+  /**
+   * Method that computes and sets next state of cells
+   */
   @Override
   public void computeStates() {
     //Override method with segregation rules

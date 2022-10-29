@@ -19,7 +19,7 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
   private Neighborhood simulationNeighbors;
 
   /**
-   * Constructor for GraphGrid class
+   * Constructor for WatorGraphGrid class
    *
    * @param gridParsing is the layout of the grid
    * @param properties
@@ -27,11 +27,20 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
   public WatorGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
+  /**
+   * Method that creates the cells for the grid
+   * @param inputLayout
+   * @return
+   */
   @Override
   public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
     return super.createCells(inputLayout);
   }
 
+  /**
+   * Method that computes the new states for the cells
+   */
   @Override
   public void computeStates() {
     emptyCells = new ArrayList<>();
@@ -74,6 +83,11 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
     }
   }
 
+  /**
+   * Method that moves the shark
+   * @param sharkCell
+   * @return the new cell the shark is in
+   */
   public Cell moveShark(Cell sharkCell) {
     //See if any fish may be eaten first
     Cell newLocation = findCellToSwap(sharkCell, super.myAdjacencyList.get(sharkCell),
@@ -93,7 +107,11 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
     return sharkCell;
   }
 
-
+  /**
+   * Method that moves the fish
+   * @param fishCell
+   * @return the new cell the fish is in
+   */
   public Cell moveFish(Cell fishCell) {
     //See if there is an adjacent location for the fish to move into
     Cell newLocation = findCellToSwap(fishCell, super.myAdjacencyList.get(fishCell), 0);
