@@ -32,15 +32,6 @@ public abstract class Grid {
       throws ReflectionException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException;
 
   /**
-   * Abstract method initializes the neighbors for each of the cells
-   * @param gridParsing
-   * @param myCells
-   * @param simulationNeighbors
-   * @return
-   */
-  public abstract Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors);
-
-  /**
    * Abstract method that sets the current cell state
    * @param key
    * @param state

@@ -50,7 +50,7 @@ public class SwappedCellsGraphGrid extends GraphGrid{
    * @param locations
    * @return
    */
-  public Cell findCellToSwap(Cell cellToSwap, Set<Cell> locations) {
+  public Cell findCellToSwap(Cell cellToSwap, List<Cell> locations) {
     for (Cell potentialCell : locations) {
       if (potentialCell.getId() == cellToSwap.getId()) {
         return potentialCell;
