@@ -2,12 +2,15 @@ package cellsociety.parser;
 
 import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-//abstraction of parsing to allow multiple filetypes/parsing methods
 public abstract class Parser {
-
+  /**
+   * abstraction of parsing to allow multiple filetypes/parsing methods
+   * @param csvPath
+   * @return GridWrapper
+   * @throws IOException
+   * @throws CsvValidationException
+   */
   public abstract GridWrapper parseData(String csvPath) throws IOException, CsvValidationException;
 }

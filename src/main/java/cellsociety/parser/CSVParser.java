@@ -12,11 +12,16 @@ import java.io.IOException;
 import java.util.List;
 
 public class CSVParser extends Parser {
-
   private static final String DATA_FOLDER = "data/";
   private FileReader myFileReader;
-  private List<List<String>> grid;
 
+  /**
+   * Parses the data from the csv file
+   * @param csvPath
+   * @return
+   * @throws IOException
+   * @throws CsvValidationException
+   */
   @Override
   public GridWrapper parseData(String csvPath) throws IOException, CsvValidationException {
     myFileReader = new FileReader(DATA_FOLDER + csvPath);
@@ -38,13 +43,25 @@ public class CSVParser extends Parser {
     return gridWrapper;
   }
 
+  /**
+   * Parses the first line of the csv file (size of the grid)
+   * @param csvPath
+   * @return
+   * @throws CsvValidationException
+   * @throws IOException
+   */
   public String[] parseFirstLine(String csvPath) throws CsvValidationException, IOException {
     myFileReader = new FileReader(DATA_FOLDER + csvPath);
     CSVReader csvReader = new CSVReader(myFileReader);
     return csvReader.readNext();
   }
 
-
+  /**
+   * Method that saves the current grid to a csv file
+   * @param grid
+   * @param file
+   * @throws IOException
+   */
   public void saveCurrentGrid(GridWrapper grid, File file) throws IOException {
     CSVWriter csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
     csvWriter.writeNext(new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getColumnSize())});
