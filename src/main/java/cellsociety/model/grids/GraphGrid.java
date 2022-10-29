@@ -117,34 +117,6 @@ public class GraphGrid extends Grid {
   }
 
   /**
-   * Method that initializes the neighbors for the grid
-   * @param gridParsing
-   * @param myCells
-   * @param simulationNeighbors
-   * @return the adjacency list
-   */
-
-  /**
-   * Method that creates the neighborhood for the cell
-   * @param i
-   * @param j
-   * @param gridParsing
-   * @param currId
-   * @param simulationNeighbors
-   * @param neighborNumber
-   * @param adjacencyList
-   * @param currentCell
-   * @param myCells
-   */
-  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
-    if(isInBounds(i, j, gridParsing)){
-      if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(currId));
-      }
-    }
-  }
-
-  /**
    * Method that checks if the cell is in bounds
    * @param row
    * @param col
