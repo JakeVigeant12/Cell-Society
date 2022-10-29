@@ -1,19 +1,9 @@
 package cellsociety;
 
-import cellsociety.controller.CellSocietyController;
-import cellsociety.view.StartSplash;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ResourceBundle;
+import cellsociety.view.SplashScreen;
 
 import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 
 
 /**
@@ -26,7 +16,7 @@ public class Main extends Application {
      */
 
     public void start(Stage stage){
-        StartSplash ss = new StartSplash(600.0, stage);
+        SplashScreen ss = new SplashScreen(600.0, stage);
         stage.setTitle("CellSociety");
         stage.setScene(ss.createScene("startSplash.css"));
         stage.show();

@@ -6,14 +6,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -79,7 +87,7 @@ public class GridScreen extends SceneCreator {
 
 
     gridView = new GridView(myController);
-    gridView.setUpView(myController.getViewGrid(), (String) myController.getProperties().get("Type"));
+    gridView.setUpView(myController.getViewGrid());
     GridPane grid = gridView.getGrid();
     grid.setAlignment(Pos.CENTER);
     borderPane.setCenter(gridView.getGrid());
@@ -126,6 +134,8 @@ public class GridScreen extends SceneCreator {
     controls.getChildren().add(makeSlider("speedSlider"));
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add("allButtons");
+
+
     borderPane.setBottom(controls);
   }
 
@@ -213,6 +223,7 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+        e.printStackTrace();
         new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
       }
     });
@@ -267,7 +278,7 @@ public class GridScreen extends SceneCreator {
   }
 
   private void exitSimulation() {
-    StartSplash beginning = new StartSplash(600.0, myStage);
+    SplashScreen beginning = new SplashScreen(600.0, myStage);
     myStage.setScene(beginning.createScene("startSplash.css"));
   }
 

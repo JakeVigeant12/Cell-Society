@@ -1,12 +1,11 @@
 package cellsociety.model.cells;
 
-import cellsociety.model.cells.Cell;
-
 import java.util.List;
-import java.util.Properties;
 
 public class PercolationCell extends Cell {
-
+  private final static int EMPTY = 0;
+  private final static int PERCOLATED = 1;
+  private final static int BLOCKED = 2;
   // Key States
   // 0 = empty
   // 1 = Percolated
@@ -28,18 +27,18 @@ public class PercolationCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == 0){
+    if (getCurrentState() == EMPTY){
       for (Cell neighbor : neighbors) {
-        if (neighbor.getCurrentState() == 1){
-          setFutureStateValue(1);
+        if (neighbor.getCurrentState() == PERCOLATED){
+          setFutureStateValue(PERCOLATED);
         }
       }
     }
-    else if (getCurrentState() == 1){
-      setFutureStateValue(1);
+    else if (getCurrentState() == PERCOLATED){
+      setFutureStateValue(PERCOLATED);
     }
-    else if (getCurrentState() == 2){
-      setFutureStateValue(2);
+    else if (getCurrentState() == BLOCKED){
+      setFutureStateValue(BLOCKED);
     }
   }
 

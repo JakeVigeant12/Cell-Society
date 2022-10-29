@@ -12,7 +12,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -75,7 +77,7 @@ public class FileInput extends SceneCreator {
   }
 
   private void goBack() {
-    StartSplash beginning = new StartSplash(600, myStage);
+    SplashScreen beginning = new SplashScreen(600, myStage);
     myStage.setScene(beginning.createScene(START_SPLASH_CSS));
   }
 
@@ -96,7 +98,7 @@ public class FileInput extends SceneCreator {
       new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              IllegalAccessException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
     }
   }
 
@@ -142,7 +144,8 @@ public class FileInput extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        showMessage(AlertType.ERROR, e.getMessage());
+        e.printStackTrace();
+        showMessage(AlertType.ERROR, e.getCause().getMessage());
       }
     });
     return result;

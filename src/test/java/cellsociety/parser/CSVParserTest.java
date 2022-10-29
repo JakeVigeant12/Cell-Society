@@ -2,14 +2,12 @@ package cellsociety.parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import cellsociety.model.grids.Grid;
 import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,11 +24,11 @@ class CSVParserTest {
   void testParseSquareGrid() throws CsvValidationException, IOException {
     GridWrapper expectedGrid = createSquareGrid();
     GridWrapper actualGrid = myParser.parseData("test/test_square.csv");
-    assertEquals(expectedGrid.row(), actualGrid.row());
-    assertEquals(expectedGrid.column(0), actualGrid.column(0));
-    for(int i = 0; i < expectedGrid.row(); i++) {
-      for(int j = 0; j < expectedGrid.column(0); j++) {
-        assertEquals(expectedGrid.get(i,j), actualGrid.get(i, j));
+    assertEquals(expectedGrid.getRowCount(), actualGrid.getRowCount());
+    assertEquals(expectedGrid.getRowSize(0), actualGrid.getRowSize(0));
+    for(int i = 0; i < expectedGrid.getRowCount(); i++) {
+      for(int j = 0; j < expectedGrid.getRowSize(0); j++) {
+        assertEquals(expectedGrid.getState(i,j), actualGrid.getState(i, j));
       }
     }
   }
@@ -39,11 +37,11 @@ class CSVParserTest {
   void testParseRectangularGrid() throws CsvValidationException, IOException {
     GridWrapper expectedGrid = createRectangularGrid();
     GridWrapper actualGrid = myParser.parseData("test/test_rectangle.csv");
-    assertEquals(expectedGrid.row(), actualGrid.row());
-    assertEquals(expectedGrid.column(0), actualGrid.column(0));
-    for(int i = 0; i < expectedGrid.row(); i++) {
-      for(int j = 0; j < expectedGrid.column(0); j++) {
-        assertEquals(expectedGrid.get(i,j), actualGrid.get(i, j));
+    assertEquals(expectedGrid.getRowCount(), actualGrid.getRowCount());
+    assertEquals(expectedGrid.getRowSize(0), actualGrid.getRowSize(0));
+    for(int i = 0; i < expectedGrid.getRowCount(); i++) {
+      for(int j = 0; j < expectedGrid.getRowSize(0); j++) {
+        assertEquals(expectedGrid.getState(i,j), actualGrid.getState(i, j));
       }
     }
   }
@@ -55,11 +53,11 @@ class CSVParserTest {
     myParser.saveCurrentGrid(grid, file);
     GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_square.csv");
     List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
-    assertEquals(grid.row(), parsedCSVGrid.size());
-    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
-    for(int i = 0; i < grid.row(); i++) {
-      for(int j = 0; j < grid.column(0); j++) {
-        assertEquals(grid.get(i,j), parsedCSVGrid.get(i).get(j));
+    assertEquals(grid.getRowCount(), parsedCSVGrid.size());
+    assertEquals(grid.getRowSize(0), parsedCSVGrid.get(0).size());
+    for(int i = 0; i < grid.getRowCount(); i++) {
+      for(int j = 0; j < grid.getRowSize(0); j++) {
+        assertEquals(grid.getState(i,j), parsedCSVGrid.get(i).get(j));
       }
     }
   }
@@ -71,11 +69,11 @@ class CSVParserTest {
     myParser.saveCurrentGrid(grid, file);
     GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_rectangle.csv");
     List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
-    assertEquals(grid.row(), parsedCSVGrid.size());
-    assertEquals(grid.column(0), parsedCSVGrid.get(0).size());
-    for(int i = 0; i < grid.row(); i++) {
-      for(int j = 0; j < grid.column(0); j++) {
-        assertEquals(grid.get(i,j), parsedCSVGrid.get(i).get(j));
+    assertEquals(grid.getRowCount(), parsedCSVGrid.size());
+    assertEquals(grid.getRowSize(0), parsedCSVGrid.get(0).size());
+    for(int i = 0; i < grid.getRowCount(); i++) {
+      for(int j = 0; j < grid.getRowSize(0); j++) {
+        assertEquals(grid.getState(i,j), parsedCSVGrid.get(i).get(j));
       }
     }
   }
@@ -85,7 +83,7 @@ class CSVParserTest {
     int[][] grid = {{0, 0, 1}, {1, 0, 0}, {0, 1, 0}};
     for(int i = 0; i < grid.length; i++) {
       for(int j = 0; j < grid[i].length; j++) {
-        gridWrapper.set(i, j, grid[i][j]);
+        gridWrapper.setState(i, j, grid[i][j]);
       }
     }
     return gridWrapper;
@@ -96,7 +94,7 @@ class CSVParserTest {
     int[][] grid = {{0, 0, 1, 0}, {1, 0, 0, 1}, {0, 1, 0, 1}};
     for(int i = 0; i < grid.length; i++) {
       for(int j = 0; j < grid[i].length; j++) {
-        gridWrapper.set(i, j, grid[i][j]);
+        gridWrapper.setState(i, j, grid[i][j]);
       }
     }
     return gridWrapper;

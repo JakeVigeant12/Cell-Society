@@ -16,7 +16,6 @@ import java.util.Properties;
 import cellsociety.view.GridWrapper;
 import org.junit.jupiter.api.Test;
 
-import static cellsociety.model.SimType.GameOfLife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphGridTest {

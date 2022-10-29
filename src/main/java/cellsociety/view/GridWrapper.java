@@ -29,12 +29,12 @@ public class GridWrapper {
     grid = new ArrayList<>();
   }
 
-  public int get(int row, int column) {
+  public int getState(int row, int column) {
     return grid.get(row).get(column);
   }
 
   //Before using this method, make sure you have added a row and a value of column index to that row
-  public void set(int row, int columnIndex, int state) {
+  public void setState(int row, int columnIndex, int state) {
     grid.get(row).set(columnIndex, state);
   }
 
@@ -47,32 +47,17 @@ public class GridWrapper {
     grid.get(row).add(value);
   }
 
-  public int row() {
-    return row;
+  public int getRowCount() {
+//    return row;
+    return grid.size();
   }
 
-  public int column(int row) {
+  public int getRowSize(int row) {
     return grid.get(row).size();
   }
-
-  public List<Integer> getRow(int row) {
-    List<Integer> rowList = new ArrayList<>();
-    for (int i = 0; i < column; i++) {
-      rowList.add(grid.get(row).get(i));
-    }
-    return rowList;
-  }
-
-  public List<Integer> getColumn(int column) {
-    List<Integer> columnList = new ArrayList<>();
-    for (int i = 0; i < row; i++) {
-      columnList.add(grid.get(i).get(column));
-    }
-    return columnList;
-  }
-
+  
   /**
-   * For test purposes
+   * For test purpose
    *
    * @return
    */
@@ -80,6 +65,7 @@ public class GridWrapper {
     return grid.toArray();
   }
 
+  //TODO: refactor this, it should not return a list of list
   public List<List<Integer>> getGrid() {
     return grid;
   }

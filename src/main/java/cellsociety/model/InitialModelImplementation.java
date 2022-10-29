@@ -1,10 +1,7 @@
 package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.model.grids.GraphGrid;
-import cellsociety.model.grids.Grid;
-import cellsociety.model.grids.SegregationGraphGrid;
-import cellsociety.model.grids.WatorGraphGrid;
+import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
 import java.util.Map;
@@ -12,9 +9,13 @@ import java.util.Properties;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
-
   private final Grid myGrid;
 
+  /**
+   * Constructor for the model
+   * @param gridWrapper
+   * @param simParameters
+   */
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
     if(simParameters.getProperty("Type").equals("WatorWorld")){
       myGrid = new WatorGraphGrid(gridWrapper, simParameters);
@@ -22,21 +23,36 @@ public class InitialModelImplementation extends Model {
     else if(simParameters.getProperty("Type").equals("Segregation")) {
       myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
     }
+    else if (simParameters.getProperty("Type").equals("FallingSand")) {
+      myGrid = new FallingSandGraphGrid(gridWrapper, simParameters);
+    }
     else {
       myGrid = new GraphGrid(gridWrapper, simParameters);
     }
 
   }
 
+  /**
+   * Method that computes the states of the cells
+   */
   public void computeStates() {
     myGrid.computeStates();
   }
 
+  /**
+   * Method that sets the current state of a cell
+   * @param key
+   * @param state
+   */
   @Override
   public void setCellCurrentState (int key, int state){
     myGrid.setCellCurrentState(key, state);
   }
 
+  /**
+   * Method that returns the cells
+   * @return cells
+   */
   @Override
   public Map<Integer, Cell> getCells() {
     return myGrid.getCells();

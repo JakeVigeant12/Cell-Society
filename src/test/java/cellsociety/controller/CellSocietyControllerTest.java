@@ -46,7 +46,7 @@ class CellSocietyControllerTest {
     myController.setBackEndCellsByID(cellMap);
     GridWrapper expected = new GridWrapper(3, 3);
     for(Integer key : cellMap.keySet()) {
-      expected.set((key -1)/ 3, (key - 1)  % 3, cellMap.get(key).getCurrentState());
+      expected.setState((key -1)/ 3, (key - 1)  % 3, cellMap.get(key).getCurrentState());
     }
     GridWrapper actual = myController.getViewGrid();
     Assertions.assertArrayEquals(expected.toArray(), actual.toArray());

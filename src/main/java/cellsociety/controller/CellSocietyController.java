@@ -1,28 +1,20 @@
 package cellsociety.controller;
 
 import cellsociety.model.InitialModelImplementation;
-import cellsociety.model.SimType;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
-import cellsociety.parser.Parser;
 import cellsociety.view.GridWrapper;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javafx.stage.Stage;
-
-import javax.management.ReflectionException;
-import javax.swing.text.View;
 
 public class CellSocietyController {
   private static final String INITIAL_STATES = "InitialStates";
@@ -35,6 +27,16 @@ public class CellSocietyController {
   private File simFile;
   private Map<Integer, Cell> backEndCellsByID;
 
+  /**
+   * Constructor for CellSocietyController class
+   * @param simFile
+   * @throws IOException
+   * @throws CsvValidationException
+   * @throws ClassNotFoundException
+   * @throws InvocationTargetException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   */
   public CellSocietyController(File simFile)
       throws IOException, CsvValidationException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     this.simFile = simFile;
@@ -51,28 +53,49 @@ public class CellSocietyController {
     numRows = Integer.parseInt(parseRowCol[1].trim());
   }
 
+  /**
+   * Method that gets the simulation data
+   * @throws IOException
+   */
   public void getSimData() throws IOException {
     properties = new Properties();
     properties.load(new FileReader(simFile));
   }
 
+  /**
+   * Method that loads the simulation based on the stage
+   * @param stage
+   */
   public void loadSimulation(Stage stage) {
     stage.setTitle((String) properties.get(TITLE));
     stage.show();
   }
 
+  /**
+   * Getter for properties
+   * @return
+   */
   public Properties getProperties() {
     return properties;
   }
 
+  /**
+   * Method that updates only one cell
+   * @param y
+   * @param x
+   * @param state
+   */
   public void updateOneCell(int y, int x, int state) {
     myModel.setCellCurrentState(numCols * y + x + 1, state);
   }
 
+  /**
+   * Method gets the view of the grid
+   */
   public GridWrapper getViewGrid() {
     GridWrapper stateGrid = new GridWrapper(numRows, numCols);
     for (Integer key : backEndCellsByID.keySet()) {
-      stateGrid.set((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
+      stateGrid.setState((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
     }
     return stateGrid;
   }
@@ -82,6 +105,10 @@ public class CellSocietyController {
     this.backEndCellsByID = backEndCellsByID;
   }
 
+  /**
+   * Method that updates the grid
+   * @return gridWrapper
+   */
   public GridWrapper updateGrid() {
     myModel.computeStates();
     return getViewGrid();
@@ -96,12 +123,16 @@ public class CellSocietyController {
   public void resetController()
       throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     String csvPath = (String) properties.get(INITIAL_STATES);
-    SimType simType = SimType.valueOf((String) properties.get("Type"));
     GridWrapper gridWrapper = myGridParser.parseData(csvPath);
     myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsByID = myModel.getCells();
   }
 
+  /**
+   * Method that saves the grid to a file
+   * @param file
+   * @throws IOException
+   */
   public void saveGrid(File file) throws IOException {
     myGridParser.saveCurrentGrid(getViewGrid(), file);
   }

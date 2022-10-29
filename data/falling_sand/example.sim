@@ -1,0 +1,5 @@
+Type=FallingSand
+Title=Example
+Author=Nick Ward
+Description=test of a falling sand game
+InitialStates=falling_sand/example.csv

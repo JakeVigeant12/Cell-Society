@@ -1,6 +1,8 @@
 package cellsociety.model.grids;
 
-import cellsociety.model.cells.*;
+
+import cellsociety.model.AdjacencyList;
+import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
@@ -12,7 +14,7 @@ import java.util.*;
 
 public class GraphGrid extends Grid {
   protected Map<Integer, Cell> myCells;
-  protected Map<Cell, List<Cell>> myAdjacenyList;
+  protected AdjacencyList myAdjacencyList;
   protected List<Cell> emptyCells;
   protected Properties myProperties;
   protected final String cellPackagePath = "cellsociety.model.cells.";
@@ -26,10 +28,9 @@ public class GraphGrid extends Grid {
    */
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
-    myAdjacenyList = new HashMap<>();
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    myAdjacenyList=initializeNeighbors(gridParsing, myCells, simulationNeighbors);
+    myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
   /**
@@ -44,15 +45,21 @@ public class GraphGrid extends Grid {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Integer, Cell> cellHolder = new HashMap<>();
     int cellCount = 0;
-    for(int i = 0; i < inputLayout.row(); i++){
-      for(int j = 0; j < inputLayout.column(0); j++){
+    for(int i = 0; i < inputLayout.getRowCount(); i++){
+      for(int j = 0; j < inputLayout.getRowSize(0); j++){
         cellCount++;
-        createCell(inputLayout.get(i, j), cellHolder, cellCount);
+        createCell(inputLayout.getState(i, j), cellHolder, cellCount);
       }
     }
     return cellHolder;
   }
 
+  /**
+   * Method that creates a cell
+   * @param cellData
+   * @param cellHolder
+   * @param cellCount
+   */
   private void createCell(int cellData, Map<Integer, Cell> cellHolder, int cellCount) {
     Cell newCell;
     try {
@@ -69,7 +76,7 @@ public class GraphGrid extends Grid {
           }
           catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
             e1.printStackTrace();
-            throw new IllegalStateException("Cannot find default resource");
+            throw new IllegalStateException("Missing parameters");
           }
         }
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
@@ -79,17 +86,26 @@ public class GraphGrid extends Grid {
       }
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-      throw new RuntimeException(e);
+      throw new IllegalStateException("Cannot make buttons");
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  /**
+   * Method that sets the current cell state of the grid
+   * @param key
+   * @param state
+   */
   @Override
   public void setCellCurrentState (int key, int state){
     myCells.get(key).setCurrentState(state);
   }
 
-  
+  /**
+   * Sets the neighbors for the grid
+   * @param simType
+   * @return
+   */
   //TODO refactor
   public Neighborhood setNeighbors(String simType){
     if(simType.equals("Fire")){
@@ -98,70 +114,6 @@ public class GraphGrid extends Grid {
     else{
       return new CompleteNeighborhood();
     }
-  }
-  @Override
-  public Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors) {
-    //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
-    //ID of the current cell
-    HashMap<Cell, List<Cell>> adjacencyList = new HashMap<>();
-    int currId = 0;
-    for (int i = 0; i < gridParsing.row(); i++) {
-      for (int j = 0; j < gridParsing.column(0); j++) {
-        List<Cell> neighbors = new ArrayList<>();
-        currId++;
-        Cell currentCell = myCells.get(currId);
-        adjacencyList.putIfAbsent(currentCell, neighbors);
-        if(isInBounds(i-1, j-1, gridParsing)){
-          int upperLeftNeighborId = currId - gridParsing.column(0) -1;
-          if(simulationNeighbors.countNeighbor(0)) {
-            adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
-          }
-        }
-        if(isInBounds(i - 1, j, gridParsing)){
-          int topNeighborId = currId - gridParsing.column(0);
-          if(simulationNeighbors.countNeighbor(1)) {
-            adjacencyList.get(currentCell).add(myCells.get(topNeighborId));
-          }
-        }
-        if(isInBounds(i-1, j+1, gridParsing)){
-          int upperRightNeighborId = currId - gridParsing.column(0) + 1;
-          if(simulationNeighbors.countNeighbor(2)) {
-            adjacencyList.get(currentCell).add(myCells.get(upperRightNeighborId));
-          }
-        }
-        if(isInBounds(i, j-1, gridParsing)){
-          int leftNeighborId = currId - 1;
-          if(simulationNeighbors.countNeighbor(3)) {
-            adjacencyList.get(currentCell).add(myCells.get(leftNeighborId));
-          }
-        }
-        if(isInBounds(i, j+1, gridParsing)){
-          int rightNeighborId = currId + 1;
-          if(simulationNeighbors.countNeighbor(4)) {
-            adjacencyList.get(currentCell).add(myCells.get(rightNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j-1, gridParsing)){
-          int lowerLeftNeighborId = currId + gridParsing.column(0) - 1;
-          if(simulationNeighbors.countNeighbor(5)) {
-            adjacencyList.get(currentCell).add(myCells.get(lowerLeftNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j, gridParsing)){
-          int bottomNeighborId = currId + gridParsing.column(0);
-          if(simulationNeighbors.countNeighbor(6)) {
-            adjacencyList.get(currentCell).add(myCells.get(bottomNeighborId));
-          }
-        }
-        if(isInBounds(i+1, j+1, gridParsing)){
-          int bottomRightNeighborId = currId + gridParsing.column(0) + 1;
-          if(simulationNeighbors.countNeighbor(7)) {
-            adjacencyList.get(currentCell).add(myCells.get(bottomRightNeighborId));
-          }
-        }
-      }
-    }
-    return adjacencyList;
   }
 
   /**
@@ -172,7 +124,7 @@ public class GraphGrid extends Grid {
    * @return
    */
   public static boolean isInBounds(int row, int col, GridWrapper gridWrapper){
-    return (row >= 0 && row < gridWrapper.row()) && (col >= 0 && col < gridWrapper.column(0));
+    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0 && col < gridWrapper.getRowSize(0));
   }
 
   /**
@@ -181,13 +133,13 @@ public class GraphGrid extends Grid {
   @Override
   public void computeStates() {
     emptyCells = new ArrayList<>();
-    for (Cell currentCell : myAdjacenyList.keySet()){
-      currentCell.setFutureState(myAdjacenyList.get(currentCell));
+    for (Cell currentCell : myAdjacencyList.getCells()){
+      currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
       if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
         emptyCells.add(currentCell);
       }
     }
-    for (Cell currentCell : myAdjacenyList.keySet()){
+    for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.updateState();
     }
   }

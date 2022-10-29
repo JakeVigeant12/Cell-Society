@@ -2,10 +2,8 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.view.GridWrapper;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+
+import java.util.*;
 
 public class SwappedCellsGraphGrid extends GraphGrid{
 
@@ -34,12 +32,30 @@ public class SwappedCellsGraphGrid extends GraphGrid{
         potentialLocations.add(potentialCell);
       }
       //No cells found that match the state we need to swap into
-      if (potentialLocations.isEmpty()){
+      else if (potentialLocations.isEmpty()){
+        return startingCell;
+      }
+      else {
         return startingCell;
       }
     }
     //Of the cells with the correct ending state, select one at random
     Random rand = new Random();
     return potentialLocations.get(rand.nextInt(potentialLocations.size()));
+  }
+
+  /**
+   * Finds a cell to swap with the current cell if a set of locations is given
+   * @param cellToSwap
+   * @param locations
+   * @return
+   */
+  public Cell findCellToSwap(Cell cellToSwap, List<Cell> locations) {
+    for (Cell potentialCell : locations) {
+      if (potentialCell.getId() == cellToSwap.getId()) {
+        return potentialCell;
+      }
+    }
+    return cellToSwap;
   }
 }

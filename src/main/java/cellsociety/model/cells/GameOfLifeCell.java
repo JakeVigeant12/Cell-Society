@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Properties;
 
 public class GameOfLifeCell extends Cell {
-
+  private final static int DEAD = 0;
+  private final static int ALIVE = 1;
+  private final static int LOWERTHRESHOLD = 2;
+  private final static int UPPERTHRESHOLD = 3;
   // Key States
   // 0 = Dead
   // 1 = Alive
@@ -27,24 +30,24 @@ public class GameOfLifeCell extends Cell {
   public void setFutureState(List<Cell> neighbors) {
     int aliveNeighbors = 0;
     for (Cell neighbor : neighbors) { // Count each neighbor that is alive
-      if (neighbor.getCurrentState() == 1) {
+      if (neighbor.getCurrentState() == ALIVE) {
         aliveNeighbors++;
       }
     }
-    if (getCurrentState() == 1) { // If current cell is alive
-      if (aliveNeighbors < 2 || aliveNeighbors > 3) { // If alive cell has less than 2 or more than 3 neighbors
-        setFutureStateValue(0); // Set current cell to dead
+    if (getCurrentState() == ALIVE) { // If current cell is alive
+      if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
+        setFutureStateValue(DEAD); // Set current cell to dead
       }
       else {
-        setFutureStateValue(1); // Set current cell to alive
+        setFutureStateValue(ALIVE); // Set current cell to alive
       }
     }
-    else if (getCurrentState() == 0) { // If current cell is dead
-      if (aliveNeighbors == 3) { // If current cell has 3 alive neighbors
-        setFutureStateValue(1); // Set current cell to alive
+    else if (getCurrentState() == DEAD) { // If current cell is dead
+      if (aliveNeighbors == UPPERTHRESHOLD) { // If current cell has 3 alive neighbors
+        setFutureStateValue(ALIVE); // Set current cell to alive
       }
       else {
-        setFutureStateValue(0); // Set current cell to dead
+        setFutureStateValue(DEAD); // Set current cell to dead
       }
     }
   }
