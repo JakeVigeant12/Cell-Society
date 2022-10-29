@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 
 
 public class GridView {
-  GridPane grid;
+  private GridPane grid;
   private final DoubleProperty widthProperty = new SimpleDoubleProperty();
   private final DoubleProperty heightProperty = new SimpleDoubleProperty();
   private final DoubleProperty sizeProperty = new SimpleDoubleProperty();
@@ -56,6 +56,16 @@ public class GridView {
       }
     }
   }
+
+//  public void enlarge() {
+//    n++;
+//    for (int x = 0; x < m; x++) {
+//      CellView node = new CellView((y, x), (String) myController.getProperties().get("Type"), y, x, colors);
+//      node.setId("cell" + y + "," + x);
+//      // add cells to group
+//      grid.add(node, x, y);
+//    }
+//  }
 
   public void setUpGridViewSize() {
     widthProperty.bind(grid.widthProperty().subtract(50).divide(m));

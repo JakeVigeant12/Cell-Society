@@ -143,6 +143,8 @@ public class GridScreen extends SceneCreator {
     for(String button : BUTTONS_LIST.get(0)) {
       topPanel.getChildren().add(makeButton(button));
     }
+    Button enlargeButton = new Button("enlarge");
+    topPanel.getChildren().add(enlargeButton);
     topPanel.setBackground(Background.fill(mainColor));
     borderPane.setTop(topPanel);
   }

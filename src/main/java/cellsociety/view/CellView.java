@@ -1,15 +1,17 @@
 package cellsociety.view;
 
-import java.util.Properties;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ResourceBundle;
 
+import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_FOLDER;
 import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 
 public class CellView extends StackPane {
@@ -24,6 +26,7 @@ public class CellView extends StackPane {
   private String CELLSTATES = "CellView";
   private int numStates;
   private ColorMap myColors;
+  private ImageView imageView;
 
   /**
    * Constructor for CellView
@@ -53,6 +56,7 @@ public class CellView extends StackPane {
     // setTranslateY(y);
 
     getChildren().addAll(rectangle);
+    getChildren().add(imageView);
 
     setOnClick();
   }
