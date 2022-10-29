@@ -44,6 +44,12 @@ public class SwappedCellsGraphGrid extends GraphGrid{
     return potentialLocations.get(rand.nextInt(potentialLocations.size()));
   }
 
+  /**
+   * Finds a cell to swap with the current cell if a set of locations is given
+   * @param cellToSwap
+   * @param locations
+   * @return
+   */
   public Cell findCellToSwap(Cell cellToSwap, Set<Cell> locations) {
     for (Cell potentialCell : locations) {
       if (potentialCell.getId() == cellToSwap.getId()) {
