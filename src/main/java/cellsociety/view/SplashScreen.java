@@ -1,7 +1,5 @@
 package cellsociety.view;
 
-import java.awt.event.ActionEvent;
-import java.beans.EventHandler;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,25 +15,22 @@ import javafx.scene.control.Button;
 
 import java.util.ResourceBundle;
 
-public class StartSplash extends SceneCreator {
+public class SplashScreen extends SceneCreator {
 
   public static final String FILE_INPUT_CSS = "fileInput.css";
   private final List<String> languageList = List.of("English", "Spanish", "French");
   public BorderPane startPane;
   private Text mainTitle;
   private Text selectLanguage;
-  private Button englishButton;
-  private Button spanishButton;
-  private Button frenchButton;
   private ImageView myBackground;
   private final Stage myStage;
 
-  public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_PACKAGE = SplashScreen.class.getPackageName() + ".";
   public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
   ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
-  public StartSplash(double size, Stage stage) {
+  public SplashScreen(double size, Stage stage) {
     super(size, stage);
     myStage = stage;
     startPane = new BorderPane();
@@ -100,8 +95,8 @@ public class StartSplash extends SceneCreator {
     // New window (Stage)
     Stage newStage = new Stage();
     newStage.setTitle("CellSociety");
-    StartSplash newStartSplash = new StartSplash(600.0, newStage);
-    newStage.setScene(newStartSplash.createScene("startSplash.css"));
+    SplashScreen newSplashScreen = new SplashScreen(600.0, newStage);
+    newStage.setScene(newSplashScreen.createScene("startSplash.css"));
 
     // Set position of second window, related to primary window.
     newStage.setX(myStage.getX() + 200);

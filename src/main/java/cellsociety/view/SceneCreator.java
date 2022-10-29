@@ -1,13 +1,11 @@
 package cellsociety.view;
 
-import cellsociety.controller.CellSocietyController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ResourceBundle;
-
 
 public abstract class SceneCreator {
   private double mySize;

@@ -1,8 +1,10 @@
 package cellsociety.view;
 
-import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
+import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
+
+import java.awt.Point;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -10,8 +12,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-
-import java.awt.*;
 
 
 public class GridView {

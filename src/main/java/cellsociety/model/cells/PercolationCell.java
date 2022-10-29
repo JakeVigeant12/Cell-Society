@@ -1,9 +1,6 @@
 package cellsociety.model.cells;
 
-import cellsociety.model.cells.Cell;
-
 import java.util.List;
-import java.util.Properties;
 
 public class PercolationCell extends Cell {
   private final static int EMPTY = 0;

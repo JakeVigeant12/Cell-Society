@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-class StartSplashTest extends DukeApplicationTest {
+class SplashScreenTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) {
-    StartSplash ss = new StartSplash(600.0, stage);
+    SplashScreen ss = new SplashScreen(600.0, stage);
     stage.setTitle("CellSociety");
     stage.setScene(ss.createScene("startSplash.css"));
     stage.show();
