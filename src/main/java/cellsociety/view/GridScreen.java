@@ -127,10 +127,6 @@ public class GridScreen extends SceneCreator {
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add("allButtons");
 
-    Button button = new Button("1");
-    button.setOnAction(e -> saveSimulation());
-    controls.getChildren().add(button);
-
 
     borderPane.setBottom(controls);
   }
@@ -143,9 +139,6 @@ public class GridScreen extends SceneCreator {
     for(String button : BUTTONS_LIST.get(0)) {
       topPanel.getChildren().add(makeButton(button));
     }
-    Button enlargeButton = new Button("enlarge");
-    enlargeButton.setOnAction(e -> gridView.enlarge());
-    topPanel.getChildren().add(enlargeButton);
     topPanel.setBackground(Background.fill(mainColor));
     borderPane.setTop(topPanel);
   }

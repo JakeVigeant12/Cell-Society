@@ -47,8 +47,9 @@ public class GridWrapper {
     grid.get(row).add(value);
   }
 
-  public int getColumnSize() {
-    return row;
+  public int getRowCount() {
+//    return row;
+    return grid.size();
   }
 
   public int getRowSize(int row) {

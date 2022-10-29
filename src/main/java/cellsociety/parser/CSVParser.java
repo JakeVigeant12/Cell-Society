@@ -47,7 +47,7 @@ public class CSVParser extends Parser {
 
   public void saveCurrentGrid(GridWrapper grid, File file) throws IOException {
     CSVWriter csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-    csvWriter.writeNext(new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getColumnSize())});
+    csvWriter.writeNext(new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getRowCount())});
     for(List<Integer> row : grid.getGrid()) {
       String[] writeArray = new String[row.size()];
       for(int i = 0; i < row.size(); i++) {

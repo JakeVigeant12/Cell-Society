@@ -6,15 +6,17 @@ import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 import cellsociety.controller.CellSocietyController;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -26,10 +28,10 @@ public class GridView {
   private final DoubleProperty heightProperty = new SimpleDoubleProperty();
   private final DoubleProperty sizeProperty = new SimpleDoubleProperty();
   private CellSocietyController myController;
-  private IntegerProperty n;
-  private int m;
+  private IntegerProperty row;
+  private IntegerProperty column;
   //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
-  private CellView[][] cells;
+  private List<List<CellView>> cells;
   final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
   private final ColorMap colors;
@@ -45,6 +47,7 @@ public class GridView {
     myController = controller;
     grid.setId("gridView");
     Properties properties = controller.getProperties();
+    cells = new ArrayList<>();
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
@@ -72,55 +75,26 @@ public class GridView {
     }
   }
 
-  public void enlarge() {
-    n.set(n.get() + 1);
-    CellView node;
-    for (int x = 0; x < m; x++) {
-      if (isUsingColors)
-        node = new CellView(0, colors);
-      else
-        node = new CellView(0, images);
-//      node.setId("cell" + n + "," + x);
-      // add cells to group
-      grid.add(node, x, n.get() - 1);
-      // add to grid for further reference using an array
-//      gridStates.setState(n + 1, x, node.getState());
-//      cells[n + 1][x] = node;
-      int finalX = x;
-      CellView finalNode = node;
-      updateCellSize(finalNode, sizeProperty.get());
-      sizeProperty.addListener((obs, oldVal, newVal) -> {
-        updateCellSize(finalNode, (Double)newVal);
-//        System.out.println(newVal);
-      });
-      setCellListener(node, new Point(x, n.get() - 1));
-    }
-  }
-
   public void setUpGridViewSize() {
-    widthProperty.bind(grid.widthProperty().subtract(50).divide(m));
-    heightProperty.bind(grid.heightProperty().subtract(50).divide(n));
+    widthProperty.bind(grid.widthProperty().subtract(50).divide(column));
+    heightProperty.bind(grid.heightProperty().subtract(50).divide(row));
     sizeProperty.bind(Bindings.min(widthProperty, heightProperty));
+    int rows = row.get();
+    int cols = column.get();
     sizeProperty.addListener((obs, oldVal, newVal) -> {
-//      System.out.println(newVal);
-      updateCellsWidth((Double) newVal);
+      for (int y = 0; y < rows; y++) {
+        for (int x = 0; x <cols; x++) {
+          updateCellWidth(x, y, (Double) newVal);
+        }
+      }
     });
   }
-
-  public void updateCellSize (CellView cellView, double size) {
-    cellView.updateSize(size);
-  }
-
   public GridWrapper getGridStates() {
     return gridStates;
   }
 
-  public void updateCellsWidth(double size) {
-    for (int y = 0; y < 8; y++) {
-      for (int x = 0; x < m; x++) {
-        cells[y][x].updateSize(size);
-      }
-    }
+  public void updateCellWidth(int x, int y, double size) {
+    cells.get(y).get(x).updateSize(size);
   }
 
 
@@ -130,13 +104,13 @@ public class GridView {
    * @param gridData
    */
   public void setUpView(GridWrapper gridData) {
-    n = new SimpleIntegerProperty(gridData.getColumnSize());
-    m = gridData.getRowSize(0);
-    gridStates = new GridWrapper(n.get(), m);
+    row = new SimpleIntegerProperty(gridData.getRowCount());
+    column = new SimpleIntegerProperty(gridData.getRowSize(0));
+    gridStates = new GridWrapper(row.get(), column.get());
 
-    cells = new CellView[n.get()][m];
-    for (int y = 0; y < n.get(); y++) {
-      for (int x = 0; x < m; x++) {
+    for (int y = 0; y < row.get(); y++) {
+      cells.add(new ArrayList<>());
+      for (int x = 0; x < column.get(); x++) {
         CellView node;
         if (isUsingColors)
           node = new CellView(gridData.getState(y, x), colors);
@@ -147,7 +121,7 @@ public class GridView {
         grid.add(node, x, y);
         // add to grid for further reference using an array
         gridStates.setState(y, x, node.getState());
-        cells[y][x] = node;
+        cells.get(y).add(node);
 
         setCellListener(node, new Point(x, y));
       }
@@ -170,9 +144,9 @@ public class GridView {
    * @param gridData
    */
   public void updateGrid(GridWrapper gridData) {
-    for (int y = 0; y < n.get(); y++) {
-      for (int x = 0; x < m; x++) {
-        cells[y][x].updateState(gridData.getState(y, x));
+    for (int y = 0; y < row.get(); y++) {
+      for (int x = 0; x < column.get(); x++) {
+        cells.get(y).get(x).updateState(gridData.getState(y, x));
       }
     }
   }
