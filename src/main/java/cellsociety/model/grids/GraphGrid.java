@@ -123,30 +123,6 @@ public class GraphGrid extends Grid {
    * @param simulationNeighbors
    * @return the adjacency list
    */
-  @Override
-  public Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors) {
-    //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
-    //ID of the current cell
-    Map<Cell, List<Cell>> adjacencyList = new HashMap<>();
-    int currId = 0;
-    for (int i = 0; i < gridParsing.getRowCount(); i++) {
-      for (int j = 0; j < gridParsing.getRowSize(0); j++) {
-        List<Cell> neighbors = new ArrayList<>();
-        currId++;
-        Cell currentCell = myCells.get(currId);
-        adjacencyList.putIfAbsent(currentCell, neighbors);
-        createNeighborhood(i - 1, j - 1, gridParsing, currId - gridParsing.getRowSize(0) - 1, simulationNeighbors, 0, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j, gridParsing, currId - gridParsing.getRowSize(0), simulationNeighbors, 1, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j + 1, gridParsing, currId - gridParsing.getRowSize(0) + 1, simulationNeighbors, 2, adjacencyList, currentCell, myCells);
-        createNeighborhood(i, j - 1, gridParsing, currId - 1, simulationNeighbors, 3, adjacencyList, currentCell, myCells);
-        createNeighborhood(i, j + 1, gridParsing, currId + 1, simulationNeighbors, 4, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j - 1, gridParsing, currId + gridParsing.getRowSize(0) - 1, simulationNeighbors, 5, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j, gridParsing, currId + gridParsing.getRowSize(0), simulationNeighbors, 6, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j + 1, gridParsing, currId + gridParsing.getRowSize(0) + 1, simulationNeighbors, 7, adjacencyList, currentCell, myCells);
-      }
-    }
-    return adjacencyList;
-  }
 
   /**
    * Method that creates the neighborhood for the cell
