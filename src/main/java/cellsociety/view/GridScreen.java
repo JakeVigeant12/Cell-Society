@@ -144,6 +144,7 @@ public class GridScreen extends SceneCreator {
       topPanel.getChildren().add(makeButton(button));
     }
     Button enlargeButton = new Button("enlarge");
+    enlargeButton.setOnAction(e -> gridView.enlarge());
     topPanel.getChildren().add(enlargeButton);
     topPanel.setBackground(Background.fill(mainColor));
     borderPane.setTop(topPanel);
@@ -221,6 +222,7 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+        e.printStackTrace();
         new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
       }
     });
