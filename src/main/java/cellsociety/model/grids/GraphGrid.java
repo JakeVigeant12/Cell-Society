@@ -13,14 +13,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class GraphGrid extends Grid {
-  protected Map<Integer, Cell> myCells;
-  protected AdjacencyList myAdjacencyList;
-  protected List<Cell> emptyCells;
-  protected Properties myProperties;
-  protected final String cellPackagePath = "cellsociety.model.cells.";
-  protected Neighborhood simulationNeighbors;
-  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+
+  private Map<Integer, Cell> myCells;
+  private AdjacencyList myAdjacencyList;
+  private List<Cell> emptyCells;
+
+
+  private Properties myProperties;
+  private final String cellPackagePath = "cellsociety.model.cells.";
+  private Neighborhood simulationNeighbors;
+  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -32,6 +35,31 @@ public class GraphGrid extends Grid {
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
     myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
+
+  public Map<Integer, Cell> getMyCells() {
+    return myCells;
+  }
+
+  public void setMyCells(Map<Integer, Cell> myCells) {
+    this.myCells = myCells;
+  }
+
+  public List<Cell> getEmptyCells() {
+    return emptyCells;
+  }
+
+  public void setEmptyCells(List<Cell> emptyCells) {
+    this.emptyCells = emptyCells;
+  }
+
+  public AdjacencyList getMyAdjacencyList() {
+    return myAdjacencyList;
+  }
+
+  public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
+    this.myAdjacencyList = myAdjacencyList;
+  }
+
 
   /**
    * Method that creates the cells for the grid
