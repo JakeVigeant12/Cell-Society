@@ -30,7 +30,7 @@ public class GraphGrid extends Grid {
     myAdjacencyList = new HashMap<>();
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    myAdjacencyList =initializeNeighbors(gridParsing, myCells, simulationNeighbors);
+    myAdjacencyList = initializeNeighbors(gridParsing, myCells, simulationNeighbors);
   }
 
   /**
@@ -127,7 +127,7 @@ public class GraphGrid extends Grid {
   public Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors) {
     //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
     //ID of the current cell
-    HashMap<Cell, List<Cell>> adjacencyList = new HashMap<>();
+    Map<Cell, List<Cell>> adjacencyList = new HashMap<>();
     int currId = 0;
     for (int i = 0; i < gridParsing.getRowCount(); i++) {
       for (int j = 0; j < gridParsing.getRowSize(0); j++) {
@@ -160,7 +160,7 @@ public class GraphGrid extends Grid {
    * @param currentCell
    * @param myCells
    */
-  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, HashMap<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
+  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
     if(isInBounds(i, j, gridParsing)){
       if(simulationNeighbors.countNeighbor(neighborNumber)) {
         adjacencyList.get(currentCell).add(myCells.get(currId));
