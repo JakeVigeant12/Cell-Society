@@ -3,7 +3,6 @@ package cellsociety.view;
 import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
-import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -27,7 +26,7 @@ public class GridView {
   private CellView[][] cells;
   final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
-  private final String[] colors;
+  private final String[] stateStyles;
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
@@ -38,10 +37,12 @@ public class GridView {
     myController = controller;
     grid.setId("gridView");
     Properties properties = controller.getProperties();
-    if(properties.containsKey("StateColors")) {
-      colors = properties.get("StateColors").toString().split(",");
+    if(properties.containsKey("StateImages")) {
+      stateStyles = properties.get("StateImages").toString().split(",");
+    } else if (properties.containsKey("StateColors")) {
+      stateStyles = properties.get("StateColors").toString().split(",");
     } else {
-      colors = resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",");
+      stateStyles = resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",");
     }
   }
 
@@ -81,7 +82,7 @@ public class GridView {
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
         CellView node = new CellView(gridData.getState(y, x),
-            (String) myController.getProperties().get("Type"), y, x, colors);
+            myController.getProperties(), y, x, stateStyles);
         node.setId("cell" + y + "," + x);
         // add cells to group
         grid.add(node, x, y);

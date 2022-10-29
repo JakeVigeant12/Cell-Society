@@ -43,6 +43,9 @@ Nick Ward: Cells
 Collaborators:
 
 Attributions for others' work:
+- tree.png: Tree icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/tree)
+- fire.png: Fire icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/fire)
+- grass.png: Grass icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/grass)
 
 
 ### Running the Program
