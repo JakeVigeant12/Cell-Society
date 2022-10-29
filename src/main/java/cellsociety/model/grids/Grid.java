@@ -18,8 +18,8 @@ public abstract class Grid {
       throws ReflectionException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException;
   public abstract Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors);
   public void setCellCurrentState (int key, int state){}
-  public Map<Integer, Cell> getCells() {
-    return null;
+  public Map<Integer, Cell> getCells(){
+    return Map.of(null,null);
   }
 }
 

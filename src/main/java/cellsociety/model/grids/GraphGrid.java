@@ -127,9 +127,8 @@ public class GraphGrid extends Grid {
 
   private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, HashMap<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
     if(isInBounds(i, j, gridParsing)){
-      int upperLeftNeighborId = currId;
       if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
+        adjacencyList.get(currentCell).add(myCells.get(currId));
       }
     }
   }
