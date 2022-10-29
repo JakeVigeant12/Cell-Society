@@ -33,7 +33,7 @@ Luyao Wang: GUI, Grid side
 
 Jake Vigeant: Grid and Model
 
-Vaishvi Patel: Controller 
+Vaishvi Patel: Controller, Configuration
 
 Nick Ward: Cells
 
@@ -46,6 +46,21 @@ Attributions for others' work:
 - tree.png: Tree icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/tree)
 - fire.png: Fire icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/fire)
 - grass.png: Grass icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/grass)
+- heart.png: Heartbeat icons created by DinosoftLabs - Flaticon (https://www.flaticon.com/free-icons/heartbeat)
+- user.png: User icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/user)
+- tombstone.png: Dead icons created by srip - Flaticon (https://www.flaticon.com/free-icons/dead)
+- sea.png: Water icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/water)
+- rock.png: Rock icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/rock)
+- empty.png: Blank icons created by Google - Flaticon (https://www.flaticon.com/free-icons/blank)
+- paper.png: Paper icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/paper)
+- scissors.png: Scissors icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/scissors)
+- red-person.png: Business and finance icons created by HideMaru - Flaticon (https://www.flaticon.com/free-icons/business-and-finance)
+- blue-person.png: User icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/user)
+- fish.png: Ocean icons created by Freepik - Flaticon (https://www.flaticon.com/free-icons/ocean)
+- shark.png: Shark icons created by Skyclick - Flaticon (https://www.flaticon.com/free-icons/shark)
+- dunes.png: Sand icons created by Freepik - Flaticon https://www.flaticon.com/free-icons/sand
+- unc.png: UNC Tar Heels Logo - freebie supply (https://freebiesupply.com/logos/unc-tar-heels-logo-4/)
+- duke.png: Wikipedia Commons (https://commons.wikimedia.org/wiki/File:Duke_Blue_Devils_logo.svg)
 
 
 ### Running the Program
