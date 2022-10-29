@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import java.util.Properties;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -273,7 +272,7 @@ public class GridScreen extends SceneCreator {
   }
 
   private void exitSimulation() {
-    StartSplash beginning = new StartSplash(600.0, myStage);
+    SplashScreen beginning = new SplashScreen(600.0, myStage);
     myStage.setScene(beginning.createScene("startSplash.css"));
   }
 

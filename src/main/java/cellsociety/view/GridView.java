@@ -1,6 +1,6 @@
 package cellsociety.view;
 
-import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
+import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
 import java.util.Properties;

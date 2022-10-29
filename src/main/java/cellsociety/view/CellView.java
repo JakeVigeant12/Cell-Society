@@ -12,8 +12,8 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ResourceBundle;
 
-import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_FOLDER;
-import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
+import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_FOLDER;
+import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 public class CellView extends StackPane {
   private Rectangle rectangle;
