@@ -1,12 +1,12 @@
 package cellsociety.model.cells;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 public class FireCell extends Cell {
-  private static final int BURNING_TIME = 3;
+
   private int turns;
   private double myProbCatch;
   private static final int EMPTY = 0;
@@ -25,7 +25,7 @@ public class FireCell extends Cell {
     turns = 0;
     double probCatch = parameter;
     if (probCatch > 1){
-      throw new IllegalArgumentException("Probability of catching fire must be between 0 and 1");
+      throw new IllegalArgumentException(PROBABILITY_ERROR_MESSAGE);
     }
     myProbCatch = probCatch;
     stateMap = Map.of(EMPTY, "EMPTY", TREE, "TREE", BURNING, "BURNING");

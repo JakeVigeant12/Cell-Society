@@ -1,16 +1,25 @@
 package cellsociety.model;
 
+import static cellsociety.view.GridScreen.TYPE;
+
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Properties;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
+
+  public static final String WATOR_WORLD = "WatorWorld";
+  public static final String SEGREGATION = "Segregation";
+  public static final String FALLING_SAND = "FallingSand";
   private final Grid myGrid;
+  private final String gridPackagePath = "cellsociety.model.grids.";
 
   /**
    * Constructor for the model
@@ -18,19 +27,15 @@ public class InitialModelImplementation extends Model {
    * @param simParameters
    */
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    if(simParameters.getProperty("Type").equals("WatorWorld")){
-      myGrid = new WatorGraphGrid(gridWrapper, simParameters);
+    try {
+      Class<?> graphGridClass = Class.forName(gridPackagePath + simParameters.get("Type") + "GraphGrid");
+      Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
+      myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper,simParameters);
     }
-    else if(simParameters.getProperty("Type").equals("Segregation")) {
-      myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
+    catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+           InvocationTargetException e) {
+      throw new IllegalStateException("Cannot make buttons");
     }
-    else if (simParameters.getProperty("Type").equals("FallingSand")) {
-      myGrid = new FallingSandGraphGrid(gridWrapper, simParameters);
-    }
-    else {
-      myGrid = new GraphGrid(gridWrapper, simParameters);
-    }
-
   }
 
   /**

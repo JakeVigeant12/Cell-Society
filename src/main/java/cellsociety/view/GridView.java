@@ -23,6 +23,13 @@ import javafx.scene.text.Text;
 
 
 public class GridView {
+
+  public static final String GRID_VIEW = "gridView";
+  public static final String STATE_IMAGES = "StateImages";
+  public static final String STATE_COLORS = "StateColors";
+  public static final String TYPE = "Type";
+  public static final String REGEX = ",";
+  public static final String CELL = "Cell";
   private GridPane grid;
   private final DoubleProperty widthProperty = new SimpleDoubleProperty();
   private final DoubleProperty heightProperty = new SimpleDoubleProperty();
@@ -32,7 +39,6 @@ public class GridView {
   private IntegerProperty column;
   //the 2D array cells is not refactored into a wrapper class for the time being since it is used only in this class, and will not be passed to other classes.
   private List<List<CellView>> cells;
-  final double rem = new Text("").getLayoutBounds().getHeight();
   GridWrapper gridStates;
   private final ColorMap colors;
   private final ImageMap images;
@@ -45,7 +51,7 @@ public class GridView {
   public GridView(CellSocietyController controller) {
     grid = new GridPane();
     myController = controller;
-    grid.setId("gridView");
+    grid.setId(GRID_VIEW);
     Properties properties = controller.getProperties();
     cells = new ArrayList<>();
     colors = new ColorMap();
@@ -54,20 +60,21 @@ public class GridView {
   }
 
   private void applyColors(Properties properties) {
-    if (properties.containsKey("StateImages")) {
-      for (String imageString : properties.get("StateImages").toString().split(",")) {
+    if (properties.containsKey(STATE_IMAGES)) {
+      for (String imageString : properties.get(STATE_IMAGES).toString().split(REGEX)) {
         Image image = new Image(DEFAULT_RESOURCE_FOLDER + imageString);
         images.addImage(image);
         isUsingColors = false;
       }
-    } else if (properties.containsKey("StateColors")) {
-      for (String colorString : properties.get("StateColors").toString().split(",")) {
+    } else if (properties.containsKey(STATE_COLORS)) {
+      for (String colorString : properties.get(STATE_COLORS).toString().split(REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
         isUsingColors = true;
       }
     } else {
-      for (String colorString : resourceBundle.getString(String.format("%sStateColors", properties.get("Type"))).split(",")) {
+      for (String colorString : resourceBundle.getString(String.format("%s%s", properties.get(TYPE),STATE_COLORS)).split(
+          REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
         isUsingColors = true;
@@ -112,25 +119,27 @@ public class GridView {
     for (int y = 0; y < row.get(); y++) {
       cells.add(new ArrayList<>());
       for (int x = 0; x < column.get(); x++) {
-        CellView node;
-        if (isUsingColors)
-          node = new CellView(gridData.getState(y, x), colors);
-        else
-          node = new CellView(gridData.getState(y, x), images);
-        node.setId("cell" + y + "," + x);
-        // add cells to group
-        grid.add(node, x, y);
-        // add to grid for further reference using an array
-        gridStates.setState(y, x, node.getState());
-        cells.get(y).add(node);
-        int finalX = x;
-        int finalY = y;
-        node.setOnMouseClicked(e -> {
-          node.setOnClick();
-          myController.updateOneCell(finalY, finalX, node.getState());
-        });
+        createCell(gridData, y, x);
       }
     }
+  }
+
+  private void createCell(GridWrapper gridData, int y, int x) {
+    CellView node;
+    if (isUsingColors)
+      node = new CellView(gridData.getState(y, x), colors);
+    else
+      node = new CellView(gridData.getState(y, x), images);
+    node.setId("cell" + y + "," + x);
+    // add cells to group
+    grid.add(node, x, y);
+    // add to grid for further reference using an array
+    gridStates.setState(y, x, node.getState());
+    cells.get(y).add(node);
+    node.setOnMouseClicked(e -> {
+      node.setOnClick();
+      myController.updateOneCell(y, x, node.getState());
+    });
   }
 
   /**
