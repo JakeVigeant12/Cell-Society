@@ -27,8 +27,8 @@ public class GraphGrid extends Grid {
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
-  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  private static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
