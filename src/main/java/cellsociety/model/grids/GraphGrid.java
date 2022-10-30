@@ -31,25 +31,26 @@ public class GraphGrid extends Grid {
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
-
-
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
   public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+  public static final String DEFAULT_RESOURCE_FOLDER =
+      "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
+   *
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) {
+  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException {
     myProperties = properties;
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
     try {
-      if (properties.getProperty("EdgePolicy").equals("toroidal"))
+      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
         myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+      }
     } catch (NullPointerException e) {
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
     }
@@ -72,13 +73,14 @@ public class GraphGrid extends Grid {
     this.emptyCells = emptyCells;
   }
 
-  public AdjacencyList getMyAdjacencyList() {
+  protected AdjacencyList getMyAdjacencyList() {
     return myAdjacencyList;
   }
 
   public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
     this.myAdjacencyList = myAdjacencyList;
   }
+
   public Neighborhood getSimulationNeighbors() {
     return simulationNeighbors;
   }
@@ -95,11 +97,11 @@ public class GraphGrid extends Grid {
    * @return
    */
   //Assume grid values are passed in as expected, sans dimensions
-  private Map<Point, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) throws IllegalStateException {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Point, Cell> cellHolder = new HashMap<>();
-    for(int i = 0; i < inputLayout.getRowCount(); i++){
-      for(int j = 0; j < inputLayout.getRowSize(0); j++){
+    for (int i = 0; i < inputLayout.getRowCount(); i++) {
+      for (int j = 0; j < inputLayout.getRowSize(0); j++) {
         createCell(inputLayout.getState(i, j), cellHolder, new Point(j, i));
       }
     }
@@ -108,75 +110,94 @@ public class GraphGrid extends Grid {
 
   /**
    * Method that creates a cell
+   *
    * @param cellData
    * @param cellHolder
    * @param cellCount
    */
-  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount) {
+  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount)
+      throws IllegalStateException {
     Cell newCell;
+    Class<?> cellClass;
     try {
-      Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get(TYPE) + CELL);
-      Constructor<?>[] makeNewCell = cellClass.getConstructors();
-      if(makeNewCell[0].getParameterCount() == 3){
-        double parameter;
-        try {
-          parameter = Double.parseDouble((String) myProperties.get(PARAMETERS));
-        }
-        catch (NullPointerException e) {//No parameter specified in .sim file
-          try {//load parameter from .sim file
-            parameter = Double.parseDouble(ResourceBundle.getBundle(String.format("%s%s%s", DEFAULT_RESOURCE_PACKAGE, DEFAULT, myProperties.get(TYPE))).getString(PARAMETERS));
-          }
-          catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
-            e1.printStackTrace();
-            throw new IllegalStateException(MISSING_PARAMETERS);
-          }
-        }
-        newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
-      }
-      else{
+      cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+    } catch (ClassNotFoundException e) {
+      throw new IllegalStateException("classNotFound");
+    }
+    Constructor<?>[] makeNewCell = cellClass.getConstructors();
+    if (makeNewCell[0].getParameterCount() == 3) {
+      newCell = getCellWithParameter(cellData, cellCount, makeNewCell);
+    } else {
+      try {
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+      } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        throw new IllegalStateException("parameterError");
       }
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-             InvocationTargetException e) {
-      throw new IllegalStateException(CANNOT_MAKE_BUTTONS);
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
+      throws IllegalStateException {
+    Cell newCell;
+    double parameter;
+    try {
+      parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+    } catch (NullPointerException e) {//No parameter specified in .sim file
+      try {//load parameter from .sim file
+        parameter = Double.parseDouble(ResourceBundle.getBundle(
+                DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"))
+            .getString("Parameters"));
+      } catch (
+          MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
+        throw new IllegalStateException("parameterError");
+      }
+    }
+    try {
+      newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new IllegalStateException("parameterError");
+    }
+    return newCell;
+  }
+
   /**
    * Method that sets the current cell state of the grid
+   *
    * @param key
    * @param state
    */
   @Override
-  public void setCellCurrentState (Point key, int state){
+  public void setCellCurrentState(Point key, int state) {
     myCells.get(key).setCurrentState(state);
   }
 
   /**
    * Sets the neighbors for the grid
+   *
    * @param simType
    * @return
    */
   //TODO refactor
-  public Neighborhood setNeighbors(String simType){
-    if(simType.equals(FIRE)){
+  public Neighborhood setNeighbors(String simType) {
+    if (simType.equals(FIRE)) {
       return new NoDiagonalNeighborhood();
-    }
-    else{
+    } else {
       return new CompleteNeighborhood();
     }
   }
 
   /**
    * Method that checks if the cell is in bounds
+   *
    * @param row
    * @param col
    * @param gridWrapper
    * @return
    */
-  public static boolean isInBounds(int row, int col, GridWrapper gridWrapper){
-    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0 && col < gridWrapper.getRowSize(0));
+  public static boolean isInBounds(int row, int col, GridWrapper gridWrapper) {
+    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0
+        && col < gridWrapper.getRowSize(0));
   }
 
   /**
@@ -184,24 +205,21 @@ public class GraphGrid extends Grid {
    */
   @Override
   public void computeStates() {
-    for (Cell currentCell : getMyAdjacencyList().getCells()){
-      setFutureState(currentCell, getMyAdjacencyList().getNeighbors(currentCell));
+    for (Cell currentCell : myAdjacencyList.getCells()) {
+      currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
     }
-    for (Cell currentCell : getMyAdjacencyList().getCells()){
+    for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.updateState();
     }
   }
 
-  public void setFutureState(Cell target, List<Cell> neighbors) {
-
-  }
-
   /**
    * Method that returns the map of cells
+   *
    * @return myCells
    */
   @Override
-  public Map<Point, Cell> getCells(){
+  public Map<Point, Cell> getCells() {
     return myCells;
   }
 }

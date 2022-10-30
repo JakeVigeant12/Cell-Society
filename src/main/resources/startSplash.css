@@ -1,21 +1,22 @@
-.startSelectLanguage{
-    -fx-font-size: 14pt;
-    -fx-fill: black;
-    -fx-alignment: center;
-}
-.button{
-    -fx-pref-height: 40;
-    -fx-pref-width: 100;
-    -fx-font-size: 12pt;
+.startSelectLanguage {
+  -fx-font-size: 14pt;
+  -fx-fill: black;
+  -fx-alignment: center;
 }
 
-.allButtons{
-    -fx-alignment: bottom-center;
-    -fx-spacing: 30px;
+.button {
+  -fx-pref-height: 40;
+  -fx-pref-width: 100;
+  -fx-font-size: 12pt;
 }
 
-.mainTitle{
-    -fx-alignment: center;
-    -fx-fill: white;
-    -fx-font-size: 48pt;
+.allButtons {
+  -fx-alignment: bottom-center;
+  -fx-spacing: 30px;
+}
+
+.mainTitle {
+  -fx-alignment: center;
+  -fx-fill: white;
+  -fx-font-size: 48pt;
 }

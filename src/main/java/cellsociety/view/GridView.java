@@ -77,7 +77,7 @@ public class GridView {
         isUsingColors = true;
       }
     } else {
-      for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE),STATE_COLORS)).split(
+      for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
           REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
@@ -130,11 +130,11 @@ public class GridView {
 
   private void createCell(GridWrapper gridData, int y, int x) {
     CellView node;
-    if (isUsingColors)
+    if (isUsingColors) {
       node = new CellView(gridData.getState(y, x), colors);
-    else
+    } else {
       node = new CellView(gridData.getState(y, x), images);
-
+    }
     if (setBorder) {
       node.showBorder();
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GridWrapper {
+
   private int row = 0;
   private int column = 0;
   private List<List<Integer>> grid;
@@ -18,7 +19,7 @@ public class GridWrapper {
     grid = new ArrayList<>();
     for (int i = 0; i < this.row; i++) {
       List<Integer> singleList = new ArrayList<>();
-      for (int j = 0; j < this.column; j++){
+      for (int j = 0; j < this.column; j++) {
         singleList.add(0);
       }
       grid.add(singleList);
@@ -106,7 +107,7 @@ public class GridWrapper {
   public int getRowSize(int row) {
     return grid.get(row).size();
   }
-  
+
   /**
    * For test purpose
    *

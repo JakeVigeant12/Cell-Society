@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NoDiagonalNeighborhoodTest {
+
   @Test
-  void holisticTest(){
+  void holisticTest() {
     Neighborhood tester2 = new NoDiagonalNeighborhood();
     assertFalse(tester2.countNeighbor(0));
     assertTrue(tester2.countNeighbor(1));

@@ -30,12 +30,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
 
 
 import static cellsociety.Main.START_SPLASH_CSS;
 import static cellsociety.view.FileInput.FILE_CHOOSER;
-import static cellsociety.view.FileInput.FILE_UPLOAD_ERROR;
 import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 import static cellsociety.view.SplashScreen.FILE_INPUT_CSS;
 
@@ -71,7 +69,9 @@ public class GridScreen extends SceneCreator {
   private CellSocietyController myController;
   private double refreshRate = 1;
   private final Stage myStage;
-  private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
+  private static final List<List<String>> BUTTONS_LIST = List.of(
+      List.of("backButton", "exitButton", "uploadButton"),
+      List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
   /**
    * Constructor for GridScreen, sets up the root, borderPane and the timeline
@@ -105,7 +105,6 @@ public class GridScreen extends SceneCreator {
     createLeftPanel();
     createBottomPanel();
     createTopPanel();
-
 
     gridView = new GridView(myController);
     gridView.setUpView(myController.getViewGrid());
@@ -145,7 +144,8 @@ public class GridScreen extends SceneCreator {
     descriptionBox.setEditable(false);
     descriptionBox.setWrapText(true);
 
-    VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
+    VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox,
+        statusBox);
     fileInfoBox.setBackground(Background.fill(mainColor));
     fileInfoBox.getStyleClass().add(ABOUT_BOX);
     borderPane.setLeft(fileInfoBox);
@@ -156,13 +156,12 @@ public class GridScreen extends SceneCreator {
    */
   private void createBottomPanel() {
     HBox controls = new HBox();
-    for(String button : BUTTONS_LIST.get(1)) {
+    for (String button : BUTTONS_LIST.get(1)) {
       controls.getChildren().add(makeButton(button));
     }
     controls.getChildren().add(makeSlider(SPEED_SLIDER));
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add(ALL_BUTTONS);
-
 
     borderPane.setBottom(controls);
   }
@@ -172,7 +171,7 @@ public class GridScreen extends SceneCreator {
    */
   private void createTopPanel() {
     HBox topPanel = new HBox();
-    for(String button : BUTTONS_LIST.get(0)) {
+    for (String button : BUTTONS_LIST.get(0)) {
       topPanel.getChildren().add(makeButton(button));
     }
     topPanel.setBackground(Background.fill(mainColor));
@@ -193,8 +192,9 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Creates and stylizes the text box based on a resource bundle label
+   *
    * @param myLabels resource bundle label
-   * @param title title of the text box
+   * @param title    title of the text box
    * @return text box
    */
   private TextArea createAndStyleTextBox(String myLabels, String title) {
@@ -205,6 +205,7 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Method that creates and stylizes a slider
+   *
    * @param property resource bundle label
    * @return slider
    */
@@ -230,8 +231,7 @@ public class GridScreen extends SceneCreator {
             Number.class);
         m.invoke(this, newValue);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("createSliderError")).showAndWait();
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return sliderBox;
@@ -239,6 +239,7 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Creates a button based on a resource bundle property
+   *
    * @param property - property of the resource bundle
    * @return button
    */
@@ -252,9 +253,7 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        e.printStackTrace();
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return result;
@@ -270,18 +269,13 @@ public class GridScreen extends SceneCreator {
     new Alert(type, message).showAndWait();
   }
 
-  private void saveSimulation() {
+  private void saveSimulation() throws IllegalStateException {
     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(CSV_FILES, CSV);
     FILE_CHOOSER.getExtensionFilters().add(extFilter);
     File file = FILE_CHOOSER.showSaveDialog(myStage);
     if (file != null) {
-      try {
-        myController.saveGrid(file);
-        statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
-      } catch (IOException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("saveSimulationError")).showAndWait();
-      }
+      myController.saveGrid(file);
+      statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
     }
   }
 
@@ -299,24 +293,14 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Sets up the file picker
-   *
    */
-  private void uploadFile() {
-    try {
-      setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
-      if (getMyDataFile() != null) {
-        myController = new CellSocietyController(getMyDataFile());
-        myController.loadSimulation(myStage);
-        GridScreen firstGrid = new GridScreen(800, myStage, myController);
-        myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
-      }
-    } catch (IOException | CsvValidationException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
+  private void uploadFile() throws IllegalStateException {
+    setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+    if (getMyDataFile() != null) {
+      myController = new CellSocietyController(getMyDataFile());
+      myController.loadSimulation(myStage);
+      GridScreen firstGrid = new GridScreen(800, myStage, myController);
+      myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
     }
   }
 
@@ -330,19 +314,10 @@ public class GridScreen extends SceneCreator {
     statusBox.setText(getMyResource().getString(PAUSED_STATUS));
   }
 
-  private void resetSimulation() {
-    try {
-      statusBox.setText(getMyResource().getString(RESET_STATUS));
-      myController.resetController();
-      gridView.updateGrid(myController.getViewGrid());
-    } catch (CsvValidationException | IOException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
-    }
+  private void resetSimulation() throws IllegalStateException {
+    statusBox.setText(getMyResource().getString(RESET_STATUS));
+    myController.resetController();
+    gridView.updateGrid(myController.getViewGrid());
   }
 
   private void stepSimulation() {

@@ -47,7 +47,7 @@ class CellSocietyControllerTest {
     cellMap.put(new Point(2, 2), cell9);
     myController.setBackEndCellsByID(cellMap);
     GridWrapper expected = new GridWrapper(3, 3);
-    for(Point key : cellMap.keySet()) {
+    for (Point key : cellMap.keySet()) {
       expected.setState(key.y, key.x, cellMap.get(key).getCurrentState());
     }
     GridWrapper actual = myController.getViewGrid();

@@ -7,6 +7,7 @@ import javafx.scene.shape.Rectangle;
 
 
 public class CellView extends StackPane {
+
   private Rectangle rectangle;
   private int state;
   private int numStates;
@@ -58,17 +59,19 @@ public class CellView extends StackPane {
   }
 
   private void setStateStyle() {
-    if (isUsingColors)
+    if (isUsingColors) {
       rectangle.setFill(colors.getColor(state));
-    else
+    } else {
       rectangle.setFill(new ImagePattern(images.getImage(state)));
+    }
   }
 
   private void circulateState() {
-    if (state < numStates - 1)
+    if (state < numStates - 1) {
       state++;
-    else
+    } else {
       state = 0;
+    }
   }
 
   /**
