@@ -20,17 +20,6 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
       Properties properties) {
     super(gridParsing, properties);
   }
-
-  /**
-   * Method that creates the cells
-   * @param inputLayout
-   * @return Map of cells
-   */
-  @Override
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
-    return super.createCells(inputLayout);
-  }
-
   /**
    * Method that computes and sets next state of cells
    */

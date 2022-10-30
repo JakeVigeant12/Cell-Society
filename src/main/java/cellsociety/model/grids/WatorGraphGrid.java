@@ -33,11 +33,6 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
    * @param inputLayout
    * @return
    */
-  @Override
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
-    return super.createCells(inputLayout);
-  }
-
   /**
    * Method that computes the new states for the cells
    */

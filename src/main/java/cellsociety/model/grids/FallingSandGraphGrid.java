@@ -18,17 +18,6 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
   public FallingSandGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
-
-  /**
-   * Method that creates the cells
-   * @param inputLayout
-   * @return
-   */
-  @Override
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
-    return super.createCells(inputLayout);
-  }
-
   /**
    * Method that computes and sets next state of cells
    */

@@ -67,9 +67,8 @@ public class GraphGrid extends Grid {
    * @param inputLayout
    * @return
    */
-  @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Integer, Cell> createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Integer, Cell> cellHolder = new HashMap<>();
     int cellCount = 0;

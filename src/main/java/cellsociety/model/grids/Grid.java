@@ -1,11 +1,9 @@
 package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 import javax.management.ReflectionException;
 
@@ -28,8 +26,6 @@ public abstract class Grid {
    * @throws InstantiationException
    * @throws IllegalAccessException
    */
-  public abstract Map<Integer, Cell> createCells(GridWrapper inputLayout)
-      throws ReflectionException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException;
 
   /**
    * Abstract method that sets the current cell state
