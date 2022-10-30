@@ -2,11 +2,14 @@ package cellsociety.model.cells;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class PercolationCell extends Cell {
   private final static int EMPTY = 0;
   private final static int PERCOLATED = 1;
   private final static int BLOCKED = 2;
+  private List<Cell> myNeighbors;
+  private Map<Integer, String> stateMap;
   // Key States
   // 0 = empty
   // 1 = Percolated
@@ -19,6 +22,7 @@ public class PercolationCell extends Cell {
    */
   public PercolationCell(int state, Point id){
     super(state, id);
+    stateMap = Map.of(EMPTY, "EMPTY", PERCOLATED, "PERCOLATED", BLOCKED, "BLOCKED");
   }
 
   /**
@@ -28,19 +32,28 @@ public class PercolationCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == EMPTY){
-      for (Cell neighbor : neighbors) {
-        if (neighbor.getCurrentState() == PERCOLATED){
-          setFutureStateValue(PERCOLATED);
-        }
+    myNeighbors = neighbors;
+    try {
+      this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void setEMPTY() {
+    for (Cell neighbor : myNeighbors) {
+      if (neighbor.getCurrentState() == PERCOLATED){
+        setFutureStateValue(PERCOLATED);
       }
     }
-    else if (getCurrentState() == PERCOLATED){
-      setFutureStateValue(PERCOLATED);
-    }
-    else if (getCurrentState() == BLOCKED){
-      setFutureStateValue(BLOCKED);
-    }
+  }
+
+  private void setPERCOLATED() {
+    setFutureStateValue(PERCOLATED);
+  }
+
+  private void setBLOCKED() {
+    setFutureStateValue(BLOCKED);
   }
 
 }

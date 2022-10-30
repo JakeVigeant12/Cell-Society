@@ -37,6 +37,7 @@ public class FallingSandCell extends Cell {
     private Cell cellToSwap;
     private List<Cell> neighborHood;
     private Map<Integer, String> stateMap;
+    private Map<Integer, String> positionMap;
 
     /**
      * Constructor for FallingSandCell class
@@ -46,6 +47,7 @@ public class FallingSandCell extends Cell {
     public FallingSandCell(int state, Point id){
         super(state, id);
         stateMap = Map.of(EMPTY, "EMPTY", SAND, "SAND", WATER, "WATER", BOUNDARY, "BOUNDARY");
+        positionMap = Map.of(UPPERLEFT, "UPPERLEFT", UPPER, "UPPER", UPPERRIGHT, "UPPERRIGHT", LEFT, "LEFT", RIGHT, "RIGHT", LOWERLEFT, "LOWERLEFT", LOWER, "LOWER", LOWERRIGHT, "LOWERRIGHT");
     }
 
     /**
@@ -97,10 +99,17 @@ public class FallingSandCell extends Cell {
             setFutureStateValue(EMPTY); // Turn into empty
         }
         else {
+            /*try {
+                int upperState = neighborHood.get(UPPER).getCurrentState();
+                this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+
             if (neighborHood.get(UPPER).getCurrentState() == SAND){ // if the cell is water and above is sand
                 setFutureStateValue(SAND); // Turn into sand
             }
-            else if (neighborHood.get(LOWERLEFT).getCurrentState() == EMPTY && neighborHood.get(LEFT).getCurrentState() == EMPTY){
+            if (neighborHood.get(LOWERLEFT).getCurrentState() == EMPTY && neighborHood.get(LEFT).getCurrentState() == EMPTY){
                 setFutureStateValue(WATER);
                 wantsToSwap = true;
                 cellToSwap = neighborHood.get(LOWERLEFT);
@@ -138,8 +147,17 @@ public class FallingSandCell extends Cell {
     }
 
     private void rulesUPPERSAND() {
-        setFutureStateValue(EMPTY); // Turn into empty
+        setFutureStateValue(SAND); // Turn into SAND
     }
+
+    private void rulesUPPERWATER() {
+        setFutureStateValue(WATER);
+    }
+
+    private void rulesUPPEREMPTY() {
+        setFutureStateValue(WATER);
+    }
+
     private void rulesRIGHTEMPTY() {
         horizontalMovement(LOWERRIGHT, RIGHT);
     }

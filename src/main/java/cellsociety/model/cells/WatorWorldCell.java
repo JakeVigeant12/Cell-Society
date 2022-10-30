@@ -2,6 +2,7 @@ package cellsociety.model.cells;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class WatorWorldCell extends Cell {
   private static final int WATER = 0;
@@ -11,6 +12,8 @@ public class WatorWorldCell extends Cell {
   private int fishTurns;
   private int sharkTurns;
   private int sharkStarve;
+  private List<Integer> myNeighborStates;
+  private Map<Integer, String> stateMap;
 
   // Cell Key
   // 0 = water
@@ -28,6 +31,7 @@ public class WatorWorldCell extends Cell {
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
+    stateMap = Map.of(WATER, "WATER", FISH, "FISH", SHARK, "SHARK", INTERMEDIATESHARK, "INTERMEDIATESHARK");
   }
   @Override
   public void swapCells(Cell cellToSwap) {
@@ -69,54 +73,64 @@ public class WatorWorldCell extends Cell {
   }
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == WATER) { // if the current cell is water
-      setFutureStateValue(WATER); // do nothing
-      fishTurns = 0;
-      sharkTurns = 0;
-      sharkStarve = 0;
+    myNeighborStates = getNeighborStates(neighbors);
+
+    try {
+      this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    else { // if the current cell is a fish or shark
-      List<Integer> neighborStates = getNeighborStates(neighbors);
-      // An animal can move to an empty cell
-      if (getCurrentState() == FISH){ // If current cell is a fish
-        if (neighborStates.contains(WATER)){
-          fishTurns++;
-          if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
-            setFutureStateValue(FISH);
-            fishTurns = 0;
-          }
-          else {
-            setFutureStateValue(FISH); // Needs to swap with a water cell
-          }
-        }
-        else {
-          setFutureStateValue(FISH); // If there are no empty cells, then the fish stays in the same spot
-        }
+  }
+
+  private void setWATER(){
+    setFutureStateValue(WATER); // do nothing
+    fishTurns = 0;
+    sharkTurns = 0;
+    sharkStarve = 0;
+  }
+
+  private void setFISH(){
+    if (myNeighborStates.contains(WATER)){
+      fishTurns++;
+      if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
+        setFutureStateValue(FISH);
+        fishTurns = 0;
       }
-      else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
-        if (neighborStates.contains(WATER) && !neighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
-          sharkStarve++;
-          if (sharkStarve == 3) {
-            setFutureStateValue(WATER); // Shark dies
-            sharkStarve = 0;
-          }
-          else {
-            setFutureStateValue(SHARK); // Shark stays alive
-          }
-        }
-        else if (neighborStates.contains(FISH)) { // if there is a fish, then the shark will eat it
-          sharkTurns++;
-          if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
-            setFutureStateValue(SHARK);
-            sharkTurns = 0;
-          } else {
-            setFutureStateValue(SHARK); // Needs to swap with a water cell
-          }
-        }
-        else {
-          setFutureStateValue(SHARK);
-        }
+      else {
+        setFutureStateValue(FISH); // Needs to swap with a water cell
       }
     }
+    else {
+      setFutureStateValue(FISH); // If there are no empty cells, then the fish stays in the same spot
+    }
+  }
+
+  private void setSHARK(){
+    if (myNeighborStates.contains(WATER) && !myNeighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
+      sharkStarve++;
+      if (sharkStarve == 3) {
+        setFutureStateValue(WATER); // Shark dies
+        sharkStarve = 0;
+      }
+      else {
+        setFutureStateValue(SHARK); // Shark stays alive
+      }
+    }
+    else if (myNeighborStates.contains(FISH)) { // if there is a fish, then the shark will eat it
+      sharkTurns++;
+      if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
+        setFutureStateValue(SHARK);
+        sharkTurns = 0;
+      } else {
+        setFutureStateValue(SHARK); // Needs to swap with a water cell
+      }
+    }
+    else {
+      setFutureStateValue(SHARK);
+    }
+  }
+
+  private void setINTERMEDIATESHARK(){
+    setFutureStateValue(SHARK);
   }
 }
