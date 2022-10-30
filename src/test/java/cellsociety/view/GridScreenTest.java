@@ -42,13 +42,13 @@ class GridScreenTest extends DukeApplicationTest {
   }
   @Test
   void testClickCell() {
-    CellView cell = lookup("#cell1,2").query();
+    CellView cell = lookup("#Cell1,2").query();
     clickOn(cell);
     assertEquals(1, cell.getState());
   }
   @Test
   void testClickCell2() {
-    CellView cell = lookup("#cell3,0").query();
+    CellView cell = lookup("#Cell3,0").query();
     clickOn(cell);
     assertEquals(0, cell.getState());
   }
@@ -94,7 +94,7 @@ class GridScreenTest extends DukeApplicationTest {
   }
   @Test
   void testColorChange() {
-    CellView cell = lookup("#cell3,1").query();
+    CellView cell = lookup("#Cell3,1").query();
     Button button = lookup("#stepButton").query();
     clickOn(button);
     assertEquals(1, cell.getState());

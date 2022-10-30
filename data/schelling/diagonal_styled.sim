@@ -5,3 +5,4 @@ Description=Agents on opposite corners
 InitialStates=schelling/diagonal.csv
 Parameters=0.5
 StateImages=images/empty.png,images/blue-person.png,images/red-person.png
+Outlined=false

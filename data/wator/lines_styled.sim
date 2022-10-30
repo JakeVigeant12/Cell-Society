@@ -4,3 +4,4 @@ Type=WatorWorld
 InitialStates=wator/lines.csv
 Author=Robert Duvall
 StateImages=images/sea.png,images/fish.png,images/shark.png
+Outlined=false

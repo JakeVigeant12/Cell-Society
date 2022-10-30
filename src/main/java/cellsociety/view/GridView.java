@@ -43,6 +43,7 @@ public class GridView {
   private final ColorMap colors;
   private final ImageMap images;
   private boolean isUsingColors;
+  private final boolean setBorder;
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
@@ -57,6 +58,11 @@ public class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
+    if(properties.containsKey("Outlined")) {
+      setBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
+    } else {
+      setBorder = true;
+    }
   }
 
   private void applyColors(Properties properties) {
@@ -130,7 +136,11 @@ public class GridView {
       node = new CellView(gridData.getState(y, x), colors);
     else
       node = new CellView(gridData.getState(y, x), images);
-    node.setId("cell" + y + "," + x);
+
+    if (setBorder) {
+      node.showBorder();
+    }
+    node.setId(CELL + y + REGEX + x);
     // add cells to group
     grid.add(node, x, y);
     // add to grid for further reference using an array

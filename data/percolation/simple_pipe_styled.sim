@@ -4,3 +4,4 @@ Author=Robert Duvall
 Description=A simple pipe flowing from top to bottom
 InitialStates=percolation/simple_pipe.csv
 StateImages=images/empty.png,images/sea.png,images/rock.png
+Outlined=false
