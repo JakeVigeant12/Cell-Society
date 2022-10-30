@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Properties;
 
 public class FireCell extends Cell {
+
   private static final int BURNING_TIME = 3;
+  public static final String PROBABILITY_ERROR_MESSAGE = "Probability of catching fire must be between 0 and 1";
   private int turns;
   private double myProbCatch;
   private static final int EMPTY = 0;
@@ -22,7 +24,7 @@ public class FireCell extends Cell {
     turns = 0;
     double probCatch = parameter;
     if (probCatch > 1){
-      throw new IllegalArgumentException("Probability of catching fire must be between 0 and 1");
+      throw new IllegalArgumentException(PROBABILITY_ERROR_MESSAGE);
     }
     myProbCatch = probCatch;
   }

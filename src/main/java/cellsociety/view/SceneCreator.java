@@ -12,7 +12,7 @@ public abstract class SceneCreator {
   private File myDataFile;
   private String language;
   private ResourceBundle myResource;
-  private ResourceBundle myCommands;
+  private ResourceBundle myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));
   private static final String COMMAND_PROPERTIES = "Command";
   public static final String DEFAULT_RESOURCE_PACKAGE = String.format("%s.", SceneCreator.class.getPackageName());
   private Stage myStage;
@@ -42,7 +42,6 @@ public abstract class SceneCreator {
   public Scene createScene(String language, String css) {
     this.language = language;
     myResource = ResourceBundle.getBundle(language);
-    myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));
     Scene scene = new Scene(setUpRootPane(), mySize, mySize);
     scene.getStylesheets().add(css);
     return scene;
