@@ -1,5 +1,8 @@
 package cellsociety.view;
 
+import static cellsociety.Main.CELL_SOCIETY;
+import static cellsociety.Main.START_SPLASH_CSS;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -22,6 +25,15 @@ import java.util.ResourceBundle;
 public class SplashScreen extends SceneCreator {
 
   public static final String FILE_INPUT_CSS = "fileInput.css";
+  public static final String TEAM_10 = "Team 10";
+  public static final String MAIN_TITLE = "mainTitle";
+  public static final String SELECT_LANGUAGE = "Select Language";
+  public static final String START_SELECT_LANGUAGE = "startSelectLanguage";
+  public static final String START_GIF = "startGif";
+  public static final String ALL_BUTTONS = "allButtons";
+  public static final String ENGLISH = "English";
+  public static final String SPANISH = "Spanish";
+  public static final String FRENCH = "French";
   private final List<String> buttonList = List.of("englishButton", "spanishButton", "frenchButton", "newWindowScreenButton");
   public BorderPane startPane;
   private Text mainTitle;
@@ -45,17 +57,17 @@ public class SplashScreen extends SceneCreator {
 
   public Pane setUpRootPane() {
 
-    mainTitle = new Text("Team 10");
-    mainTitle.getStyleClass().add("mainTitle");
+    mainTitle = new Text(TEAM_10);
+    mainTitle.getStyleClass().add(MAIN_TITLE);
     VBox vBoxTop = new VBox(mainTitle);
     vBoxTop.setAlignment(Pos.CENTER);
 
 
-    selectLanguage = new Text("Select Language");
-    selectLanguage.getStyleClass().add("startSelectLanguage");
+    selectLanguage = new Text(SELECT_LANGUAGE);
+    selectLanguage.getStyleClass().add(START_SELECT_LANGUAGE);
 
 
-    myBackground.setImage(new Image(startInfo.getString("startGif")));
+    myBackground.setImage(new Image(startInfo.getString(START_GIF)));
     myBackground.setFitWidth(getMySize());
     myBackground.setFitHeight(getMySize());
 
@@ -63,13 +75,7 @@ public class SplashScreen extends SceneCreator {
     for(String button : buttonList) {
       buttons.getChildren().add(makeButton(button));
     }
-    buttons.getStyleClass().add("allButtons");
-
-//    Button newWindow = new Button("New Window");
-//    newWindow.setOnAction(e -> openNewWindow());
-//    newWindow.setId("newWindowButton");
-//    buttons.getChildren().add(newWindow);
-    //TODO: Create this button with reflection
+    buttons.getStyleClass().add(ALL_BUTTONS);
 
     VBox vBoxBot = new VBox(selectLanguage, buttons);
     vBoxBot.setSpacing(20);
@@ -100,15 +106,15 @@ public class SplashScreen extends SceneCreator {
   }
 
   private void createEnglishScreen() {
-    createLanguageScreen("English");
+    createLanguageScreen(ENGLISH);
   }
 
   private void createSpanishScreen() {
-    createLanguageScreen("Spanish");
+    createLanguageScreen(SPANISH);
   }
 
   private void createFrenchScreen() {
-    createLanguageScreen("French");
+    createLanguageScreen(FRENCH);
   }
 
   private void createLanguageScreen(String property) {
@@ -119,9 +125,9 @@ public class SplashScreen extends SceneCreator {
   private void openNewWindow() {
     // New window (Stage)
     Stage newStage = new Stage();
-    newStage.setTitle("CellSociety");
+    newStage.setTitle(CELL_SOCIETY);
     SplashScreen newSplashScreen = new SplashScreen(600.0, newStage);
-    newStage.setScene(newSplashScreen.createScene("startSplash.css"));
+    newStage.setScene(newSplashScreen.createScene(START_SPLASH_CSS));
 
     // Set position of second window, related to primary window.
     newStage.setX(myStage.getX() + 200);
