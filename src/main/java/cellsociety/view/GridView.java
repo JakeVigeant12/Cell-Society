@@ -112,25 +112,27 @@ public class GridView {
     for (int y = 0; y < row.get(); y++) {
       cells.add(new ArrayList<>());
       for (int x = 0; x < column.get(); x++) {
-        CellView node;
-        if (isUsingColors)
-          node = new CellView(gridData.getState(y, x), colors);
-        else
-          node = new CellView(gridData.getState(y, x), images);
-        node.setId("cell" + y + "," + x);
-        // add cells to group
-        grid.add(node, x, y);
-        // add to grid for further reference using an array
-        gridStates.setState(y, x, node.getState());
-        cells.get(y).add(node);
-        int finalX = x;
-        int finalY = y;
-        node.setOnMouseClicked(e -> {
-          node.setOnClick();
-          myController.updateOneCell(finalY, finalX, node.getState());
-        });
+        createCell(gridData, y, x);
       }
     }
+  }
+
+  private void createCell(GridWrapper gridData, int y, int x) {
+    CellView node;
+    if (isUsingColors)
+      node = new CellView(gridData.getState(y, x), colors);
+    else
+      node = new CellView(gridData.getState(y, x), images);
+    node.setId("cell" + y + "," + x);
+    // add cells to group
+    grid.add(node, x, y);
+    // add to grid for further reference using an array
+    gridStates.setState(y, x, node.getState());
+    cells.get(y).add(node);
+    node.setOnMouseClicked(e -> {
+      node.setOnClick();
+      myController.updateOneCell(y, x, node.getState());
+    });
   }
 
   /**

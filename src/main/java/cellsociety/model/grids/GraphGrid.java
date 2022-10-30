@@ -8,7 +8,7 @@ import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

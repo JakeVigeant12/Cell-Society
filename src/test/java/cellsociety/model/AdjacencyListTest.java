@@ -5,7 +5,7 @@ import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.view.GridWrapper;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
