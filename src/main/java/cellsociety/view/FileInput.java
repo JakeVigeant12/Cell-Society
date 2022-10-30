@@ -3,7 +3,7 @@ package cellsociety.view;
 import static cellsociety.Main.START_SPLASH_CSS;
 
 import cellsociety.controller.CellSocietyController;
-import com.opencsv.exceptions.CsvValidationException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -22,7 +22,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 public class FileInput extends SceneCreator {
 
@@ -74,7 +73,7 @@ public class FileInput extends SceneCreator {
     inputPane.getChildren().addAll(inputBackground);
 
     VBox upload = new VBox(title);
-    for(String button : buttonList) {
+    for (String button : buttonList) {
       upload.getChildren().add(makeButton(button));
     }
     upload.setAlignment(Pos.CENTER);
@@ -90,24 +89,17 @@ public class FileInput extends SceneCreator {
 
   /**
    * Sets up the file picker
-   *
    */
-  public void uploadFile() {
-    try {
-      setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
-      if (getLanguage() != null) {
-        CellSocietyController controller = new CellSocietyController(getMyDataFile());
-        controller.loadSimulation(myStage);
-        GridScreen firstGrid = new GridScreen(800, myStage, controller);
-        myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
-      }
-    } catch (IOException | CsvValidationException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString(FILE_UPLOAD_ERROR)).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
+  public void uploadFile() throws IllegalStateException {
+    setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+    if (getLanguage() != null) {
+      CellSocietyController controller = new CellSocietyController(getMyDataFile());
+      controller.loadSimulation(myStage);
+      GridScreen firstGrid = new GridScreen(800, myStage, controller);
+      myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
     }
   }
+
 
   /**
    * Sets up the alert message
@@ -150,8 +142,8 @@ public class FileInput extends SceneCreator {
       try {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
-      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
+      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return result;

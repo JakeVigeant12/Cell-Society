@@ -6,7 +6,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
-import java.awt.*;
+import java.awt.Point;;;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -26,16 +26,16 @@ public class InitialModelImplementation extends Model {
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    try {
-      Class<?> graphGridClass = Class.forName(gridPackagePath + simParameters.get("Type") + "GraphGrid");
-      Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
-      myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper,simParameters);
-    }
-    catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-           InvocationTargetException e) {
-      throw new IllegalStateException("Cannot make buttons");
-    }
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
+      try {
+        Class<?> graphGridClass = Class.forName(gridPackagePath + simParameters.get("Type") + "GraphGrid");
+        Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
+        myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper,simParameters);
+      }
+      catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+             InvocationTargetException e) {
+        throw new IllegalStateException("errorInitializingGrid");
+      }
   }
 
   /**
