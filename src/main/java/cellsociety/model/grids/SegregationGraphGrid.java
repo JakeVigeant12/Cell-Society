@@ -25,30 +25,34 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
    * Method that computes and sets next state of cells
    */
   @Override
-  public void computeStates() {
-    //Override method with segregation rules
-    super.setEmptyCells(new ArrayList<>());
+  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    try {
+      //Override method with segregation rules
+      super.setEmptyCells(new ArrayList<>());
 
-    // Pass 1: Calculate future cell states and find empty cells
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      currentCell.setFutureState(super.getMyAdjacencyList().getNeighbors(currentCell));
-      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
-        super.getEmptyCells().add(currentCell);
+      // Pass 1: Calculate future cell states and find empty cells
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        currentCell.setFutureState(super.getMyAdjacencyList().getNeighbors(currentCell));
+        if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
+          super.getEmptyCells().add(currentCell);
+        }
       }
-    }
 
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      // Pass 2: If a current cell wants to move, then swap it with an empty cell in the list of empty cells
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        // Pass 2: If a current cell wants to move, then swap it with an empty cell in the list of empty cells
         SegregationCell segregationCell = (SegregationCell) currentCell;
         if (!super.getEmptyCells().isEmpty() && currentCell.getCurrentState() != 0 && segregationCell.getWantsToMove()) {
           Cell newCell = findCellToSwap(currentCell, super.getEmptyCells(), 0);
           currentCell.swapCellStates(newCell);
           super.getEmptyCells().remove(newCell);
         }
-    }
+      }
 
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      currentCell.updateState();
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        currentCell.updateState();
+      }
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      throw e;
     }
   }
 }

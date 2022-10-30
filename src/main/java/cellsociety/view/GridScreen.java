@@ -87,12 +87,16 @@ public class GridScreen extends SceneCreator {
    * Sets up the timeline for the animation
    */
   private void setUpTimeline() {
-    timeline = new Timeline();
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-      gridView.updateGrid(myController.updateGrid());
-    }));
-    timeline.pause();
+      timeline = new Timeline();
+      timeline.setCycleCount(Timeline.INDEFINITE);
+      timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+        try {
+          gridView.updateGrid(myController.updateGrid());
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException ex) {
+          showMessage(AlertType.ERROR, getMyResource().getString(ex.getCause().getMessage()));
+        }
+      }));
+      timeline.pause();
   }
 
   /**
@@ -318,7 +322,11 @@ public class GridScreen extends SceneCreator {
   }
 
   private void stepSimulation() {
-    gridView.updateGrid(myController.updateGrid());
+    try {
+      gridView.updateGrid(myController.updateGrid());
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException ex) {
+      showMessage(AlertType.ERROR, getMyResource().getString(ex.getCause().getMessage()));
+    }
     statusBox.setText(getMyResource().getString(STEP_STATUS));
   }
 

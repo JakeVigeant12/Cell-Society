@@ -23,25 +23,29 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
    * Method that computes and sets next state of cells
    */
   @Override
-  public void computeStates() {
+  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     //Override method with Falling Sand
     // Pass 1: Calculate future cell states and find empty cells
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      currentCell.setFutureState(super.getMyAdjacencyList().getNeighbors(currentCell));
-    }
-
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      // Pass 2: If a current cell wants to swap, then swap it with the cell in the adjacency list
-      FallingSandCell sandWaterCell = (FallingSandCell) currentCell;
-      if (sandWaterCell.wantsToSwap()) {
-        Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(), super.getMyAdjacencyList().getCells());
-        currentCell.swapCellStates(newCell);
+    try {
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        currentCell.setFutureState(super.getMyAdjacencyList().getNeighbors(currentCell));
       }
-    }
 
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      // Pass 3: Update the state of the cell
-      currentCell.updateState();
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        // Pass 2: If a current cell wants to swap, then swap it with the cell in the adjacency list
+        FallingSandCell sandWaterCell = (FallingSandCell) currentCell;
+        if (sandWaterCell.wantsToSwap()) {
+          Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(), super.getMyAdjacencyList().getCells());
+          currentCell.swapCellStates(newCell);
+        }
+      }
+
+      for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
+        // Pass 3: Update the state of the cell
+        currentCell.updateState();
+      }
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      throw e;
     }
   }
 }

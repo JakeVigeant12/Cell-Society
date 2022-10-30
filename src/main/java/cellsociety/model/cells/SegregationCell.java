@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -41,13 +42,13 @@ public class SegregationCell extends Cell {
    * @return next state of the cell
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) {
+  public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     countNeighbors(neighbors);
 
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      throw e;
     }
   }
 

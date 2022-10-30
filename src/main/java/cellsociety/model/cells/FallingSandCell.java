@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -71,13 +72,13 @@ public class FallingSandCell extends Cell {
      * @param neighbors
      */
     @Override
-    public void setFutureState(List<Cell> neighbors) {
+    public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         neighborHood = neighbors;
         wantsToSwap = false;
         try {
             this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            throw e;
         }
     }
 
@@ -102,8 +103,8 @@ public class FallingSandCell extends Cell {
             /*try {
                 int upperState = neighborHood.get(UPPER).getCurrentState();
                 this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+                throw e;
             }*/
 
             if (neighborHood.get(UPPER).getCurrentState() == SAND){ // if the cell is water and above is sand

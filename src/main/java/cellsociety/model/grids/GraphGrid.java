@@ -195,7 +195,7 @@ public class GraphGrid extends Grid {
    * Method that does two passes, the first sets the state, the second updates the state
    */
   @Override
-  public void computeStates() {
+  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
     }
