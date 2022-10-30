@@ -18,8 +18,11 @@ public class InitialModelImplementation extends Model {
    * @param simParameters
    */
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    if(simParameters.getProperty("Type").equals("WatorWorld")){
-      myGrid = new WatorGraphGrid(gridWrapper, simParameters);
+    if(simParameters.getProperty("Type").equals("Percolation")){
+      myGrid = new PercolationGraphGrid(gridWrapper, simParameters);
+    }
+    else if(simParameters.getProperty("Type").equals("WatorWorld")){
+      myGrid = new WatorWorldGraphGrid(gridWrapper, simParameters);
     }
     else if(simParameters.getProperty("Type").equals("Segregation")) {
       myGrid = new SegregationGraphGrid(gridWrapper, simParameters);

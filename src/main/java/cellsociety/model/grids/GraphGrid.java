@@ -64,6 +64,13 @@ public class GraphGrid extends Grid {
   public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
     this.myAdjacencyList = myAdjacencyList;
   }
+  public Neighborhood getSimulationNeighbors() {
+    return simulationNeighbors;
+  }
+
+  public void setSimulationNeighbors(Neighborhood simulationNeighbors) {
+    this.simulationNeighbors = simulationNeighbors;
+  }
 
 
   /**

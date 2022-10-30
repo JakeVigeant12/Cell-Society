@@ -8,10 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
-public class WatorGraphGrid extends SwappedCellsGraphGrid {
+public class WatorWorldGraphGrid extends SwappedCellsGraphGrid {
 
   private HashMap<Point, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
@@ -26,7 +25,7 @@ public class WatorGraphGrid extends SwappedCellsGraphGrid {
    * @param gridParsing is the layout of the grid
    * @param properties
    */
-  public WatorGraphGrid(GridWrapper gridParsing, Properties properties) {
+  public WatorWorldGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
 
