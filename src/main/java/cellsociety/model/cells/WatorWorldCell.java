@@ -4,6 +4,10 @@ import java.awt.*;
 import java.util.List;
 
 public class WatorWorldCell extends Cell {
+  private static final int WATER = 0;
+  private static final int FISH = 1;
+  private static final int SHARK = 2;
+  private static final int INTERMEDIATESHARK = 3;
   private int fishTurns;
   private int sharkTurns;
   private int sharkStarve;
@@ -36,13 +40,13 @@ public class WatorWorldCell extends Cell {
     return getCurrentState();
   }
   public boolean readyToReproduce(){
-    if(getCurrentState() == 1){
+    if(getCurrentState() == FISH){
       if(fishTurns == 3){
         return true;
       }
       return false;
     }
-    if(getCurrentState() == 3){
+    if(getCurrentState() == INTERMEDIATESHARK){
       if(sharkTurns == 2){
         return true;
       }
@@ -51,7 +55,7 @@ public class WatorWorldCell extends Cell {
     return false;
   }
   public boolean readyToDie(){
-    if(getCurrentState() == 2){
+    if(getCurrentState() == SHARK){
       if(sharkStarve == 3){
         return true;
       }
@@ -65,8 +69,8 @@ public class WatorWorldCell extends Cell {
   }
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == 0) { // if the current cell is water
-      setFutureStateValue(0); // do nothing
+    if (getCurrentState() == WATER) { // if the current cell is water
+      setFutureStateValue(WATER); // do nothing
       fishTurns = 0;
       sharkTurns = 0;
       sharkStarve = 0;
@@ -74,43 +78,43 @@ public class WatorWorldCell extends Cell {
     else { // if the current cell is a fish or shark
       List<Integer> neighborStates = getNeighborStates(neighbors);
       // An animal can move to an empty cell
-      if (getCurrentState() == 1){ // If current cell is a fish
-        if (neighborStates.contains(0)){
+      if (getCurrentState() == FISH){ // If current cell is a fish
+        if (neighborStates.contains(WATER)){
           fishTurns++;
           if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
-            setFutureStateValue(1);
+            setFutureStateValue(FISH);
             fishTurns = 0;
           }
           else {
-            setFutureStateValue(1); // Needs to swap with a water cell
+            setFutureStateValue(FISH); // Needs to swap with a water cell
           }
         }
         else {
-          setFutureStateValue(1);
+          setFutureStateValue(FISH); // If there are no empty cells, then the fish stays in the same spot
         }
       }
       else if (getCurrentState() == 2) { // If current cell is a shark and eats a fish
-        if (neighborStates.contains(0) && !neighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
+        if (neighborStates.contains(WATER) && !neighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
           sharkStarve++;
           if (sharkStarve == 3) {
-            setFutureStateValue(0); // Shark dies
+            setFutureStateValue(WATER); // Shark dies
             sharkStarve = 0;
           }
           else {
-            setFutureStateValue(2); // Shark stays alive
+            setFutureStateValue(SHARK); // Shark stays alive
           }
         }
-        else if (neighborStates.contains(1)) { // if there is a fish, then the shark will eat it
+        else if (neighborStates.contains(FISH)) { // if there is a fish, then the shark will eat it
           sharkTurns++;
           if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
-            setFutureStateValue(2);
+            setFutureStateValue(SHARK);
             sharkTurns = 0;
           } else {
-            setFutureStateValue(2); // Needs to swap with a water cell
+            setFutureStateValue(SHARK); // Needs to swap with a water cell
           }
         }
         else {
-          setFutureStateValue(2);
+          setFutureStateValue(SHARK);
         }
       }
     }

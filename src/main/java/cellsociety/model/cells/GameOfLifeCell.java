@@ -2,6 +2,7 @@ package cellsociety.model.cells;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class GameOfLifeCell extends Cell {
@@ -9,6 +10,8 @@ public class GameOfLifeCell extends Cell {
   private final static int ALIVE = 1;
   private final static int LOWERTHRESHOLD = 2;
   private final static int UPPERTHRESHOLD = 3;
+  private int aliveNeighbors;
+  private Map<Integer, String> stateMap;
   // Key States
   // 0 = Dead
   // 1 = Alive
@@ -20,6 +23,7 @@ public class GameOfLifeCell extends Cell {
    */
   public GameOfLifeCell(int state, Point id) {
     super(state, id);
+    stateMap = Map.of(DEAD, "DEAD", ALIVE, "ALIVE");
   }
 
   /**
@@ -29,27 +33,35 @@ public class GameOfLifeCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    int aliveNeighbors = 0;
+    aliveNeighbors = 0;
     for (Cell neighbor : neighbors) { // Count each neighbor that is alive
       if (neighbor.getCurrentState() == ALIVE) {
         aliveNeighbors++;
       }
     }
-    if (getCurrentState() == ALIVE) { // If current cell is alive
-      if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
-        setFutureStateValue(DEAD); // Set current cell to dead
-      }
-      else {
-        setFutureStateValue(ALIVE); // Set current cell to alive
-      }
+    // using reflection, call the method that corresponds to the current state
+    try {
+      this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    else if (getCurrentState() == DEAD) { // If current cell is dead
-      if (aliveNeighbors == UPPERTHRESHOLD) { // If current cell has 3 alive neighbors
-        setFutureStateValue(ALIVE); // Set current cell to alive
-      }
-      else {
-        setFutureStateValue(DEAD); // Set current cell to dead
-      }
+  }
+
+  private void setDEAD() {
+    if (aliveNeighbors == UPPERTHRESHOLD) { // If current cell has 3 alive neighbors
+      setFutureStateValue(ALIVE); // Set current cell to alive
+    }
+    else {
+      setFutureStateValue(DEAD); // Set current cell to dead
+    }
+  }
+
+  private void setALIVE() {
+    if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
+      setFutureStateValue(DEAD); // Set current cell to dead
+    }
+    else {
+      setFutureStateValue(ALIVE); // Set current cell to alive
     }
   }
 }
