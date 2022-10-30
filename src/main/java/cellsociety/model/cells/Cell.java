@@ -14,7 +14,7 @@ public class Cell {
    * @param state is the state of the cell
    * @param id is the identification number for this cell
    */
-  public Cell(int state, Point id) {
+  public Cell(int state, Point id) throws IllegalStateException {
     this.currentState = state;
     this.id = id;
   }

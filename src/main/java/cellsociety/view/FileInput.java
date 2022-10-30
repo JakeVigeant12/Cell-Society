@@ -1,7 +1,8 @@
 package cellsociety.view;
 
+import static cellsociety.Main.START_SPLASH_CSS;
+
 import cellsociety.controller.CellSocietyController;
-import com.opencsv.exceptions.CsvValidationException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,14 +22,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 public class FileInput extends SceneCreator {
 
   public static final String OPEN_DATA_FILE = "Open Data File";
   public static final String SIM_FILES = "SIM Files";
   public static final String GRID_SCREEN_CSS = "gridScreen.css";
-  public static final String START_SPLASH_CSS = "startSplash.css";
+  public static final String TITLE_TEXT = "titleText";
+  public static final String MAIN_TEXT = "mainText";
+  public static final String UPLOAD_GIF = "uploadGif";
+  public static final String UPLOAD_BOX = "uploadBox";
+  public static final String FILE_UPLOAD_ERROR = "fileUploadError";
+  public static final String BUTTON = "button";
   public BorderPane inputPane;
   // kind of data files to look for
   public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
@@ -59,10 +64,10 @@ public class FileInput extends SceneCreator {
    * @return
    */
   public Pane setUpRootPane() {
-    Text title = new Text(getMyResource().getString("titleText"));
-    title.getStyleClass().add("mainText");
+    Text title = new Text(getMyResource().getString(TITLE_TEXT));
+    title.getStyleClass().add(MAIN_TEXT);
 
-    inputBackground.setImage(new Image(getMyResource().getString("uploadGif")));
+    inputBackground.setImage(new Image(getMyResource().getString(UPLOAD_GIF)));
     inputBackground.setFitHeight(getMySize());
     inputBackground.setFitWidth(getMySize());
     inputPane.getChildren().addAll(inputBackground);
@@ -72,7 +77,7 @@ public class FileInput extends SceneCreator {
       upload.getChildren().add(makeButton(button));
     }
     upload.setAlignment(Pos.CENTER);
-    upload.getStyleClass().add("uploadBox");
+    upload.getStyleClass().add(UPLOAD_BOX);
     inputPane.setTop(upload);
     return inputPane;
   }
@@ -132,7 +137,7 @@ public class FileInput extends SceneCreator {
     String labelText = getMyResource().getString(property);
     result.setText(labelText);
     result.setId(property);
-    result.getStyleClass().add("button");
+    result.getStyleClass().add(BUTTON);
     result.setOnAction(event -> {
       try {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));

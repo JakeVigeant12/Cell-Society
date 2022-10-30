@@ -1,6 +1,9 @@
 package cellsociety.model.grids;
 
 
+import static cellsociety.view.GridScreen.TYPE;
+import static cellsociety.view.GridView.CELL;
+
 import cellsociety.model.AdjacencyList;
 import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
@@ -20,6 +23,11 @@ import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
+  public static final String FIRE = "Fire";
+  public static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  public static final String MISSING_PARAMETERS = "Missing parameters";
+  public static final String PARAMETERS = "Parameters";
+  public static final String DEFAULT = "Default";
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
@@ -63,12 +71,19 @@ public class GraphGrid extends Grid {
     this.emptyCells = emptyCells;
   }
 
-  public AdjacencyList getMyAdjacencyList() {
+  protected AdjacencyList getMyAdjacencyList() {
     return myAdjacencyList;
   }
 
   public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
     this.myAdjacencyList = myAdjacencyList;
+  }
+  public Neighborhood getSimulationNeighbors() {
+    return simulationNeighbors;
+  }
+
+  public void setSimulationNeighbors(Neighborhood simulationNeighbors) {
+    this.simulationNeighbors = simulationNeighbors;
   }
 
 
@@ -157,7 +172,7 @@ public class GraphGrid extends Grid {
    */
   //TODO refactor
   public Neighborhood setNeighbors(String simType) {
-    if (simType.equals("Fire")) {
+    if (simType.equals(FIRE)) {
       return new NoDiagonalNeighborhood();
     } else {
       return new CompleteNeighborhood();
@@ -187,6 +202,10 @@ public class GraphGrid extends Grid {
     for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.updateState();
     }
+  }
+
+  public void setFutureState(Cell target, List<Cell> neighbors) {
+
   }
 
   /**

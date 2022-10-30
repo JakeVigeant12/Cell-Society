@@ -30,16 +30,40 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
 
 
+import static cellsociety.Main.START_SPLASH_CSS;
 import static cellsociety.view.FileInput.FILE_CHOOSER;
 import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
+import static cellsociety.view.SplashScreen.FILE_INPUT_CSS;
 
 public class GridScreen extends SceneCreator {
-  private BorderPane borderPane;
+
+  public static final String ABOUT = "About";
+  public static final String TITLE = "Title";
+  public static final String INFO = "Info";
+  public static final String TYPE = "Type";
+  public static final String AUTHOR = "Author";
+  public static final String STATUS = "Status";
+  public static final String DESCRIPTION = "Description";
+  public static final String ABOUT_BOX = "aboutBox";
+  public static final String SPEED_SLIDER = "speedSlider";
+  public static final String ALL_BUTTONS = "allButtons";
+  public static final String CREATE_SLIDER_ERROR = "createSliderError";
+  public static final String CREATE_BUTTON_ERROR = "createButtonError";
+  public static final String CSV_FILES = "CSV Files";
+  public static final String CSV = "*.csv";
+  public static final String SAVE_SIMULATION_STATUS = "saveSimulationStatus";
+  public static final String SAVE_SIMULATION_ERROR = "saveSimulationError";
+  public static final String SPEED_STATUS = "speedStatus";
+  public static final String CREATE_CELL_ERROR = "createCellError";
+  public static final String PAUSED_STATUS = "pausedStatus";
+  public static final String RESET_STATUS = "resetStatus";
+  public static final String STEP_STATUS = "stepStatus";
+  public static final String PLAYING_STATUS = "playingStatus";
+  private final BorderPane borderPane;
   private TextArea statusBox;
-  private Paint mainColor = Color.LIGHTGRAY;
+  private final Paint mainColor = Color.LIGHTGRAY;
   private GridView gridView;
   private Timeline timeline;
   private CellSocietyController myController;
@@ -96,25 +120,32 @@ public class GridScreen extends SceneCreator {
    * Sets up the left panel of the Grid Screen UI
    */
   private void createLeftPanel() {
-    Text aboutTitle = createAndStyleText(getMyResource().getString("aboutText"), "title");
-    Text fileTitle = createAndStyleText(getMyResource().getString("title") + myController.getProperties().get("Title"), "info");
-    Text simulationType = createAndStyleText(getMyResource().getString("typeText") + myController.getProperties().get("Type"), "info");
-    Text author = createAndStyleText(getMyResource().getString("authorText") + myController.getProperties().get("Author"), "info");
+    Text aboutTitle = createAndStyleText(getMyResource().getString(ABOUT), TITLE);
+    Text fileTitle = createAndStyleText(
+        getMyResource().getString(TITLE) + myController.getProperties().get(TITLE), INFO);
+    Text simulationType = createAndStyleText(
+        getMyResource().getString(TYPE) + myController.getProperties().get(TYPE), INFO);
+    Text author = createAndStyleText(
+        getMyResource().getString(AUTHOR) + myController.getProperties().get(AUTHOR),
+        INFO);
 
-    statusBox = createAndStyleTextBox(String.format(getMyResource().getString("statusText"), simulationType), "info");
-    statusBox.setId("statusText");
+    statusBox = createAndStyleTextBox(String.format(getMyResource().getString(STATUS),
+        simulationType), INFO);
+    statusBox.setId(STATUS);
     statusBox.setBackground(Background.fill(mainColor));
     statusBox.setEditable(false);
     statusBox.setWrapText(true);
 
-    TextArea descriptionBox = createAndStyleTextBox(getMyResource().getString("descriptionText") + myController.getProperties().get("Description"), "info");
+    TextArea descriptionBox = createAndStyleTextBox(
+        getMyResource().getString(DESCRIPTION) + myController.getProperties()
+            .get(DESCRIPTION), INFO);
     descriptionBox.setBackground(Background.fill(mainColor));
     descriptionBox.setEditable(false);
     descriptionBox.setWrapText(true);
 
     VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
     fileInfoBox.setBackground(Background.fill(mainColor));
-    fileInfoBox.getStyleClass().add("aboutBox");
+    fileInfoBox.getStyleClass().add(ABOUT_BOX);
     borderPane.setLeft(fileInfoBox);
   }
 
@@ -126,9 +157,9 @@ public class GridScreen extends SceneCreator {
     for(String button : BUTTONS_LIST.get(1)) {
       controls.getChildren().add(makeButton(button));
     }
-    controls.getChildren().add(makeSlider("speedSlider"));
+    controls.getChildren().add(makeSlider(SPEED_SLIDER));
     controls.setBackground(Background.fill(mainColor));
-    controls.getStyleClass().add("allButtons");
+    controls.getStyleClass().add(ALL_BUTTONS);
 
 
     borderPane.setBottom(controls);
@@ -178,7 +209,7 @@ public class GridScreen extends SceneCreator {
   private HBox makeSlider(String property) {
     HBox sliderBox = new HBox();
     sliderBox.getChildren().add(new Label(getMyResource().getString(property)));
-    sliderBox.getStyleClass().add("speedSlider");
+    sliderBox.getStyleClass().add(SPEED_SLIDER);
     Slider slider = new Slider();
     sliderBox.getChildren().add(slider);
     slider.setMin(0);
@@ -235,12 +266,12 @@ public class GridScreen extends SceneCreator {
   }
 
   private void saveSimulation() throws IllegalStateException {
-    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(CSV_FILES, CSV);
     FILE_CHOOSER.getExtensionFilters().add(extFilter);
     File file = FILE_CHOOSER.showSaveDialog(myStage);
     if (file != null) {
         myController.saveGrid(file);
-        statusBox.setText(getMyResource().getString("saveSimulationStatus"));
+        statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
     }
   }
 
@@ -248,12 +279,12 @@ public class GridScreen extends SceneCreator {
   private void changeSpeed(Number newValue) {
     refreshRate = newValue.doubleValue();
     timeline.setRate(refreshRate);
-    statusBox.setText(String.format(getMyResource().getString("speedStatus"), refreshRate));
+    statusBox.setText(String.format(getMyResource().getString(SPEED_STATUS), refreshRate));
   }
 
   private void goBack() {
     FileInput backInput = new FileInput(600, myStage);
-    myStage.setScene(backInput.createScene(getLanguage(), "fileInput.css"));
+    myStage.setScene(backInput.createScene(getLanguage(), FILE_INPUT_CSS));
   }
 
   /**
@@ -272,27 +303,27 @@ public class GridScreen extends SceneCreator {
 
   private void exitSimulation() {
     SplashScreen beginning = new SplashScreen(600.0, myStage);
-    myStage.setScene(beginning.createScene("startSplash.css"));
+    myStage.setScene(beginning.createScene(START_SPLASH_CSS));
   }
 
   private void pauseSimulation() {
     timeline.pause();
-    statusBox.setText(getMyResource().getString("pausedStatus"));
+    statusBox.setText(getMyResource().getString(PAUSED_STATUS));
   }
 
   private void resetSimulation() throws IllegalStateException {
-      statusBox.setText(getMyResource().getString("resetStatus"));
+      statusBox.setText(getMyResource().getString(RESET_STATUS));
       myController.resetController();
       gridView.updateGrid(myController.getViewGrid());
   }
 
   private void stepSimulation() {
     gridView.updateGrid(myController.updateGrid());
-    statusBox.setText(getMyResource().getString("stepStatus"));
+    statusBox.setText(getMyResource().getString(STEP_STATUS));
   }
 
   private void playSimulation() {
     timeline.play();
-    statusBox.setText(getMyResource().getString("playingStatus"));
+    statusBox.setText(getMyResource().getString(PLAYING_STATUS));
   }
 }

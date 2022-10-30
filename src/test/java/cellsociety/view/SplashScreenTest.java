@@ -17,7 +17,7 @@ class SplashScreenTest extends DukeApplicationTest {
 
   @Test
   void testEnglish() {
-    Button button = lookup("#English").query();
+    Button button = lookup("#englishButton").query();
     clickOn(button);
     Button button1 =  lookup("#uploadButton").query();
     Assertions.assertEquals(button1.getText(), "Upload");
