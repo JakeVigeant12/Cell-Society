@@ -24,7 +24,6 @@ public class CellView extends StackPane {
     //TODO: x, y might not be needed
 
     rectangle = new Rectangle();
-    rectangle.setStroke(Color.BROWN);
     this.state = state;
 
     getChildren().add(rectangle);
@@ -88,6 +87,10 @@ public class CellView extends StackPane {
   public void updateSize(double size) {
     rectangle.setWidth(size);
     rectangle.setHeight(size);
+  }
+
+  public void showBorder() {
+    rectangle.setStroke(Color.BROWN);
   }
 
   //For test purpose

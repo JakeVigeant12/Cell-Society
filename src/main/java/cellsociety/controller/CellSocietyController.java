@@ -1,5 +1,10 @@
 package cellsociety.controller;
 
+import static cellsociety.view.GridScreen.TYPE;
+import static cellsociety.view.GridView.CELL_VIEW_RESOURCES;
+import static cellsociety.view.GridView.REGEX;
+import static cellsociety.view.SceneCreator.DEFAULT_RESOURCE_PACKAGE;
+
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
@@ -13,8 +18,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
+import java.util.ResourceBundle;
 import javafx.stage.Stage;
 
 public class CellSocietyController {
@@ -38,13 +45,26 @@ public class CellSocietyController {
     this.simFile = simFile;
     getSimData();
     String csvPath = (String) properties.get(INITIAL_STATES);
+    GridWrapper gridWrapper;
     myGridParser = new CSVParser();
-    GridWrapper gridWrapper = myGridParser.parseData(csvPath);
+    if(csvPath.equals("Random")) {
+      gridWrapper = new GridWrapper(Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))));
+      numCols = gridWrapper.getRowSize(0);
+      numRows = gridWrapper.getRowCount();
+    } else if (csvPath.equals("Proportions")){
+      String[] initialProportions = ((String) properties.get("InitialProportions")).split(REGEX);
+      gridWrapper = new GridWrapper(Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))), initialProportions);
+      numCols = gridWrapper.getRowSize(0);
+      numRows = gridWrapper.getRowCount();
+    }else {
+      gridWrapper = myGridParser.parseData(csvPath);
+      String[] parseRowCol = myGridParser.parseFirstLine(csvPath);
+
+      numCols = Integer.parseInt(parseRowCol[0].trim());
+      numRows = Integer.parseInt(parseRowCol[1].trim());
+    }
     myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsByID = myModel.getCells();
-    String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
-    numCols = Integer.parseInt(parseRowCol[0].trim());
-    numRows = Integer.parseInt(parseRowCol[1].trim());
   }
 
   /**

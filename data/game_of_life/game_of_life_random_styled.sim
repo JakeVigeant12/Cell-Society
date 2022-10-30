@@ -1,0 +1,8 @@
+Type=GameOfLife
+Title=Blinkers
+Author=John Conway
+Description=Random starting configuration of GameOfLife
+InitialStates=Random
+StateImages=images/tombstone.png,images/user.png
+Outlined=false
+EdgePolicy=toroidal
