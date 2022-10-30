@@ -36,9 +36,7 @@ public class SplashScreen extends SceneCreator {
   public static final String FRENCH = "French";
   private final List<String> buttonList = List.of("englishButton", "spanishButton", "frenchButton", "newWindowScreenButton");
   public BorderPane startPane;
-  private Text mainTitle;
-  private Text selectLanguage;
-  private ImageView myBackground;
+  private final ImageView myBackground;
   private final Stage myStage;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = SplashScreen.class.getPackageName() + ".";
