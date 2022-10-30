@@ -29,7 +29,7 @@ public class GridView {
   public static final String STATE_COLORS = "StateColors";
   public static final String TYPE = "Type";
   public static final String REGEX = ",";
-  public static final String CELL = "cell";
+  public static final String CELL = "Cell";
   private GridPane grid;
   private final DoubleProperty widthProperty = new SimpleDoubleProperty();
   private final DoubleProperty heightProperty = new SimpleDoubleProperty();

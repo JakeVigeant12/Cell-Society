@@ -1,5 +1,7 @@
 package cellsociety.model;
 
+import static cellsociety.view.GridScreen.TYPE;
+
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
@@ -10,6 +12,10 @@ import java.util.Properties;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
+
+  public static final String WATOR_WORLD = "WatorWorld";
+  public static final String SEGREGATION = "Segregation";
+  public static final String FALLING_SAND = "FallingSand";
   private final Grid myGrid;
 
   /**
@@ -18,13 +24,13 @@ public class InitialModelImplementation extends Model {
    * @param simParameters
    */
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    if(simParameters.getProperty("Type").equals("WatorWorld")){
+    if(simParameters.getProperty(TYPE).equals(WATOR_WORLD)){
       myGrid = new WatorGraphGrid(gridWrapper, simParameters);
     }
-    else if(simParameters.getProperty("Type").equals("Segregation")) {
+    else if(simParameters.getProperty(TYPE).equals(SEGREGATION)) {
       myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
     }
-    else if (simParameters.getProperty("Type").equals("FallingSand")) {
+    else if (simParameters.getProperty(TYPE).equals(FALLING_SAND)) {
       myGrid = new FallingSandGraphGrid(gridWrapper, simParameters);
     }
     else {

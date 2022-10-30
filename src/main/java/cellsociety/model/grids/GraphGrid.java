@@ -1,6 +1,9 @@
 package cellsociety.model.grids;
 
 
+import static cellsociety.view.GridScreen.TYPE;
+import static cellsociety.view.GridView.CELL;
+
 import cellsociety.model.AdjacencyList;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
@@ -19,6 +22,11 @@ import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
+  public static final String FIRE = "Fire";
+  public static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  public static final String MISSING_PARAMETERS = "Missing parameters";
+  public static final String PARAMETERS = "Parameters";
+  public static final String DEFAULT = "Default";
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
@@ -28,7 +36,6 @@ public class GraphGrid extends Grid {
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
   private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  private static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -37,7 +44,7 @@ public class GraphGrid extends Grid {
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
     myCells = createCells(gridParsing);
-    simulationNeighbors = setNeighbors(properties.getProperty("Type"));
+    simulationNeighbors = setNeighbors(properties.getProperty(TYPE));
     myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
@@ -93,20 +100,20 @@ public class GraphGrid extends Grid {
   private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount) {
     Cell newCell;
     try {
-      Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+      Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get(TYPE) + CELL);
       Constructor<?>[] makeNewCell = cellClass.getConstructors();
       if(makeNewCell[0].getParameterCount() == 3){
         double parameter;
         try {
-          parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+          parameter = Double.parseDouble((String) myProperties.get(PARAMETERS));
         }
         catch (NullPointerException e) {//No parameter specified in .sim file
           try {//load parameter from .sim file
-            parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
+            parameter = Double.parseDouble(ResourceBundle.getBundle(String.format("%s%s%s", DEFAULT_RESOURCE_PACKAGE, DEFAULT, myProperties.get(TYPE))).getString(PARAMETERS));
           }
           catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
             e1.printStackTrace();
-            throw new IllegalStateException("Missing parameters");
+            throw new IllegalStateException(MISSING_PARAMETERS);
           }
         }
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
@@ -116,7 +123,7 @@ public class GraphGrid extends Grid {
       }
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-      throw new IllegalStateException("Cannot make buttons");
+      throw new IllegalStateException(CANNOT_MAKE_BUTTONS);
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }
@@ -138,7 +145,7 @@ public class GraphGrid extends Grid {
    */
   //TODO refactor
   public Neighborhood setNeighbors(String simType){
-    if(simType.equals("Fire")){
+    if(simType.equals(FIRE)){
       return new NoDiagonalNeighborhood();
     }
     else{
