@@ -2,6 +2,7 @@ package cellsociety.model.grids;
 
 
 import cellsociety.model.AdjacencyList;
+import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
@@ -38,8 +39,14 @@ public class GraphGrid extends Grid {
     myProperties = properties;
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    try {
+      if (properties.getProperty("Edge").equals("toroidal"))
+        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+    } catch (NullPointerException e) {
+      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    }
   }
+
 
   public Map<Point, Cell> getMyCells() {
     return myCells;

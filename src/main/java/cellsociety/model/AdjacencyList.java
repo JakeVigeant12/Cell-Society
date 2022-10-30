@@ -63,11 +63,6 @@ public class AdjacencyList {
         adjacencyList.get(currentCell).add(myCells.get(currId));
       }
     }
-    else {
-      if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(new Point(rowSize - cell.x - 1, rowCount - cell.y - 1)));
-      }
-    }
   }
 
   /**
