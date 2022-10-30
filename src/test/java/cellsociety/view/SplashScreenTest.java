@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class SplashScreenTest extends DukeApplicationTest {
+
   @Override
   public void start(Stage stage) {
     SplashScreen ss = new SplashScreen(600.0, stage);
@@ -19,7 +20,7 @@ class SplashScreenTest extends DukeApplicationTest {
   void testEnglish() {
     Button button = lookup("#englishButton").query();
     clickOn(button);
-    Button button1 =  lookup("#uploadButton").query();
+    Button button1 = lookup("#uploadButton").query();
     Assertions.assertEquals(button1.getText(), "Upload");
   }
 

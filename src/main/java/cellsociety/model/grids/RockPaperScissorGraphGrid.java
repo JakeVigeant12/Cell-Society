@@ -7,7 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
-public class RockPaperScissorGraphGrid extends GraphGrid{
+public class RockPaperScissorGraphGrid extends GraphGrid {
+
   /**
    * Constructor for GraphGrid class
    *
@@ -17,6 +18,7 @@ public class RockPaperScissorGraphGrid extends GraphGrid{
   public RockPaperScissorGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   @Override
   public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     try {

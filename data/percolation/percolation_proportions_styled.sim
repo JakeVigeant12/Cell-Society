@@ -1,0 +1,10 @@
+# EMPTY, FLUID, ROCK
+InitialStates=Proportions
+InitialProportions=10,40,50
+Type=Percolation
+Title=Long Pipe
+Author=Robert Duvall
+Description=Random starting configuration of Percolation
+StateImages=images/empty.png,images/sea.png,images/rock.png
+Outlined=true
+EdgePolicy=toroidal

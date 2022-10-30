@@ -7,7 +7,7 @@ import cellsociety.view.GridWrapper;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
+public class FallingSandGraphGrid extends SwappedCellsGraphGrid {
 
   /**
    * Constructor for GraphGrid class

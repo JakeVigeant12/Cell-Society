@@ -5,7 +5,6 @@ import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,7 +18,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
 public class GridView {
@@ -43,7 +41,8 @@ public class GridView {
   private final ColorMap colors;
   private final ImageMap images;
   private boolean isUsingColors;
-  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
+  private final boolean setBorder;
+  public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
    * Constructor for GridView, sets up the grid and the cells
@@ -57,6 +56,11 @@ public class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
+    if(properties.containsKey("Outlined")) {
+      setBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
+    } else {
+      setBorder = true;
+    }
   }
 
   private void applyColors(Properties properties) {
@@ -73,7 +77,7 @@ public class GridView {
         isUsingColors = true;
       }
     } else {
-      for (String colorString : resourceBundle.getString(String.format("%s%s", properties.get(TYPE),STATE_COLORS)).split(
+      for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
           REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
@@ -126,11 +130,15 @@ public class GridView {
 
   private void createCell(GridWrapper gridData, int y, int x) {
     CellView node;
-    if (isUsingColors)
+    if (isUsingColors) {
       node = new CellView(gridData.getState(y, x), colors);
-    else
+    } else {
       node = new CellView(gridData.getState(y, x), images);
-    node.setId("cell" + y + "," + x);
+    }
+    if (setBorder) {
+      node.showBorder();
+    }
+    node.setId(CELL + y + REGEX + x);
     // add cells to group
     grid.add(node, x, y);
     // add to grid for further reference using an array

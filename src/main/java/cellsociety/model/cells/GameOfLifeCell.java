@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class GameOfLifeCell extends Cell {
+
   private final static int DEAD = 0;
   private final static int ALIVE = 1;
   private final static int LOWERTHRESHOLD = 2;
@@ -19,8 +20,9 @@ public class GameOfLifeCell extends Cell {
 
   /**
    * Constructor for GameOfLifeCell class
+   *
    * @param state is the state of the cell
-   * @param id is the id of the cell
+   * @param id    is the id of the cell
    */
   public GameOfLifeCell(int state, Point id) {
     super(state, id);
@@ -29,6 +31,7 @@ public class GameOfLifeCell extends Cell {
 
   /**
    * Method that returns the next state of the cell
+   *
    * @param neighbors is the list of neighbors of the cell
    * @return next state of the cell
    */
@@ -51,17 +54,16 @@ public class GameOfLifeCell extends Cell {
   private void setDEAD() {
     if (aliveNeighbors == UPPERTHRESHOLD) { // If current cell has 3 alive neighbors
       setFutureStateValue(ALIVE); // Set current cell to alive
-    }
-    else {
+    } else {
       setFutureStateValue(DEAD); // Set current cell to dead
     }
   }
 
   private void setALIVE() {
-    if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
+    if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors
+        > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
       setFutureStateValue(DEAD); // Set current cell to dead
-    }
-    else {
+    } else {
       setFutureStateValue(ALIVE); // Set current cell to alive
     }
   }

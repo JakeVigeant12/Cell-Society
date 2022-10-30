@@ -1,11 +1,11 @@
 package cellsociety.model.cells;
 
-import java.awt.Point;;
-import java.lang.reflect.InvocationTargetException;
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
 public class FireCell extends Cell {
+
   private int turns;
   private double myProbCatch;
   private static final int EMPTY = 0;
@@ -18,14 +18,15 @@ public class FireCell extends Cell {
 
   /**
    * Constructor for FireCell class
+   *
    * @param state is the state of the cell
-   * @param id is the id of the cell
+   * @param id    is the id of the cell
    */
-  public FireCell(int state, Point id, double parameter) throws IllegalStateException{
+  public FireCell(int state, Point id, double parameter) throws IllegalStateException {
     super(state, id);
     turns = 0;
     double probCatch = parameter;
-    if (probCatch > 1){
+    if (probCatch > 1) {
       throw new IllegalStateException("probabilityError");
     }
     myProbCatch = probCatch;
@@ -34,6 +35,7 @@ public class FireCell extends Cell {
 
   /**
    * Method that returns the future state of the cell
+   *
    * @param neighbors is the list of neighbors of the cell
    * @return next state of the cell
    */
@@ -52,12 +54,10 @@ public class FireCell extends Cell {
       double burnVal = Math.random();// If current cell is a tree and has a burning neighbor
       if (burnVal < myProbCatch) { // If random number is less than probability of catching fire
         setFutureStateValue(BURNING); // Set current cell to burning
-      }
-      else {
+      } else {
         setFutureStateValue(TREE); // Set current cell to tree
       }
-    }
-    else {
+    } else {
       setFutureStateValue(TREE);
     }
   }
@@ -65,8 +65,7 @@ public class FireCell extends Cell {
   private void setBURNING() {
     if (turns == BURNING_TIME) { // If current cell has been burning for BURNING_TIME turns
       setFutureStateValue(EMPTY); // Set current cell to empty
-    }
-    else {
+    } else {
       turns++;
       setFutureStateValue(BURNING); // Keep current cell burning
     }

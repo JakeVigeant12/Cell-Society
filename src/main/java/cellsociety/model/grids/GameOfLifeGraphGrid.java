@@ -7,7 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
-public class GameOfLifeGraphGrid extends GraphGrid{
+public class GameOfLifeGraphGrid extends GraphGrid {
+
   /**
    * Constructor for GraphGrid class
    *
@@ -17,6 +18,7 @@ public class GameOfLifeGraphGrid extends GraphGrid{
   public GameOfLifeGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   @Override
   public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     try {

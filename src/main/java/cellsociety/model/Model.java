@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public abstract class Model {
+
   private Parser inputGrid;
   private Grid myGrid;
   private String simType;
@@ -30,17 +31,19 @@ public abstract class Model {
 
   /**
    * Method that sets the current state of the cell
+   *
    * @param key
    * @param state
    */
-  public void setCellCurrentState (Point key, int state){
+  public void setCellCurrentState(Point key, int state) {
   }
 
   /**
    * Method that returns the cells
+   *
    * @return adjacencyList
    */
   public Map<Point, Cell> getCells() {
-    return Map.of(null,null);
+    return Map.of(null, null);
   }
 }

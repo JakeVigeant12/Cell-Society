@@ -7,8 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 
+public class PercolationGraphGrid extends GraphGrid {
 
-public class PercolationGraphGrid extends GraphGrid{
   /**
    * Constructor for GraphGrid class
    *
@@ -18,6 +18,7 @@ public class PercolationGraphGrid extends GraphGrid{
   public PercolationGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   @Override
   public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     try {

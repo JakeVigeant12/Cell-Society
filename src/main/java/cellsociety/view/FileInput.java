@@ -100,17 +100,6 @@ public class FileInput extends SceneCreator {
     }
   }
 
-
-  /**
-   * Sets up the alert message
-   *
-   * @param type
-   * @param message
-   */
-  private void showMessage(Alert.AlertType type, String message) {
-    new Alert(type, message).showAndWait();
-  }
-
   /**
    * Sets up the file chooser
    *
@@ -122,7 +111,8 @@ public class FileInput extends SceneCreator {
     result.setTitle(OPEN_DATA_FILE);
     // pick a reasonable place to start searching for files
     result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-    result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
+    result.getExtensionFilters()
+        .setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
     return result;
   }
 
@@ -143,6 +133,10 @@ public class FileInput extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+//        System.out.println(e);
+//        System.out.println(e.getCause());
+//        System.out.println(e.getCause().getMessage());
+//        TODO: Delete these
         showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });

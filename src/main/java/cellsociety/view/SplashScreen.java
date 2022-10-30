@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,13 +33,15 @@ public class SplashScreen extends SceneCreator {
   public static final String ENGLISH = "English";
   public static final String SPANISH = "Spanish";
   public static final String FRENCH = "French";
-  private final List<String> buttonList = List.of("englishButton", "spanishButton", "frenchButton", "newWindowScreenButton");
+  private final List<String> buttonList = List.of("englishButton", "spanishButton", "frenchButton",
+      "newWindowScreenButton");
   public BorderPane startPane;
   private final ImageView myBackground;
   private final Stage myStage;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = SplashScreen.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+  public static final String DEFAULT_RESOURCE_FOLDER =
+      "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
   ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
 
@@ -60,17 +61,15 @@ public class SplashScreen extends SceneCreator {
     VBox vBoxTop = new VBox(mainTitle);
     vBoxTop.setAlignment(Pos.CENTER);
 
-
     Text selectLanguage = new Text(SELECT_LANGUAGE);
     selectLanguage.getStyleClass().add(START_SELECT_LANGUAGE);
-
 
     myBackground.setImage(new Image(startInfo.getString(START_GIF)));
     myBackground.setFitWidth(getMySize());
     myBackground.setFitHeight(getMySize());
 
     HBox buttons = new HBox();
-    for(String button : buttonList) {
+    for (String button : buttonList) {
       buttons.getChildren().add(makeButton(button));
     }
     buttons.getStyleClass().add(ALL_BUTTONS);
@@ -97,7 +96,7 @@ public class SplashScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        new Alert(AlertType.ERROR, e.getCause().getMessage());
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return result;

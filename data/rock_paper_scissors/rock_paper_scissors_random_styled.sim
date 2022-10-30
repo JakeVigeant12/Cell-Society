@@ -1,0 +1,9 @@
+# ROCK, PAPER, SCISSORS
+Type=RockPaperScissor
+Author=Former Student
+Title=Endless Cycle
+Description=Random starting configuration of Rock, Paper, Scissors
+InitialStates=Random
+StateImages=images/rock.png,images/paper.png,images/scissors.png
+Outlined=false
+EdgePolicy=toroidal

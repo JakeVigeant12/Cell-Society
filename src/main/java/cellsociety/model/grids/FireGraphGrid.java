@@ -8,7 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
-public class FireGraphGrid extends GraphGrid{
+public class FireGraphGrid extends GraphGrid {
+
   /**
    * Constructor for GraphGrid class
    *
@@ -18,6 +19,7 @@ public class FireGraphGrid extends GraphGrid{
   public FireGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   @Override
   public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     try {

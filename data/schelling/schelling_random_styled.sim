@@ -1,0 +1,8 @@
+Type=Segregation
+Title=Divided
+Author=Robert Duvall
+Description=Random starting configuration of Segregation
+InitialStates=Random
+StateImages=images/empty.png,images/duke.png,images/unc.png
+Outlined=false
+EdgePolicy=finite

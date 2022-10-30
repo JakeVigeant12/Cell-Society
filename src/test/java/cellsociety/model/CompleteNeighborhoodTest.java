@@ -1,4 +1,5 @@
 package cellsociety.model;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,8 +8,9 @@ import cellsociety.model.neighborhoods.Neighborhood;
 import org.junit.jupiter.api.Test;
 
 public class CompleteNeighborhoodTest {
+
   @Test
-  void holisticTest(){
+  void holisticTest() {
     Neighborhood tester1 = new CompleteNeighborhood();
     assertTrue(tester1.countNeighbor(0));
     assertTrue(tester1.countNeighbor(1));

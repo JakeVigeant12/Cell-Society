@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImageMap {
+
   private Map<Integer, Image> colorMap;
   private int count;
+
   public ImageMap() {
     colorMap = new HashMap<>();
     count = 0;

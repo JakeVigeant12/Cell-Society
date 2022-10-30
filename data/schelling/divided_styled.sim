@@ -4,3 +4,5 @@ Author=Robert Duvall
 Description=Agents on either side
 InitialStates=schelling/divided.csv
 StateImages=images/empty.png,images/duke.png,images/unc.png
+Outlined=false
+EdgePolicy=finite

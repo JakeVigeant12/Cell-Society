@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WatorWorldCell extends Cell {
+
   private static final int WATER = 0;
   private static final int FISH = 1;
   private static final int SHARK = 2;
@@ -24,16 +25,19 @@ public class WatorWorldCell extends Cell {
 
   /**
    * Constructor for WaTorWorldCell class
+   *
    * @param state is the state of the cell
-   * @param id is the id of the cell
+   * @param id    is the id of the cell
    */
-  public WatorWorldCell(int state, Point id){
+  public WatorWorldCell(int state, Point id) {
     super(state, id);
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
-    stateMap = Map.of(WATER, "WATER", FISH, "FISH", SHARK, "SHARK", INTERMEDIATESHARK, "INTERMEDIATESHARK");
+    stateMap = Map.of(WATER, "WATER", FISH, "FISH", SHARK, "SHARK", INTERMEDIATESHARK,
+        "INTERMEDIATESHARK");
   }
+
   @Override
   public void swapCells(Cell cellToSwap) {
     //Swap the current cell into the other cell's future state and vice versa
@@ -41,37 +45,41 @@ public class WatorWorldCell extends Cell {
     this.setFutureStateValue(cellToSwap.getCurrentState());
   }
 
-  public int getState(){
+  public int getState() {
     return getCurrentState();
   }
-  public boolean readyToReproduce(){
-    if(getCurrentState() == FISH){
-      if(fishTurns == 3){
+
+  public boolean readyToReproduce() {
+    if (getCurrentState() == FISH) {
+      if (fishTurns == 3) {
         return true;
       }
       return false;
     }
-    if(getCurrentState() == INTERMEDIATESHARK){
-      if(sharkTurns == 2){
+    if (getCurrentState() == INTERMEDIATESHARK) {
+      if (sharkTurns == 2) {
         return true;
       }
       return false;
     }
     return false;
   }
-  public boolean readyToDie(){
-    if(getCurrentState() == SHARK){
-      if(sharkStarve == 3){
+
+  public boolean readyToDie() {
+    if (getCurrentState() == SHARK) {
+      if (sharkStarve == 3) {
         return true;
       }
     }
     return false;
   }
-  public void resetStateParameters(){
+
+  public void resetStateParameters() {
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
   }
+
   @Override
   public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     myNeighborStates = getNeighborStates(neighbors);
@@ -83,41 +91,39 @@ public class WatorWorldCell extends Cell {
     }
   }
 
-  private void setWATER(){
+  private void setWATER() {
     setFutureStateValue(WATER); // do nothing
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
   }
 
-  private void setFISH(){
-    if (myNeighborStates.contains(WATER)){
+  private void setFISH() {
+    if (myNeighborStates.contains(WATER)) {
       fishTurns++;
-      if (fishTurns == 3){ // if the fish has been alive for 3 turns, then it will breed
+      if (fishTurns == 3) { // if the fish has been alive for 3 turns, then it will breed
         setFutureStateValue(FISH);
         fishTurns = 0;
-      }
-      else {
+      } else {
         setFutureStateValue(FISH); // Needs to swap with a water cell
       }
-    }
-    else {
-      setFutureStateValue(FISH); // If there are no empty cells, then the fish stays in the same spot
+    } else {
+      setFutureStateValue(
+          FISH); // If there are no empty cells, then the fish stays in the same spot
     }
   }
 
-  private void setSHARK(){
-    if (myNeighborStates.contains(WATER) && !myNeighborStates.contains(1)) { // if there are empty cells and no fish, then the shark will starve
+  private void setSHARK() {
+    if (myNeighborStates.contains(WATER) && !myNeighborStates.contains(
+        1)) { // if there are empty cells and no fish, then the shark will starve
       sharkStarve++;
       if (sharkStarve == 3) {
         setFutureStateValue(WATER); // Shark dies
         sharkStarve = 0;
-      }
-      else {
+      } else {
         setFutureStateValue(SHARK); // Shark stays alive
       }
-    }
-    else if (myNeighborStates.contains(FISH)) { // if there is a fish, then the shark will eat it
+    } else if (myNeighborStates.contains(FISH)) { // if there is a fish, then the shark will eat it
       sharkTurns++;
       if (sharkTurns == 3) { // if the shark has been alive for 3 turns, then it will breed
         setFutureStateValue(SHARK);
@@ -125,13 +131,12 @@ public class WatorWorldCell extends Cell {
       } else {
         setFutureStateValue(SHARK); // Needs to swap with a water cell
       }
-    }
-    else {
+    } else {
       setFutureStateValue(SHARK);
     }
   }
 
-  private void setINTERMEDIATESHARK(){
+  private void setINTERMEDIATESHARK() {
     setFutureStateValue(SHARK);
   }
 }

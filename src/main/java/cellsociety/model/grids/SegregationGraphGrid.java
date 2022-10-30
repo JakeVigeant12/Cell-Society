@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
 
-public class SegregationGraphGrid extends SwappedCellsGraphGrid{
+public class SegregationGraphGrid extends SwappedCellsGraphGrid {
 
   /**
    * Constructor for SegregationGraphGrid class
@@ -21,6 +21,7 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
   public SegregationGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   /**
    * Method that computes and sets next state of cells
    */
