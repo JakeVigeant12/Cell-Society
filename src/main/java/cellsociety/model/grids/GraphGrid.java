@@ -5,13 +5,14 @@ import static cellsociety.view.GridScreen.TYPE;
 import static cellsociety.view.GridView.CELL;
 
 import cellsociety.model.AdjacencyList;
+import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -35,7 +36,8 @@ public class GraphGrid extends Grid {
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
-  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -44,9 +46,15 @@ public class GraphGrid extends Grid {
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
     myCells = createCells(gridParsing);
-    simulationNeighbors = setNeighbors(properties.getProperty(TYPE));
-    myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    simulationNeighbors = setNeighbors(properties.getProperty("Type"));
+    try {
+      if (properties.getProperty("Edge").equals("toroidal"))
+        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+    } catch (NullPointerException e) {
+      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    }
   }
+
 
   public Map<Point, Cell> getMyCells() {
     return myCells;

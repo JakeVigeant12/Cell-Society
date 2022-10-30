@@ -1,6 +1,6 @@
 package cellsociety.model.cells;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;

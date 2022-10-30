@@ -1,6 +1,6 @@
 package cellsociety.model.cells;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.List;
 
 public class PercolationCell extends Cell {

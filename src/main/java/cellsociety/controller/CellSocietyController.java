@@ -7,7 +7,7 @@ import cellsociety.model.Model;
 import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
