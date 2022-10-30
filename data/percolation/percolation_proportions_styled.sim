@@ -1,10 +1,10 @@
 # EMPTY, FLUID, ROCK
-StateColors=FFFFFF,0000FF,000000
-InitialStates=percolation/long_pipe.csv
+InitialStates=Proportions
+InitialProportions=10,40,50
 Type=Percolation
 Title=Long Pipe
 Author=Robert Duvall
-Description=Long, bendy pipes flowing from top to bottom
+Description=Random starting configuration of Percolation
 StateImages=images/empty.png,images/sea.png,images/rock.png
 Outlined=true
 EdgePolicy=toroidal

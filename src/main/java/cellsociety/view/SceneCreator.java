@@ -9,13 +9,16 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 public abstract class SceneCreator {
+
   private double mySize;
   private File myDataFile;
   private String language;
   private ResourceBundle myResource;
-  private ResourceBundle myCommands = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));
+  private ResourceBundle myCommands = ResourceBundle.getBundle(
+      String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, COMMAND_PROPERTIES));
   private static final String COMMAND_PROPERTIES = "Command";
-  public static final String DEFAULT_RESOURCE_PACKAGE = String.format("%s.", SceneCreator.class.getPackageName());
+  public static final String DEFAULT_RESOURCE_PACKAGE = String.format("%s.",
+      SceneCreator.class.getPackageName());
   private Stage myStage;
 
   /**

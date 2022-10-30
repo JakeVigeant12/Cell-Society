@@ -2,8 +2,9 @@
 Type=RockPaperScissor
 Author=Former Student
 Title=Endless Cycle
-Description=Endless cycle of rotating cells, no dominance
-InitialStates=rock_paper_scissors/cycle.csv
+Description=Random starting configuration of Rock, Paper, Scissors
+InitialStates=Proportions
+InitialProportions=34,33,33
 StateImages=images/rock.png,images/paper.png,images/scissors.png
 Outlined=false
 EdgePolicy=toroidal

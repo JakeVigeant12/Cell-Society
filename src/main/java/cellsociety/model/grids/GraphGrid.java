@@ -35,20 +35,22 @@ public class GraphGrid extends Grid {
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
   public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+  public static final String DEFAULT_RESOURCE_FOLDER =
+      "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
    *
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException{
+  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException {
     myProperties = properties;
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
     try {
-      if (properties.getProperty("Edge").equals("toroidal"))
+      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
         myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+      }
     } catch (NullPointerException e) {
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
     }
@@ -78,6 +80,7 @@ public class GraphGrid extends Grid {
   public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
     this.myAdjacencyList = myAdjacencyList;
   }
+
   public Neighborhood getSimulationNeighbors() {
     return simulationNeighbors;
   }
@@ -94,7 +97,7 @@ public class GraphGrid extends Grid {
    * @return
    */
   //Assume grid values are passed in as expected, sans dimensions
-  private Map<Point, Cell> createCells(GridWrapper inputLayout) throws IllegalStateException{
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) throws IllegalStateException {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Point, Cell> cellHolder = new HashMap<>();
     for (int i = 0; i < inputLayout.getRowCount(); i++) {
@@ -112,7 +115,8 @@ public class GraphGrid extends Grid {
    * @param cellHolder
    * @param cellCount
    */
-  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount) throws IllegalStateException{
+  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount)
+      throws IllegalStateException {
     Cell newCell;
     Class<?> cellClass;
     try {
@@ -133,7 +137,8 @@ public class GraphGrid extends Grid {
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
-  private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell) throws IllegalStateException{
+  private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
+      throws IllegalStateException {
     Cell newCell;
     double parameter;
     try {
@@ -188,7 +193,8 @@ public class GraphGrid extends Grid {
    * @return
    */
   public static boolean isInBounds(int row, int col, GridWrapper gridWrapper) {
-    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0 && col < gridWrapper.getRowSize(0));
+    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0
+        && col < gridWrapper.getRowSize(0));
   }
 
   /**

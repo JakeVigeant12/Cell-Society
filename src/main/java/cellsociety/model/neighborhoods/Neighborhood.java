@@ -3,6 +3,7 @@ package cellsociety.model.neighborhoods;
 import java.util.List;
 
 public class Neighborhood {
+
   private List<Boolean> neighborHood;
 
   public List<Boolean> getNeighborHood() {
@@ -16,13 +17,15 @@ public class Neighborhood {
   /**
    * Constructor for Neighborhood class
    */
-  public Neighborhood(){}
+  public Neighborhood() {
+  }
 
   /**
    * Method that counts the neighbors of a cell
+   *
    * @return neighborHood
    */
-  public boolean countNeighbor(int neighborNumber){
+  public boolean countNeighbor(int neighborNumber) {
     return neighborHood.get(neighborNumber);
   }
 

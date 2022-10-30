@@ -83,6 +83,7 @@ public class WatorWorldGraphGrid extends SwappedCellsGraphGrid {
 
   /**
    * Method that moves the shark
+   *
    * @param sharkCell
    * @return the new cell the shark is in
    */
@@ -107,12 +108,14 @@ public class WatorWorldGraphGrid extends SwappedCellsGraphGrid {
 
   /**
    * Method that moves the fish
+   *
    * @param fishCell
    * @return the new cell the fish is in
    */
   public Cell moveFish(Cell fishCell) {
     //See if there is an adjacent location for the fish to move into
-    Cell newLocation = findCellToSwap(fishCell, super.getMyAdjacencyList().getNeighbors(fishCell), 0);
+    Cell newLocation = findCellToSwap(fishCell, super.getMyAdjacencyList().getNeighbors(fishCell),
+        0);
     //If fish can move to a new empty cell, return this
     if (!(newLocation.getId() == fishCell.getId())) {
       return newLocation;

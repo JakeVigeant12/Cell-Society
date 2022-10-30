@@ -69,7 +69,9 @@ public class GridScreen extends SceneCreator {
   private CellSocietyController myController;
   private double refreshRate = 1;
   private final Stage myStage;
-  private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
+  private static final List<List<String>> BUTTONS_LIST = List.of(
+      List.of("backButton", "exitButton", "uploadButton"),
+      List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
   /**
    * Constructor for GridScreen, sets up the root, borderPane and the timeline
@@ -103,7 +105,6 @@ public class GridScreen extends SceneCreator {
     createLeftPanel();
     createBottomPanel();
     createTopPanel();
-
 
     gridView = new GridView(myController);
     gridView.setUpView(myController.getViewGrid());
@@ -143,7 +144,8 @@ public class GridScreen extends SceneCreator {
     descriptionBox.setEditable(false);
     descriptionBox.setWrapText(true);
 
-    VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox, statusBox);
+    VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox,
+        statusBox);
     fileInfoBox.setBackground(Background.fill(mainColor));
     fileInfoBox.getStyleClass().add(ABOUT_BOX);
     borderPane.setLeft(fileInfoBox);
@@ -154,13 +156,12 @@ public class GridScreen extends SceneCreator {
    */
   private void createBottomPanel() {
     HBox controls = new HBox();
-    for(String button : BUTTONS_LIST.get(1)) {
+    for (String button : BUTTONS_LIST.get(1)) {
       controls.getChildren().add(makeButton(button));
     }
     controls.getChildren().add(makeSlider(SPEED_SLIDER));
     controls.setBackground(Background.fill(mainColor));
     controls.getStyleClass().add(ALL_BUTTONS);
-
 
     borderPane.setBottom(controls);
   }
@@ -170,7 +171,7 @@ public class GridScreen extends SceneCreator {
    */
   private void createTopPanel() {
     HBox topPanel = new HBox();
-    for(String button : BUTTONS_LIST.get(0)) {
+    for (String button : BUTTONS_LIST.get(0)) {
       topPanel.getChildren().add(makeButton(button));
     }
     topPanel.setBackground(Background.fill(mainColor));
@@ -191,8 +192,9 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Creates and stylizes the text box based on a resource bundle label
+   *
    * @param myLabels resource bundle label
-   * @param title title of the text box
+   * @param title    title of the text box
    * @return text box
    */
   private TextArea createAndStyleTextBox(String myLabels, String title) {
@@ -203,6 +205,7 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Method that creates and stylizes a slider
+   *
    * @param property resource bundle label
    * @return slider
    */
@@ -236,6 +239,7 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Creates a button based on a resource bundle property
+   *
    * @param property - property of the resource bundle
    * @return button
    */
@@ -260,8 +264,8 @@ public class GridScreen extends SceneCreator {
     FILE_CHOOSER.getExtensionFilters().add(extFilter);
     File file = FILE_CHOOSER.showSaveDialog(myStage);
     if (file != null) {
-        myController.saveGrid(file);
-        statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
+      myController.saveGrid(file);
+      statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
     }
   }
 
@@ -279,16 +283,15 @@ public class GridScreen extends SceneCreator {
 
   /**
    * Sets up the file picker
-   *
    */
   private void uploadFile() throws IllegalStateException {
-      setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
-      if (getMyDataFile() != null) {
-        myController = new CellSocietyController(getMyDataFile());
-        myController.loadSimulation(myStage);
-        GridScreen firstGrid = new GridScreen(800, myStage, myController);
-        myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
-      }
+    setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+    if (getMyDataFile() != null) {
+      myController = new CellSocietyController(getMyDataFile());
+      myController.loadSimulation(myStage);
+      GridScreen firstGrid = new GridScreen(800, myStage, myController);
+      myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
+    }
   }
 
   private void exitSimulation() {
@@ -302,9 +305,9 @@ public class GridScreen extends SceneCreator {
   }
 
   private void resetSimulation() throws IllegalStateException {
-      statusBox.setText(getMyResource().getString(RESET_STATUS));
-      myController.resetController();
-      gridView.updateGrid(myController.getViewGrid());
+    statusBox.setText(getMyResource().getString(RESET_STATUS));
+    myController.resetController();
+    gridView.updateGrid(myController.getViewGrid());
   }
 
   private void stepSimulation() {

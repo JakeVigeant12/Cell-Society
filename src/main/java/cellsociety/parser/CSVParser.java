@@ -9,11 +9,13 @@ import java.io.*;
 import java.util.List;
 
 public class CSVParser extends Parser {
+
   private static final String DATA_FOLDER = "data/";
   private FileReader myFileReader;
 
   /**
    * Parses the data from the csv file
+   *
    * @param csvPath
    * @return
    */
@@ -44,6 +46,7 @@ public class CSVParser extends Parser {
 
   /**
    * Parses the first line of the csv file (size of the grid)
+   *
    * @param csvPath
    * @return
    * @throws CsvValidationException
@@ -61,6 +64,7 @@ public class CSVParser extends Parser {
 
   /**
    * Method that saves the current grid to a csv file
+   *
    * @param grid
    * @param file
    * @throws IOException
@@ -68,11 +72,14 @@ public class CSVParser extends Parser {
   public void saveCurrentGrid(GridWrapper grid, File file) throws IllegalStateException {
     CSVWriter csvWriter;
     try {
-      csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-      csvWriter.writeNext(new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getRowCount())});
-      for(List<Integer> row : grid.getGrid()) {
+      csvWriter = new CSVWriter(new FileWriter(file), CSVWriter.DEFAULT_SEPARATOR,
+          CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+          CSVWriter.DEFAULT_LINE_END);
+      csvWriter.writeNext(
+          new String[]{String.valueOf(grid.getRowSize(0)), String.valueOf(grid.getRowCount())});
+      for (List<Integer> row : grid.getGrid()) {
         String[] writeArray = new String[row.size()];
-        for(int i = 0; i < row.size(); i++) {
+        for (int i = 0; i < row.size(); i++) {
           writeArray[i] = String.valueOf(row.get(i));
         }
         csvWriter.writeNext(writeArray);
