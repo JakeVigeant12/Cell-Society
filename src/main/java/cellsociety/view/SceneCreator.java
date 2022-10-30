@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -59,9 +60,8 @@ public abstract class SceneCreator {
   }
 
   protected void setMyDataFile(File myDataFile) {
-    if (myDataFile == null) {
-      throw new IllegalStateException();
-    }
+    if (myDataFile == null)
+      throw new IllegalStateException("noFileInput");
     this.myDataFile = myDataFile;
   }
 
@@ -69,11 +69,14 @@ public abstract class SceneCreator {
     return mySize;
   }
 
-  protected void setMySize(double size) {
-    if (size <= 0) {
-      throw new IllegalStateException();
-    }
-    mySize = size;
+  /**
+   * Sets up the alert message
+   *
+   * @param type
+   * @param message
+   */
+  protected void showMessage(Alert.AlertType type, String message) {
+    new Alert(type, message).showAndWait();
   }
 
   protected String getLanguage() {

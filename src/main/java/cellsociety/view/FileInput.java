@@ -100,17 +100,6 @@ public class FileInput extends SceneCreator {
     }
   }
 
-
-  /**
-   * Sets up the alert message
-   *
-   * @param type
-   * @param message
-   */
-  private void showMessage(Alert.AlertType type, String message) {
-    new Alert(type, message).showAndWait();
-  }
-
   /**
    * Sets up the file chooser
    *
@@ -144,6 +133,10 @@ public class FileInput extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+//        System.out.println(e);
+//        System.out.println(e.getCause());
+//        System.out.println(e.getCause().getMessage());
+//        TODO: Delete these
         showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });

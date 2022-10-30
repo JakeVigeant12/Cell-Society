@@ -74,8 +74,9 @@ public class CellSocietyController {
     properties = new Properties();
     try {
       properties.load(new FileReader(simFile));
-    } catch (IOException e) {
-      throw new IllegalStateException("fileUploadError");
+    }
+    catch (IOException e) {
+      throw new IllegalStateException("fileUploadError", e);
     }
   }
 

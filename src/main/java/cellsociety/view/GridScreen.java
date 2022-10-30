@@ -259,16 +259,6 @@ public class GridScreen extends SceneCreator {
     return result;
   }
 
-  /**
-   * Sets up the alert message
-   *
-   * @param type
-   * @param message
-   */
-  private void showMessage(Alert.AlertType type, String message) {
-    new Alert(type, message).showAndWait();
-  }
-
   private void saveSimulation() throws IllegalStateException {
     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(CSV_FILES, CSV);
     FILE_CHOOSER.getExtensionFilters().add(extFilter);
