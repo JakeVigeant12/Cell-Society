@@ -118,7 +118,7 @@ public class GraphGrid extends Grid {
     try {
       cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
     } catch (ClassNotFoundException e) {
-      throw new IllegalStateException("classNotFound");
+      throw new IllegalStateException("classNotFound", e);
     }
     Constructor<?>[] makeNewCell = cellClass.getConstructors();
     if (makeNewCell[0].getParameterCount() == 3) {
@@ -127,7 +127,7 @@ public class GraphGrid extends Grid {
       try {
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-        throw new IllegalStateException("parameterError");
+        throw new IllegalStateException("parameterError", e);
       }
     }
     cellHolder.putIfAbsent(cellCount, newCell);
@@ -142,13 +142,13 @@ public class GraphGrid extends Grid {
       try {//load parameter from .sim file
         parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
       } catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
-        throw new IllegalStateException("parameterError");
+        throw new IllegalStateException("parameterError", e);
       }
     }
     try {
       newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException("parameterError");
+      throw new IllegalStateException("parameterError", e);
     }
     return newCell;
   }

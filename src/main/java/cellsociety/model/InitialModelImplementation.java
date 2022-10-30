@@ -34,7 +34,7 @@ public class InitialModelImplementation extends Model {
       }
       catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-        throw new IllegalStateException("errorInitializingGrid");
+        throw new IllegalStateException(e.getCause().getMessage(), e);
       }
   }
 

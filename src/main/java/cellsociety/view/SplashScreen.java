@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -97,7 +96,7 @@ public class SplashScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        new Alert(AlertType.ERROR, e.getCause().getMessage());
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return result;
