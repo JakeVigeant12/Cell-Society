@@ -21,6 +21,9 @@ public class InitialModelImplementation extends Model {
     if(simParameters.getProperty("Type").equals("Percolation")){
       myGrid = new PercolationGraphGrid(gridWrapper, simParameters);
     }
+    else if(simParameters.getProperty("Type").equals("Fire")){
+      myGrid = new FireGraphGrid(gridWrapper, simParameters);
+    }
     else if(simParameters.getProperty("Type").equals("RockPaperScissor")){
       myGrid = new RockPaperScissorGraphGrid(gridWrapper, simParameters);
     }
