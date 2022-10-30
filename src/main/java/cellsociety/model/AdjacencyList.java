@@ -4,9 +4,11 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Point;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class AdjacencyList {
     Map<Cell, List<Cell>> adjacencyList;
@@ -17,6 +19,16 @@ public class AdjacencyList {
         adjacencyList = new HashMap<>();
         rowCount = inputLayout.getRowCount();
         rowSize = inputLayout.getRowSize(0);
+        initializeNeighbors(inputLayout, cells, simulationNeighbors);
+    }
+
+    /**
+     * Method that initializes the neighbors for each cell
+     * @param inputLayout
+     * @param cells
+     * @param simulationNeighbors
+     */
+    private void initializeNeighbors(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < rowSize; j++) {
                 List<Cell> neighbors = new ArrayList<>();
@@ -34,14 +46,17 @@ public class AdjacencyList {
         }
     }
 
-//    private void createNeighborhood(Point cell, GridWrapper gridParsing, Point neighbor, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Point, Cell> myCells) {
-//        if(isInBounds(neighbor, gridParsing)){
-//            if(simulationNeighbors.countNeighbor(neighborNumber)) {
-//                adjacencyList.get(currentCell).add(myCells.get(neighbor));
-//            }
-//        }
-//    }
-
+    /**
+     * Method that creates the neighborhood for each cell based on the neighborhood type
+     * @param cell
+     * @param gridParsing
+     * @param currId
+     * @param simulationNeighbors
+     * @param neighborNumber
+     * @param adjacencyList
+     * @param currentCell
+     * @param myCells
+     */
     private void createNeighborhood(Point cell, GridWrapper gridParsing, Point currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Point, Cell> myCells) {
         if(isInBounds(currId, gridParsing)) {
             if(simulationNeighbors.countNeighbor(neighborNumber)) {
@@ -55,18 +70,40 @@ public class AdjacencyList {
         }
     }
 
+    /**
+     * Boolean to determine if the cell is on edges of grid
+     * @param row
+     * @param col
+     * @param gridWrapper
+     * @return
+     */
     public static boolean isOnEdges(int row, int col, GridWrapper gridWrapper){
         return (row == 0 || row == gridWrapper.getRowCount() - 1) || (col == 0 || col == gridWrapper.getRowSize(0) - 1);
     }
 
+    /**
+     * Boolean to determine if the cell is in bounds of grid
+     * @param point
+     * @param gridWrapper
+     * @return
+     */
     private static boolean isInBounds(Point point, GridWrapper gridWrapper){
         return (point.y >= 0 && point.y < gridWrapper.getRowCount()) && (point.x >= 0 && point.x < gridWrapper.getRowSize(0));
     }
 
+    /**
+     * Getter to get the list of cells as a list (hiding that it is a map)
+     * @return
+     */
     public List<Cell> getCells() {
         return adjacencyList.keySet().stream().toList();
     }
 
+    /**
+     * Getter to get the neighbors of a cell as a list (hiding that it is a map)
+     * @param cell
+     * @return
+     */
     public List<Cell> getNeighbors(Cell cell) {
         return adjacencyList.get(cell);
     }
