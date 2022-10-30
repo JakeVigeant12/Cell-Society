@@ -1,8 +1,12 @@
 package cellsociety.view;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +22,7 @@ import java.util.ResourceBundle;
 public class SplashScreen extends SceneCreator {
 
   public static final String FILE_INPUT_CSS = "fileInput.css";
-  private final List<String> languageList = List.of("English", "Spanish", "French");
+  private final List<String> buttonList = List.of("englishButton", "spanishButton", "frenchButton", "newWindowScreenButton");
   public BorderPane startPane;
   private Text mainTitle;
   private Text selectLanguage;
@@ -56,15 +60,15 @@ public class SplashScreen extends SceneCreator {
     myBackground.setFitHeight(getMySize());
 
     HBox buttons = new HBox();
-    for(String language : languageList) {
-      buttons.getChildren().add(makeButton(language));
+    for(String button : buttonList) {
+      buttons.getChildren().add(makeButton(button));
     }
     buttons.getStyleClass().add("allButtons");
 
-    Button newWindow = new Button("New Window");
-    newWindow.setOnAction(e -> openNewWindow());
-    newWindow.setId("newWindowButton");
-    buttons.getChildren().add(newWindow);
+//    Button newWindow = new Button("New Window");
+//    newWindow.setOnAction(e -> openNewWindow());
+//    newWindow.setId("newWindowButton");
+//    buttons.getChildren().add(newWindow);
     //TODO: Create this button with reflection
 
     VBox vBoxBot = new VBox(selectLanguage, buttons);
@@ -85,10 +89,31 @@ public class SplashScreen extends SceneCreator {
     result.setText(label);
     result.setId(property);
     result.setOnAction(event -> {
-      FileInput fileInput = new FileInput(getMySize(), myStage);
-      myStage.setScene(fileInput.createScene(property, FILE_INPUT_CSS));
+      try {
+        Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
+        m.invoke(this);
+      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
+        new Alert(AlertType.ERROR, e.getCause().getMessage());
+      }
     });
     return result;
+  }
+
+  private void createEnglishScreen() {
+    createLanguageScreen("English");
+  }
+
+  private void createSpanishScreen() {
+    createLanguageScreen("Spanish");
+  }
+
+  private void createFrenchScreen() {
+    createLanguageScreen("French");
+  }
+
+  private void createLanguageScreen(String property) {
+    FileInput fileInput = new FileInput(getMySize(), myStage);
+    myStage.setScene(fileInput.createScene(property, FILE_INPUT_CSS));
   }
 
   private void openNewWindow() {
