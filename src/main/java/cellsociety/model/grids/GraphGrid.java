@@ -8,24 +8,27 @@ import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
-import java.awt.Point;
+import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
-  protected Map<Point, Cell> myCells;
-  protected AdjacencyList myAdjacencyList;
-  protected List<Cell> emptyCells;
-  protected Properties myProperties;
-  protected final String cellPackagePath = "cellsociety.model.cells.";
-  protected Neighborhood simulationNeighbors;
+
+  private Map<Point, Cell> myCells;
+  private AdjacencyList myAdjacencyList;
+  private List<Cell> emptyCells;
+
+
+  private Properties myProperties;
+  private final String cellPackagePath = "cellsociety.model.cells.";
+  private Neighborhood simulationNeighbors;
   private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -38,15 +41,39 @@ public class GraphGrid extends Grid {
     myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
+  public Map<Point, Cell> getMyCells() {
+    return myCells;
+  }
+
+  public void setMyCells(Map<Point, Cell> myCells) {
+    this.myCells = myCells;
+  }
+
+  public List<Cell> getEmptyCells() {
+    return emptyCells;
+  }
+
+  public void setEmptyCells(List<Cell> emptyCells) {
+    this.emptyCells = emptyCells;
+  }
+
+  public AdjacencyList getMyAdjacencyList() {
+    return myAdjacencyList;
+  }
+
+  public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
+    this.myAdjacencyList = myAdjacencyList;
+  }
+
+
   /**
    * Method that creates the cells for the grid
    *
    * @param inputLayout
    * @return
    */
-  @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public Map<Point, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Point, Cell> cellHolder = new HashMap<>();
     for(int i = 0; i < inputLayout.getRowCount(); i++){

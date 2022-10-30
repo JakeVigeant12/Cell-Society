@@ -3,7 +3,15 @@ package cellsociety.model.neighborhoods;
 import java.util.List;
 
 public class Neighborhood {
-  protected List<Boolean> neighborHood;
+  private List<Boolean> neighborHood;
+
+  public List<Boolean> getNeighborHood() {
+    return neighborHood;
+  }
+
+  public void setNeighborHood(List<Boolean> neighborHood) {
+    this.neighborHood = neighborHood;
+  }
 
   /**
    * Constructor for Neighborhood class
