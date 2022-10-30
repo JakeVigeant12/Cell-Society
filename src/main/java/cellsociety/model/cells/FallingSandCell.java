@@ -1,89 +1,26 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class FallingSandCell extends Cell {
 
-  private static final int EMPTY = 0;
-  private static final int SAND = 1;
-  private static final int WATER = 2;
-  private static final int BOUNDARY = 3;
-
-  private static final int UPPERLEFT = 0;
-  private static final int UPPER = 1;
-  private static final int UPPERRIGHT = 2;
-  private static final int LEFT = 3;
-  private static final int RIGHT = 4;
-  private static final int LOWERLEFT = 5;
-  private static final int LOWER = 6;
-  private static final int LOWERRIGHT = 7;
-
-  // Key States
-  // 0 = Empty
-  // 1 = Sand
-  // 2 = Water
-  // 3 = Boundary
-
-  // Directions
-  // 0 1 2
-  // 3 C 4
-  // 5 6 7
-
-  // Grid Loops Required: 3
-
-  private boolean wantsToSwap;
-  private Cell cellToSwap;
-  private List<Cell> neighborHood;
-  private Map<Integer, String> stateMap;
-  private Map<Integer, String> positionMap;
-
-  /**
-   * Constructor for FallingSandCell class
-   *
-   * @param state is the state of the cell
-   * @param id    is the id of the cell
-   */
-  public FallingSandCell(int state, Point id) {
-    super(state, id);
-    stateMap = Map.of(EMPTY, "EMPTY", SAND, "SAND", WATER, "WATER", BOUNDARY, "BOUNDARY");
-    positionMap = Map.of(UPPERLEFT, "UPPERLEFT", UPPER, "UPPER", UPPERRIGHT, "UPPERRIGHT", LEFT,
-        "LEFT", RIGHT, "RIGHT", LOWERLEFT, "LOWERLEFT", LOWER, "LOWER", LOWERRIGHT, "LOWERRIGHT");
-  }
-
-  /**
-   * Method that returns the cell that the current cell wants to swap with
-   *
-   * @return cell that the current cell wants to swap with
-   */
-  public Cell getNeighborToSwap() {
-    return cellToSwap;
-  }
-
-  /**
-   * Method that returns whether the current cell wants to swap with another cell
-   *
-   * @return whether the current cell wants to swap with another cell
-   */
-  public boolean wantsToSwap() {
-    return wantsToSwap;
-  }
-
-  /**
-   * Sets the future state of the cell
-   *
-   * @param neighbors
-   */
-  @Override
-  public void setFutureState(List<Cell> neighbors) {
-    neighborHood = neighbors;
-    wantsToSwap = false;
-    try {
-      this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (Exception e) {
-      e.printStackTrace();
+    /**
+     * Sets the future state of the cell
+     * @param neighbors
+     */
+    @Override
+    public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        neighborHood = neighbors;
+        wantsToSwap = false;
+        try {
+            this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            throw e;
+        }
     }
   }
 
@@ -108,8 +45,8 @@ public class FallingSandCell extends Cell {
             /*try {
                 int upperState = neighborHood.get(UPPER).getCurrentState();
                 this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+                throw e;
             }*/
 
       if (neighborHood.get(UPPER).getCurrentState()

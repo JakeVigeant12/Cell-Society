@@ -2,6 +2,8 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.view.GridWrapper;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
@@ -18,12 +20,16 @@ public class GameOfLifeGraphGrid extends GraphGrid {
   }
 
   @Override
-  public void computeStates() {
-    for (Cell currentCell : getMyAdjacencyList().getCells()) {
-      currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
-    }
-    for (Cell currentCell : getMyAdjacencyList().getCells()) {
-      currentCell.updateState();
+  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    try {
+      for (Cell currentCell : getMyAdjacencyList().getCells()) {
+        currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
+      }
+      for (Cell currentCell : getMyAdjacencyList().getCells()) {
+        currentCell.updateState();
+      }
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      throw e;
     }
   }
 }

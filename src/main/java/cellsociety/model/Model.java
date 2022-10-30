@@ -5,6 +5,7 @@ import cellsociety.model.grids.Grid;
 import cellsociety.parser.Parser;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public abstract class Model {
@@ -19,8 +20,13 @@ public abstract class Model {
   /**
    * Method that computes the states of the grid class
    */
-  public void computeStates() {
-    myGrid.computeStates();
+  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    try {
+      myGrid.computeStates();
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      throw e;
+    }
+
   }
 
   /**
