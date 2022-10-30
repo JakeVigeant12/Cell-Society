@@ -55,16 +55,6 @@ public class GraphGrid extends Grid {
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
     }
   }
-
-
-  public Map<Point, Cell> getMyCells() {
-    return myCells;
-  }
-
-  public void setMyCells(Map<Point, Cell> myCells) {
-    this.myCells = myCells;
-  }
-
   public List<Cell> getEmptyCells() {
     return emptyCells;
   }
@@ -211,15 +201,5 @@ public class GraphGrid extends Grid {
     for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.updateState();
     }
-  }
-
-  /**
-   * Method that returns the map of cells
-   *
-   * @return myCells
-   */
-  @Override
-  public Map<Point, Cell> getCells() {
-    return myCells;
   }
 }
