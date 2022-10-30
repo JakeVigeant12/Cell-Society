@@ -29,19 +29,24 @@ public class StartSplash extends SceneCreator {
   private Button frenchButton;
   private ImageView myBackground;
   private final Stage myStage;
-
+  private int minSize = 200;
   public static final String DEFAULT_RESOURCE_PACKAGE = StartSplash.class.getPackageName() + ".";
   public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
   ResourceBundle startInfo = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "startInfo");
 
+  /**
+   *
+   * @param size
+   * @param stage
+   */
 
   public StartSplash(double size, Stage stage) {
     super(size, stage);
     myStage = stage;
     startPane = new BorderPane();
     myBackground = new ImageView();
-    myStage.setMinWidth(200);
-    myStage.setMinHeight(200);
+    myStage.setMinWidth(minSize);
+    myStage.setMinHeight(minSize);
   }
 
   public Pane setUpRootPane() {

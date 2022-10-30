@@ -44,6 +44,7 @@ public class GridScreen extends SceneCreator {
   private final Stage myStage;
   private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
+  //TODO shorten class length
   /**
    * Constructor for GridScreen, sets up the root, borderPane and the timeline
    *
@@ -304,4 +305,6 @@ public class GridScreen extends SceneCreator {
     timeline.play();
     statusBox.setText(getMyResource().getString("playingStatus"));
   }
+
+  public GridView getCurrentView(){return gridView;}
 }

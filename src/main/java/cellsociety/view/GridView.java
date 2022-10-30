@@ -3,6 +3,9 @@ package cellsociety.view;
 import static cellsociety.view.StartSplash.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
+
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -28,6 +31,8 @@ public class GridView {
   GridWrapper gridStates;
   private final String[] stateStyles;
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
+  private HashMap<Integer, Integer> allCurrentStates = new HashMap<>();
+  private HashSet<Integer> stateTypes = new HashSet<>();
 
   /**
    * Constructor for GridView, sets up the grid and the cells
@@ -91,8 +96,10 @@ public class GridView {
         cells[y][x] = node;
 
         setCellListener(node, new Point(x, y));
+        stateTypes.add(node.getState());
       }
     }
+    updateHash();
   }
 
   private void setCellListener(CellView node, Point point) {
@@ -114,6 +121,7 @@ public class GridView {
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
         cells[y][x].updateState(gridData.getState(y, x));
+        allCurrentStates.put(gridData.getState(y,x), allCurrentStates.get(gridData.getState(y,x)) + 1);
       }
     }
   }
@@ -126,4 +134,10 @@ public class GridView {
   public GridPane getGrid() {
     return grid;
   }
+
+  private void updateHash(){
+    stateTypes.forEach( (n) -> allCurrentStates.put(n,0));
+  }
+
+  public HashMap getCurrentStates(){return allCurrentStates;}
 }
