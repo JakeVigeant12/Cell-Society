@@ -22,9 +22,9 @@ Part 1: 10/12/22
 
 Part 2: 10/18/22
 
-Part 3: TBA
+Part 3: 10/30/22
 
-Hours Spent: 80+ hours
+Hours Spent: 95+ hours
 
 ### Primary Roles
 Eka Ebong: GUI, User input side 
@@ -35,7 +35,7 @@ Jake Vigeant: Grid and Model
 
 Vaishvi Patel: Controller, Configuration
 
-Nick Ward: Cells
+Nick Ward: Cells, Model, Front-End Functionality
 
 
 ### Resources Used
@@ -82,6 +82,7 @@ Fully working simulations:
  * Rock, Paper, Scissors
  * Percolation
  * Schelling's Model of Segregation
+ * Falling Sand
 
 Nearly Complete Simulations:
  * Wa-Tor World
