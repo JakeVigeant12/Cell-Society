@@ -25,6 +25,37 @@ public class GridWrapper {
     }
   }
 
+  /***
+   * creates a random grid based on initial proportions for all states
+   * @param numStates
+   * @param initialProportions
+   */
+  public GridWrapper(int numStates, String[] initialProportions) {
+    Random rand = new Random();
+    this.row = rand.nextInt(1,25);
+    this.column = rand.nextInt(1,25);
+    int total = row*column;
+    int[] countStates = new int[numStates];
+    int[] currentCount = new int[numStates];
+    for(int i = 0; i < initialProportions.length; i++) {
+      countStates[i] = Integer.parseInt(initialProportions[i]) * total;
+      currentCount[i] = 0;
+    }
+
+    grid = new ArrayList<>();
+    for (int i = 0; i < this.row; i++) {
+      List<Integer> singleList = new ArrayList<>();
+      for (int j = 0; j < this.column; j++){
+        int newState = rand.nextInt(numStates);
+        if(currentCount[newState] < countStates[newState]) {
+          singleList.add(newState);
+          currentCount[newState] ++;
+        }
+      }
+      grid.add(singleList);
+    }
+  }
+
   //Initialize a GridWrapper with size 0
   public GridWrapper() {
     grid = new ArrayList<>();
