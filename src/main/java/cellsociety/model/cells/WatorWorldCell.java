@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 
 public class WatorWorldCell extends Cell {
@@ -18,7 +19,7 @@ public class WatorWorldCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public WatorWorldCell(int state, int id){
+  public WatorWorldCell(int state, Point id){
     super(state, id);
     fishTurns = 0;
     sharkTurns = 0;

@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 
 public class RockPaperScissorCell extends Cell {
@@ -17,7 +18,7 @@ public class RockPaperScissorCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public RockPaperScissorCell(int state, int id){
+  public RockPaperScissorCell(int state, Point id){
     super(state, id);
   }
 

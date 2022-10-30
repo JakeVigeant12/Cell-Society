@@ -4,6 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.SegregationCell;
 import cellsociety.view.GridWrapper;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
@@ -27,7 +28,7 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
    * @return Map of cells
    */
   @Override
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+  public Map<Point, Cell> createCells(GridWrapper inputLayout) {
     return super.createCells(inputLayout);
   }
 

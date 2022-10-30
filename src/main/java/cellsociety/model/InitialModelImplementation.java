@@ -4,6 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Properties;
 
@@ -45,7 +46,7 @@ public class InitialModelImplementation extends Model {
    * @param state
    */
   @Override
-  public void setCellCurrentState (int key, int state){
+  public void setCellCurrentState (Point key, int state){
     myGrid.setCellCurrentState(key, state);
   }
 
@@ -54,7 +55,7 @@ public class InitialModelImplementation extends Model {
    * @return cells
    */
   @Override
-  public Map<Integer, Cell> getCells() {
+  public Map<Point, Cell> getCells() {
     return myGrid.getCells();
   }
 }

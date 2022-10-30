@@ -1,7 +1,5 @@
 package cellsociety.view;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -11,7 +9,6 @@ import javafx.scene.shape.Rectangle;
 public class CellView extends StackPane {
   private Rectangle rectangle;
   private int state;
-  private final BooleanProperty isClicked;
   private int numStates;
   private ColorMap colors;
   private ImageMap images;
@@ -23,15 +20,13 @@ public class CellView extends StackPane {
    * @param state
    */
   public CellView(int state) {
-    isClicked = new SimpleBooleanProperty(false);
     //TODO: x, y might not be needed
 
     rectangle = new Rectangle();
     rectangle.setStroke(Color.BROWN);
     this.state = state;
 
-    getChildren().addAll(rectangle);
-    setOnClick();
+    getChildren().add(rectangle);
   }
 
   public CellView(int state, ImageMap images) {
@@ -50,14 +45,6 @@ public class CellView extends StackPane {
     setStateStyle();
   }
 
-  private void setStateStyle() {
-    if(isUsingColors)
-      rectangle.setFill(colors.getColor(state));
-    else {
-      rectangle.setFill(new ImagePattern(images.getImage(state)));
-    }
-  }
-
   public int getState() {
     return state;
   }
@@ -66,20 +53,16 @@ public class CellView extends StackPane {
    * Change the state of the cell on click
    */
   public void setOnClick() {
-    this.setOnMouseClicked(e -> {
-      //circulateState() must be put before isClicked.setValue(true). Otherwise, controller cannot observe the change in state.
-      circulateState();
-      isClicked.setValue(true);
-      if(isUsingColors)
-        rectangle.setFill(colors.getColor(state));
-      else
-        rectangle.setFill(new ImagePattern(images.getImage(state)));
-      isClicked.set(false);
-    });
+    //circulateState() must be put before isClicked.setValue(true). Otherwise, controller cannot observe the change in state.
+    circulateState();
+    setStateStyle();
   }
 
-  public BooleanProperty isClickedProperty() {
-    return isClicked;
+  private void setStateStyle() {
+    if (isUsingColors)
+      rectangle.setFill(colors.getColor(state));
+    else
+      rectangle.setFill(new ImagePattern(images.getImage(state)));
   }
 
   private void circulateState() {
@@ -96,11 +79,7 @@ public class CellView extends StackPane {
    */
   public void updateState(Integer state) {
     this.state = state;
-    if(isUsingColors)
-      rectangle.setFill(colors.getColor(state));
-    else
-      rectangle.setFill(new ImagePattern(images.getImage(state)));
-    isClicked.set(false);
+    setStateStyle();
   }
 
   public void updateSize(double size) {

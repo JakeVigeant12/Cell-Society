@@ -7,6 +7,7 @@ import cellsociety.model.Model;
 import cellsociety.view.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class CellSocietyController {
   private Model myModel;
   private final CSVParser myGridParser;
   private File simFile;
-  private Map<Integer, Cell> backEndCellsByID;
+  private Map<Point, Cell> backEndCellsByID;
 
   /**
    * Constructor for CellSocietyController class
@@ -86,7 +87,7 @@ public class CellSocietyController {
    * @param state
    */
   public void updateOneCell(int y, int x, int state) {
-    myModel.setCellCurrentState(numCols * y + x + 1, state);
+    myModel.setCellCurrentState(new Point(x, y), state);
   }
 
   /**
@@ -94,14 +95,14 @@ public class CellSocietyController {
    */
   public GridWrapper getViewGrid() {
     GridWrapper stateGrid = new GridWrapper(numRows, numCols);
-    for (Integer key : backEndCellsByID.keySet()) {
-      stateGrid.setState((key - 1) / numCols, (key - 1) % numCols, backEndCellsByID.get(key).getCurrentState());
+    for (Point key : backEndCellsByID.keySet()) {
+      stateGrid.setState(key.y, key.x, backEndCellsByID.get(key).getCurrentState());
     }
     return stateGrid;
   }
 
   //For test purpose
-  public void setBackEndCellsByID(Map<Integer, Cell> backEndCellsByID) {
+  public void setBackEndCellsByID(Map<Point, Cell> backEndCellsByID) {
     this.backEndCellsByID = backEndCellsByID;
   }
 

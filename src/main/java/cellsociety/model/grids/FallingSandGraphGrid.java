@@ -4,6 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.FallingSandCell;
 import cellsociety.view.GridWrapper;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Properties;
 
@@ -25,7 +26,7 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
    * @return
    */
   @Override
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+  public Map<Point, Cell> createCells(GridWrapper inputLayout) {
     return super.createCells(inputLayout);
   }
 

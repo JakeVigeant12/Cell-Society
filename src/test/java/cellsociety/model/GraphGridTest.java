@@ -3,6 +3,8 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.GameOfLifeCell;
 
 import cellsociety.model.grids.GraphGrid;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,9 +35,9 @@ public class GraphGridTest {
     HashMap<Integer, Cell> testCells = new HashMap<>();
     for(int i = 0; i < 16; i++){
 
-      testCells.put(i, new GameOfLifeCell(1,i));
+      testCells.put(i, new GameOfLifeCell(1,new Point(1, 0)));
     }
-    assertEquals(testCells.get(1).getCurrentState(),gameOfLifeGrid.getCells().get(16).getCurrentState());
+    assertEquals(testCells.get(1).getCurrentState(),gameOfLifeGrid.getCells().get(new Point(3,3)).getCurrentState());
     assertEquals(testCells.size(), gameOfLifeGrid.getCells().size());
 
   }

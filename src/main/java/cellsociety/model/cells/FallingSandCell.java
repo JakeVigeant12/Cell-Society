@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class FallingSandCell extends Cell {
 
     private List<Cell> neighborHood;
 
-    public FallingSandCell(int state, int id){
+    public FallingSandCell(int state, Point id){
         super(state, id);
     }
 
