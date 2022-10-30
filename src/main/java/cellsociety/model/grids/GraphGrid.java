@@ -48,7 +48,7 @@ public class GraphGrid extends Grid {
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
     try {
-      if (properties.getProperty("Edge").equals("toroidal"))
+      if (properties.getProperty("EdgePolicy").equals("toroidal"))
         myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
     } catch (NullPointerException e) {
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);

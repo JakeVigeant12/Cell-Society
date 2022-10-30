@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GridWrapper {
   private int row = 0;
@@ -27,6 +28,25 @@ public class GridWrapper {
   //Initialize a GridWrapper with size 0
   public GridWrapper() {
     grid = new ArrayList<>();
+  }
+
+  /***
+   * Creates a random grid with cells with a certain number of states
+   * @param numStates
+   */
+  public GridWrapper(int numStates) {
+    Random rand = new Random();
+    this.row = rand.nextInt(1,25);
+    this.column = rand.nextInt(1,25);
+
+    grid = new ArrayList<>();
+    for (int i = 0; i < this.row; i++) {
+      List<Integer> singleList = new ArrayList<>();
+      for (int j = 0; j < this.column; j++){
+        singleList.add(rand.nextInt(numStates));
+      }
+      grid.add(singleList);
+    }
   }
 
   public int getState(int row, int column) {

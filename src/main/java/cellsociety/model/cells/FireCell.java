@@ -9,6 +9,7 @@ public class FireCell extends Cell {
   private int turns;
   private double myProbCatch;
 
+  private String PROBABILITY_ERROR_MESSAGE = "probabilityError";
 
   /**
    * Constructor for FireCell class

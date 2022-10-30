@@ -5,7 +5,6 @@ import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,7 +18,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
 public class GridView {
@@ -44,7 +42,7 @@ public class GridView {
   private final ImageMap images;
   private boolean isUsingColors;
   private final boolean setBorder;
-  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
+  public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
    * Constructor for GridView, sets up the grid and the cells
@@ -79,7 +77,7 @@ public class GridView {
         isUsingColors = true;
       }
     } else {
-      for (String colorString : resourceBundle.getString(String.format("%s%s", properties.get(TYPE),STATE_COLORS)).split(
+      for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE),STATE_COLORS)).split(
           REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
