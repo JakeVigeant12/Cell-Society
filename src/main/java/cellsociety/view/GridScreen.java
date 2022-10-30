@@ -42,7 +42,8 @@ public class GridScreen extends SceneCreator {
   private CellSocietyController myController;
   private double refreshRate = 1;
   private final Stage myStage;
-  private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
+  private Histogram myChart;
+  private static final List<List<String>> BUTTONS_LIST = List.of(List.of("backButton", "exitButton","uploadButton", "chartButton"), List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
   //TODO shorten class length
   /**
@@ -307,4 +308,9 @@ public class GridScreen extends SceneCreator {
   }
 
   public GridView getCurrentView(){return gridView;}
+
+  private void createChart() {
+    myChart = new Histogram(gridView);
+    myChart.createGraph();
+  }
 }

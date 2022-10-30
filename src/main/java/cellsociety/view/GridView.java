@@ -100,6 +100,7 @@ public class GridView {
       }
     }
     updateHash();
+    setCurrentStatesData(gridData);
   }
 
   private void setCellListener(CellView node, Point point) {
@@ -118,13 +119,15 @@ public class GridView {
    * @param gridData
    */
   public void updateGrid(GridWrapper gridData) {
+    updateHash();
     for (int y = 0; y < n; y++) {
       for (int x = 0; x < m; x++) {
         cells[y][x].updateState(gridData.getState(y, x));
-        allCurrentStates.put(gridData.getState(y,x), allCurrentStates.get(gridData.getState(y,x)) + 1);
       }
     }
+    setCurrentStatesData(gridData);
   }
+
 
   /**
    * Returns the grid
@@ -137,6 +140,14 @@ public class GridView {
 
   private void updateHash(){
     stateTypes.forEach( (n) -> allCurrentStates.put(n,0));
+  }
+
+  private void setCurrentStatesData(GridWrapper gridData){
+    for (int y = 0; y < n; y++) {
+      for (int x = 0; x < m; x++) {
+        allCurrentStates.put(gridData.getState(y,x), allCurrentStates.get(gridData.getState(y,x)) + 1);
+      }
+    }
   }
 
   public HashMap getCurrentStates(){return allCurrentStates;}
