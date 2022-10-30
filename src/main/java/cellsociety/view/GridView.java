@@ -83,12 +83,13 @@ public class GridView {
     int cols = column.get();
     sizeProperty.addListener((obs, oldVal, newVal) -> {
       for (int y = 0; y < rows; y++) {
-        for (int x = 0; x <cols; x++) {
+        for (int x = 0; x < cols; x++) {
           updateCellWidth(x, y, (Double) newVal);
         }
       }
     });
   }
+
   public GridWrapper getGridStates() {
     return gridStates;
   }
@@ -122,20 +123,14 @@ public class GridView {
         // add to grid for further reference using an array
         gridStates.setState(y, x, node.getState());
         cells.get(y).add(node);
-
-        setCellListener(node, new Point(x, y));
+        int finalX = x;
+        int finalY = y;
+        node.setOnMouseClicked(e -> {
+          node.setOnClick();
+          myController.updateOneCell(finalY, finalX, node.getState());
+        });
       }
     }
-  }
-
-  private void setCellListener(CellView node, Point point) {
-    node.isClickedProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal) {
-          myController.updateOneCell(point.y, point.x, node.getState());
-          node.isClickedProperty().set(false);
-        }
-      }
-    );
   }
 
   /**

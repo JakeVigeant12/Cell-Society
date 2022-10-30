@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -7,13 +8,13 @@ import java.util.Properties;
 public class Cell {
   private int currentState;
   private int futureState;
-  private int id;
+  private Point id;
   /**
    * Constructor for Cell class
    * @param state is the state of the cell
    * @param id is the identification number for this cell
    */
-  public Cell(int state, int id) {
+  public Cell(int state, Point id) {
     this.currentState = state;
     this.id = id;
   }
@@ -56,7 +57,7 @@ public class Cell {
    * Method that sets the id of the cell
    * @param id
    */
-  public void setId(int id) {
+  public void setId(Point id) {
     this.id = id;
   }
 
@@ -64,7 +65,7 @@ public class Cell {
    * Method that returns the id of the cell
    * @return id of the cell
    */
-  public int getId() {
+  public Point getId() {
     return this.id;
   }
 

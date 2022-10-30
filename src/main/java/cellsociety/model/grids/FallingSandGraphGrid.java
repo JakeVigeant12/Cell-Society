@@ -4,6 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.FallingSandCell;
 import cellsociety.view.GridWrapper;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Properties;
 
@@ -18,6 +19,7 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid{
   public FallingSandGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   /**
    * Method that computes and sets next state of cells
    */

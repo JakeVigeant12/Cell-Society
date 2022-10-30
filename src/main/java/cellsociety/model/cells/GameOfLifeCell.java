@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,7 +18,7 @@ public class GameOfLifeCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public GameOfLifeCell(int state, int id) {
+  public GameOfLifeCell(int state, Point id) {
     super(state, id);
   }
 

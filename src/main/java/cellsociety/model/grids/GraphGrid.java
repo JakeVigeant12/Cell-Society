@@ -8,9 +8,11 @@ import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
+import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.List;
 
 public class GraphGrid extends Grid {
 
@@ -70,12 +72,10 @@ public class GraphGrid extends Grid {
   //Assume grid values are passed in as expected, sans dimensions
   private Map<Integer, Cell> createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
-    Map<Integer, Cell> cellHolder = new HashMap<>();
-    int cellCount = 0;
+    Map<Point, Cell> cellHolder = new HashMap<>();
     for(int i = 0; i < inputLayout.getRowCount(); i++){
       for(int j = 0; j < inputLayout.getRowSize(0); j++){
-        cellCount++;
-        createCell(inputLayout.getState(i, j), cellHolder, cellCount);
+        createCell(inputLayout.getState(i, j), cellHolder, new Point(j, i));
       }
     }
     return cellHolder;
@@ -87,7 +87,7 @@ public class GraphGrid extends Grid {
    * @param cellHolder
    * @param cellCount
    */
-  private void createCell(int cellData, Map<Integer, Cell> cellHolder, int cellCount) {
+  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount) {
     Cell newCell;
     try {
       Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
@@ -124,7 +124,7 @@ public class GraphGrid extends Grid {
    * @param state
    */
   @Override
-  public void setCellCurrentState (int key, int state){
+  public void setCellCurrentState (Point key, int state){
     myCells.get(key).setCurrentState(state);
   }
 
@@ -140,6 +140,34 @@ public class GraphGrid extends Grid {
     }
     else{
       return new CompleteNeighborhood();
+    }
+  }
+
+  /**
+   * Method that initializes the neighbors for the grid
+   * @param gridParsing
+   * @param myCells
+   * @param simulationNeighbors
+   * @return the adjacency list
+   */
+
+  /**
+   * Method that creates the neighborhood for the cell
+   * @param i
+   * @param j
+   * @param gridParsing
+   * @param currId
+   * @param simulationNeighbors
+   * @param neighborNumber
+   * @param adjacencyList
+   * @param currentCell
+   * @param myCells
+   */
+  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Point, Cell> myCells) {
+    if(isInBounds(i, j, gridParsing)){
+      if(simulationNeighbors.countNeighbor(neighborNumber)) {
+        adjacencyList.get(currentCell).add(myCells.get(currId));
+      }
     }
   }
 
@@ -176,7 +204,7 @@ public class GraphGrid extends Grid {
    * @return myCells
    */
   @Override
-  public Map<Integer, Cell> getCells(){
+  public Map<Point, Cell> getCells(){
     return myCells;
   }
 }

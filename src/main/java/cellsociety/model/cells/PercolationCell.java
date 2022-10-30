@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 
 public class PercolationCell extends Cell {
@@ -16,7 +17,7 @@ public class PercolationCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public PercolationCell(int state, int id){
+  public PercolationCell(int state, Point id){
     super(state, id);
   }
 

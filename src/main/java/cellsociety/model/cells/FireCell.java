@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,7 +17,7 @@ public class FireCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public FireCell(int state, int id, double parameter){
+  public FireCell(int state, Point id, double parameter){
     super(state, id);
     turns = 0;
     double probCatch = parameter;

@@ -3,6 +3,8 @@ package cellsociety.model.grids;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.Properties;
 
 public class WatorGraphGrid extends SwappedCellsGraphGrid {
 
-  private HashMap<Integer, Cell> myCells;
+  private HashMap<Point, Cell> myCells;
   private HashMap<Cell, List<Cell>> myAdjacenyList;
   private List<Cell> emptyCells;
   private Properties myProperties;

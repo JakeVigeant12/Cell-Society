@@ -3,6 +3,8 @@ package cellsociety.model;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.Grid;
 import cellsociety.parser.Parser;
+
+import java.awt.*;
 import java.util.Map;
 
 public abstract class Model {
@@ -25,14 +27,14 @@ public abstract class Model {
    * @param key
    * @param state
    */
-  public void setCellCurrentState (int key, int state){
+  public void setCellCurrentState (Point key, int state){
   }
 
   /**
    * Method that returns the cells
    * @return adjacencyList
    */
-  public Map<Integer, Cell> getCells() {
+  public Map<Point, Cell> getCells() {
     return Map.of(null,null);
   }
 }

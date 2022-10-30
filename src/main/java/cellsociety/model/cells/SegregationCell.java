@@ -1,5 +1,6 @@
 package cellsociety.model.cells;
 
+import java.awt.*;
 import java.util.List;
 
 public class SegregationCell extends Cell {
@@ -22,7 +23,7 @@ public class SegregationCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public SegregationCell(int state, int id, double parameter){
+  public SegregationCell(int state, Point id, double parameter){
     super(state, id);
     sameNeighborsAgent1 = 0;
     sameNeighborsAgent2 = 0;
