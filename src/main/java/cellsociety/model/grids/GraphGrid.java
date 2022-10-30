@@ -204,10 +204,6 @@ public class GraphGrid extends Grid {
     }
   }
 
-  public void setFutureState(Cell target, List<Cell> neighbors) {
-
-  }
-
   /**
    * Method that returns the map of cells
    *

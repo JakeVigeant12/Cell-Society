@@ -3,15 +3,15 @@ package cellsociety.model.cells;
 import java.awt.Point;;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class FireCell extends Cell {
-
   private int turns;
   private double myProbCatch;
   private static final int EMPTY = 0;
   private static final int TREE = 1;
   private static final int BURNING = 2;
+  private static final int BURNING_TIME = 3;
+  public static final String PROBABILITY_ERROR_MESSAGE = "Probability of catching fire must be between 0 and 1";
   private List<Cell> myNeighbors;
   private Map<Integer, String> stateMap;
 
