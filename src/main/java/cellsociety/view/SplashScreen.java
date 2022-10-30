@@ -55,13 +55,13 @@ public class SplashScreen extends SceneCreator {
 
   public Pane setUpRootPane() {
 
-    mainTitle = new Text(TEAM_10);
+    Text mainTitle = new Text(TEAM_10);
     mainTitle.getStyleClass().add(MAIN_TITLE);
     VBox vBoxTop = new VBox(mainTitle);
     vBoxTop.setAlignment(Pos.CENTER);
 
 
-    selectLanguage = new Text(SELECT_LANGUAGE);
+    Text selectLanguage = new Text(SELECT_LANGUAGE);
     selectLanguage.getStyleClass().add(START_SELECT_LANGUAGE);
 
 

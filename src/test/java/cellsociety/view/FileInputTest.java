@@ -24,7 +24,7 @@ class FileInputTest extends DukeApplicationTest {
   void testBack() {
     Button button = lookup("#backButton").query();
     clickOn(button);
-    Button button1 = lookup("#English").query();
+    Button button1 = lookup("#englishButton").query();
     Assertions.assertEquals(button1.getText(), "English");
   }
 }
