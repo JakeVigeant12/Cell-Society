@@ -4,7 +4,7 @@ import cellsociety.model.cells.GameOfLifeCell;
 
 import cellsociety.model.grids.GraphGrid;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

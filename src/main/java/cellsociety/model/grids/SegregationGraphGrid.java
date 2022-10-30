@@ -4,7 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.SegregationCell;
 import cellsociety.view.GridWrapper;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;

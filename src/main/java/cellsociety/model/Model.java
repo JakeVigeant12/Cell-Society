@@ -4,7 +4,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.Grid;
 import cellsociety.parser.Parser;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.Map;
 
 public abstract class Model {

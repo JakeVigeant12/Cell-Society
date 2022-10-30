@@ -3,7 +3,7 @@ package cellsociety.model;
 import cellsociety.model.cells.PercolationCell;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
