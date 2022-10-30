@@ -169,12 +169,16 @@ public class GraphGrid extends Grid {
    */
   @Override
   public void computeStates() {
-    for (Cell currentCell : myAdjacencyList.getCells()){
-      currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
+    for (Cell currentCell : getMyAdjacencyList().getCells()){
+      setFutureState(currentCell, getMyAdjacencyList().getNeighbors(currentCell));
     }
-    for (Cell currentCell : myAdjacencyList.getCells()){
+    for (Cell currentCell : getMyAdjacencyList().getCells()){
       currentCell.updateState();
     }
+  }
+
+  public void setFutureState(Cell target, List<Cell> neighbors) {
+
   }
 
   /**

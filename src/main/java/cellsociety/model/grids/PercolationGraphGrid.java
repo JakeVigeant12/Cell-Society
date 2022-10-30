@@ -25,15 +25,6 @@ public class PercolationGraphGrid extends GraphGrid{
   }
 
   @Override
-  public void computeStates() {
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      setFutureState(currentCell, super.getMyAdjacencyList().getNeighbors(currentCell));
-    }
-    for (Cell currentCell : super.getMyAdjacencyList().getCells()){
-      currentCell.updateState();
-    }
-  }
-
   public void setFutureState(Cell target, List<Cell> neighbors) {
     if (target.getCurrentState() == EMPTY){
       for (Cell neighbor : neighbors) {

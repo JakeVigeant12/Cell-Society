@@ -1,5 +1,18 @@
 package cellsociety.model.grids;
 
-public class RockPaperScissorGraphGrid {
+import cellsociety.view.GridWrapper;
+import java.util.Properties;
 
+public class RockPaperScissorGraphGrid extends GraphGrid{
+
+  /**
+   * Constructor for GraphGrid class
+   *
+   * @param gridParsing is the layout of the grid
+   * @param properties
+   */
+  public RockPaperScissorGraphGrid(GridWrapper gridParsing,
+      Properties properties) {
+    super(gridParsing, properties);
+  }
 }
