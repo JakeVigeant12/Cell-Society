@@ -16,7 +16,9 @@ public class GameOfLifeGraphGrid extends GraphGrid {
   public GameOfLifeGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
-
+  /**
+   * Loops through cells and tells them to update states
+   */
   @Override
   public void computeStates() {
     for (Cell currentCell : getMyAdjacencyList().getCells()) {

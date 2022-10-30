@@ -168,7 +168,6 @@ public class GraphGrid extends Grid {
    * @param simType
    * @return
    */
-  //TODO refactor
   public Neighborhood setNeighbors(String simType) {
     if (simType.equals(FIRE)) {
       return new NoDiagonalNeighborhood();
@@ -201,5 +200,15 @@ public class GraphGrid extends Grid {
     for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.updateState();
     }
+  }
+
+  /**
+   * Method that returns the map of cells
+   *
+   * @return myCells
+   */
+  @Override
+  public Map<Point, Cell> getCells() {
+    return myCells;
   }
 }

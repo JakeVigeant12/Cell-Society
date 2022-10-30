@@ -48,7 +48,9 @@ public class FireCell extends Cell {
       e.printStackTrace();
     }
   }
-
+/**
+ * Sets the state of a cell to Tree
+ **/
   private void setTREE() {
     if (getNeighborStates(myNeighbors).contains(BURNING)) {
       double burnVal = Math.random();// If current cell is a tree and has a burning neighbor
@@ -61,7 +63,9 @@ public class FireCell extends Cell {
       setFutureStateValue(TREE);
     }
   }
-
+  /**
+   * Sets the state of a cell to Burning
+   **/
   private void setBURNING() {
     if (turns == BURNING_TIME) { // If current cell has been burning for BURNING_TIME turns
       setFutureStateValue(EMPTY); // Set current cell to empty
@@ -70,7 +74,9 @@ public class FireCell extends Cell {
       setFutureStateValue(BURNING); // Keep current cell burning
     }
   }
-
+  /**
+   * Sets the state of a cell to Empty
+   **/
   private void setEMPTY() {
     setFutureStateValue(EMPTY);
   }

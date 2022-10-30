@@ -43,19 +43,25 @@ public class RockPaperScissorCell extends Cell {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Sets the state of a cell to rock
+   **/
   private void setROCK() {
     if (myNeighborStates.contains(PAPER)) { // if neighbor is paper
       setFutureStateValue(PAPER); // cell becomes paper
     }
   }
-
+  /**
+   * Sets the state of a cell to paper
+   **/
   private void setPAPER() {
     if (myNeighborStates.contains(SCISSOR)) { // if neighbor is scissors
       setFutureStateValue(SCISSOR); // cell becomes scissors
     }
   }
-
+  /**
+   * Sets the state of a cell to scissor
+   **/
   private void setSCISSOR() {
     if (myNeighborStates.contains(ROCK)) { // if neighbor is rock
       setFutureStateValue(ROCK); // cell becomes rock

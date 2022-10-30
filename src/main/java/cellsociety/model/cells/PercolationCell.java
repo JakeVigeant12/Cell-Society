@@ -42,7 +42,9 @@ public class PercolationCell extends Cell {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Sets the state of a cell to empty
+   **/
   private void setEMPTY() {
     for (Cell neighbor : myNeighbors) {
       if (neighbor.getCurrentState() == PERCOLATED) {
@@ -50,11 +52,15 @@ public class PercolationCell extends Cell {
       }
     }
   }
-
+  /**
+   * Sets the state of a cell to percolated
+   **/
   private void setPERCOLATED() {
     setFutureStateValue(PERCOLATED);
   }
-
+  /**
+   * Sets the state of a cell to blocked
+   **/
   private void setBLOCKED() {
     setFutureStateValue(BLOCKED);
   }

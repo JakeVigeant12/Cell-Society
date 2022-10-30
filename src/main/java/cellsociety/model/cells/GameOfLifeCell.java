@@ -49,7 +49,9 @@ public class GameOfLifeCell extends Cell {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Sets the state of a cell to dead
+   **/
   private void setDEAD() {
     if (aliveNeighbors == UPPERTHRESHOLD) { // If current cell has 3 alive neighbors
       setFutureStateValue(ALIVE); // Set current cell to alive
@@ -57,7 +59,9 @@ public class GameOfLifeCell extends Cell {
       setFutureStateValue(DEAD); // Set current cell to dead
     }
   }
-
+  /**
+   * Sets the state of a cell to alive
+   **/
   private void setALIVE() {
     if (aliveNeighbors < LOWERTHRESHOLD || aliveNeighbors
         > UPPERTHRESHOLD) { // If alive cell has less than 2 or more than 3 neighbors
