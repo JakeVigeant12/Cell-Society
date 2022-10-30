@@ -13,6 +13,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
@@ -144,34 +147,6 @@ public class GraphGrid extends Grid {
   }
 
   /**
-   * Method that initializes the neighbors for the grid
-   * @param gridParsing
-   * @param myCells
-   * @param simulationNeighbors
-   * @return the adjacency list
-   */
-
-  /**
-   * Method that creates the neighborhood for the cell
-   * @param i
-   * @param j
-   * @param gridParsing
-   * @param currId
-   * @param simulationNeighbors
-   * @param neighborNumber
-   * @param adjacencyList
-   * @param currentCell
-   * @param myCells
-   */
-  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Point, Cell> myCells) {
-    if(isInBounds(i, j, gridParsing)){
-      if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(currId));
-      }
-    }
-  }
-
-  /**
    * Method that checks if the cell is in bounds
    * @param row
    * @param col
@@ -187,12 +162,8 @@ public class GraphGrid extends Grid {
    */
   @Override
   public void computeStates() {
-    emptyCells = new ArrayList<>();
     for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
-      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
-        emptyCells.add(currentCell);
-      }
     }
     for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.updateState();
@@ -201,7 +172,6 @@ public class GraphGrid extends Grid {
 
   /**
    * Method that returns the map of cells
-   *
    * @return myCells
    */
   @Override
