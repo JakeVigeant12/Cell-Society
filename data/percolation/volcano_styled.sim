@@ -6,3 +6,4 @@ Description=An erupting volcano
 InitialStates=percolation/volcano.csv
 StateImages=images/empty.png,images/sea.png,images/rock.png
 Outlined=false
+EdgePolicy=toroidal

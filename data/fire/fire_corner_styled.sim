@@ -6,3 +6,4 @@ Title=Starts Small
 Description=Fire starts from the corner
 StateImages=images/grass.png,images/tree.png,images/fire.png
 Outlined=false
+EdgePolicy=toroidal

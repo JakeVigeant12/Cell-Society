@@ -5,3 +5,4 @@ Description=Diagonal ands of each type, order matters to determine who wins the 
 InitialStates=rock_paper_scissors/diagonal.csv
 StateImages=images/rock.png,images/paper.png,images/scissors.png
 Outlined=false
+EdgePolicy=finite

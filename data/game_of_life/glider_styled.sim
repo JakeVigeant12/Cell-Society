@@ -5,3 +5,4 @@ Description=The glider is a pattern that travels across the board (John Conway r
 InitialStates=game_of_life/glider.csv
 StateImages=images/tombstone.png,images/heart.png
 Outlined=false
+EdgePolicy=finite

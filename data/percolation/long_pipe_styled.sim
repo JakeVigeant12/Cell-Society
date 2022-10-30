@@ -7,3 +7,4 @@ Author=Robert Duvall
 Description=Long, bendy pipes flowing from top to bottom
 StateImages=images/empty.png,images/sea.png,images/rock.png
 Outlined=true
+EdgePolicy=toroidal

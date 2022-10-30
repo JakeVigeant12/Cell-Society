@@ -6,3 +6,4 @@ InitialStates=fire/fire_center.csv
 Parameters=0.4
 StateImages=images/grass.png,images/tree.png,images/fire.png
 Outlined=true
+EdgePolicy=toroidal

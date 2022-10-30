@@ -7,3 +7,4 @@ StateColors=FF0000,00FF00,0000FF
 InitialStates=rock_paper_scissors/divided.csv
 StateImages=images/rock.png,images/paper.png,images/scissors.png
 Outlined=true
+EdgePolicy=finite
