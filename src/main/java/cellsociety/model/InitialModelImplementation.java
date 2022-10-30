@@ -23,19 +23,21 @@ public class InitialModelImplementation extends Model {
 
   /**
    * Constructor for the model
+   *
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
-      try {
-        Class<?> graphGridClass = Class.forName(gridPackagePath + simParameters.get("Type") + "GraphGrid");
-        Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
-        myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper,simParameters);
-      }
-      catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
+      throws IllegalStateException {
+    try {
+      Class<?> graphGridClass = Class.forName(
+          gridPackagePath + simParameters.get("Type") + "GraphGrid");
+      Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
+      myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper, simParameters);
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-        throw new IllegalStateException("errorInitializingGrid");
-      }
+      throw new IllegalStateException("errorInitializingGrid");
+    }
   }
 
   /**
@@ -47,16 +49,18 @@ public class InitialModelImplementation extends Model {
 
   /**
    * Method that sets the current state of a cell
+   *
    * @param key
    * @param state
    */
   @Override
-  public void setCellCurrentState (Point key, int state){
+  public void setCellCurrentState(Point key, int state) {
     myGrid.setCellCurrentState(key, state);
   }
 
   /**
    * Method that returns the cells
+   *
    * @return cells
    */
   @Override

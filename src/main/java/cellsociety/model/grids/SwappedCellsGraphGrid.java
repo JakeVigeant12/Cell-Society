@@ -6,7 +6,7 @@ import cellsociety.view.GridWrapper;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public class SwappedCellsGraphGrid extends GraphGrid{
+public class SwappedCellsGraphGrid extends GraphGrid {
 
   /**
    * Constructor for GraphGrid class
@@ -20,6 +20,7 @@ public class SwappedCellsGraphGrid extends GraphGrid{
 
   /**
    * Finds a cell to swap with the current cell
+   *
    * @param startingCell
    * @param locations
    * @param targetState
@@ -32,10 +33,9 @@ public class SwappedCellsGraphGrid extends GraphGrid{
         potentialLocations.add(potentialCell);
       }
       //No cells found that match the state we need to swap into
-      else if (potentialLocations.isEmpty()){
+      else if (potentialLocations.isEmpty()) {
         return startingCell;
-      }
-      else {
+      } else {
         return startingCell;
       }
     }
@@ -46,6 +46,7 @@ public class SwappedCellsGraphGrid extends GraphGrid{
 
   /**
    * Finds a cell to swap with the current cell if a set of locations is given
+   *
    * @param cellToSwap
    * @param locations
    * @return

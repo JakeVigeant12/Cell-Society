@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class AdjacencyList {
+
   private Map<Cell, List<Cell>> adjacencyList;
   private int rowCount;
   private int rowSize;
@@ -18,7 +19,8 @@ public class AdjacencyList {
   private Map<Point, Cell> cells;
   private Neighborhood simulationNeighbors;
 
-  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
+  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells,
+      Neighborhood simulationNeighbors) {
     this.inputLayout = inputLayout;
     this.cells = cells;
     this.simulationNeighbors = simulationNeighbors;
@@ -30,7 +32,6 @@ public class AdjacencyList {
 
   /**
    * Method that initializes the neighbors for each cell
-   *
    */
   private void initializeNeighbors() {
     for (int i = 0; i < rowCount; i++) {
@@ -38,14 +39,22 @@ public class AdjacencyList {
         List<Cell> neighbors = new ArrayList<>();
         Cell currentCell = cells.get(new Point(j, i));
         adjacencyList.putIfAbsent(currentCell, neighbors);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), simulationNeighbors, 0, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j, i - 1), simulationNeighbors, 1, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors, 2, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i), simulationNeighbors, 3, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i), simulationNeighbors, 4, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), simulationNeighbors, 5, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j, i + 1), simulationNeighbors, 6, currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors, 7, currentCell);
+        createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), simulationNeighbors, 0,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j, i - 1), simulationNeighbors, 1,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors, 2,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j - 1, i), simulationNeighbors, 3,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j + 1, i), simulationNeighbors, 4,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), simulationNeighbors, 5,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j, i + 1), simulationNeighbors, 6,
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors, 7,
+            currentCell);
       }
     }
   }
@@ -59,7 +68,8 @@ public class AdjacencyList {
    * @param neighborNumber
    * @param currentCell
    */
-  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors, int neighborNumber, Cell currentCell) {
+  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors,
+      int neighborNumber, Cell currentCell) {
     if (isInBounds(currId, inputLayout)) {
       if (simulationNeighbors.countNeighbor(neighborNumber)) {
         adjacencyList.get(currentCell).add(cells.get(currId));
@@ -76,7 +86,8 @@ public class AdjacencyList {
    * @return
    */
   public static boolean isOnEdges(int row, int col, GridWrapper gridWrapper) {
-    return (row == 0 || row == gridWrapper.getRowCount() - 1) || (col == 0 || col == gridWrapper.getRowSize(0) - 1);
+    return (row == 0 || row == gridWrapper.getRowCount() - 1) || (col == 0
+        || col == gridWrapper.getRowSize(0) - 1);
   }
 
   /**
@@ -87,7 +98,8 @@ public class AdjacencyList {
    * @return
    */
   protected static boolean isInBounds(Point point, GridWrapper gridWrapper) {
-    return (point.y >= 0 && point.y < gridWrapper.getRowCount()) && (point.x >= 0 && point.x < gridWrapper.getRowSize(0));
+    return (point.y >= 0 && point.y < gridWrapper.getRowCount()) && (point.x >= 0
+        && point.x < gridWrapper.getRowSize(0));
   }
 
   /**

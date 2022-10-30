@@ -18,6 +18,7 @@ import java.util.Properties;
 import javafx.stage.Stage;
 
 public class CellSocietyController {
+
   private static final String INITIAL_STATES = "InitialStates";
   public static final String TITLE = "Title";
   private final int numRows;
@@ -30,6 +31,7 @@ public class CellSocietyController {
 
   /**
    * Constructor for CellSocietyController class
+   *
    * @param simFile
    */
   public CellSocietyController(File simFile) throws IllegalStateException {
@@ -48,18 +50,18 @@ public class CellSocietyController {
   /**
    * Method that gets the simulation data
    */
-  public void getSimData() throws IllegalStateException{
+  public void getSimData() throws IllegalStateException {
     properties = new Properties();
     try {
       properties.load(new FileReader(simFile));
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw new IllegalStateException("fileUploadError");
     }
   }
 
   /**
    * Method that loads the simulation based on the stage
+   *
    * @param stage
    */
   public void loadSimulation(Stage stage) {
@@ -69,6 +71,7 @@ public class CellSocietyController {
 
   /**
    * Getter for properties
+   *
    * @return
    */
   public Properties getProperties() {
@@ -77,6 +80,7 @@ public class CellSocietyController {
 
   /**
    * Method that updates only one cell
+   *
    * @param y
    * @param x
    * @param state
@@ -103,6 +107,7 @@ public class CellSocietyController {
 
   /**
    * Method that updates the grid
+   *
    * @return gridWrapper
    */
   public GridWrapper updateGrid() {
@@ -112,7 +117,6 @@ public class CellSocietyController {
 
   /**
    * Resets the cells to the original file inputted
-   *
    */
   public void resetController() throws IllegalStateException {
     String csvPath = (String) properties.get(INITIAL_STATES);
@@ -123,9 +127,10 @@ public class CellSocietyController {
 
   /**
    * Method that saves the grid to a file
+   *
    * @param file
    */
-  public void saveGrid(File file) throws IllegalStateException{
+  public void saveGrid(File file) throws IllegalStateException {
     myGridParser.saveCurrentGrid(getViewGrid(), file);
   }
 }

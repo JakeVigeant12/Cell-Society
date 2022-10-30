@@ -18,9 +18,11 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GridScreenTest extends DukeApplicationTest {
+
   Stage stage;
   TextArea myStatusBox;
   ResourceBundle myResources;
+
   @Override
   public void start(Stage stage)
       throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -40,36 +42,42 @@ class GridScreenTest extends DukeApplicationTest {
     clickOn(button);
     Assertions.assertEquals(myResources.getString("playingStatus"), myStatusBox.getText());
   }
+
   @Test
   void testClickCell() {
     CellView cell = lookup("#cell1,2").query();
     clickOn(cell);
     assertEquals(1, cell.getState());
   }
+
   @Test
   void testClickCell2() {
     CellView cell = lookup("#cell3,0").query();
     clickOn(cell);
     assertEquals(0, cell.getState());
   }
+
   @Test
   void testPauseButton() {
     Button button = lookup("#pauseButton").query();
     clickOn(button);
     Assertions.assertEquals(myResources.getString("pausedStatus"), myStatusBox.getText());
   }
+
   @Test
   void testStepButton() {
     Button button = lookup("#stepButton").query();
     clickOn(button);
     Assertions.assertEquals(myResources.getString("stepStatus"), myStatusBox.getText());
   }
+
   @Test
   void testResetButton() {
     Button button = lookup("#resetButton").query();
     clickOn(button);
     Assertions.assertEquals(myResources.getString("resetStatus"), myStatusBox.getText());
   }
+
   @Test
   void testExitButton() {
     Button button = lookup("#exitButton").query();
@@ -77,6 +85,7 @@ class GridScreenTest extends DukeApplicationTest {
     Button button1 = lookup("#englishButton").query();
     Assertions.assertEquals(button1.getText(), "English");
   }
+
   @Test
   void testBackButton() {
     Button button = lookup("#backButton").query();
@@ -84,14 +93,16 @@ class GridScreenTest extends DukeApplicationTest {
     Button button1 = lookup("#uploadButton").query();
     Assertions.assertEquals(button1.getText(), "Upload");
   }
+
   @Test
   void testGridSize() {
     GridPane gridView = lookup("#gridView").query();
-    CellView cellView = (CellView)gridView.getChildren().get(0);
+    CellView cellView = (CellView) gridView.getChildren().get(0);
     double actual = cellView.getRectangleSize();
     double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
     assertEquals(expected, actual);
   }
+
   @Test
   void testColorChange() {
     CellView cell = lookup("#cell3,1").query();

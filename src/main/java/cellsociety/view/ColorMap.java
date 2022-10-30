@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColorMap {
+
   private Map<Integer, Color> colorMap;
   private int count;
+
   public ColorMap() {
     colorMap = new HashMap<>();
     count = 0;

@@ -122,7 +122,8 @@ public class FileInput extends SceneCreator {
     result.setTitle(OPEN_DATA_FILE);
     // pick a reasonable place to start searching for files
     result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-    result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
+    result.getExtensionFilters()
+        .setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
     return result;
   }
 
