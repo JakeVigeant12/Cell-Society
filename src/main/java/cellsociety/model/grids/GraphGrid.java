@@ -2,7 +2,6 @@ package cellsociety.model.grids;
 
 
 import cellsociety.model.AdjacencyList;
-import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
@@ -14,14 +13,20 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
-  protected Map<Point, Cell> myCells;
-  protected AdjacencyList myAdjacencyList;
-  protected List<Cell> emptyCells;
-  protected Properties myProperties;
-  protected final String cellPackagePath = "cellsociety.model.cells.";
-  protected Neighborhood simulationNeighbors;
+
+  private Map<Point, Cell> myCells;
+  private AdjacencyList myAdjacencyList;
+  private List<Cell> emptyCells;
+
+
+  private Properties myProperties;
+  private final String cellPackagePath = "cellsociety.model.cells.";
+  private Neighborhood simulationNeighbors;
   public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
   public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
@@ -33,22 +38,42 @@ public class GraphGrid extends Grid {
     myProperties = properties;
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    try {
-      if (properties.getProperty("Edge").equals("toroidal"))
-        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
-    } catch (NullPointerException e) {
-      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
-    }
+    myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
+
+  public Map<Point, Cell> getMyCells() {
+    return myCells;
+  }
+
+  public void setMyCells(Map<Point, Cell> myCells) {
+    this.myCells = myCells;
+  }
+
+  public List<Cell> getEmptyCells() {
+    return emptyCells;
+  }
+
+  public void setEmptyCells(List<Cell> emptyCells) {
+    this.emptyCells = emptyCells;
+  }
+
+  public AdjacencyList getMyAdjacencyList() {
+    return myAdjacencyList;
+  }
+
+  public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
+    this.myAdjacencyList = myAdjacencyList;
+  }
+
+
   /**
    * Method that creates the cells for the grid
    *
    * @param inputLayout
    * @return
    */
-  @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public Map<Point, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Point, Cell> cellHolder = new HashMap<>();
     for(int i = 0; i < inputLayout.getRowCount(); i++){
@@ -122,34 +147,6 @@ public class GraphGrid extends Grid {
   }
 
   /**
-   * Method that initializes the neighbors for the grid
-   * @param gridParsing
-   * @param myCells
-   * @param simulationNeighbors
-   * @return the adjacency list
-   */
-
-  /**
-   * Method that creates the neighborhood for the cell
-   * @param i
-   * @param j
-   * @param gridParsing
-   * @param currId
-   * @param simulationNeighbors
-   * @param neighborNumber
-   * @param adjacencyList
-   * @param currentCell
-   * @param myCells
-   */
-  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, Map<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Point, Cell> myCells) {
-    if(isInBounds(i, j, gridParsing)){
-      if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(currId));
-      }
-    }
-  }
-
-  /**
    * Method that checks if the cell is in bounds
    * @param row
    * @param col
@@ -165,12 +162,8 @@ public class GraphGrid extends Grid {
    */
   @Override
   public void computeStates() {
-    emptyCells = new ArrayList<>();
     for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
-      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
-        emptyCells.add(currentCell);
-      }
     }
     for (Cell currentCell : myAdjacencyList.getCells()){
       currentCell.updateState();

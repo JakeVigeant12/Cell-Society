@@ -10,6 +10,6 @@ public class CompleteNeighborhood extends Neighborhood {
    */
   public CompleteNeighborhood() {
     super();
-    neighborHood = new ArrayList<>(Arrays.asList(true,true,true,true,true,true,true,true));
+    setNeighborHood(new ArrayList<>(Arrays.asList(true,true,true,true,true,true,true,true)));
   }
 }

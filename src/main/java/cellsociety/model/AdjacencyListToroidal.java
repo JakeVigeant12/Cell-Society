@@ -23,7 +23,7 @@ public class AdjacencyListToroidal extends AdjacencyList{
     }
     else {
       if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(new Point(this.getRowSize() - cell.x - 1, this.getRowCount() - cell.y - 1)));
+        adjacencyList.get(currentCell).add(myCells.get(new Point(gridParsing.getRowSize(0) - cell.x - 1, gridParsing.getRowCount() - cell.y - 1)));
       }
     }
   }

@@ -202,7 +202,8 @@ public class GridScreen extends SceneCreator {
             Number.class);
         m.invoke(this, newValue);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        new Alert(AlertType.ERROR, getMyResource().getString("createSliderError")).showAndWait();
+        showMessage(AlertType.ERROR, e.getCause().getMessage());
+//        new Alert(AlertType.ERROR, getMyResource().getString("createSliderError")).showAndWait();
       }
     });
     return sliderBox;
@@ -224,10 +225,21 @@ public class GridScreen extends SceneCreator {
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
         e.printStackTrace();
-        new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
+        showMessage(AlertType.ERROR, e.getCause().getMessage());
+//        new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
       }
     });
     return result;
+  }
+
+  /**
+   * Sets up the alert message
+   *
+   * @param type
+   * @param message
+   */
+  private void showMessage(Alert.AlertType type, String message) {
+    new Alert(type, message).showAndWait();
   }
 
   private void saveSimulation() {
@@ -239,7 +251,8 @@ public class GridScreen extends SceneCreator {
         myController.saveGrid(file);
         statusBox.setText(getMyResource().getString("saveSimulationStatus"));
       } catch (IOException e) {
-        new Alert(AlertType.ERROR, getMyResource().getString("saveSimulationError")).showAndWait();
+        showMessage(AlertType.ERROR, e.getCause().getMessage());
+//        new Alert(AlertType.ERROR, getMyResource().getString("saveSimulationError")).showAndWait();
       }
     }
   }
@@ -270,10 +283,12 @@ public class GridScreen extends SceneCreator {
         myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
       }
     } catch (IOException | CsvValidationException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
+//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              IllegalAccessException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
+//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
     }
   }
 
@@ -293,10 +308,12 @@ public class GridScreen extends SceneCreator {
       myController.resetController();
       gridView.updateGrid(myController.getViewGrid());
     } catch (CsvValidationException | IOException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
+//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              IllegalAccessException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
+      showMessage(AlertType.ERROR, e.getCause().getMessage());
+//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
     }
   }
 
