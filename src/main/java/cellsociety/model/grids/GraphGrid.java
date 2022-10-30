@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GraphGrid extends Grid {
 
-  private Map<Integer, Cell> myCells;
+  private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
 
@@ -38,11 +38,11 @@ public class GraphGrid extends Grid {
     myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
-  public Map<Integer, Cell> getMyCells() {
+  public Map<Point, Cell> getMyCells() {
     return myCells;
   }
 
-  public void setMyCells(Map<Integer, Cell> myCells) {
+  public void setMyCells(Map<Point, Cell> myCells) {
     this.myCells = myCells;
   }
 
@@ -70,7 +70,7 @@ public class GraphGrid extends Grid {
    * @return
    */
   //Assume grid values are passed in as expected, sans dimensions
-  private Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
     Map<Point, Cell> cellHolder = new HashMap<>();
     for(int i = 0; i < inputLayout.getRowCount(); i++){
@@ -201,6 +201,7 @@ public class GraphGrid extends Grid {
 
   /**
    * Method that returns the map of cells
+   *
    * @return myCells
    */
   @Override
