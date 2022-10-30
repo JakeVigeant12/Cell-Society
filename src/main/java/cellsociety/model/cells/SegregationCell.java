@@ -2,6 +2,7 @@ package cellsociety.model.cells;
 
 import java.awt.Point;;
 import java.util.List;
+import java.util.Map;
 
 public class SegregationCell extends Cell {
   private double myThreshold;
@@ -12,6 +13,7 @@ public class SegregationCell extends Cell {
   private static final int EMPTY = 0;
   private static final int AGENT1 = 1;
   private static final int AGENT2 = 2;
+  private Map<Integer, String> stateMap;
 
   // Key States
   // 0 = empty
@@ -30,6 +32,7 @@ public class SegregationCell extends Cell {
     totalNeighbors = 0;
     myThreshold = parameter;
     wantsToMove = false;
+    stateMap = Map.of(EMPTY, "EMPTY", AGENT1, "AGENT1", AGENT2, "AGENT2");
   }
 
   /**
@@ -39,20 +42,25 @@ public class SegregationCell extends Cell {
    */
   @Override
   public void setFutureState(List<Cell> neighbors) {
-    if (getCurrentState() == EMPTY){
-      setFutureStateValue(EMPTY);
-    }
-    else {
-      countNeighbors(neighbors);
+    countNeighbors(neighbors);
 
-      if (getCurrentState() == AGENT1){
-        agentBehavior(sameNeighborsAgent1, AGENT1);
-      }
-
-      if (getCurrentState() == AGENT2){
-        agentBehavior(sameNeighborsAgent2, AGENT2);
-      }
+    try {
+      this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
+
+  private void setEMPTY(){
+    setFutureStateValue(EMPTY);
+  }
+
+  private void setAGENT1(){
+    agentBehavior(sameNeighborsAgent1, AGENT1);
+  }
+
+  private void setAGENT2(){
+    agentBehavior(sameNeighborsAgent2, AGENT2);
   }
 
   /**
