@@ -5,6 +5,7 @@ import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -17,7 +18,7 @@ public class InitialModelImplementation extends Model {
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
     if(simParameters.getProperty("Type").equals("WatorWorld")){
       myGrid = new WatorGraphGrid(gridWrapper, simParameters);
     }
