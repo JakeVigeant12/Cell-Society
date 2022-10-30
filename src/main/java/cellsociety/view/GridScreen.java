@@ -30,12 +30,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
 
 
 import static cellsociety.Main.START_SPLASH_CSS;
 import static cellsociety.view.FileInput.FILE_CHOOSER;
-import static cellsociety.view.FileInput.FILE_UPLOAD_ERROR;
 import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 import static cellsociety.view.SplashScreen.FILE_INPUT_CSS;
 
@@ -230,8 +228,7 @@ public class GridScreen extends SceneCreator {
             Number.class);
         m.invoke(this, newValue);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("createSliderError")).showAndWait();
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return sliderBox;
@@ -252,9 +249,7 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        e.printStackTrace();
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("createButtonError")).showAndWait();
+        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
       }
     });
     return result;
@@ -270,18 +265,13 @@ public class GridScreen extends SceneCreator {
     new Alert(type, message).showAndWait();
   }
 
-  private void saveSimulation() {
+  private void saveSimulation() throws IllegalStateException {
     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(CSV_FILES, CSV);
     FILE_CHOOSER.getExtensionFilters().add(extFilter);
     File file = FILE_CHOOSER.showSaveDialog(myStage);
     if (file != null) {
-      try {
         myController.saveGrid(file);
         statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
-      } catch (IOException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-//        new Alert(AlertType.ERROR, getMyResource().getString("saveSimulationError")).showAndWait();
-      }
     }
   }
 
@@ -301,8 +291,7 @@ public class GridScreen extends SceneCreator {
    * Sets up the file picker
    *
    */
-  private void uploadFile() {
-    try {
+  private void uploadFile() throws IllegalStateException {
       setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
       if (getMyDataFile() != null) {
         myController = new CellSocietyController(getMyDataFile());
@@ -310,14 +299,6 @@ public class GridScreen extends SceneCreator {
         GridScreen firstGrid = new GridScreen(800, myStage, myController);
         myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
       }
-    } catch (IOException | CsvValidationException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
-    }
   }
 
   private void exitSimulation() {
@@ -330,19 +311,10 @@ public class GridScreen extends SceneCreator {
     statusBox.setText(getMyResource().getString(PAUSED_STATUS));
   }
 
-  private void resetSimulation() {
-    try {
+  private void resetSimulation() throws IllegalStateException {
       statusBox.setText(getMyResource().getString(RESET_STATUS));
       myController.resetController();
       gridView.updateGrid(myController.getViewGrid());
-    } catch (CsvValidationException | IOException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
-//      new Alert(AlertType.ERROR, getMyResource().getString("createCellError")).showAndWait();
-    }
   }
 
   private void stepSimulation() {

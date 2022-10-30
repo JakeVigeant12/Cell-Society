@@ -3,6 +3,7 @@ package cellsociety.model.grids;
 import cellsociety.model.cells.Cell;
 import cellsociety.view.GridWrapper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class SwappedCellsGraphGrid extends GraphGrid{
@@ -13,8 +14,7 @@ public class SwappedCellsGraphGrid extends GraphGrid{
    * @param gridParsing is the layout of the grid
    * @param properties
    */
-  public SwappedCellsGraphGrid(GridWrapper gridParsing,
-      Properties properties) {
+  public SwappedCellsGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
 

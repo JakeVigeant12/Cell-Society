@@ -5,6 +5,7 @@ import cellsociety.model.cells.SegregationCell;
 import cellsociety.view.GridWrapper;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;

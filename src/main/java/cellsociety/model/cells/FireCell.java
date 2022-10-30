@@ -20,12 +20,12 @@ public class FireCell extends Cell {
    * @param state is the state of the cell
    * @param id is the id of the cell
    */
-  public FireCell(int state, Point id, double parameter){
+  public FireCell(int state, Point id, double parameter) throws IllegalStateException{
     super(state, id);
     turns = 0;
     double probCatch = parameter;
     if (probCatch > 1){
-      throw new IllegalArgumentException(PROBABILITY_ERROR_MESSAGE);
+      throw new IllegalStateException("probabilityError");
     }
     myProbCatch = probCatch;
     stateMap = Map.of(EMPTY, "EMPTY", TREE, "TREE", BURNING, "BURNING");

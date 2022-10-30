@@ -31,15 +31,8 @@ public class CellSocietyController {
   /**
    * Constructor for CellSocietyController class
    * @param simFile
-   * @throws IOException
-   * @throws CsvValidationException
-   * @throws ClassNotFoundException
-   * @throws InvocationTargetException
-   * @throws InstantiationException
-   * @throws IllegalAccessException
    */
-  public CellSocietyController(File simFile)
-      throws IOException, CsvValidationException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
+  public CellSocietyController(File simFile) throws IllegalStateException {
     this.simFile = simFile;
     getSimData();
     String csvPath = (String) properties.get(INITIAL_STATES);
@@ -47,20 +40,22 @@ public class CellSocietyController {
     GridWrapper gridWrapper = myGridParser.parseData(csvPath);
     myModel = new InitialModelImplementation(gridWrapper, properties);
     backEndCellsByID = myModel.getCells();
-
     String[] parseRowCol = new CSVParser().parseFirstLine(csvPath);
-
     numCols = Integer.parseInt(parseRowCol[0].trim());
     numRows = Integer.parseInt(parseRowCol[1].trim());
   }
 
   /**
    * Method that gets the simulation data
-   * @throws IOException
    */
-  public void getSimData() throws IOException {
+  public void getSimData() throws IllegalStateException{
     properties = new Properties();
-    properties.load(new FileReader(simFile));
+    try {
+      properties.load(new FileReader(simFile));
+    }
+    catch (IOException e) {
+      throw new IllegalStateException("fileUploadError");
+    }
   }
 
   /**
@@ -118,11 +113,8 @@ public class CellSocietyController {
   /**
    * Resets the cells to the original file inputted
    *
-   * @throws CsvValidationException
-   * @throws IOException
    */
-  public void resetController()
-      throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
+  public void resetController() throws IllegalStateException {
     String csvPath = (String) properties.get(INITIAL_STATES);
     GridWrapper gridWrapper = myGridParser.parseData(csvPath);
     myModel = new InitialModelImplementation(gridWrapper, properties);
@@ -132,9 +124,8 @@ public class CellSocietyController {
   /**
    * Method that saves the grid to a file
    * @param file
-   * @throws IOException
    */
-  public void saveGrid(File file) throws IOException {
+  public void saveGrid(File file) throws IllegalStateException{
     myGridParser.saveCurrentGrid(getViewGrid(), file);
   }
 }
