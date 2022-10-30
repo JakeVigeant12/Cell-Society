@@ -30,7 +30,7 @@ class GridScreenTest extends DukeApplicationTest {
     controller.loadSimulation(stage);
     GridScreen firstGrid = new GridScreen(800, stage, controller);
     stage.setScene(firstGrid.createScene("English", "gridScreen.css"));
-    myStatusBox = lookup("#statusText").query();
+    myStatusBox = lookup("#Status").query();
     myResources = ResourceBundle.getBundle("English");
   }
 
@@ -74,7 +74,7 @@ class GridScreenTest extends DukeApplicationTest {
   void testExitButton() {
     Button button = lookup("#exitButton").query();
     clickOn(button);
-    Button button1 = lookup("#English").query();
+    Button button1 = lookup("#englishButton").query();
     Assertions.assertEquals(button1.getText(), "English");
   }
   @Test

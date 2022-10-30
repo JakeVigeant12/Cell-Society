@@ -2,7 +2,7 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 
-import java.awt.*;
+import java.awt.Point;;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import javax.management.ReflectionException;
