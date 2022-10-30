@@ -18,8 +18,7 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
    * @param gridParsing is the layout of the grid
    * @param properties
    */
-  public SegregationGraphGrid(GridWrapper gridParsing,
-      Properties properties) {
+  public SegregationGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
   /**
@@ -37,7 +36,6 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid{
         super.getEmptyCells().add(currentCell);
       }
     }
-
 
     for (Cell currentCell : super.getMyAdjacencyList().getCells()){
       // Pass 2: If a current cell wants to move, then swap it with an empty cell in the list of empty cells
