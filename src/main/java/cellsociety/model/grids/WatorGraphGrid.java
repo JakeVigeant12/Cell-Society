@@ -4,11 +4,11 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.view.GridWrapper;
 
+
 import java.awt.Point;;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 public class WatorGraphGrid extends SwappedCellsGraphGrid {

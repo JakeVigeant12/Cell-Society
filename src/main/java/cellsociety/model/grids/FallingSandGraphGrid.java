@@ -4,8 +4,6 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.FallingSandCell;
 import cellsociety.view.GridWrapper;
 
-import java.awt.Point;;
-import java.util.Map;
 import java.util.Properties;
 
 public class FallingSandGraphGrid extends SwappedCellsGraphGrid{

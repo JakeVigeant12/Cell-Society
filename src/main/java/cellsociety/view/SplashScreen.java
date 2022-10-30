@@ -20,9 +20,7 @@ public class SplashScreen extends SceneCreator {
   public static final String FILE_INPUT_CSS = "fileInput.css";
   private final List<String> languageList = List.of("English", "Spanish", "French");
   public BorderPane startPane;
-  private Text mainTitle;
-  private Text selectLanguage;
-  private ImageView myBackground;
+  private final ImageView myBackground;
   private final Stage myStage;
 
   public static final String DEFAULT_RESOURCE_PACKAGE = SplashScreen.class.getPackageName() + ".";
@@ -41,13 +39,13 @@ public class SplashScreen extends SceneCreator {
 
   public Pane setUpRootPane() {
 
-    mainTitle = new Text("Team 10");
+    Text mainTitle = new Text("Team 10");
     mainTitle.getStyleClass().add("mainTitle");
     VBox vBoxTop = new VBox(mainTitle);
     vBoxTop.setAlignment(Pos.CENTER);
 
 
-    selectLanguage = new Text("Select Language");
+    Text selectLanguage = new Text("Select Language");
     selectLanguage.getStyleClass().add("startSelectLanguage");
 
 

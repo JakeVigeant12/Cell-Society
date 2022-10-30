@@ -38,12 +38,7 @@ import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 
 public class GridScreen extends SceneCreator {
   private BorderPane borderPane;
-  private Text fileTitle;
-  private Text simulationType;
-  private Text author;
-  private TextArea descriptionBox;
   private TextArea statusBox;
-  private Text aboutTitle;
   private Paint mainColor = Color.LIGHTGRAY;
   private GridView gridView;
   private Timeline timeline;
@@ -101,10 +96,10 @@ public class GridScreen extends SceneCreator {
    * Sets up the left panel of the Grid Screen UI
    */
   private void createLeftPanel() {
-    aboutTitle = createAndStyleText(getMyResource().getString("aboutText"), "title");
-    fileTitle = createAndStyleText(getMyResource().getString("title") + myController.getProperties().get("Title"), "info");
-    simulationType = createAndStyleText(getMyResource().getString("typeText") + myController.getProperties().get("Type"), "info");
-    author = createAndStyleText(getMyResource().getString("authorText") + myController.getProperties().get("Author"), "info");
+    Text aboutTitle = createAndStyleText(getMyResource().getString("aboutText"), "title");
+    Text fileTitle = createAndStyleText(getMyResource().getString("title") + myController.getProperties().get("Title"), "info");
+    Text simulationType = createAndStyleText(getMyResource().getString("typeText") + myController.getProperties().get("Type"), "info");
+    Text author = createAndStyleText(getMyResource().getString("authorText") + myController.getProperties().get("Author"), "info");
 
     statusBox = createAndStyleTextBox(String.format(getMyResource().getString("statusText"), simulationType), "info");
     statusBox.setId("statusText");
@@ -112,7 +107,7 @@ public class GridScreen extends SceneCreator {
     statusBox.setEditable(false);
     statusBox.setWrapText(true);
 
-    descriptionBox = createAndStyleTextBox(getMyResource().getString("descriptionText") + myController.getProperties().get("Description"), "info");
+    TextArea descriptionBox = createAndStyleTextBox(getMyResource().getString("descriptionText") + myController.getProperties().get("Description"), "info");
     descriptionBox.setBackground(Background.fill(mainColor));
     descriptionBox.setEditable(false);
     descriptionBox.setWrapText(true);

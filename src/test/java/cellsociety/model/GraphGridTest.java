@@ -6,13 +6,10 @@ import cellsociety.model.grids.GraphGrid;
 
 import java.awt.Point;;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 
 import cellsociety.view.GridWrapper;
