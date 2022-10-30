@@ -5,12 +5,15 @@ import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Properties;
 
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
   private final Grid myGrid;
+  private final String gridPackagePath = "cellsociety.model.grids.";
 
   /**
    * Constructor for the model
@@ -18,28 +21,15 @@ public class InitialModelImplementation extends Model {
    * @param simParameters
    */
   public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) {
-    if(simParameters.getProperty("Type").equals("Percolation")){
-      myGrid = new PercolationGraphGrid(gridWrapper, simParameters);
+    try {
+      Class<?> graphGridClass = Class.forName(gridPackagePath + simParameters.get("Type") + "GraphGrid");
+      Constructor<?>[] newGraphGrid = graphGridClass.getConstructors();
+      myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper,simParameters);
     }
-    else if(simParameters.getProperty("Type").equals("Fire")){
-      myGrid = new FireGraphGrid(gridWrapper, simParameters);
+    catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+           InvocationTargetException e) {
+      throw new IllegalStateException("Cannot make buttons");
     }
-    else if(simParameters.getProperty("Type").equals("RockPaperScissor")){
-      myGrid = new RockPaperScissorGraphGrid(gridWrapper, simParameters);
-    }
-    else if(simParameters.getProperty("Type").equals("WatorWorld")){
-      myGrid = new WatorWorldGraphGrid(gridWrapper, simParameters);
-    }
-    else if(simParameters.getProperty("Type").equals("Segregation")) {
-      myGrid = new SegregationGraphGrid(gridWrapper, simParameters);
-    }
-    else if (simParameters.getProperty("Type").equals("FallingSand")) {
-      myGrid = new FallingSandGraphGrid(gridWrapper, simParameters);
-    }
-    else {
-      myGrid = new GraphGrid(gridWrapper, simParameters);
-    }
-
   }
 
   /**

@@ -41,13 +41,6 @@ public class GraphGrid extends Grid {
     myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
 
-  public Map<Point, Cell> getMyCells() {
-    return myCells;
-  }
-
-  public void setMyCells(Map<Point, Cell> myCells) {
-    this.myCells = myCells;
-  }
 
   public List<Cell> getEmptyCells() {
     return emptyCells;
@@ -112,7 +105,6 @@ public class GraphGrid extends Grid {
             parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
           }
           catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
-            e1.printStackTrace();
             throw new IllegalStateException("Missing parameters");
           }
         }
