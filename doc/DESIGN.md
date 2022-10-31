@@ -7,9 +7,8 @@
 
 My primary responsibility was the cell logic for each of the simulations. However, I also worked on the View with creating the buttons and the general UI layout, and worked on the grids and adjacency list implementation.
 
- * Team Member #2: Eka Ebong
-
-My main responsibilty was the user interface including the splash screens, the background images, as well as the graphs that show current cell states. 
+ * Team Member #2: Eka Ebong 
+   * My main responsibilty was the user interface including the splash screens, the background images, as well as the graphs that show current cell states. 
 
  * Team Member #3: Luyao Wang
    * My primary responsibility was the UI, especially the part of grid and cells displayed on UI. I also worked on the graphgrid and adjacency list to make the model work well with UI.
@@ -81,5 +80,12 @@ default values we add for the new row or column. Some simulation has state 0 as 
 0 as empty, so we might need to use a random state when extending that row or column.
 
 * Langton's Loop
+* UI Parameters: Ideally, the user could be able to change certain parameters about the code from the front and through textboxes and these 
+* could be passed to the backend.  However, sorting out how that looks for each simulation caused this feature to be delayed.
+
+*Line and Bar Graph
+We have implemented 3 possible views of the cells and their states, the grid, a bar graph, and a line graph. However, switching back and forth 
+between the line graph and the bar graph is a bit buggy at the moment. We think this is due to the way updating the line Graph is dealt with on 
+in relation to the timeline as well as certain values being set to null when the stage changes from a line graph to a bar graph
 
 Dynamically changing color of the simulation states

@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -25,7 +26,7 @@ public class Histogram{
     private XYChart.Series<Number, Integer> lineSeries3;
     List<XYChart.Series<Number,Integer>> SERIES_LIST;
     private Set cellKeys;
-    private FlowPane myPane;
+    private VBox myPane;
     private int updateTime;
 
     /**
@@ -54,13 +55,15 @@ public class Histogram{
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
 
-        xAxis.setLabel("State");
+        xAxis.setLabel("States");
         yAxis.setLabel("Cell Population");
 
-        myPane = new FlowPane();
+        myPane = new VBox();
 
         barChart = new BarChart(xAxis, yAxis);
         barChart.getData().addAll(barSeries);
+        barChart.setTitle("Current Cell States");
+        barChart.setLegendVisible(false);
 
         myPane.getChildren().add(barChart);
 
@@ -70,7 +73,7 @@ public class Histogram{
     //Sets the stage and shows it with the graph
 
     private void showGraph(){
-        Scene scene = new Scene(myPane, 600, 600);
+        Scene scene = new Scene(myPane, 500, 400);
         myStage.setScene(scene);
         myStage.setX(0);
         myStage.setY(0);
@@ -95,12 +98,18 @@ public class Histogram{
         cellKeys.forEach( (n) -> {
 
             SERIES_LIST.get((Integer) n).getData().add(new XYChart.Data<Number, Integer>(0, (Integer) cellNumbers.get(n), true));
+            SERIES_LIST.get((Integer) n).setName("State " + n);
         });
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        myPane = new FlowPane();
+        xAxis.setLabel("Step");
+        yAxis.setLabel("Cell Population");
+        myPane = new VBox();
+
         lineChart = new LineChart(xAxis, yAxis);
         lineChart.getData().addAll(lineSeries1, lineSeries2, lineSeries3);
+        lineChart.setTitle("Current Cell States");
+        lineChart.setLegendVisible(true);
         myPane.getChildren().add(lineChart);
         showGraph();
     }
