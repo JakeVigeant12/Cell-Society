@@ -95,26 +95,29 @@ public class WatorWorldCellTest {
   }
 
   @Test
-  void testResetState(){
+  void testResetState() {
     WatorWorldCell c1 = new WatorWorldCell(1, new Point(0, 0));
     c1.resetStateParameters();
-    assertEquals(0,c1.getSharkTurns());
-    assertEquals(0,c1.getFishTurns());
+    assertEquals(0, c1.getSharkTurns());
+    assertEquals(0, c1.getFishTurns());
   }
-@Test
-  void setFishStateTest(){
-  WatorWorldCell c1 = new WatorWorldCell(0, new Point(0, 0));
-  c1.setFISH();
-  assertEquals(c1.getFutureState(),1);
-}
+
   @Test
-  void setWaterStateTest(){
+  void setFishStateTest() {
+    WatorWorldCell c1 = new WatorWorldCell(0, new Point(0, 0));
+    c1.setFISH();
+    assertEquals(c1.getFutureState(), 1);
+  }
+
+  @Test
+  void setWaterStateTest() {
     WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
     c1.setWATER();
-    assertEquals(c1.getFutureState(),0);
+    assertEquals(c1.getFutureState(), 0);
   }
+
   @Test
-  void setSharkStateTest(){
+  void setSharkStateTest() {
 
     WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
     WatorWorldCell c2 = new WatorWorldCell(0, new Point(1, 0));
@@ -124,30 +127,32 @@ public class WatorWorldCellTest {
     List<Integer> neighborStates = c.getNeighborStates(List.of(c2, c3, c4));
 
     c.setSHARK();
-    assertEquals(c1.getFutureState(),2);
+    assertEquals(c1.getFutureState(), 2);
   }
+
   @Test
-  void setIntermediateSharkStateTest(){
+  void setIntermediateSharkStateTest() {
     WatorWorldCell c1 = new WatorWorldCell(0, new Point(0, 0));
     c1.setINTERMEDIATESHARK();
-    assertEquals(c1.getFutureState(),2);
+    assertEquals(c1.getFutureState(), 2);
   }
+
   @Test
-  void fishReadyToBreedTest(){
+  void fishReadyToBreedTest() {
     WatorWorldCell c1 = new WatorWorldCell(1, new Point(0, 0));
 
-    assertEquals(c1.readyToReproduce(),false);
+    assertEquals(c1.readyToReproduce(), false);
     c1.setFishTurns(3);
-    assertEquals(c1.readyToReproduce(),true);
+    assertEquals(c1.readyToReproduce(), true);
   }
 
   @Test
-  void readyToDieTest(){
+  void readyToDieTest() {
     WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
 
-    assertEquals(c1.readyToDie(),false);
+    assertEquals(c1.readyToDie(), false);
     c1.setSharkStarve(3);
-    assertEquals(c1.readyToDie(),true);
+    assertEquals(c1.readyToDie(), true);
 
   }
 }

@@ -24,7 +24,8 @@ public class InitialModelImplementation extends Model {
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
+      throws IllegalStateException {
     try {
       Class<?> graphGridClass = Class.forName(
           gridPackagePath + simParameters.get("Type") + "GraphGrid");
@@ -32,8 +33,8 @@ public class InitialModelImplementation extends Model {
       myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper, simParameters);
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-        throw new IllegalStateException(e.getCause().getMessage(), e);
-      }
+      throw new IllegalStateException(e.getCause().getMessage(), e);
+    }
   }
 
   /**

@@ -12,6 +12,7 @@ public class Neighborhood {
 
   /**
    * Sets neighborhood to the passed in list
+   *
    * @param neighborHood
    */
   public void setNeighborHood(List<Boolean> neighborHood) {

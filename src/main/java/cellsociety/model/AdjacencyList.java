@@ -26,7 +26,8 @@ public class AdjacencyList {
   public static final int LOWER = 6;
   public static final int LOWERRIGHT = 7;
 
-  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
+  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells,
+      Neighborhood simulationNeighbors) {
     this.inputLayout = inputLayout;
     this.cells = cells;
     this.simulationNeighbors = simulationNeighbors;
@@ -46,21 +47,23 @@ public class AdjacencyList {
         Cell currentCell = cells.get(new Point(j, i));
         adjacencyList.putIfAbsent(currentCell, neighbors);
         createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), simulationNeighbors, UPPERLEFT,
-          currentCell);
+            currentCell);
         createNeighborhood(new Point(j, i), new Point(j, i - 1), simulationNeighbors, UPPER,
-          currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors, UPPERRIGHT,
-          currentCell);
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors,
+            UPPERRIGHT,
+            currentCell);
         createNeighborhood(new Point(j, i), new Point(j - 1, i), simulationNeighbors, LEFT,
-          currentCell);
+            currentCell);
         createNeighborhood(new Point(j, i), new Point(j + 1, i), simulationNeighbors, RIGHT,
-          currentCell);
+            currentCell);
         createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), simulationNeighbors, LOWERLEFT,
-          currentCell);
+            currentCell);
         createNeighborhood(new Point(j, i), new Point(j, i + 1), simulationNeighbors, LOWER,
-          currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors, LOWERRIGHT,
-          currentCell);
+            currentCell);
+        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors,
+            LOWERRIGHT,
+            currentCell);
       }
     }
   }
@@ -74,7 +77,8 @@ public class AdjacencyList {
    * @param neighborNumber
    * @param currentCell
    */
-  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors, int neighborNumber, Cell currentCell) {
+  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors,
+      int neighborNumber, Cell currentCell) {
     if (isInBounds(currId, inputLayout) && simulationNeighbors.countNeighbor(neighborNumber)) {
       adjacencyList.get(currentCell).add(cells.get(currId));
     }
@@ -90,7 +94,7 @@ public class AdjacencyList {
    */
   public static boolean isOnEdges(int row, int col, GridWrapper gridWrapper) {
     return (row == 0 || row == gridWrapper.getRowCount() - 1) || (col == 0
-      || col == gridWrapper.getRowSize(0) - 1);
+        || col == gridWrapper.getRowSize(0) - 1);
   }
 
   /**
@@ -102,7 +106,7 @@ public class AdjacencyList {
    */
   protected static boolean isInBounds(Point point, GridWrapper gridWrapper) {
     return (point.y >= 0 && point.y < gridWrapper.getRowCount()) && (point.x >= 0
-      && point.x < gridWrapper.getRowSize(0));
+        && point.x < gridWrapper.getRowSize(0));
   }
 
   /**

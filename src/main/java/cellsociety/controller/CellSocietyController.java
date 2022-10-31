@@ -42,16 +42,19 @@ public class CellSocietyController {
     String csvPath = (String) properties.get(INITIAL_STATES);
     GridWrapper gridWrapper;
     myGridParser = new CSVParser();
-    if(csvPath.equals("Random")) {
-      gridWrapper = new GridWrapper(Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))));
+    if (csvPath.equals("Random")) {
+      gridWrapper = new GridWrapper(
+          Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))));
       numCols = gridWrapper.getRowSize(0);
       numRows = gridWrapper.getRowCount();
-    } else if (csvPath.equals("Proportions")){
+    } else if (csvPath.equals("Proportions")) {
       String[] initialProportions = ((String) properties.get("InitialProportions")).split(REGEX);
-      gridWrapper = new GridWrapper(Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))), initialProportions);
+      gridWrapper = new GridWrapper(
+          Integer.parseInt(CELL_VIEW_RESOURCES.getString((String) properties.get(TYPE))),
+          initialProportions);
       numCols = gridWrapper.getRowSize(0);
       numRows = gridWrapper.getRowCount();
-    }else {
+    } else {
       gridWrapper = myGridParser.parseData(csvPath);
       String[] parseRowCol = myGridParser.parseFirstLine(csvPath);
 
@@ -69,8 +72,7 @@ public class CellSocietyController {
     properties = new Properties();
     try {
       properties.load(new FileReader(simFile));
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw new IllegalStateException("fileUploadError", e);
     }
   }

@@ -13,15 +13,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class RockPaperScissorGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   RockPaperScissorGraphGrid myTestGrid;
   GridWrapper gridWrapper;
   ArrayList<Integer> prevStates = new ArrayList<>();
   ArrayList<Integer> nextStates = new ArrayList<>();
   Properties p = new Properties();
+
   @Test
-  public void testStableStateComputation()
-  {
+  public void testStableStateComputation() {
     p.setProperty("Type", "RockPaperScissor");
     myTestGrid = new RockPaperScissorGraphGrid(gridWrapper, p);
     gridWrapper = myGridParser.parseData("rock_paper_scissors/stable_sample.csv");
@@ -35,8 +36,9 @@ public class RockPaperScissorGraphGridTest {
     //Stable input config
     assertTrue(areEqual);
   }
+
   @Test
-  public void testMovingStates(){
+  public void testMovingStates() {
     p.setProperty("Type", "RockPaperScissor");
     gridWrapper = myGridParser.parseData("rock_paper_scissors/stable_sample.csv");
     myTestGrid = new RockPaperScissorGraphGrid(gridWrapper, p);

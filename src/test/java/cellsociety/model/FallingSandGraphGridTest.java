@@ -14,15 +14,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class FallingSandGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   FallingSandGraphGrid myTestGrid;
   GridWrapper gridWrapper;
   ArrayList<Integer> prevStates = new ArrayList<>();
   ArrayList<Integer> nextStates = new ArrayList<>();
   Properties p = new Properties();
+
   @Test
-  public void testStableStateComputation()
-  {
+  public void testStableStateComputation() {
     p.setProperty("Type", "FallingSand");
     gridWrapper = myGridParser.parseData("falling_sand/stable_example.csv");
     myTestGrid = new FallingSandGraphGrid(gridWrapper, p);
@@ -36,8 +37,9 @@ public class FallingSandGraphGridTest {
     //Stable input config
     assertTrue(areEqual);
   }
+
   @Test
-  public void testMovingStates(){
+  public void testMovingStates() {
     p.setProperty("Type", "FallingSand");
     gridWrapper = myGridParser.parseData("falling_sand/example.csv");
     myTestGrid = new FallingSandGraphGrid(gridWrapper, p);

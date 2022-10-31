@@ -14,12 +14,13 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class WatorGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   GridWrapper gridWrapper = myGridParser.parseData("wator/buffet.csv");
   Properties p = new Properties();
+
   @Test
-  public void testStateComputation()
-  {
+  public void testStateComputation() {
     p.setProperty("Type", "WatorWorld");
     WatorWorldGraphGrid myTestGrid = new WatorWorldGraphGrid(gridWrapper, p);
     ArrayList<Integer> prevStates = new ArrayList<>();

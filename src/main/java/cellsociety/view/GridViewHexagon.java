@@ -5,6 +5,7 @@ import cellsociety.model.GridWrapper;
 import javafx.beans.binding.Bindings;
 
 public class GridViewHexagon extends GridView {
+
   /**
    * Constructor for GridView, sets up the grid and the cells
    *
@@ -50,16 +51,18 @@ public class GridViewHexagon extends GridView {
   public void setUpGridViewSize() {
     getWidthProperty().bind(getGrid().widthProperty().subtract(50).divide(getColumn()));
     getHeightProperty().bind(getGrid().heightProperty().subtract(150).divide(getRow()));
-    getSizeProperty().bind(Bindings.min(getWidthProperty().divide(2), getHeightProperty().divide(2)));
+    getSizeProperty().bind(
+        Bindings.min(getWidthProperty().divide(2), getHeightProperty().divide(2)));
     int rows = getRow().get();
     int cols = getColumn().get();
     getSizeProperty().addListener((obs, oldVal, newVal) -> {
       for (int y = 0; y < rows; y++) {
         for (int x = 0; x < cols; x++) {
           updateCellWidth(x, y, (Double) newVal);
-          if (y % 2 == 0)
-            getCells().get(y).get(x).setTranslateX(((Double)newVal/20) * 18);
-          getCells().get(y).get(x).setTranslateY(-((Double)newVal/20) * 10 * y);
+          if (y % 2 == 0) {
+            getCells().get(y).get(x).setTranslateX(((Double) newVal / 20) * 18);
+          }
+          getCells().get(y).get(x).setTranslateY(-((Double) newVal / 20) * 10 * y);
         }
       }
     });

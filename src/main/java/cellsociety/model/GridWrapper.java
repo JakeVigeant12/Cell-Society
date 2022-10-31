@@ -33,12 +33,12 @@ public class GridWrapper {
    */
   public GridWrapper(int numStates, String[] initialProportions) {
     Random rand = new Random();
-    this.row = rand.nextInt(1,25);
-    this.column = rand.nextInt(1,25);
-    int total = row*column;
+    this.row = rand.nextInt(1, 25);
+    this.column = rand.nextInt(1, 25);
+    int total = row * column;
     int[] countStates = new int[numStates];
     int[] currentCount = new int[numStates];
-    for(int i = 0; i < initialProportions.length; i++) {
+    for (int i = 0; i < initialProportions.length; i++) {
       countStates[i] = Integer.parseInt(initialProportions[i]) * total;
       currentCount[i] = 0;
     }
@@ -46,11 +46,11 @@ public class GridWrapper {
     grid = new ArrayList<>();
     for (int i = 0; i < this.row; i++) {
       List<Integer> singleList = new ArrayList<>();
-      for (int j = 0; j < this.column; j++){
+      for (int j = 0; j < this.column; j++) {
         int newState = rand.nextInt(numStates);
-        if(currentCount[newState] < countStates[newState]) {
+        if (currentCount[newState] < countStates[newState]) {
           singleList.add(newState);
-          currentCount[newState] ++;
+          currentCount[newState]++;
         }
       }
       grid.add(singleList);
@@ -68,13 +68,13 @@ public class GridWrapper {
    */
   public GridWrapper(int numStates) {
     Random rand = new Random();
-    this.row = rand.nextInt(1,25);
-    this.column = rand.nextInt(1,25);
+    this.row = rand.nextInt(1, 25);
+    this.column = rand.nextInt(1, 25);
 
     grid = new ArrayList<>();
     for (int i = 0; i < this.row; i++) {
       List<Integer> singleList = new ArrayList<>();
-      for (int j = 0; j < this.column; j++){
+      for (int j = 0; j < this.column; j++) {
         singleList.add(rand.nextInt(numStates));
       }
       grid.add(singleList);

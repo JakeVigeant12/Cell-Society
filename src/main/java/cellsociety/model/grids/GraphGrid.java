@@ -35,7 +35,7 @@ public class GraphGrid extends Grid {
   private Neighborhood simulationNeighbors;
   private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
   private static final String DEFAULT_RESOURCE_FOLDER =
-    "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+      "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
@@ -54,8 +54,9 @@ public class GraphGrid extends Grid {
         case "square" -> setSquareAdjacencyList(gridParsing);
         default -> setSquareAdjacencyList(gridParsing);
       };
-    } else
+    } else {
       myAdjacencyList = setSquareAdjacencyList(gridParsing);
+    }
   }
 
   private AdjacencyList setSquareAdjacencyList(GridWrapper gridParsing) {
@@ -124,7 +125,7 @@ public class GraphGrid extends Grid {
    * @param cellCount
    */
   private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount)
-    throws IllegalStateException {
+      throws IllegalStateException {
     Cell newCell;
     Class<?> cellClass;
     try {
@@ -155,16 +156,18 @@ public class GraphGrid extends Grid {
    * @throws IllegalStateException
    */
   private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
-    throws IllegalStateException {
+      throws IllegalStateException {
     Cell newCell;
     double parameter;
-    if (myProperties.contains("Parameters"))
+    if (myProperties.contains("Parameters")) {
       parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-    else {//No parameter specified in .sim file
+    } else {//No parameter specified in .sim file
       try {//load parameter from .sim file
-        parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
+        parameter = Double.parseDouble(ResourceBundle.getBundle(
+                DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"))
+            .getString("Parameters"));
       } catch (
-        MissingResourceException e) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
+          MissingResourceException e) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
         throw new IllegalStateException("parameterError", e);
       }
     }
@@ -212,7 +215,7 @@ public class GraphGrid extends Grid {
    */
   public static boolean isInBounds(int row, int col, GridWrapper gridWrapper) {
     return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0
-      && col < gridWrapper.getRowSize(0));
+        && col < gridWrapper.getRowSize(0));
   }
 
   /**

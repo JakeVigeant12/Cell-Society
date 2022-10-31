@@ -73,7 +73,8 @@ public class WatorWorldCell extends Cell {
     }
     return false;
   }
-  public void setSharkStarve(int input){
+
+  public void setSharkStarve(int input) {
     sharkStarve = input;
   }
 
@@ -83,7 +84,7 @@ public class WatorWorldCell extends Cell {
     sharkStarve = 0;
   }
 
-  public void setFishTurns(int input){
+  public void setFishTurns(int input) {
     fishTurns = input;
   }
 
@@ -93,7 +94,7 @@ public class WatorWorldCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
   }
 
@@ -146,10 +147,11 @@ public class WatorWorldCell extends Cell {
     setFutureStateValue(SHARK);
   }
 
-  public int getFishTurns(){
+  public int getFishTurns() {
     return fishTurns;
   }
-  public int getSharkTurns(){
+
+  public int getSharkTurns() {
     return sharkTurns;
   }
 }
