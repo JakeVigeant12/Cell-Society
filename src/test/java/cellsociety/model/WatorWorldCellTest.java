@@ -4,6 +4,7 @@ import cellsociety.model.cells.WatorWorldCell;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +37,15 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(0, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(0, new Point(2, 1));
 
-    fish.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      fish.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(1, fish.getFutureState());
   }
@@ -49,7 +58,15 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(1, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(1, new Point(2, 1));
 
-    fish.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      fish.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(1, fish.getFutureState());
   }
@@ -62,7 +79,15 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(1, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(1, new Point(2, 1));
 
-    shark.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      shark.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(2, shark.getFutureState());
   }
@@ -75,7 +100,15 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(2, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(2, new Point(2, 1));
 
-    shark.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      shark.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(2, shark.getFutureState());
 
