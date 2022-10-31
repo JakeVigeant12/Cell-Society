@@ -37,15 +37,7 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(0, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(0, new Point(2, 1));
 
-    try {
-      fish.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    fish.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(1, fish.getFutureState());
   }
@@ -58,15 +50,7 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(1, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(1, new Point(2, 1));
 
-    try {
-      fish.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    fish.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(1, fish.getFutureState());
   }
@@ -79,15 +63,7 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(1, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(1, new Point(2, 1));
 
-    try {
-      shark.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    shark.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(2, shark.getFutureState());
   }
@@ -100,15 +76,7 @@ public class WatorWorldCellTest {
     WatorWorldCell c3 = new WatorWorldCell(2, new Point(1, 1));
     WatorWorldCell c4 = new WatorWorldCell(2, new Point(2, 1));
 
-    try {
-      shark.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    shark.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(2, shark.getFutureState());
 

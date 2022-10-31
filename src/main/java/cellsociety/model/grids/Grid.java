@@ -5,6 +5,7 @@ import cellsociety.model.cells.Cell;
 import java.awt.Point;;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Properties;
 import javax.management.ReflectionException;
 
 //abstraction of grid to allow flexibility in implementation

@@ -21,6 +21,9 @@ public class FireGraphGrid extends GraphGrid {
   }
 
   /**
+   * Loops through cells and tells them to update states
+   */
+  /**
    * Computes and updates the states of the cells
    * @throws IllegalStateException
    */
