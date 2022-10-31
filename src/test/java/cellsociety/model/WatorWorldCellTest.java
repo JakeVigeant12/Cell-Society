@@ -140,4 +140,15 @@ public class WatorWorldCellTest {
     c1.setFishTurns(3);
     assertEquals(c1.readyToReproduce(),true);
   }
+
+  @Test
+  void readyToDieTest(){
+    WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
+
+    assertEquals(c1.readyToDie(),false);
+    c1.setSharkStarve(3);
+    assertEquals(c1.readyToDie(),true);
+
+  }
 }
+
