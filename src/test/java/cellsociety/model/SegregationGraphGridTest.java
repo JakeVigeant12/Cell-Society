@@ -1,6 +1,7 @@
 package cellsociety.model;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cellsociety.model.grids.FireGraphGrid;
 import cellsociety.model.grids.GameOfLifeGraphGrid;
@@ -10,14 +11,14 @@ import java.util.ArrayList;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
-public class GameOfLifeGraphGridTest {
+public class SegregationGraphGridTest {
   CSVParser myGridParser = new CSVParser();
-  GridWrapper gridWrapper = myGridParser.parseData("game_of_life/game_of_life_simple_test.csv");
+  GridWrapper gridWrapper = myGridParser.parseData("schelling/schelling_simple_test.csv");
   Properties p = new Properties();
   @Test
   public void testStateComputation()
   {
-    p.setProperty("Type", "GameOfLife");
+    p.setProperty("Type", "Segregation");
     GameOfLifeGraphGrid myTestGrid = new GameOfLifeGraphGrid(gridWrapper, p);
     ArrayList<Integer> prevStates = new ArrayList<>();
     ArrayList<Integer> nextStates = new ArrayList<>();
@@ -28,6 +29,7 @@ public class GameOfLifeGraphGridTest {
     for (int i = 0; i < prevStates.size(); i++) {
       areEqual = areEqual && (prevStates.get(i) == nextStates.get(i));
     }
-    assertFalse(areEqual);
+    //Stable input config
+    assertTrue(areEqual);
   }
 }
