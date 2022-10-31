@@ -5,6 +5,7 @@ import static cellsociety.view.GridScreen.TYPE;
 import static cellsociety.view.GridView.CELL;
 
 import cellsociety.model.AdjacencyList;
+import cellsociety.model.AdjacencyListHexagon;
 import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
@@ -47,15 +48,23 @@ public class GraphGrid extends Grid {
     myProperties = properties;
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    if (properties.contains("EdgePolicy")) {
-      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
+    if (properties.containsKey("EdgePolicy")) {
+      String edgePolicy = properties.getProperty("EdgePolicy");
+      if (edgePolicy.equals("toroidal")) {
         myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
       }
-      if (properties.getProperty("EdgePolicy").equals("finite")) {
+      if (edgePolicy.equals("finite")) {
         myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
       }
-    } else
+    } else if (properties.containsKey("Tiling")){
+      String tilingPolicy = properties.getProperty("Tiling");
+      if (tilingPolicy.equals("hex")){
+        myAdjacencyList = new AdjacencyListHexagon(gridParsing, myCells, simulationNeighbors);
+      }
+    }
+    else{
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    };
   }
 
 

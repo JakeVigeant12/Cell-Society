@@ -19,8 +19,7 @@ public class AdjacencyList {
   private Map<Point, Cell> cells;
   private Neighborhood simulationNeighbors;
 
-  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells,
-      Neighborhood simulationNeighbors) {
+  public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
     this.inputLayout = inputLayout;
     this.cells = cells;
     this.simulationNeighbors = simulationNeighbors;
@@ -33,7 +32,7 @@ public class AdjacencyList {
   /**
    * Method that initializes the neighbors for each cell
    */
-  private void initializeNeighbors() {
+  protected void initializeNeighbors() {
     for (int i = 0; i < rowCount; i++) {
       for (int j = 0; j < rowSize; j++) {
         List<Cell> neighbors = new ArrayList<>();
@@ -68,8 +67,7 @@ public class AdjacencyList {
    * @param neighborNumber
    * @param currentCell
    */
-  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors,
-      int neighborNumber, Cell currentCell) {
+  protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors, int neighborNumber, Cell currentCell) {
     if (isInBounds(currId, inputLayout)) {
       if (simulationNeighbors.countNeighbor(neighborNumber)) {
         adjacencyList.get(currentCell).add(cells.get(currId));
@@ -121,6 +119,15 @@ public class AdjacencyList {
 
   protected Map<Point, Cell> getCellMap() {
     return cells;
+  }
+  protected int getRowCount() {
+    return rowCount;
+  }
+  protected int getRowSize() {
+    return rowSize;
+  }
+  protected Neighborhood getSimulationNeighbors() {
+    return simulationNeighbors;
   }
 
   /**

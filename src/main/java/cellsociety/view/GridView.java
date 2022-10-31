@@ -20,7 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 
-public class GridView {
+public abstract class GridView {
 
   public static final String GRID_VIEW = "gridView";
   public static final String STATE_IMAGES = "StateImages";
@@ -41,7 +41,7 @@ public class GridView {
   private final ColorMap colors;
   private final ImageMap images;
   private boolean isUsingColors;
-  private final boolean setBorder;
+  private final boolean isSetBorder;
   public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
 
   /**
@@ -57,9 +57,9 @@ public class GridView {
     images = new ImageMap();
     applyColors(properties);
     if(properties.containsKey("Outlined")) {
-      setBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
+      isSetBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
     } else {
-      setBorder = true;
+      isSetBorder = true;
     }
   }
 
@@ -128,14 +128,14 @@ public class GridView {
     }
   }
 
-  private void createCell(GridWrapper gridData, int y, int x) {
+  protected void createCell(GridWrapper gridData, int y, int x) {
     CellView node;
     if (isUsingColors) {
-      node = new CellView(gridData.getState(y, x), colors);
+      node = new CellViewSquare(gridData.getState(y, x), colors);
     } else {
-      node = new CellView(gridData.getState(y, x), images);
+      node = new CellViewSquare(gridData.getState(y, x), images);
     }
-    if (setBorder) {
+    if (isSetBorder) {
       node.showBorder();
     }
     node.setId(CELL + y + REGEX + x);
@@ -161,6 +161,49 @@ public class GridView {
         cells.get(y).get(x).updateState(gridData.getState(y, x));
       }
     }
+  }
+
+  protected ColorMap getColors() {
+    return colors;
+  }
+
+  protected ImageMap getImages() {
+    return images;
+  }
+
+  protected Boolean isUsingColors() {
+    return isUsingColors;
+  }
+
+  protected Boolean isSetBorder() {
+    return isSetBorder;
+  }
+
+  protected List<List<CellView>> getCells() {
+    return cells;
+  }
+  protected CellSocietyController getController() {
+    return myController;
+  }
+
+  protected DoubleProperty getWidthProperty() {
+    return widthProperty;
+  }
+
+  protected DoubleProperty getHeightProperty() {
+    return heightProperty;
+  }
+
+  protected DoubleProperty getSizeProperty() {
+    return sizeProperty;
+  }
+
+  protected IntegerProperty getRow() {
+    return row;
+  }
+
+  protected IntegerProperty getColumn() {
+    return column;
   }
 
   /**
