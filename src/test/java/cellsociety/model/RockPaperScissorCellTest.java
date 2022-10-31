@@ -1,6 +1,5 @@
 package cellsociety.model;
 
-import cellsociety.model.cells.PercolationCell;
 import cellsociety.model.cells.RockPaperScissorCell;
 import org.junit.jupiter.api.Test;
 
