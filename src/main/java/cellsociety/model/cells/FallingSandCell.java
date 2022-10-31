@@ -100,53 +100,34 @@ public class FallingSandCell extends Cell {
   /**
    * Special movement for sand cells
    */
-  private void setWATER() {
-    if (neighborHood.get(LOWER).getCurrentState()
-            == EMPTY) { // if the cell is water and below is empty
+  // NOTE: This functionality was working with a ton of if elses, I did not have enough time to fix it to work with
+  // reflection.
+  private void setWATER() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    if (neighborHood.get(LOWER).getCurrentState() == EMPTY) { // if the cell is water and below is empty
       setFutureStateValue(EMPTY); // Turn into empty
     } else {
-            /*try {
-                int upperState = neighborHood.get(UPPER).getCurrentState();
-                this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-
-      if (neighborHood.get(UPPER).getCurrentState()
-              == SAND) { // if the cell is water and above is sand
-        setFutureStateValue(SAND); // Turn into sand
-      }
-      if (neighborHood.get(LOWERLEFT).getCurrentState() == EMPTY
-              && neighborHood.get(LEFT).getCurrentState() == EMPTY) {
-        setFutureStateValue(WATER);
-        wantsToSwap = true;
-        cellToSwap = neighborHood.get(LOWERLEFT);
-      } else if (neighborHood.get(LOWERRIGHT).getCurrentState() == EMPTY
-              && neighborHood.get(RIGHT).getCurrentState() == EMPTY) {
-        setFutureStateValue(WATER);
-        wantsToSwap = true;
-        cellToSwap = neighborHood.get(LOWERRIGHT);
-      } else if (neighborHood.get(LEFT).getCurrentState() == EMPTY && neighborHood.get(RIGHT).getCurrentState()
-              == EMPTY) {
-        // If the cell is water and the left and right are empty, but lower left and lower right are not empty
-        setFutureStateValue(WATER);
-        Random rand = new Random();
-        wantsToSwap = true;
-        if (rand.nextBoolean()) {
-          cellToSwap = neighborHood.get(LEFT);
+      try {
+        if (neighborHood.get(LEFT).getCurrentState() == EMPTY && neighborHood.get(RIGHT).getCurrentState() == EMPTY) { // If the cell is water and the left and right are empty, but lower left and lower right are not empty
+          setFutureStateValue(WATER);
+          wantsToSwap = true;
+          Random rand = new Random();
+          if (rand.nextBoolean()) {
+            cellToSwap = neighborHood.get(LEFT);
+          } else {
+            cellToSwap = neighborHood.get(RIGHT);
+          }
         } else {
-          cellToSwap = neighborHood.get(RIGHT);
+          int upperState = neighborHood.get(UPPER).getCurrentState();
+          this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
+
+          int rightState = neighborHood.get(RIGHT).getCurrentState();
+          this.getClass().getDeclaredMethod("rules" + positionMap.get(RIGHT) + stateMap.get(rightState)).invoke(this);
+
+          int leftState = neighborHood.get(LEFT).getCurrentState();
+          this.getClass().getDeclaredMethod("rules" + positionMap.get(LEFT) + stateMap.get(leftState)).invoke(this);
         }
-      } else if (neighborHood.get(LEFT).getCurrentState() == EMPTY) {
-        setFutureStateValue(WATER);
-        wantsToSwap = true;
-        cellToSwap = neighborHood.get(LEFT);
-      } else if (neighborHood.get(RIGHT).getCurrentState() == EMPTY) {
-        setFutureStateValue(WATER);
-        wantsToSwap = true;
-        cellToSwap = neighborHood.get(RIGHT);
-      } else {
-        setFutureStateValue(WATER); // Stay the same
+      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        throw e;
       }
     }
   }
@@ -155,7 +136,31 @@ public class FallingSandCell extends Cell {
     setFutureStateValue(SAND); // Turn into SAND
   }
 
+  private void rulesLOWERSAND() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesLEFTSAND() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesRIGHTSAND() {
+    setFutureStateValue(WATER);
+  }
+
   private void rulesUPPERWATER() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesLOWERWATER() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesLEFTWATER() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesRIGHTWATER() {
     setFutureStateValue(WATER);
   }
 
@@ -169,6 +174,22 @@ public class FallingSandCell extends Cell {
 
   private void rulesLEFTEMPTY() {
     horizontalMovement(LOWERLEFT, LEFT);
+  }
+
+  private void rulesUPPERBOUNDARY() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesLOWERBOUNDARY() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesLEFTBOUNDARY() {
+    setFutureStateValue(WATER);
+  }
+
+  private void rulesRIGHTBOUNDARY() {
+    setFutureStateValue(WATER);
   }
 
   private void horizontalMovement(int lowerPosition, int position) {
@@ -199,5 +220,4 @@ public class FallingSandCell extends Cell {
   private void setBOUNDARY() {
     setFutureStateValue(BOUNDARY);
   }
-
 }
