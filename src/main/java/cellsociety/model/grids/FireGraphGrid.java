@@ -3,6 +3,8 @@ package cellsociety.model.grids;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.FireCell;
 import cellsociety.view.GridWrapper;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,7 +24,7 @@ public class FireGraphGrid extends GraphGrid {
    * Loops through cells and tells them to update states
    */
   @Override
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     for (Cell currentCell : getMyAdjacencyList().getCells()) {
       currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
     }

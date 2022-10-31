@@ -20,11 +20,11 @@ import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
-  public static final String FIRE = "Fire";
-  public static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
-  public static final String MISSING_PARAMETERS = "Missing parameters";
-  public static final String PARAMETERS = "Parameters";
-  public static final String DEFAULT = "Default";
+  private static final String FIRE = "Fire";
+  private static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  private static final String MISSING_PARAMETERS = "Missing parameters";
+  private static final String PARAMETERS = "Parameters";
+  private static final String DEFAULT = "Default";
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
@@ -32,27 +32,29 @@ public class GraphGrid extends Grid {
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
-  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER =
-      "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER =
+    "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
    *
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException {
+  public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
     myCells = createCells(gridParsing);
     numRows = gridParsing.getRowCount();
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    try {
-      if (properties.getProperty("Edge").equals("toroidal")) {
+    if (properties.contains("EdgePolicy")) {
+      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
         myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
       }
-    } catch (NullPointerException e) {
+      if (properties.getProperty("EdgePolicy").equals("finite")) {
+        myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+      }
+    } else
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
-    }
   }
   public List<Cell> getEmptyCells() {
     return emptyCells;
@@ -105,13 +107,13 @@ public class GraphGrid extends Grid {
    * @param cellCount
    */
   private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount)
-      throws IllegalStateException {
+    throws IllegalStateException {
     Cell newCell;
     Class<?> cellClass;
     try {
       cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
     } catch (ClassNotFoundException e) {
-      throw new IllegalStateException("classNotFound");
+      throw new IllegalStateException("classNotFound", e);
     }
     Constructor<?>[] makeNewCell = cellClass.getConstructors();
     if (makeNewCell[0].getParameterCount() == 3) {
@@ -120,32 +122,30 @@ public class GraphGrid extends Grid {
       try {
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-        throw new IllegalStateException("parameterError");
+        throw new IllegalStateException("parameterError", e);
       }
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
   private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
-      throws IllegalStateException {
+    throws IllegalStateException {
     Cell newCell;
     double parameter;
-    try {
+    if (myProperties.contains("Parameters"))
       parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-    } catch (NullPointerException e) {//No parameter specified in .sim file
+    else {//No parameter specified in .sim file
       try {//load parameter from .sim file
-        parameter = Double.parseDouble(ResourceBundle.getBundle(
-                DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type"))
-            .getString("Parameters"));
+        parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
       } catch (
-          MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
-        throw new IllegalStateException("parameterError");
+        MissingResourceException e) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
+        throw new IllegalStateException("parameterError", e);
       }
     }
     try {
       newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException("parameterError");
+      throw new IllegalStateException("parameterError", e);
     }
     return newCell;
   }
@@ -167,6 +167,7 @@ public class GraphGrid extends Grid {
    * @param simType
    * @return
    */
+  //TODO refactor
   public Neighborhood setNeighbors(String simType) {
     if (simType.equals(FIRE)) {
       return new NoDiagonalNeighborhood();
@@ -185,14 +186,14 @@ public class GraphGrid extends Grid {
    */
   public static boolean isInBounds(int row, int col, GridWrapper gridWrapper) {
     return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0
-        && col < gridWrapper.getRowSize(0));
+      && col < gridWrapper.getRowSize(0));
   }
 
   /**
    * Method that does two passes, the first sets the state, the second updates the state
    */
   @Override
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
     }

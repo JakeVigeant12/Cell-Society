@@ -10,7 +10,6 @@ import java.util.List;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,7 +32,6 @@ public class FileInput extends SceneCreator {
   public static final String UPLOAD_GIF = "uploadGif";
   public static final String UPLOAD_BOX = "uploadBox";
   public static final String FILE_UPLOAD_ERROR = "fileUploadError";
-  public static final String BUTTON = "button";
   public BorderPane inputPane;
   // kind of data files to look for
   public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
@@ -64,10 +62,10 @@ public class FileInput extends SceneCreator {
    * @return
    */
   public Pane setUpRootPane() {
-    Text title = new Text(getMyResource().getString(TITLE_TEXT));
+    Text title = new Text(getResource().getString(TITLE_TEXT));
     title.getStyleClass().add(MAIN_TEXT);
 
-    inputBackground.setImage(new Image(getMyResource().getString(UPLOAD_GIF)));
+    inputBackground.setImage(new Image(getResource().getString(UPLOAD_GIF)));
     inputBackground.setFitHeight(getMySize());
     inputBackground.setFitWidth(getMySize());
     inputPane.getChildren().addAll(inputBackground);
@@ -80,6 +78,29 @@ public class FileInput extends SceneCreator {
     upload.getStyleClass().add(UPLOAD_BOX);
     inputPane.setTop(upload);
     return inputPane;
+  }
+
+  /**
+   * Make a button and sets properties
+   *
+   * @param property
+   * @return
+   */
+  protected Button makeButton(String property) {
+    Button result = new Button();
+    String labelText = getResource().getString(property);
+    result.setText(labelText);
+    result.setId(property);
+    result.getStyleClass().add(BUTTON);
+    result.setOnAction(event -> {
+      try {
+        Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
+        m.invoke(this);
+      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
+      }
+    });
+    return result;
   }
 
   private void goBack() {
@@ -100,17 +121,6 @@ public class FileInput extends SceneCreator {
     }
   }
 
-
-  /**
-   * Sets up the alert message
-   *
-   * @param type
-   * @param message
-   */
-  private void showMessage(Alert.AlertType type, String message) {
-    new Alert(type, message).showAndWait();
-  }
-
   /**
    * Sets up the file chooser
    *
@@ -124,29 +134,6 @@ public class FileInput extends SceneCreator {
     result.setInitialDirectory(new File(DATA_FILE_FOLDER));
     result.getExtensionFilters()
         .setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
-    return result;
-  }
-
-  /**
-   * Make a button and sets properties
-   *
-   * @param property
-   * @return
-   */
-  public Button makeButton(String property) {
-    Button result = new Button();
-    String labelText = getMyResource().getString(property);
-    result.setText(labelText);
-    result.setId(property);
-    result.getStyleClass().add(BUTTON);
-    result.setOnAction(event -> {
-      try {
-        Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
-        m.invoke(this);
-      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
-      }
-    });
     return result;
   }
 }

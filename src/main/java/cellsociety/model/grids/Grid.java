@@ -14,7 +14,7 @@ public abstract class Grid {
   /**
    * Abstract method that computes the new states of the cells
    */
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     return;
   }
 

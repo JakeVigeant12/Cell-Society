@@ -5,6 +5,7 @@ import static cellsociety.view.GridScreen.TYPE;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
+import javafx.scene.control.Alert;
 
 import java.awt.Point;;;
 import java.lang.reflect.Constructor;
@@ -15,9 +16,9 @@ import java.util.Properties;
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
 
-  public static final String WATOR_WORLD = "WatorWorld";
-  public static final String SEGREGATION = "Segregation";
-  public static final String FALLING_SAND = "FallingSand";
+  private static final String WATOR_WORLD = "WatorWorld";
+  private static final String SEGREGATION = "Segregation";
+  private static final String FALLING_SAND = "FallingSand";
   private final Grid myGrid;
   private final String gridPackagePath = "cellsociety.model.grids.";
 
@@ -27,8 +28,7 @@ public class InitialModelImplementation extends Model {
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
-      throws IllegalStateException {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
     try {
       Class<?> graphGridClass = Class.forName(
           gridPackagePath + simParameters.get("Type") + "GraphGrid");
@@ -36,14 +36,14 @@ public class InitialModelImplementation extends Model {
       myGrid = (Grid) newGraphGrid[0].newInstance(gridWrapper, simParameters);
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
              InvocationTargetException e) {
-      throw new IllegalStateException("errorInitializingGrid");
-    }
+        throw new IllegalStateException(e.getCause().getMessage(), e);
+      }
   }
 
   /**
    * Method that computes the states of the cells
    */
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     myGrid.computeStates();
   }
 

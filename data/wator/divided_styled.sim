@@ -5,3 +5,5 @@ Author=Former Student
 Description=Predators on one side, prey on the other
 InitialStates=wator/divided.csv
 StateImages=images/sea.png,images/fish.png,images/shark.png
+Outlined=false
+EdgePolicy=finite

@@ -4,6 +4,7 @@ import cellsociety.model.cells.FallingSandCell;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,7 +38,15 @@ public class FallingSandCellTest {
     FallingSandCell c6 = new FallingSandCell(0, new Point(1, 0));
     FallingSandCell c7 = new FallingSandCell(1, new Point(1, 0));
     FallingSandCell c8 = new FallingSandCell(0, new Point(1, 0));
-    c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(0, c.getFutureState());
   }
@@ -53,7 +62,15 @@ public class FallingSandCellTest {
     FallingSandCell c7 = new FallingSandCell(2132, new Point(1, 0));
     FallingSandCell c8 = new FallingSandCell(213, new Point(1, 0));
 
-    c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(0, c.getFutureState());
   }

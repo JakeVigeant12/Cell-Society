@@ -1,8 +1,8 @@
 Type=Fire
-Title=Room to Burn
+Title=Random Fire
 Author=Robert Duvall
-Description=Fire in the center of the trees
-InitialStates=fire/fire_center.csv
+Description=Random starting configuration of Fire
+InitialStates=Random
 Parameters=0.4
 StateImages=images/grass.png,images/tree.png,images/fire.png
 Outlined=true

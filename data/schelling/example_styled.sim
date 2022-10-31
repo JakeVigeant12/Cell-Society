@@ -6,3 +6,5 @@ Description=Agents don't want to be by each other
 InitialStates=schelling/example.csv
 Parameters=0.7
 StateImages=images/empty.png,images/blue-person.png,images/red-person.png
+Outlined=true
+EdgePolicy=toroidal

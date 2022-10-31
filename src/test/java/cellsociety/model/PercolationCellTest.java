@@ -4,6 +4,7 @@ import cellsociety.model.cells.PercolationCell;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,15 @@ public class PercolationCellTest {
     PercolationCell c3 = new PercolationCell(2, new Point(1, 1));
     PercolationCell c4 = new PercolationCell(0, new Point(2, 1));
 
-    c.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(1, c.getFutureState());
   }
@@ -47,7 +56,15 @@ public class PercolationCellTest {
     PercolationCell c3 = new PercolationCell(2, new Point(1, 1));
     PercolationCell c4 = new PercolationCell(0, new Point(2, 1));
 
-    mainCell.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      mainCell.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(2, mainCell.getFutureState());
   }
@@ -60,7 +77,15 @@ public class PercolationCellTest {
     PercolationCell c3 = new PercolationCell(2, new Point(1, 1));
     PercolationCell c4 = new PercolationCell(0, new Point(2, 1));
 
-    mainCell.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      mainCell.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(1, mainCell.getFutureState());
   }
@@ -72,7 +97,15 @@ public class PercolationCellTest {
     PercolationCell c3 = new PercolationCell(2132, new Point(1, 1));
     PercolationCell c4 = new PercolationCell(213, new Point(2, 1));
 
-    c.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(0, c.getFutureState());
   }

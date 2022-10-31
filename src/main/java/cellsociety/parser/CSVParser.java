@@ -40,7 +40,7 @@ public class CSVParser extends Parser {
       }
       return gridWrapper;
     } catch (CsvValidationException | IOException e) {
-      throw new IllegalStateException("badCsvFile");
+      throw new IllegalStateException("badCsvFile", e);
     }
   }
 
@@ -58,7 +58,7 @@ public class CSVParser extends Parser {
       CSVReader csvReader = new CSVReader(myFileReader);
       return csvReader.readNext();
     } catch (CsvValidationException | IOException e) {
-      throw new IllegalStateException("badCsvFile");
+      throw new IllegalStateException("badCsvFile", e);
     }
   }
 
@@ -86,7 +86,7 @@ public class CSVParser extends Parser {
       }
       csvWriter.close();
     } catch (IOException e) {
-      throw new IllegalStateException("saveSimulationError");
+      throw new IllegalStateException("saveSimulationError", e);
     }
   }
 }
