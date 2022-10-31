@@ -24,8 +24,7 @@ class GridScreenTest extends DukeApplicationTest {
   ResourceBundle myResources;
 
   @Override
-  public void start(Stage stage)
-      throws CsvValidationException, IOException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
+  public void start(Stage stage) {
     this.stage = stage;
     File myDataFile = new File("./data/game_of_life/blinkers.sim");
     CellSocietyController controller = new CellSocietyController(myDataFile);
@@ -98,7 +97,7 @@ class GridScreenTest extends DukeApplicationTest {
   void testGridSize() {
     GridPane gridView = lookup("#gridView").query();
     CellView cellView = (CellView) gridView.getChildren().get(0);
-    double actual = cellView.getRectangleSize();
+    double actual = cellView.getShapeSize();
     double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
     assertEquals(expected, actual);
   }

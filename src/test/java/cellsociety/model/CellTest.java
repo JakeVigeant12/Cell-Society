@@ -23,15 +23,7 @@ public class CellTest {
 
   @Test
   void testCellStateChange() {
-    try {
-      c.setFutureState(List.of());
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of());
     assertEquals(state, c.getFutureState());
   }
 
@@ -66,15 +58,7 @@ public class CellTest {
     Cell c3 = new Cell(1, new Point(1, 0));
     Cell c4 = new Cell(0, new Point(1, 0));
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(state, c.getFutureState());
   }

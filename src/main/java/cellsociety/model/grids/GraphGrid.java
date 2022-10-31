@@ -1,12 +1,14 @@
 package cellsociety.model.grids;
 
+
 import cellsociety.model.AdjacencyList;
+import cellsociety.model.AdjacencyListHexagon;
 import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
 import java.awt.Point;;
 import java.lang.reflect.Constructor;
@@ -27,6 +29,7 @@ public class GraphGrid extends Grid {
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
+  private int numRows;
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
@@ -39,28 +42,35 @@ public class GraphGrid extends Grid {
    *
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) {
+  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException {
     myProperties = properties;
     myCells = createCells(gridParsing);
+    numRows = gridParsing.getRowCount();
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    if (properties.contains("EdgePolicy")) {
-      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
-        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
-      }
-      if (properties.getProperty("EdgePolicy").equals("finite")) {
-        myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
-      }
+    if (myProperties.containsKey("Tiling")) {
+      String tilingPolicy = myProperties.getProperty("Tiling");
+      myAdjacencyList = switch (tilingPolicy) {
+        case "hexagon" -> new AdjacencyListHexagon(gridParsing, myCells, simulationNeighbors);
+        case "square" -> setSquareAdjacencyList(gridParsing);
+        default -> setSquareAdjacencyList(gridParsing);
+      };
     } else
-      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+      myAdjacencyList = setSquareAdjacencyList(gridParsing);
   }
 
-
-  public Map<Point, Cell> getMyCells() {
-    return myCells;
-  }
-
-  public void setMyCells(Map<Point, Cell> myCells) {
-    this.myCells = myCells;
+  private AdjacencyList setSquareAdjacencyList(GridWrapper gridParsing) {
+    AdjacencyList AdjacencyList;
+    if (myProperties.containsKey("EdgePolicy")) {
+      String edgePolicy = myProperties.getProperty("EdgePolicy");
+      AdjacencyList = switch (edgePolicy) {
+        case "toroidal" -> new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+        case "finite" -> new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+        default -> new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+      };
+    } else {
+      AdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    }
+    return AdjacencyList;
   }
 
   public List<Cell> getEmptyCells() {
@@ -135,6 +145,15 @@ public class GraphGrid extends Grid {
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  /**
+   * Method that gets a cell with a parameter
+   *
+   * @param cellData
+   * @param cellCount
+   * @param makeNewCell
+   * @return
+   * @throws IllegalStateException
+   */
   private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
     throws IllegalStateException {
     Cell newCell;
@@ -217,5 +236,24 @@ public class GraphGrid extends Grid {
   @Override
   public Map<Point, Cell> getCells() {
     return myCells;
+  }
+
+  /**
+   * For testing purposes
+   **/
+  public List<Integer> representStatesAsList(Map<Point, Cell> inputCells) {
+    HashMap<Integer, Cell> sortableInput = new HashMap<>();
+    for (Point p : inputCells.keySet()) {
+      //Just need to make an integer of the point values to produce a sorting that is constant. Any method works
+
+      sortableInput.put((p.x + numRows * p.y), inputCells.get(p));
+    }
+    TreeMap<Integer, Cell> sortedMap = new TreeMap<>();
+    sortedMap.putAll(sortableInput);
+    List<Integer> cellStates = new ArrayList<>();
+    for (Integer currentCell : sortedMap.keySet()) {
+      cellStates.add(sortedMap.get(currentCell).getCurrentState());
+    }
+    return cellStates;
   }
 }

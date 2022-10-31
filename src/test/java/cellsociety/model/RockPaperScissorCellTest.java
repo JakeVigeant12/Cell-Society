@@ -35,15 +35,7 @@ public class RockPaperScissorCellTest {
     RockPaperScissorCell c3 = new RockPaperScissorCell(0, new Point(1, 1));
     RockPaperScissorCell c4 = new RockPaperScissorCell(0, new Point(2, 1));
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(1, c.getFutureState());
   }
@@ -56,15 +48,7 @@ public class RockPaperScissorCellTest {
     RockPaperScissorCell c3 = new RockPaperScissorCell(0, new Point(1, 1));
     RockPaperScissorCell c4 = new RockPaperScissorCell(0, new Point(2, 1));
 
-    try {
-      mainCell.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainCell.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(0, mainCell.getFutureState());
   }
@@ -77,15 +61,7 @@ public class RockPaperScissorCellTest {
     RockPaperScissorCell c3 = new RockPaperScissorCell(2, new Point(1, 1));
     RockPaperScissorCell c4 = new RockPaperScissorCell(1, new Point(2, 1));
 
-    try {
-      mainCell.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainCell.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(2, mainCell.getFutureState());
   }
@@ -97,15 +73,7 @@ public class RockPaperScissorCellTest {
     RockPaperScissorCell c3 = new RockPaperScissorCell(2132, new Point(1, 1));
     RockPaperScissorCell c4 = new RockPaperScissorCell(213, new Point(2, 1));
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(0, c.getFutureState());
   }

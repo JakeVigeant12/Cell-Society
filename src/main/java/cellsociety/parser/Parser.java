@@ -1,6 +1,6 @@
 package cellsociety.parser;
 
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
 

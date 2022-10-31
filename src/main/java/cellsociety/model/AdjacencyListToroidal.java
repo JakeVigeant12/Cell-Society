@@ -2,15 +2,13 @@ package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
-import cellsociety.view.GridWrapper;
 
 import java.awt.Point;
 import java.util.Map;
 
 public class AdjacencyListToroidal extends AdjacencyList {
 
-  public AdjacencyListToroidal(GridWrapper inputLayout, Map<Point, Cell> cells,
-      Neighborhood simulationNeighbors) {
+  public AdjacencyListToroidal(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
     super(inputLayout, cells, simulationNeighbors);
   }
 

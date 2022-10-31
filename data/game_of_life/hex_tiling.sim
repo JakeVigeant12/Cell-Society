@@ -1,0 +1,6 @@
+Type=GameOfLife
+Title=Contracting hexagon
+Author=Luyao Wang
+Description=A hexagon tiling of game of life with the hexagons contracting
+InitialStates=game_of_life/hex_tiling.csv
+Tiling=hexagon

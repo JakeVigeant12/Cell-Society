@@ -102,7 +102,14 @@ public class GridScreen extends SceneCreator {
     createBottomPanel();
     createTopPanel();
 
-    gridView = new GridView(myController);
+    if (myController.getProperties().containsKey("Tiling")) {
+      String tilingPolicy = myController.getProperties().getProperty("Tiling");
+      if (tilingPolicy.equals("hexagon"))
+        gridView = new GridViewHexagon(myController);
+      else
+        gridView = new GridViewSquare(myController);
+    }
+    else gridView = new GridViewSquare(myController);
     gridView.setUpView(myController.getViewGrid());
     GridPane grid = gridView.getGrid();
     grid.setAlignment(Pos.CENTER);

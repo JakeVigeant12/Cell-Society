@@ -1,7 +1,7 @@
 package cellsociety.controller;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.awt.Point;;

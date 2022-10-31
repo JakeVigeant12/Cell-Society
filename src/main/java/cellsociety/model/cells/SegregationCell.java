@@ -54,15 +54,21 @@ public class SegregationCell extends Cell {
     }
 
   }
-
+  /**
+   * Sets the state of a cell to empty
+   **/
   private void setEMPTY() {
     setFutureStateValue(EMPTY);
   }
-
+  /**
+   * Sets the state of a cell to agent1
+   **/
   private void setAGENT1() {
     agentBehavior(sameNeighborsAgent1, AGENT1);
   }
-
+  /**
+   * Sets the state of a cell to agent2
+   **/
   private void setAGENT2() {
     agentBehavior(sameNeighborsAgent2, AGENT2);
   }

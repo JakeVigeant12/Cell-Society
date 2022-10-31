@@ -61,6 +61,8 @@ Attributions for others' work:
 - dunes.png: Sand icons created by Freepik - Flaticon https://www.flaticon.com/free-icons/sand
 - unc.png: UNC Tar Heels Logo - freebie supply (https://freebiesupply.com/logos/unc-tar-heels-logo-4/)
 - duke.png: Wikipedia Commons (https://commons.wikimedia.org/wiki/File:Duke_Blue_Devils_logo.svg)
+- //https://stackoverflow.com/questions/68129134/create-hexagonal-field-with-flat-tiles-with-javafx
+- //https://www.geeksforgeeks.org/reading-csv-file-java-using-opencsv/
 
 
 ### Running the Program
@@ -91,7 +93,9 @@ Data files needed:
     * Outlined
       * true or false - whether or not the grid is outlined in the UI
     * EdgePolicy
-      * Define edge policy (defaults to finite)
+      * toroidal or finite (default value finite)
+    * Tiling
+     * square or hexagon (default value square if not provided)
 
 Features implemented:
 
@@ -109,11 +113,13 @@ Nearly Complete Simulations:
 ### Notes/Assumptions
 
 Assumptions or Simplifications:
+* For hexagon tiling, edge policy is not supported
 
 Interesting data files:
 
 Known Bugs:
-* If you click cancel on the file upload dialog box it throws an error but you can continue as normal afterwards
+* Hexagon tiling will have extra blank space in lower part of the screen because the alignment is done by a gridpane, and
+each cell is translated up by some distance closely align them.
 
 Noteworthy features:
 * Try running the simulations with "styled" in the file name to see cool pictures for the different simulations. It's really cute! 

@@ -2,11 +2,10 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
 
 import java.awt.Point;;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +31,7 @@ public class WatorWorldGraphGrid extends SwappedCellsGraphGrid {
   }
 
   /**
-   * Method that creates the cells for the grid
-   * @param inputLayout
-   * @return
-   */
-  /**
-   * Method that computes the new states for the cells
+   * Computes and updates the states of the cells
    */
   @Override
   public void computeStates() {

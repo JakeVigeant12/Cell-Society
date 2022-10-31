@@ -3,12 +3,12 @@ package cellsociety.view;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 
-public class CellView extends StackPane {
+public abstract class CellView extends StackPane {
 
-  private Rectangle rectangle;
+  private Shape shape;
   private int state;
   private int numStates;
   private ColorMap colors;
@@ -21,12 +21,7 @@ public class CellView extends StackPane {
    * @param state
    */
   public CellView(int state) {
-    //TODO: x, y might not be needed
-
-    rectangle = new Rectangle();
     this.state = state;
-
-    getChildren().add(rectangle);
   }
 
   public CellView(int state, ImageMap images) {
@@ -34,7 +29,6 @@ public class CellView extends StackPane {
     isUsingColors = false;
     this.images = images;
     numStates = this.images.getStateCount();
-    setStateStyle();
   }
 
   public CellView(int state, ColorMap colors) {
@@ -42,7 +36,6 @@ public class CellView extends StackPane {
     isUsingColors = true;
     this.colors = colors;
     numStates = this.colors.getStateCount();
-    setStateStyle();
   }
 
   public int getState() {
@@ -58,14 +51,17 @@ public class CellView extends StackPane {
     setStateStyle();
   }
 
-  private void setStateStyle() {
+  protected void setStateStyle() {
     if (isUsingColors) {
-      rectangle.setFill(colors.getColor(state));
+      shape.setFill(colors.getColor(state));
     } else {
-      rectangle.setFill(new ImagePattern(images.getImage(state)));
+      shape.setFill(new ImagePattern(images.getImage(state)));
     }
   }
 
+  /**
+   * Circulate through all the states
+   */
   private void circulateState() {
     if (state < numStates - 1) {
       state++;
@@ -85,16 +81,22 @@ public class CellView extends StackPane {
   }
 
   public void updateSize(double size) {
-    rectangle.setWidth(size);
-    rectangle.setHeight(size);
   }
 
   public void showBorder() {
-    rectangle.setStroke(Color.BROWN);
+    shape.setStroke(Color.BROWN);
   }
 
-  //For test purpose
-  protected double getRectangleSize() {
-    return rectangle.getWidth();
+//  For test purpose
+  protected double getShapeSize() {
+    return 0;
+  }
+
+  protected Shape getShapePolygon() {
+    return shape;
+  }
+
+  protected void setPolygon(Shape shape) {
+    this.shape = shape;
   }
 }

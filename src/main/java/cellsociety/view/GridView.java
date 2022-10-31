@@ -7,6 +7,7 @@ import cellsociety.controller.CellSocietyController;
 
 import java.util.*;
 
+import cellsociety.model.GridWrapper;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -17,7 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 
-public class GridView {
+public abstract class GridView {
 
   public static final String GRID_VIEW = "gridView";
   public static final String STATE_IMAGES = "StateImages";
@@ -38,7 +39,7 @@ public class GridView {
   private final ColorMap colors;
   private final ImageMap images;
   private boolean isUsingColors;
-  private final boolean setBorder;
+  private final boolean isSetBorder;
   public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
   private HashSet<Integer> stateTypes = new HashSet<>();
   private HashMap<Integer, Integer> allCurrentStates = new HashMap<>();
@@ -55,10 +56,10 @@ public class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
-    if(properties.containsKey("Outlined")) {
-      setBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
+    if (properties.containsKey("Outlined")) {
+      isSetBorder = Boolean.parseBoolean((String) properties.get("Outlined"));
     } else {
-      setBorder = true;
+      isSetBorder = true;
     }
   }
 
@@ -77,7 +78,7 @@ public class GridView {
       }
     } else {
       for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
-          REGEX)) {
+        REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
         isUsingColors = true;
@@ -85,6 +86,9 @@ public class GridView {
     }
   }
 
+  /**
+   * set up the grid size so that cells size listen to the size of the gridPane
+   */
   public void setUpGridViewSize() {
     widthProperty.bind(grid.widthProperty().subtract(50).divide(column));
     heightProperty.bind(grid.heightProperty().subtract(50).divide(row));
@@ -98,10 +102,6 @@ public class GridView {
         }
       }
     });
-  }
-
-  public GridWrapper getGridStates() {
-    return gridStates;
   }
 
   public void updateCellWidth(int x, int y, double size) {
@@ -129,20 +129,20 @@ public class GridView {
     setCurrentStatesData(gridData);
   }
 
-  private void createCell(GridWrapper gridData, int y, int x) {
+  protected void createCell(GridWrapper gridData, int y, int x) {
     CellView node;
     if (isUsingColors) {
-      node = new CellView(gridData.getState(y, x), colors);
+      node = new CellViewSquare(gridData.getState(y, x), colors);
     } else {
-      node = new CellView(gridData.getState(y, x), images);
+      node = new CellViewSquare(gridData.getState(y, x), images);
     }
-    if (setBorder) {
+    if (isSetBorder) {
       node.showBorder();
     }
     node.setId(CELL + y + REGEX + x);
     // add cells to group
     grid.add(node, x, y);
-    // add to grid for further reference using an array
+    // add to grid for further reference
     gridStates.setState(y, x, node.getState());
     cells.get(y).add(node);
     node.setOnMouseClicked(e -> {
@@ -167,6 +167,50 @@ public class GridView {
     setCurrentStatesData(gridData);
   }
 
+  protected ColorMap getColors() {
+    return colors;
+  }
+
+  protected ImageMap getImages() {
+    return images;
+  }
+
+  protected Boolean isUsingColors() {
+    return isUsingColors;
+  }
+
+  protected Boolean isSetBorder() {
+    return isSetBorder;
+  }
+
+  protected List<List<CellView>> getCells() {
+    return cells;
+  }
+
+  protected CellSocietyController getController() {
+    return myController;
+  }
+
+  protected DoubleProperty getWidthProperty() {
+    return widthProperty;
+  }
+
+  protected DoubleProperty getHeightProperty() {
+    return heightProperty;
+  }
+
+  protected DoubleProperty getSizeProperty() {
+    return sizeProperty;
+  }
+
+  protected IntegerProperty getRow() {
+    return row;
+  }
+
+  protected IntegerProperty getColumn() {
+    return column;
+  }
+
   /**
    * Returns the grid
    *
@@ -178,7 +222,9 @@ public class GridView {
 
   //updates all the values to 0
   private void updateHash() {
-    stateTypes.forEach((n) -> allCurrentStates.put(n, 0));
+    for (Integer n : stateTypes) {
+      allCurrentStates.put(n, 0);
+    }
   }
 
   //sets the Hashmap with the correct data of the current cell states
@@ -195,9 +241,14 @@ public class GridView {
    *
    * @return allCurrentStates
    */
-  public HashMap getCurrentStates(){return allCurrentStates;}
-
+  public HashMap getCurrentStates() {
+    return allCurrentStates;
   }
+
+  protected HashSet<Integer> getStateTypes() {
+    return stateTypes;
+  }
+}
 
 
 

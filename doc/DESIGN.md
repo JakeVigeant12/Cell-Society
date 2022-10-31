@@ -12,6 +12,7 @@ My primary responsibility was the cell logic for each of the simulations. Howeve
 My main responsibilty was the user interface including the splash screens, the background images, as well as the graphs that show current cell states. 
 
  * Team Member #3: Luyao Wang
+   * My primary responsibility was the UI, especially the part of grid and cells displayed on UI. I also worked on the graphgrid and adjacency list to make the model work well with UI.
 
  * Team Member #4: Vaishvi Patel
    * My primary responsibility was to implement the controller, use reflection to modify the UI, and implement functionality surrounding configuration. I worked on refactoring the UI and handling excpetions as well.
@@ -34,11 +35,19 @@ Then, the GraphGrid sets up the neighbors and adjacency list, the cells are pick
 The cells decide the logic for each simulation, and the future state is set based on the states of the neighbors. The cells also hold its own state, and extra parameters that are needed for each cell type.
 * Controller:
 The controller is initialized by the view (on the file input screen) and then that is used to connect the model and the view for the grid. It's main functionality includes getting important parameters from the configuration files, calling the csv parser if necessary, and facilitating communication between the model and the view.  
-
+* UI:
+The UI has three scenes, starting splash, file selection and the main simulation view. These three UI classes are built using
+polymorphism, sharing superclass SceneCreator. Each cell on the screen is a CellView instance, which has two subclasses CellViewSquare and CellViewHexagon.
+The main simulation view contains a smaller view instance called GridView, which has two subclasses GridViewSquare and GridViewHexagon.
+The data of grid are passed from controller and the view class asks the controller to update when "step" button is clicked or
+the simulation is playing. When mouse clicked on a cell, the UI will tell the controller to change the state of a cell.
 
 #### Core Classes
-Cells: All cell types extend the Cell super class, which has the general methods that are needed for each cell and can be easily overridden.
-
+Cells(model): All cell types extend the Cell super class, which has the general methods that are needed for each cell and can be easily overridden.
+GridViews(view): Two ways cells are rendered.
+CellViews(view): Two types of cells.
+GraphGrids(model): All types of grids of cells that update the states of cells.
+CellSocietyController(controller): Connection between model and view.
 ## Assumptions that Affect the Design
 
 #### Features Affected by Assumptions
@@ -53,10 +62,24 @@ Originally, we thought we only needed one grid class to be able to run all of th
 #### Easy to Add Features
 
 #### Other Features not yet Done
-Wator World Full Functionality (still very buggy)
+* Wator World Full Functionality (still very buggy)
 
-Snow Flake Crystallization
+* Snow Flake Crystallization and hexagon tiling:
+We have implemented the hexagon tiling, and it works when a field "Tiling=Hexagon" is added in the sim file.
+However, we did not have time to implement the cell for Snow Flake Crystallization. 
 
-Langton's Loop
+Besides, in hexagon tiling, edge policy is not supported due to time issue. We think we can implement toroidal in a similar
+way as square tiling, mapping an out-of-bound neighbor to the opposite site of the grid. 
+
+There is also a small problem with frontend grid of hexagon tiling: there is some space of blank in the lower part of the screen 
+since we are using a gridpane to align hexagons, the same way as squares. However, we need to translate the y coordinate of 
+hexagons up some distance to make them align closely to each other.
+
+* Unbounded edge. To implement this, we should examine the states of cells on the edge. If these cells change states, we 
+extend the grid to one side by copying all the current grid and add a new row or column to a new grid. We also need to decide the
+default values we add for the new row or column. Some simulation has state 0 as empty, but rock paper scissors do not have
+0 as empty, so we might need to use a random state when extending that row or column.
+
+* Langton's Loop
 
 Dynamically changing color of the simulation states

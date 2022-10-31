@@ -1,0 +1,5 @@
+Type=FallingSand
+Title=No Motion
+Author=Jake Vigeant
+Description=Stable Falling Sand
+InitialStates=falling_sand/stable_example.csv

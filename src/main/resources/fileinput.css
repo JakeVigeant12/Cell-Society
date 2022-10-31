@@ -1,21 +1,21 @@
-.button {
-  -fx-pref-height: 40;
-  -fx-font-size: 12pt;
-  -fx-alignment: center;
+.button{
+    -fx-pref-height: 40;
+    -fx-font-size: 12pt;
+    -fx-alignment: center;
 }
 
-.mainText {
-  -fx-alignment: center;
-  -fx-background-color: white;
-  -fx-fill: black;
-  -fx-font-size: 30pt;
-  -fx-font-weight: Bold;
+.mainText{
+    -fx-alignment: center;
+    -fx-background-color: white;
+    -fx-fill: black;
+    -fx-font-size: 30pt;
+    -fx-font-weight: Bold;
 }
 
-.uploadBox {
-  -fx-padding: 100;
-  -fx-text-alignment: center;
-  -fx-alignment: center;
-  -fx-spacing: 35px;
-  -fx-pref-width: 400;
+.uploadBox{
+    -fx-padding: 100;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-spacing: 35px;
+    -fx-pref-width: 400;
 }

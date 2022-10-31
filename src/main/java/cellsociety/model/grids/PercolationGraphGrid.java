@@ -1,9 +1,8 @@
 package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 
@@ -19,6 +18,10 @@ public class PercolationGraphGrid extends GraphGrid {
     super(gridParsing, properties);
   }
 
+  /**
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
+   */
   @Override
   public void computeStates() throws IllegalStateException {
     for (Cell currentCell : getMyAdjacencyList().getCells()) {

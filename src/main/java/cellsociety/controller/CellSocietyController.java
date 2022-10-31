@@ -3,25 +3,20 @@ package cellsociety.controller;
 import static cellsociety.view.GridScreen.TYPE;
 import static cellsociety.view.GridView.CELL_VIEW_RESOURCES;
 import static cellsociety.view.GridView.REGEX;
-import static cellsociety.view.SceneCreator.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.model.InitialModelImplementation;
 import cellsociety.parser.CSVParser;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.Model;
-import cellsociety.view.GridWrapper;
-import com.opencsv.exceptions.CsvValidationException;
+import cellsociety.model.GridWrapper;
 
 import java.awt.Point;;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
-import java.util.ResourceBundle;
 import javafx.stage.Stage;
 
 public class CellSocietyController {

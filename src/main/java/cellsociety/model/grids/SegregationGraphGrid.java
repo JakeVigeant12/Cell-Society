@@ -2,12 +2,10 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.SegregationCell;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
-import java.awt.Point;;
-import java.lang.reflect.InvocationTargetException;
+;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
 
 public class SegregationGraphGrid extends SwappedCellsGraphGrid {
@@ -23,7 +21,8 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid {
   }
 
   /**
-   * Method that computes and sets next state of cells
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
    */
   @Override
   public void computeStates() throws IllegalStateException {
