@@ -5,8 +5,15 @@ import java.util.Set;
 
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
+<<<<<<< HEAD
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+=======
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+>>>>>>> efdab70d1bb75822ca3a41ebf2194db69fc8cb63
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,10 +33,18 @@ public class Histogram{
         myStage.setTitle("Current Cell Numbers");
         myGrid = theGrid;
         cellNumbers = myGrid.getCurrentStates();
+<<<<<<< HEAD
     }
 
 
     public void makeBarGraph(){
+=======
+        System.out.println("created Histo");
+    }
+
+
+    public void createGraph(){
+>>>>>>> efdab70d1bb75822ca3a41ebf2194db69fc8cb63
         myStage.show();
         series1 = new XYChart.Series<>();
         cellKeys = cellNumbers.keySet();
@@ -46,13 +61,21 @@ public class Histogram{
         barChart.getData().addAll(series1);
         xAxis.setLabel("State");
         yAxis.setLabel("Cell Population");
+<<<<<<< HEAD
+=======
+        System.out.println(barChart);
+>>>>>>> efdab70d1bb75822ca3a41ebf2194db69fc8cb63
         myPane.getChildren().add(barChart);
         Scene scene = new Scene(myPane, 600, 600);
         myStage.setScene(scene);
         myStage.show();
     }
 
+<<<<<<< HEAD
     public void updateBarGraph(){
+=======
+    public void updateGraph(){
+>>>>>>> efdab70d1bb75822ca3a41ebf2194db69fc8cb63
         cellKeys.forEach( (n) -> {
             series1.getData().add(new XYChart.Data<String, Integer>("State " + n, (Integer) cellNumbers.get(n), true));
         });
@@ -63,5 +86,16 @@ public class Histogram{
         myStage.close();
     }
 
+<<<<<<< HEAD
+=======
+    public void testGrid(){
+        cellNumbers.put(0,1);
+        Text hghg = new Text("mgm");
+        Pane hgh = new Pane();
+        Scene scene = new Scene(hgh, 600, 600);
+        myStage.setScene(scene);
+        myStage.show();
+    }
+>>>>>>> efdab70d1bb75822ca3a41ebf2194db69fc8cb63
 
 }
