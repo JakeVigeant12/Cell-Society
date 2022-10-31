@@ -124,5 +124,17 @@ public class FallingSandCellTest {
     c1.rulesUPPEREMPTY();
     assertEquals(c1.getFutureState(),2);
   }
+  @Test
+  void testRulesUpperBoundary(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesUPPERBOUNDARY();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesLowerBoundary(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesLOWERBOUNDARY();
+    assertEquals(c1.getFutureState(),2);
+  }
 
 }

@@ -176,11 +176,11 @@ public class FallingSandCell extends Cell {
     horizontalMovement(LOWERLEFT, LEFT);
   }
 
-  private void rulesUPPERBOUNDARY() {
+  public void rulesUPPERBOUNDARY() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesLOWERBOUNDARY() {
+  public void rulesLOWERBOUNDARY() {
     setFutureStateValue(WATER);
   }
 
