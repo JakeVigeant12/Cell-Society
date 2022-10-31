@@ -1,0 +1,7 @@
+# ROCK, PAPER, SCISSORS
+Type=RockPaperScissor
+Author=Jake Vigeant
+Description=Stable
+Title=Stable
+StateColors=FF0000,00FF00,0000FF
+InitialStates=rock_paper_scissors/stable_sample.csv

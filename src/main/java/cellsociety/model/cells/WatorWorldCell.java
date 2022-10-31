@@ -90,14 +90,14 @@ public class WatorWorldCell extends Cell {
     }
   }
 
-  private void setWATER() {
+  public void setWATER() {
     setFutureStateValue(WATER); // do nothing
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
   }
 
-  private void setFISH() {
+  public void setFISH() {
     if (myNeighborStates.contains(WATER)) {
       fishTurns++;
       if (fishTurns == 3) { // if the fish has been alive for 3 turns, then it will breed
@@ -112,7 +112,7 @@ public class WatorWorldCell extends Cell {
     }
   }
 
-  private void setSHARK() {
+  public void setSHARK() {
     if (myNeighborStates.contains(WATER) && !myNeighborStates.contains(
         1)) { // if there are empty cells and no fish, then the shark will starve
       sharkStarve++;
@@ -135,7 +135,14 @@ public class WatorWorldCell extends Cell {
     }
   }
 
-  private void setINTERMEDIATESHARK() {
+  public void setINTERMEDIATESHARK() {
     setFutureStateValue(SHARK);
+  }
+
+  public int getFishTurns(){
+    return fishTurns;
+  }
+  public int getSharkTurns(){
+    return sharkTurns;
   }
 }

@@ -94,4 +94,42 @@ public class WatorWorldCellTest {
     assertEquals(neighborStates, List.of(1, 0, 1, 0));
   }
 
+  @Test
+  void testResetState(){
+    WatorWorldCell c1 = new WatorWorldCell(1, new Point(0, 0));
+    c1.resetStateParameters();
+    assertEquals(0,c1.getSharkTurns());
+    assertEquals(0,c1.getFishTurns());
+  }
+@Test
+  void setFishStateTest(){
+  WatorWorldCell c1 = new WatorWorldCell(0, new Point(0, 0));
+  c1.setFISH();
+  assertEquals(c1.getFutureState(),1);
+}
+  @Test
+  void setWaterStateTest(){
+    WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
+    c1.setWATER();
+    assertEquals(c1.getFutureState(),0);
+  }
+  @Test
+  void setSharkStateTest(){
+
+    WatorWorldCell c1 = new WatorWorldCell(2, new Point(0, 0));
+    WatorWorldCell c2 = new WatorWorldCell(0, new Point(1, 0));
+    WatorWorldCell c3 = new WatorWorldCell(1, new Point(1, 1));
+    WatorWorldCell c4 = new WatorWorldCell(0, new Point(2, 1));
+
+    List<Integer> neighborStates = c.getNeighborStates(List.of(c2, c3, c4));
+
+    c.setSHARK();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void setIntermediateSharkStateTest(){
+    WatorWorldCell c1 = new WatorWorldCell(0, new Point(0, 0));
+    c1.setINTERMEDIATESHARK();
+    assertEquals(c1.getFutureState(),2);
+  }
 }
