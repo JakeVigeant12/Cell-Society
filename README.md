@@ -120,6 +120,7 @@ Interesting data files:
 Known Bugs:
 * Hexagon tiling will have extra blank space in lower part of the screen because the alignment is done by a gridpane, and
 each cell is translated up by some distance closely align them.
+* Falling sand simulation might fail when an active cell is on edge.
 
 Noteworthy features:
 * Try running the simulations with "styled" in the file name to see cool pictures for the different simulations. It's really cute! 
