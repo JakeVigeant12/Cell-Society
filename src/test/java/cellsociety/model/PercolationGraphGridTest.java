@@ -3,12 +3,9 @@ package cellsociety.model;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import cellsociety.model.grids.FireGraphGrid;
-import cellsociety.model.grids.GameOfLifeGraphGrid;
 import cellsociety.model.grids.PercolationGraphGrid;
-import cellsociety.model.grids.SegregationGraphGrid;
 import cellsociety.parser.CSVParser;
-import cellsociety.view.GridWrapper;
+
 import java.util.ArrayList;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;

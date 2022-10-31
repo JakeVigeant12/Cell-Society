@@ -26,4 +26,9 @@ public class CellViewSquare extends CellView {
     rectangle.setHeight(size);
     setStateStyle();
   }
+  @Override
+  protected double getShapeSize() {
+    Rectangle rectangle = (Rectangle) getShapePolygon();
+    return rectangle.getWidth();
+  }
 }

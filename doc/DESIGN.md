@@ -62,9 +62,9 @@ Originally, we thought we only needed one grid class to be able to run all of th
 #### Easy to Add Features
 
 #### Other Features not yet Done
-Wator World Full Functionality (still very buggy)
+* Wator World Full Functionality (still very buggy)
 
-Snow Flake Crystallization and hexagon tiling:
+* Snow Flake Crystallization and hexagon tiling:
 We have implemented the hexagon tiling, and it works when a field "Tiling=Hexagon" is added in the sim file.
 However, we did not have time to implement the cell for Snow Flake Crystallization. 
 
@@ -75,6 +75,11 @@ There is also a small problem with frontend grid of hexagon tiling: there is som
 since we are using a gridpane to align hexagons, the same way as squares. However, we need to translate the y coordinate of 
 hexagons up some distance to make them align closely to each other.
 
-Langton's Loop
+* Unbounded edge. To implement this, we should examine the states of cells on the edge. If these cells change states, we 
+extend the grid to one side by copying all the current grid and add a new row or column to a new grid. We also need to decide the
+default values we add for the new row or column. Some simulation has state 0 as empty, but rock paper scissors do not have
+0 as empty, so we might need to use a random state when extending that row or column.
+
+* Langton's Loop
 
 Dynamically changing color of the simulation states

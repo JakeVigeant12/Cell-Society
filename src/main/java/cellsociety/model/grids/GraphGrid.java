@@ -8,7 +8,7 @@ import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
 import java.awt.Point;;
 import java.lang.reflect.Constructor;

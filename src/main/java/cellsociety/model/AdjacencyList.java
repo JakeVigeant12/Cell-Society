@@ -2,7 +2,6 @@ package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
-import cellsociety.view.GridWrapper;
 
 import java.awt.Point;
 import java.util.List;

@@ -7,6 +7,7 @@ import cellsociety.controller.CellSocietyController;
 
 import java.util.*;
 
+import cellsociety.model.GridWrapper;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -55,8 +56,8 @@ public abstract class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
-    if(properties.containsKey("Outlined")) {
-      isSetBorder =  Boolean.parseBoolean((String) properties.get("Outlined"));
+    if (properties.containsKey("Outlined")) {
+      isSetBorder = Boolean.parseBoolean((String) properties.get("Outlined"));
     } else {
       isSetBorder = true;
     }
@@ -77,7 +78,7 @@ public abstract class GridView {
       }
     } else {
       for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
-          REGEX)) {
+        REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
         isUsingColors = true;
@@ -85,6 +86,9 @@ public abstract class GridView {
     }
   }
 
+  /**
+   * set up the grid size so that cells size listen to the size of the gridPane
+   */
   public void setUpGridViewSize() {
     widthProperty.bind(grid.widthProperty().subtract(50).divide(column));
     heightProperty.bind(grid.heightProperty().subtract(50).divide(row));
@@ -98,10 +102,6 @@ public abstract class GridView {
         }
       }
     });
-  }
-
-  public GridWrapper getGridStates() {
-    return gridStates;
   }
 
   public void updateCellWidth(int x, int y, double size) {
@@ -142,7 +142,7 @@ public abstract class GridView {
     node.setId(CELL + y + REGEX + x);
     // add cells to group
     grid.add(node, x, y);
-    // add to grid for further reference using an array
+    // add to grid for further reference
     gridStates.setState(y, x, node.getState());
     cells.get(y).add(node);
     node.setOnMouseClicked(e -> {
@@ -185,6 +185,7 @@ public abstract class GridView {
   protected List<List<CellView>> getCells() {
     return cells;
   }
+
   protected CellSocietyController getController() {
     return myController;
   }
@@ -239,11 +240,14 @@ public abstract class GridView {
    *
    * @return allCurrentStates
    */
-  public HashMap getCurrentStates(){return allCurrentStates;}
+  public HashMap getCurrentStates() {
+    return allCurrentStates;
+  }
+
   protected HashSet<Integer> getStateTypes() {
     return stateTypes;
   }
-  }
+}
 
 
 

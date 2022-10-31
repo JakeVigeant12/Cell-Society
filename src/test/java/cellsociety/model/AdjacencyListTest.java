@@ -2,7 +2,6 @@ package cellsociety.model;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
-import cellsociety.view.GridWrapper;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;;

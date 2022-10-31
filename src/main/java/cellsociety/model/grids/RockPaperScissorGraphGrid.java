@@ -1,10 +1,8 @@
 package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Properties;
 
 public class RockPaperScissorGraphGrid extends GraphGrid {

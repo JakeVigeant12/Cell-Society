@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
+import cellsociety.model.GridWrapper;
 import javafx.beans.binding.Bindings;
 
 public class GridViewHexagon extends GridView {
@@ -21,10 +22,10 @@ public class GridViewHexagon extends GridView {
     } else {
       node = new CellViewHexagon(gridData.getState(y, x), getImages());
     }
-    if (y % 2 == 0) {
+    if (y % 2 == 0) {//move hexagons to right by some distance if even row
       node.setTranslateX(18);
     }
-    node.setTranslateY(-10 * y);
+    node.setTranslateY(-10 * y);//move hexagons to up by some distance to reach close alignment
     node.updateSize(20);
     if (isSetBorder()) {
       node.showBorder();
@@ -32,7 +33,7 @@ public class GridViewHexagon extends GridView {
     node.setId(CELL + y + REGEX + x);
     // add cells to group
     getGrid().add(node, x, y);
-    // add to grid for further reference using an array
+    // add to grid for further reference
     gridStates.setState(y, x, node.getState());
     getCells().get(y).add(node);
     node.setOnMouseClicked(e -> {
@@ -42,6 +43,9 @@ public class GridViewHexagon extends GridView {
     getStateTypes().add(node.getState());
   }
 
+  /**
+   * set up the grid size so that hexagon cells size listen to the size of the gridPane
+   */
   @Override
   public void setUpGridViewSize() {
     getWidthProperty().bind(getGrid().widthProperty().subtract(50).divide(getColumn()));
@@ -60,5 +64,4 @@ public class GridViewHexagon extends GridView {
       }
     });
   }
-
 }

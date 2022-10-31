@@ -2,11 +2,10 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.Neighborhood;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
 
 import java.awt.Point;;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
