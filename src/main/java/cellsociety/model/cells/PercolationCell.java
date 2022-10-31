@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +35,12 @@ public class PercolationCell extends Cell {
    * @return next state of the cell
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     myNeighbors = neighbors;
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new IllegalStateException("methodNotFound",e);
     }
   }
 

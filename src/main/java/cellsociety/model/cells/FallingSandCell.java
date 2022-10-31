@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -77,13 +78,13 @@ public class FallingSandCell extends Cell {
    * @param neighbors
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     neighborHood = neighbors;
     wantsToSwap = false;
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new IllegalStateException("methodNotFound",e);
     }
   }
 

@@ -1,7 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellSocietyController;
-import com.opencsv.exceptions.CsvValidationException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -10,12 +10,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -121,16 +117,16 @@ public class GridScreen extends SceneCreator {
    * Sets up the left panel of the Grid Screen UI
    */
   private void createLeftPanel() {
-    Text aboutTitle = createAndStyleText(getMyResource().getString(ABOUT), TITLE);
+    Text aboutTitle = createAndStyleText(getResource().getString(ABOUT), TITLE);
     Text fileTitle = createAndStyleText(
-        getMyResource().getString(TITLE) + myController.getProperties().get(TITLE), INFO);
+        getResource().getString(TITLE) + myController.getProperties().get(TITLE), INFO);
     Text simulationType = createAndStyleText(
-        getMyResource().getString(TYPE) + myController.getProperties().get(TYPE), INFO);
+        getResource().getString(TYPE) + myController.getProperties().get(TYPE), INFO);
     Text author = createAndStyleText(
-        getMyResource().getString(AUTHOR) + myController.getProperties().get(AUTHOR),
+        getResource().getString(AUTHOR) + myController.getProperties().get(AUTHOR),
         INFO);
 
-    statusBox = createAndStyleTextBox(String.format(getMyResource().getString(STATUS),
+    statusBox = createAndStyleTextBox(String.format(getResource().getString(STATUS),
         simulationType), INFO);
     statusBox.setId(STATUS);
     statusBox.setBackground(Background.fill(mainColor));
@@ -138,7 +134,7 @@ public class GridScreen extends SceneCreator {
     statusBox.setWrapText(true);
 
     TextArea descriptionBox = createAndStyleTextBox(
-        getMyResource().getString(DESCRIPTION) + myController.getProperties()
+        getResource().getString(DESCRIPTION) + myController.getProperties()
             .get(DESCRIPTION), INFO);
     descriptionBox.setBackground(Background.fill(mainColor));
     descriptionBox.setEditable(false);
@@ -211,7 +207,7 @@ public class GridScreen extends SceneCreator {
    */
   private HBox makeSlider(String property) {
     HBox sliderBox = new HBox();
-    sliderBox.getChildren().add(new Label(getMyResource().getString(property)));
+    sliderBox.getChildren().add(new Label(getResource().getString(property)));
     sliderBox.getStyleClass().add(SPEED_SLIDER);
     Slider slider = new Slider();
     sliderBox.getChildren().add(slider);
@@ -231,29 +227,30 @@ public class GridScreen extends SceneCreator {
             Number.class);
         m.invoke(this, newValue);
       } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
+        showMessage(AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
       }
     });
     return sliderBox;
   }
 
   /**
-   * Creates a button based on a resource bundle property
+   * Make a button and sets properties
    *
-   * @param property - property of the resource bundle
-   * @return button
+   * @param property
+   * @return
    */
-  public Button makeButton(String property) {
+  protected Button makeButton(String property) {
     Button result = new Button();
-    String labelText = getMyResource().getString(property);
+    String labelText = getResource().getString(property);
     result.setText(labelText);
     result.setId(property);
+    result.getStyleClass().add(BUTTON);
     result.setOnAction(event -> {
       try {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
-      } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-        showMessage(AlertType.ERROR, getMyResource().getString(e.getCause().getMessage()));
+      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
       }
     });
     return result;
@@ -265,7 +262,7 @@ public class GridScreen extends SceneCreator {
     File file = FILE_CHOOSER.showSaveDialog(myStage);
     if (file != null) {
       myController.saveGrid(file);
-      statusBox.setText(getMyResource().getString(SAVE_SIMULATION_STATUS));
+      statusBox.setText(getResource().getString(SAVE_SIMULATION_STATUS));
     }
   }
 
@@ -273,7 +270,7 @@ public class GridScreen extends SceneCreator {
   private void changeSpeed(Number newValue) {
     refreshRate = newValue.doubleValue();
     timeline.setRate(refreshRate);
-    statusBox.setText(String.format(getMyResource().getString(SPEED_STATUS), refreshRate));
+    statusBox.setText(String.format(getResource().getString(SPEED_STATUS), refreshRate));
   }
 
   private void goBack() {
@@ -301,22 +298,22 @@ public class GridScreen extends SceneCreator {
 
   private void pauseSimulation() {
     timeline.pause();
-    statusBox.setText(getMyResource().getString(PAUSED_STATUS));
+    statusBox.setText(getResource().getString(PAUSED_STATUS));
   }
 
   private void resetSimulation() throws IllegalStateException {
-    statusBox.setText(getMyResource().getString(RESET_STATUS));
+    statusBox.setText(getResource().getString(RESET_STATUS));
     myController.resetController();
     gridView.updateGrid(myController.getViewGrid());
   }
 
   private void stepSimulation() {
     gridView.updateGrid(myController.updateGrid());
-    statusBox.setText(getMyResource().getString(STEP_STATUS));
+    statusBox.setText(getResource().getString(STEP_STATUS));
   }
 
   private void playSimulation() {
     timeline.play();
-    statusBox.setText(getMyResource().getString(PLAYING_STATUS));
+    statusBox.setText(getResource().getString(PLAYING_STATUS));
   }
 }

@@ -47,7 +47,7 @@ public class Cell {
   /**
    * Method that sets the future state of the cell
    */
-  public void setFutureState(List<Cell> neighbors) {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     futureState = currentState;
   }
 
