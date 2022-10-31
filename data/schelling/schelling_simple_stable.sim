@@ -1,0 +1,5 @@
+Type=Segregation
+Title=Simple Stable Grid
+Author=Jake Vigeant
+Description=Stable Agents
+InitialStates=schelling/schelling_simple_stable.csv
