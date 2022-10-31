@@ -158,6 +158,7 @@ public abstract class GridView {
    * @param gridData
    */
   public void updateGrid(GridWrapper gridData) {
+    updateHash();
     for (int y = 0; y < row.get(); y++) {
       for (int x = 0; x < column.get(); x++) {
         cells.get(y).get(x).updateState(gridData.getState(y, x));
