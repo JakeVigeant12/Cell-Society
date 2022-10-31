@@ -1,6 +1,7 @@
 package cellsociety.model.cells;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;

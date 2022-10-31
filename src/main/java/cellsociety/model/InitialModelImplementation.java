@@ -5,6 +5,7 @@ import static cellsociety.view.GridScreen.TYPE;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.grids.*;
 import cellsociety.view.GridWrapper;
+import javafx.scene.control.Alert;
 
 import java.awt.Point;;;
 import java.lang.reflect.Constructor;
@@ -43,7 +44,7 @@ public class InitialModelImplementation extends Model {
   /**
    * Method that computes the states of the cells
    */
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     myGrid.computeStates();
   }
 

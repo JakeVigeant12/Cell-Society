@@ -84,13 +84,13 @@ public class GridScreen extends SceneCreator {
   /**
    * Sets up the timeline for the animation
    */
-  private void setUpTimeline() {
-    timeline = new Timeline();
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-      gridView.updateGrid(myController.updateGrid());
-    }));
-    timeline.pause();
+  private void setUpTimeline() throws IllegalStateException {
+      timeline = new Timeline();
+      timeline.setCycleCount(Timeline.INDEFINITE);
+      timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+        gridView.updateGrid(myController.updateGrid());
+      }));
+      timeline.pause();
   }
 
   /**
@@ -307,7 +307,7 @@ public class GridScreen extends SceneCreator {
     gridView.updateGrid(myController.getViewGrid());
   }
 
-  private void stepSimulation() {
+  private void stepSimulation() throws IllegalStateException {
     gridView.updateGrid(myController.updateGrid());
     statusBox.setText(getResource().getString(STEP_STATUS));
   }

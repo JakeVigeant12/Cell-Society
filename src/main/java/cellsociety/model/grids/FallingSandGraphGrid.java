@@ -23,7 +23,7 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid {
    * Method that computes and sets next state of cells
    */
   @Override
-  public void computeStates() {
+  public void computeStates() throws IllegalStateException {
     //Override method with Falling Sand
     // Pass 1: Calculate future cell states and find empty cells
     for (Cell currentCell : super.getMyAdjacencyList().getCells()) {
@@ -34,8 +34,7 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid {
       // Pass 2: If a current cell wants to swap, then swap it with the cell in the adjacency list
       FallingSandCell sandWaterCell = (FallingSandCell) currentCell;
       if (sandWaterCell.wantsToSwap()) {
-        Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(),
-            super.getMyAdjacencyList().getCells());
+        Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(), super.getMyAdjacencyList().getCells());
         currentCell.swapCellStates(newCell);
       }
     }

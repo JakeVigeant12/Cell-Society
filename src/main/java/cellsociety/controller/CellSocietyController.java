@@ -131,7 +131,7 @@ public class CellSocietyController {
    *
    * @return gridWrapper
    */
-  public GridWrapper updateGrid() {
+  public GridWrapper updateGrid() throws IllegalStateException {
     myModel.computeStates();
     return getViewGrid();
   }
