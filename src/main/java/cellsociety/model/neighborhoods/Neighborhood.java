@@ -10,6 +10,10 @@ public class Neighborhood {
     return neighborHood;
   }
 
+  /**
+   * Sets neighborhood to the passed in list
+   * @param neighborHood
+   */
   public void setNeighborHood(List<Boolean> neighborHood) {
     this.neighborHood = neighborHood;
   }

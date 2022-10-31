@@ -35,15 +35,7 @@ public class GameOfLifeCellTest {
     GameOfLifeCell c3 = new GameOfLifeCell(1, new Point(1, 0));
     GameOfLifeCell c4 = new GameOfLifeCell(0, new Point(1, 0));
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(1, c.getFutureState());
   }
@@ -55,15 +47,7 @@ public class GameOfLifeCellTest {
     GameOfLifeCell c3 = new GameOfLifeCell(2132, new Point(1, 0));
     GameOfLifeCell c4 = new GameOfLifeCell(213, new Point(1, 0));
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(0, c.getFutureState());
   }

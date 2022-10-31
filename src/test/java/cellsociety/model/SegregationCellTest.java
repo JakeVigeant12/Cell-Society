@@ -41,15 +41,7 @@ public class SegregationCellTest {
     SegregationCell c7 = new SegregationCell(0, new Point(1, 1), 0.5);
     SegregationCell c8 = new SegregationCell(0, new Point(2, 1), 0.5);
 
-    try {
-      mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
     assertEquals(1, mainAgent.getFutureState());
     assertEquals(false, mainAgent.getWantsToMove());
@@ -67,15 +59,7 @@ public class SegregationCellTest {
     SegregationCell c7 = new SegregationCell(2, new Point(1, 1), 0.5);
     SegregationCell c8 = new SegregationCell(2, new Point(2, 1), 0.5);
 
-    try {
-      mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
     assertEquals(1, mainAgent.getFutureState());
     assertEquals(true, mainAgent.getWantsToMove());
@@ -93,15 +77,7 @@ public class SegregationCellTest {
     SegregationCell c7 = new SegregationCell(0, new Point(1, 1), 0.5);
     SegregationCell c8 = new SegregationCell(0, new Point(2, 1), 0.5);
 
-    try {
-      mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
     assertEquals(2, mainAgent.getFutureState());
     assertEquals(false, mainAgent.getWantsToMove());
@@ -120,15 +96,7 @@ public class SegregationCellTest {
     SegregationCell c7 = new SegregationCell(2, new Point(1, 1), 0.5);
     SegregationCell c8 = new SegregationCell(0, new Point(2, 1), 0.5);
 
-    try {
-      mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainAgent.setFutureState(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
 
     assertEquals(2, mainAgent.getFutureState());
     assertEquals(true, mainAgent.getWantsToMove());
@@ -141,15 +109,7 @@ public class SegregationCellTest {
     SegregationCell c3 = new SegregationCell(2132, new Point(1, 1), 1);
     SegregationCell c4 = new SegregationCell(213, new Point(2, 1), 1);
 
-    try {
-      c.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    c.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(1, c.getFutureState());
     assertEquals(true, c.getWantsToMove());
@@ -175,15 +135,7 @@ public class SegregationCellTest {
     SegregationCell c3 = new SegregationCell(0, new Point(1, 1), 0);
     SegregationCell c4 = new SegregationCell(0, new Point(2, 1), 0);
 
-    try {
-      mainCell.setFutureState(List.of(c1, c2, c3, c4));
-    } catch (InvocationTargetException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    }
+    mainCell.setFutureState(List.of(c1, c2, c3, c4));
 
     assertEquals(2, mainCell.getFutureState());
   }

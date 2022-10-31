@@ -1,0 +1,5 @@
+Type=Segregation
+Title=Simple Unstable Grid
+Author=Jake Vigeant
+Description=Opposite agents with room to move
+InitialStates=schelling/schelling_simple_unstable.csv

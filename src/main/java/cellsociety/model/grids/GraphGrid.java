@@ -1,5 +1,6 @@
 package cellsociety.model.grids;
 
+
 import cellsociety.model.AdjacencyList;
 import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
@@ -27,6 +28,7 @@ public class GraphGrid extends Grid {
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
+  private int numRows;
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
@@ -42,6 +44,7 @@ public class GraphGrid extends Grid {
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
     myCells = createCells(gridParsing);
+    numRows = gridParsing.getRowCount();
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
     if (properties.contains("EdgePolicy")) {
       if (properties.getProperty("EdgePolicy").equals("toroidal")) {
@@ -53,16 +56,6 @@ public class GraphGrid extends Grid {
     } else
       myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
-
-
-  public Map<Point, Cell> getMyCells() {
-    return myCells;
-  }
-
-  public void setMyCells(Map<Point, Cell> myCells) {
-    this.myCells = myCells;
-  }
-
   public List<Cell> getEmptyCells() {
     return emptyCells;
   }
@@ -225,5 +218,23 @@ public class GraphGrid extends Grid {
   @Override
   public Map<Point, Cell> getCells() {
     return myCells;
+  }
+  /**
+   * For testing purposes
+   **/
+  public List<Integer> representStatesAsList(Map<Point, Cell> inputCells){
+    HashMap<Integer, Cell> sortableInput = new HashMap<>();
+    for(Point p : inputCells.keySet()){
+      //Just need to make an integer of the point values to produce a sorting that is constant. Any method works
+
+      sortableInput.put((p.x + numRows * p.y), inputCells.get(p));
+    }
+    TreeMap<Integer, Cell> sortedMap = new TreeMap<>();
+    sortedMap.putAll(sortableInput);
+    List<Integer> cellStates = new ArrayList<>();
+    for(Integer currentCell : sortedMap.keySet()){
+      cellStates.add(sortedMap.get(currentCell).getCurrentState());
+    }
+    return cellStates;
   }
 }
