@@ -33,7 +33,8 @@ public class FallingSandGraphGrid extends SwappedCellsGraphGrid {
       // Pass 2: If a current cell wants to swap, then swap it with the cell in the adjacency list
       FallingSandCell sandWaterCell = (FallingSandCell) currentCell;
       if (sandWaterCell.wantsToSwap()) {
-        Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(), super.getMyAdjacencyList().getCells());
+        Cell newCell = findCellToSwap(sandWaterCell.getNeighborToSwap(),
+            super.getMyAdjacencyList().getCells());
         currentCell.swapCellStates(newCell);
       }
     }

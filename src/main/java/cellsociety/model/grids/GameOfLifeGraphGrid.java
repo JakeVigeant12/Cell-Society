@@ -17,17 +17,18 @@ public class GameOfLifeGraphGrid extends GraphGrid {
     super(gridParsing, properties);
   }
 
-    /**
-     * Computes and updates the states of the cells
-     * @throws IllegalStateException
-     */
+  /**
+   * Computes and updates the states of the cells
+   *
+   * @throws IllegalStateException
+   */
   @Override
   public void computeStates() throws IllegalStateException {
-      for (Cell currentCell : getMyAdjacencyList().getCells()) {
-        currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
-      }
-      for (Cell currentCell : getMyAdjacencyList().getCells()) {
-        currentCell.updateState();
-      }
+    for (Cell currentCell : getMyAdjacencyList().getCells()) {
+      currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
+    }
+    for (Cell currentCell : getMyAdjacencyList().getCells()) {
+      currentCell.updateState();
+    }
   }
 }

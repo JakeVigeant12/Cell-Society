@@ -12,15 +12,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class GameOfLifeGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   GameOfLifeGraphGrid myTestGrid;
   GridWrapper gridWrapper;
   ArrayList<Integer> prevStates = new ArrayList<>();
   ArrayList<Integer> nextStates = new ArrayList<>();
   Properties p = new Properties();
+
   @Test
-  public void testStableStateComputation()
-  {
+  public void testStableStateComputation() {
     p.setProperty("Type", "GameOfLife");
     gridWrapper = myGridParser.parseData("game_of_life/game_of_life_simple_test.csv");
     myTestGrid = new GameOfLifeGraphGrid(gridWrapper, p);
@@ -34,8 +35,9 @@ public class GameOfLifeGraphGridTest {
     //Stable input config
     assertFalse(areEqual);
   }
+
   @Test
-  public void testMovingStates(){
+  public void testMovingStates() {
     p.setProperty("Type", "GameOfLife");
     gridWrapper = myGridParser.parseData("game_of_life/game_of_life_simple_stable.csv");
     myTestGrid = new GameOfLifeGraphGrid(gridWrapper, p);

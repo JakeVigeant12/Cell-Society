@@ -2,6 +2,7 @@ package cellsociety.view;
 
 
 public class CellViewHexagon extends CellView {
+
   public CellViewHexagon(int state, ColorMap colors) {
     super(state, colors);
     initializeShape();

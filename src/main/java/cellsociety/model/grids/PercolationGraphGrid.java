@@ -20,6 +20,7 @@ public class PercolationGraphGrid extends GraphGrid {
 
   /**
    * Computes and updates the states of the cells
+   *
    * @throws IllegalStateException
    */
   @Override

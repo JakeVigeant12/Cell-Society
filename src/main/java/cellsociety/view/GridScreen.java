@@ -34,6 +34,7 @@ import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 import static cellsociety.view.SplashScreen.FILE_INPUT_CSS;
 
 public class GridScreen extends SceneCreator {
+
   public static final String ABOUT = "About";
   public static final String TITLE = "Title";
   public static final String INFO = "Info";
@@ -85,12 +86,12 @@ public class GridScreen extends SceneCreator {
    * Sets up the timeline for the animation
    */
   private void setUpTimeline() throws IllegalStateException {
-      timeline = new Timeline();
-      timeline.setCycleCount(Timeline.INDEFINITE);
-      timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-        gridView.updateGrid(myController.updateGrid());
-      }));
-      timeline.pause();
+    timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+      gridView.updateGrid(myController.updateGrid());
+    }));
+    timeline.pause();
   }
 
   /**
@@ -104,12 +105,14 @@ public class GridScreen extends SceneCreator {
 
     if (myController.getProperties().containsKey("Tiling")) {
       String tilingPolicy = myController.getProperties().getProperty("Tiling");
-      if (tilingPolicy.equals("hexagon"))
+      if (tilingPolicy.equals("hexagon")) {
         gridView = new GridViewHexagon(myController);
-      else
+      } else {
         gridView = new GridViewSquare(myController);
+      }
+    } else {
+      gridView = new GridViewSquare(myController);
     }
-    else gridView = new GridViewSquare(myController);
     gridView.setUpView(myController.getViewGrid());
     GridPane grid = gridView.getGrid();
     grid.setAlignment(Pos.CENTER);
@@ -325,14 +328,19 @@ public class GridScreen extends SceneCreator {
     timeline.play();
     statusBox.setText(getResource().getString(PLAYING_STATUS));
   }
-  public GridView getCurrentView(){return gridView;}
+
+  public GridView getCurrentView() {
+    return gridView;
+  }
 
   private void createBarGraph() {
     closeGraph();
     myChart = new Histogram(gridView);
     myChart.makeBarGraph();
     timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-      if(myChart!=null){myChart.updateBarGraph();}
+      if (myChart != null) {
+        myChart.updateBarGraph();
+      }
     }));
   }
 
@@ -341,12 +349,14 @@ public class GridScreen extends SceneCreator {
     myChart = new Histogram(gridView);
     myChart.makeLineGraph(timeline);
     timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
-      if(myChart!=null){myChart.updateLineGraph(timeline);}
+      if (myChart != null) {
+        myChart.updateLineGraph(timeline);
+      }
     }));
   }
 
-  private void closeGraph(){
-    if(myChart!=null){
+  private void closeGraph() {
+    if (myChart != null) {
       myChart.shutDown();
       timeline.getKeyFrames().remove(0);
     }

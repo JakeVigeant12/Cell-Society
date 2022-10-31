@@ -87,7 +87,7 @@ public abstract class CellView extends StackPane {
     shape.setStroke(Color.BROWN);
   }
 
-//  For test purpose
+  //  For test purpose
   protected double getShapeSize() {
     return 0;
   }

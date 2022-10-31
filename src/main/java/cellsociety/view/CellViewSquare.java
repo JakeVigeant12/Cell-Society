@@ -3,6 +3,7 @@ package cellsociety.view;
 import javafx.scene.shape.Rectangle;
 
 public class CellViewSquare extends CellView {
+
   public CellViewSquare(int state, ColorMap colors) {
     super(state, colors);
     initializeShape();
@@ -26,6 +27,7 @@ public class CellViewSquare extends CellView {
     rectangle.setHeight(size);
     setStateStyle();
   }
+
   @Override
   protected double getShapeSize() {
     Rectangle rectangle = (Rectangle) getShapePolygon();

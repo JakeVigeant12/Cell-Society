@@ -64,8 +64,9 @@ public abstract class SceneCreator {
   }
 
   protected void setMyDataFile(File myDataFile) {
-    if (myDataFile == null)
+    if (myDataFile == null) {
       throw new IllegalStateException("noFileInput");
+    }
     this.myDataFile = myDataFile;
   }
 

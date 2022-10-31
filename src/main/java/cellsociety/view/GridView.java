@@ -40,7 +40,8 @@ public abstract class GridView {
   private final ImageMap images;
   private boolean isUsingColors;
   private final boolean isSetBorder;
-  public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
+  public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(
+      String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
   private HashSet<Integer> stateTypes = new HashSet<>();
   private HashMap<Integer, Integer> allCurrentStates = new HashMap<>();
 
@@ -56,14 +57,15 @@ public abstract class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
-    if (isUsingColors)
-      for (int i = 0; i < colors.getStateCount(); i++){
+    if (isUsingColors) {
+      for (int i = 0; i < colors.getStateCount(); i++) {
         stateTypes.add(i);
       }
-    else
-      for (int i = 0; i < images.getStateCount(); i++){
+    } else {
+      for (int i = 0; i < images.getStateCount(); i++) {
         stateTypes.add(i);
       }
+    }
     if (properties.containsKey("Outlined")) {
       isSetBorder = Boolean.parseBoolean((String) properties.get("Outlined"));
     } else {
@@ -85,8 +87,9 @@ public abstract class GridView {
         isUsingColors = true;
       }
     } else {
-      for (String colorString : CELL_VIEW_RESOURCES.getString(String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
-        REGEX)) {
+      for (String colorString : CELL_VIEW_RESOURCES.getString(
+          String.format("%s%s", properties.get(TYPE), STATE_COLORS)).split(
+          REGEX)) {
         Color color = Color.web(colorString);
         colors.addColor(color);
         isUsingColors = true;
@@ -238,7 +241,8 @@ public abstract class GridView {
   private void setCurrentStatesData(GridWrapper gridData) {
     for (int y = 0; y < row.get(); y++) {
       for (int x = 0; x < column.get(); x++) {
-        allCurrentStates.put(gridData.getState(y, x), allCurrentStates.get(gridData.getState(y, x)) + 1);
+        allCurrentStates.put(gridData.getState(y, x),
+            allCurrentStates.get(gridData.getState(y, x)) + 1);
       }
     }
   }

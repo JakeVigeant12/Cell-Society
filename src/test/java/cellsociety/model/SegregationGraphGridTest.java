@@ -14,15 +14,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class SegregationGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   SegregationGraphGrid myTestGrid;
   GridWrapper gridWrapper;
   ArrayList<Integer> prevStates = new ArrayList<>();
   ArrayList<Integer> nextStates = new ArrayList<>();
   Properties p = new Properties();
+
   @Test
-  public void testStableStateComputation()
-  {
+  public void testStableStateComputation() {
     p.setProperty("Type", "Segregation");
     gridWrapper = myGridParser.parseData("schelling/schelling_simple_stable.csv");
     myTestGrid = new SegregationGraphGrid(gridWrapper, p);
@@ -36,8 +37,9 @@ public class SegregationGraphGridTest {
     //Stable input config
     assertTrue(areEqual);
   }
+
   @Test
-  public void testMovingStates(){
+  public void testMovingStates() {
     p.setProperty("Type", "Segregation");
     gridWrapper = myGridParser.parseData("schelling/schelling_simple_unstable.csv");
     myTestGrid = new SegregationGraphGrid(gridWrapper, p);

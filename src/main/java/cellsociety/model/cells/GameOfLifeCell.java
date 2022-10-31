@@ -47,9 +47,10 @@ public class GameOfLifeCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
   }
+
   /**
    * Sets the state of a cell to dead
    **/
@@ -60,6 +61,7 @@ public class GameOfLifeCell extends Cell {
       setFutureStateValue(DEAD); // Set current cell to dead
     }
   }
+
   /**
    * Sets the state of a cell to alive
    **/

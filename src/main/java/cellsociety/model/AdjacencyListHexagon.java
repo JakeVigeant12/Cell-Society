@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AdjacencyListHexagon extends AdjacencyList{
-  public AdjacencyListHexagon(GridWrapper inputLayout, Map<Point, Cell> cells, Neighborhood simulationNeighbors) {
+public class AdjacencyListHexagon extends AdjacencyList {
+
+  public AdjacencyListHexagon(GridWrapper inputLayout, Map<Point, Cell> cells,
+      Neighborhood simulationNeighbors) {
     super(inputLayout, cells, simulationNeighbors);
   }
 
@@ -20,41 +22,42 @@ public class AdjacencyListHexagon extends AdjacencyList{
         List<Cell> neighbors = new ArrayList<>();
         Cell currentCell = getCellMap().get(new Point(j, i));
         getAdjacencyList().putIfAbsent(currentCell, neighbors);
-        if (i % 2 == 0)
+        if (i % 2 == 0) {
           createEvenNeighbor(i, j, currentCell);
-        else
+        } else {
           createOddNeighbor(i, j, currentCell);
+        }
       }
     }
   }
 
   private void createOddNeighbor(int i, int j, Cell currentCell) {
     createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), getSimulationNeighbors(), 0,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j, i - 1), getSimulationNeighbors(), 1,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j - 1, i), getSimulationNeighbors(), 2,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j + 1, i), getSimulationNeighbors(), 3,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), getSimulationNeighbors(), 4,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j, i + 1), getSimulationNeighbors(), 5,
-      currentCell);
+        currentCell);
   }
 
   private void createEvenNeighbor(int i, int j, Cell currentCell) {
     createNeighborhood(new Point(j, i), new Point(j, i - 1), getSimulationNeighbors(), 0,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), getSimulationNeighbors(), 1,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j - 1, i), getSimulationNeighbors(), 2,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j + 1, i), getSimulationNeighbors(), 3,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j, i + 1), getSimulationNeighbors(), 4,
-      currentCell);
+        currentCell);
     createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), getSimulationNeighbors(), 5,
-      currentCell);
+        currentCell);
   }
 }

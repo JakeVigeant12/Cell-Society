@@ -11,15 +11,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 public class PercolationGraphGridTest {
+
   CSVParser myGridParser = new CSVParser();
   PercolationGraphGrid myTestGrid;
   GridWrapper gridWrapper;
   ArrayList<Integer> prevStates = new ArrayList<>();
   ArrayList<Integer> nextStates = new ArrayList<>();
   Properties p = new Properties();
+
   @Test
-  public void testStableStateComputation()
-  {
+  public void testStableStateComputation() {
     p.setProperty("Type", "Percolation");
     gridWrapper = myGridParser.parseData("percolation/percolation_simple_stable.csv");
     myTestGrid = new PercolationGraphGrid(gridWrapper, p);
@@ -33,8 +34,9 @@ public class PercolationGraphGridTest {
     //Stable input config
     assertTrue(areEqual);
   }
+
   @Test
-  public void testMovingStates(){
+  public void testMovingStates() {
     p.setProperty("Type", "Percolation");
     gridWrapper = myGridParser.parseData("percolation/percolation_simple_unstable.csv");
     myTestGrid = new PercolationGraphGrid(gridWrapper, p);

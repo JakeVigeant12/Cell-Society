@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class FallingSandCell extends Cell {
+
   private static final int EMPTY = 0;
   private static final int SAND = 1;
   private static final int WATER = 2;
@@ -50,7 +51,7 @@ public class FallingSandCell extends Cell {
     super(state, id);
     stateMap = Map.of(EMPTY, "EMPTY", SAND, "SAND", WATER, "WATER", BOUNDARY, "BOUNDARY");
     positionMap = Map.of(UPPERLEFT, "UPPERLEFT", UPPER, "UPPER", UPPERRIGHT, "UPPERRIGHT", LEFT,
-            "LEFT", RIGHT, "RIGHT", LOWERLEFT, "LOWERLEFT", LOWER, "LOWER", LOWERRIGHT, "LOWERRIGHT");
+        "LEFT", RIGHT, "RIGHT", LOWERLEFT, "LOWERLEFT", LOWER, "LOWER", LOWERRIGHT, "LOWERRIGHT");
   }
 
   /**
@@ -102,12 +103,16 @@ public class FallingSandCell extends Cell {
    */
   // NOTE: This functionality was working with a ton of if elses, I did not have enough time to fix it to work with
   // reflection.
-  private void setWATER() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    if (neighborHood.get(LOWER).getCurrentState() == EMPTY) { // if the cell is water and below is empty
+  private void setWATER()
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    if (neighborHood.get(LOWER).getCurrentState()
+        == EMPTY) { // if the cell is water and below is empty
       setFutureStateValue(EMPTY); // Turn into empty
     } else {
       try {
-        if (neighborHood.get(LEFT).getCurrentState() == EMPTY && neighborHood.get(RIGHT).getCurrentState() == EMPTY) { // If the cell is water and the left and right are empty, but lower left and lower right are not empty
+        if (neighborHood.get(LEFT).getCurrentState() == EMPTY
+            && neighborHood.get(RIGHT).getCurrentState()
+            == EMPTY) { // If the cell is water and the left and right are empty, but lower left and lower right are not empty
           setFutureStateValue(WATER);
           wantsToSwap = true;
           Random rand = new Random();
@@ -118,13 +123,19 @@ public class FallingSandCell extends Cell {
           }
         } else {
           int upperState = neighborHood.get(UPPER).getCurrentState();
-          this.getClass().getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState)).invoke(this);
+          this.getClass()
+              .getDeclaredMethod("rules" + positionMap.get(UPPER) + stateMap.get(upperState))
+              .invoke(this);
 
           int rightState = neighborHood.get(RIGHT).getCurrentState();
-          this.getClass().getDeclaredMethod("rules" + positionMap.get(RIGHT) + stateMap.get(rightState)).invoke(this);
+          this.getClass()
+              .getDeclaredMethod("rules" + positionMap.get(RIGHT) + stateMap.get(rightState))
+              .invoke(this);
 
           int leftState = neighborHood.get(LEFT).getCurrentState();
-          this.getClass().getDeclaredMethod("rules" + positionMap.get(LEFT) + stateMap.get(leftState)).invoke(this);
+          this.getClass()
+              .getDeclaredMethod("rules" + positionMap.get(LEFT) + stateMap.get(leftState))
+              .invoke(this);
         }
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
         throw e;

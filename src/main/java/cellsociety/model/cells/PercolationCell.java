@@ -40,9 +40,10 @@ public class PercolationCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
   }
+
   /**
    * Sets the state of a cell to empty
    **/
@@ -53,12 +54,14 @@ public class PercolationCell extends Cell {
       }
     }
   }
+
   /**
    * Sets the state of a cell to percolated
    **/
   private void setPERCOLATED() {
     setFutureStateValue(PERCOLATED);
   }
+
   /**
    * Sets the state of a cell to blocked
    **/

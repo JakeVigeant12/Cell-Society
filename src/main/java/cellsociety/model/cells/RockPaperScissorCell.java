@@ -40,10 +40,11 @@ public class RockPaperScissorCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
 
   }
+
   /**
    * Sets the state of a cell to rock
    **/
@@ -52,6 +53,7 @@ public class RockPaperScissorCell extends Cell {
       setFutureStateValue(PAPER); // cell becomes paper
     }
   }
+
   /**
    * Sets the state of a cell to paper
    **/
@@ -60,6 +62,7 @@ public class RockPaperScissorCell extends Cell {
       setFutureStateValue(SCISSOR); // cell becomes scissors
     }
   }
+
   /**
    * Sets the state of a cell to scissor
    **/

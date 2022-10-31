@@ -46,12 +46,13 @@ public class FireCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
   }
-/**
- * Sets the state of a cell to Tree
- **/
+
+  /**
+   * Sets the state of a cell to Tree
+   **/
   private void setTREE() {
     if (getNeighborStates(myNeighbors).contains(BURNING)) {
       double burnVal = Math.random();// If current cell is a tree and has a burning neighbor
@@ -64,6 +65,7 @@ public class FireCell extends Cell {
       setFutureStateValue(TREE);
     }
   }
+
   /**
    * Sets the state of a cell to Burning
    **/
@@ -75,6 +77,7 @@ public class FireCell extends Cell {
       setFutureStateValue(BURNING); // Keep current cell burning
     }
   }
+
   /**
    * Sets the state of a cell to Empty
    **/
