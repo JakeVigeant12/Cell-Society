@@ -115,6 +115,14 @@ The overall design goals for the project are not only to implement the skills we
 | FileChooser makeChooser(String extensionAccepted)      |                      |
 | Button makeButton(String property)                     |                      |
 
+| Histogram             |    |
+|-----------------------|----|
+| void makeBarGraph()   |    |
+| void showGraph()      |    |
+| void setSeries()      |    |
+| void makeLineGraph()  |    |
+| void updateBarGraph() |    |
+| void shutDown()       |    |
 
 ## Design Details
 
@@ -134,6 +142,8 @@ cellView.updateState(1);
 
  * What commonalities will be factored out into superclasses? 
    * The cell class is a great example of having a few common methods, and the subclasses are the cells for each type of game with different rules being contained in those cells. Those cells can also override those main methods too if needed and can hold different types of data based on the cell type.
+   * The SceneCreator class has much in common with all the seperate scenes putting different buttons and images on the screen but having to still have parameters
+   * such as size and staging all the same. 
  
  * How will differences be handled when superclasses are extended? 
    * New methods would be added if necessary, but public methods such as changing the state, will be overriden based on the different cell type and rules for each corresponding simulation.
