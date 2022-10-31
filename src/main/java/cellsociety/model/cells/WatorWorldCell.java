@@ -80,6 +80,10 @@ public class WatorWorldCell extends Cell {
     sharkStarve = 0;
   }
 
+  public void setFishTurns(int input){
+    fishTurns = input;
+  }
+
   @Override
   public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     myNeighborStates = getNeighborStates(neighbors);
