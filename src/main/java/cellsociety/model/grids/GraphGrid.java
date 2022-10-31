@@ -128,6 +128,14 @@ public class GraphGrid extends Grid {
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  /**
+   * Method that gets a cell with a parameter
+   * @param cellData
+   * @param cellCount
+   * @param makeNewCell
+   * @return
+   * @throws IllegalStateException
+   */
   private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
     throws IllegalStateException {
     Cell newCell;

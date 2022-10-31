@@ -34,7 +34,6 @@ import static cellsociety.view.FileInput.GRID_SCREEN_CSS;
 import static cellsociety.view.SplashScreen.FILE_INPUT_CSS;
 
 public class GridScreen extends SceneCreator {
-
   public static final String ABOUT = "About";
   public static final String TITLE = "Title";
   public static final String INFO = "Info";
@@ -59,14 +58,15 @@ public class GridScreen extends SceneCreator {
   public static final String PLAYING_STATUS = "playingStatus";
   private final BorderPane borderPane;
   private TextArea statusBox;
-  private final Paint mainColor = Color.LIGHTGRAY;
+  private static final Paint MAIN_COLOR = Color.LIGHTGRAY;
   private GridView gridView;
   private Timeline timeline;
   private CellSocietyController myController;
   private double refreshRate = 1;
   private final Stage myStage;
+  private Histogram myChart;
   private static final List<List<String>> BUTTONS_LIST = List.of(
-      List.of("backButton", "exitButton", "uploadButton"),
+      List.of("backButton", "exitButton", "uploadButton", "linegraphButton", "bargraphButton"),
       List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
   /**
@@ -129,20 +129,20 @@ public class GridScreen extends SceneCreator {
     statusBox = createAndStyleTextBox(String.format(getResource().getString(STATUS),
         simulationType), INFO);
     statusBox.setId(STATUS);
-    statusBox.setBackground(Background.fill(mainColor));
+    statusBox.setBackground(Background.fill(MAIN_COLOR));
     statusBox.setEditable(false);
     statusBox.setWrapText(true);
 
     TextArea descriptionBox = createAndStyleTextBox(
         getResource().getString(DESCRIPTION) + myController.getProperties()
             .get(DESCRIPTION), INFO);
-    descriptionBox.setBackground(Background.fill(mainColor));
+    descriptionBox.setBackground(Background.fill(MAIN_COLOR));
     descriptionBox.setEditable(false);
     descriptionBox.setWrapText(true);
 
     VBox fileInfoBox = new VBox(aboutTitle, fileTitle, simulationType, author, descriptionBox,
         statusBox);
-    fileInfoBox.setBackground(Background.fill(mainColor));
+    fileInfoBox.setBackground(Background.fill(MAIN_COLOR));
     fileInfoBox.getStyleClass().add(ABOUT_BOX);
     borderPane.setLeft(fileInfoBox);
   }
@@ -156,7 +156,7 @@ public class GridScreen extends SceneCreator {
       controls.getChildren().add(makeButton(button));
     }
     controls.getChildren().add(makeSlider(SPEED_SLIDER));
-    controls.setBackground(Background.fill(mainColor));
+    controls.setBackground(Background.fill(MAIN_COLOR));
     controls.getStyleClass().add(ALL_BUTTONS);
 
     borderPane.setBottom(controls);
@@ -170,7 +170,7 @@ public class GridScreen extends SceneCreator {
     for (String button : BUTTONS_LIST.get(0)) {
       topPanel.getChildren().add(makeButton(button));
     }
-    topPanel.setBackground(Background.fill(mainColor));
+    topPanel.setBackground(Background.fill(MAIN_COLOR));
     borderPane.setTop(topPanel);
   }
 
@@ -250,8 +250,6 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-        e.printStackTrace();
-        //TODO:remove it
         showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
       }
     });
@@ -318,4 +316,14 @@ public class GridScreen extends SceneCreator {
     timeline.play();
     statusBox.setText(getResource().getString(PLAYING_STATUS));
   }
+  public GridView getCurrentView(){return gridView;}
+
+  private void createBarGraph() {
+    myChart = new Histogram(gridView);
+    myChart.makeBarGraph();
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+      if(myChart!=null){myChart.updateBarGraph();}
+    }));
+  }
+
 }

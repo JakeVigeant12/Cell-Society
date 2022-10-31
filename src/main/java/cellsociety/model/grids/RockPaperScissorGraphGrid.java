@@ -18,8 +18,10 @@ public class RockPaperScissorGraphGrid extends GraphGrid {
   public RockPaperScissorGraphGrid(GridWrapper gridParsing, Properties properties) {
     super(gridParsing, properties);
   }
+
   /**
-   * Loops through cells and tells them to update states
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
    */
   @Override
   public void computeStates() throws IllegalStateException {

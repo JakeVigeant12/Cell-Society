@@ -11,7 +11,7 @@ import java.util.Properties;
 public class FireGraphGrid extends GraphGrid {
 
   /**
-   * Constructor for GraphGrid class
+   * Constructor for FireGraphGrid class
    *
    * @param gridParsing is the layout of the grid
    * @param properties
@@ -22,6 +22,10 @@ public class FireGraphGrid extends GraphGrid {
 
   /**
    * Loops through cells and tells them to update states
+   */
+  /**
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
    */
   @Override
   public void computeStates() throws IllegalStateException {
