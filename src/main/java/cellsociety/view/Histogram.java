@@ -130,7 +130,7 @@ public class Histogram{
     }
 
     /**
-     * used to close the stage 
+     * used to close the stage
      */
     public void shutDown(){
         setSeries();
