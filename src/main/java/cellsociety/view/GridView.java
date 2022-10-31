@@ -56,6 +56,14 @@ public abstract class GridView {
     colors = new ColorMap();
     images = new ImageMap();
     applyColors(properties);
+    if (isUsingColors)
+      for (int i = 0; i < colors.getStateCount(); i++){
+        stateTypes.add(i);
+      }
+    else
+      for (int i = 0; i < images.getStateCount(); i++){
+        stateTypes.add(i);
+      }
     if (properties.containsKey("Outlined")) {
       isSetBorder = Boolean.parseBoolean((String) properties.get("Outlined"));
     } else {
@@ -149,7 +157,6 @@ public abstract class GridView {
       node.setOnClick();
       myController.updateOneCell(y, x, node.getState());
     });
-    stateTypes.add(node.getState());
   }
 
   /**
