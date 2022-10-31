@@ -9,6 +9,8 @@ My primary responsibility was the cell logic for each of the simulations. Howeve
 
  * Team Member #2: Eka Ebong
 
+My main responsibilty was the user interface including the splash screens, the background images, as well as the graphs that show current cell states. 
+
  * Team Member #3: Luyao Wang
 
  * Team Member #4: Vaishvi Patel

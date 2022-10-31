@@ -65,8 +65,9 @@ public class GridScreen extends SceneCreator {
   private CellSocietyController myController;
   private double refreshRate = 1;
   private final Stage myStage;
+  private Histogram myChart;
   private static final List<List<String>> BUTTONS_LIST = List.of(
-      List.of("backButton", "exitButton", "uploadButton"),
+      List.of("backButton", "exitButton", "uploadButton", "linegraphButton", "bargraphButton"),
       List.of("playButton", "pauseButton", "stepButton", "resetButton", "saveButton"));
 
   /**
@@ -318,4 +319,14 @@ public class GridScreen extends SceneCreator {
     timeline.play();
     statusBox.setText(getResource().getString(PLAYING_STATUS));
   }
+  public GridView getCurrentView(){return gridView;}
+
+  private void createBarGraph() {
+    myChart = new Histogram(gridView);
+    myChart.makeBarGraph();
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+      if(myChart!=null){myChart.updateBarGraph();}
+    }));
+  }
+
 }
