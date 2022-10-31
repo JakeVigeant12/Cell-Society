@@ -1,0 +1,9 @@
+StateColors=FFFFFF,0000FF,000000
+InitialStates=percolation/percolation_simple_stable.csv
+Type=Percolation
+Title=No Flow
+Author=Jake Vigeant
+Description=No Motion
+StateImages=images/empty.png,images/sea.png,images/rock.png
+Outlined=true
+EdgePolicy=toroidal

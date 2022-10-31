@@ -1,0 +1,9 @@
+StateColors=FFFFFF,0000FF,000000
+InitialStates=percolation/percolation_simple_unstable.csv
+Type=Percolation
+Title=Simple Flow
+Author=Jake Vigeant
+Description=Simple Pipe
+StateImages=images/empty.png,images/sea.png,images/rock.png
+Outlined=true
+EdgePolicy=toroidal
