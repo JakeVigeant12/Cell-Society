@@ -73,11 +73,18 @@ public class WatorWorldCell extends Cell {
     }
     return false;
   }
+  public void setSharkStarve(int input){
+    sharkStarve = input;
+  }
 
   public void resetStateParameters() {
     fishTurns = 0;
     sharkTurns = 0;
     sharkStarve = 0;
+  }
+
+  public void setFishTurns(int input){
+    fishTurns = input;
   }
 
   @Override

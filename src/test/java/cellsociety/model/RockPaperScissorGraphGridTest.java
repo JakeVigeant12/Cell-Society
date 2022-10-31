@@ -8,7 +8,6 @@ import cellsociety.model.grids.GameOfLifeGraphGrid;
 import cellsociety.model.grids.RockPaperScissorGraphGrid;
 import cellsociety.model.grids.SegregationGraphGrid;
 import cellsociety.parser.CSVParser;
-import cellsociety.view.GridWrapper;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
