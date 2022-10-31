@@ -20,16 +20,12 @@ public class RockPaperScissorGraphGrid extends GraphGrid {
   }
 
   @Override
-  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    try {
-      for (Cell currentCell : getMyAdjacencyList().getCells()) {
-        currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
-      }
-      for (Cell currentCell : getMyAdjacencyList().getCells()) {
-        currentCell.updateState();
-      }
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
+  public void computeStates() throws IllegalStateException {
+    for (Cell currentCell : getMyAdjacencyList().getCells()) {
+      currentCell.setFutureState(getMyAdjacencyList().getNeighbors(currentCell));
+    }
+    for (Cell currentCell : getMyAdjacencyList().getCells()) {
+      currentCell.updateState();
     }
   }
 }

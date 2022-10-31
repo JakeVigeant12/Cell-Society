@@ -131,13 +131,9 @@ public class CellSocietyController {
    *
    * @return gridWrapper
    */
-  public GridWrapper updateGrid() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    try{
-      myModel.computeStates();
-      return getViewGrid();
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
-    }
+  public GridWrapper updateGrid() throws IllegalStateException {
+    myModel.computeStates();
+    return getViewGrid();
   }
 
   /**

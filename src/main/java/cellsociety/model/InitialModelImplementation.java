@@ -44,12 +44,8 @@ public class InitialModelImplementation extends Model {
   /**
    * Method that computes the states of the cells
    */
-  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    try {
-      myGrid.computeStates();
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
-    }
+  public void computeStates() throws IllegalStateException {
+    myGrid.computeStates();
   }
 
   /**

@@ -14,5 +14,5 @@ public abstract class Parser {
    * @throws IOException
    * @throws CsvValidationException
    */
-  public abstract GridWrapper parseData(String csvPath) throws IOException, CsvValidationException;
+  public abstract GridWrapper parseData(String csvPath) throws IllegalStateException;
 }
