@@ -249,6 +249,7 @@ public class GridScreen extends SceneCreator {
   }
 
   private void goBack() {
+    myChart.shutDown();
     FileInput backInput = new FileInput(600, myStage);
     myStage.setScene(backInput.createScene(getLanguage(), "fileInput.css"));
   }
@@ -275,6 +276,7 @@ public class GridScreen extends SceneCreator {
   }
 
   private void exitSimulation() {
+    myChart.shutDown();
     StartSplash beginning = new StartSplash(600.0, myStage);
     myStage.setScene(beginning.createScene("startSplash.css"));
   }
@@ -312,5 +314,8 @@ public class GridScreen extends SceneCreator {
   private void createChart() {
     myChart = new Histogram(gridView);
     myChart.createGraph();
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(refreshRate), e -> {
+      if(myChart!=null){myChart.updateGraph();}
+    }));
   }
 }

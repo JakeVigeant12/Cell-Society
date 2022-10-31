@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -20,8 +19,10 @@ public class Histogram{
     private Stage myStage;
     private HashMap cellNumbers;
     private GridView myGrid;
-    private HashMap<Integer, Integer> testGrid;
-
+    private BarChart barChart;
+    private XYChart.Series<String, Integer> series1;
+    private Set cellKeys;
+    private FlowPane myPane;
     public Histogram(GridView theGrid){
         myStage = new Stage();
         myStage.setTitle("Current Cell Numbers");
@@ -30,19 +31,40 @@ public class Histogram{
         System.out.println("created Histo");
     }
 
+
     public void createGraph(){
-        System.out.println("Oh boy this ran");
-        XYChart.Series<Integer, Integer> series1 = new XYChart.Series<>();
-        Set keys = cellNumbers.keySet();
-        System.out.println(keys);
-        System.out.println(cellNumbers);
-        keys.forEach( (n) -> {
-            series1.getData().add(new XYChart.Data(n, cellNumbers.get(n)));
+        myStage.show();
+        series1 = new XYChart.Series<>();
+        cellKeys = cellNumbers.keySet();
+
+        series1.setName("Real Data");
+        cellKeys.forEach( (n) -> {
+            series1.getData().add(new XYChart.Data<String, Integer>("State " + n, (Integer) cellNumbers.get(n), true));
         });
-        FlowPane myPane = new FlowPane();
+
+        myPane = new FlowPane();
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        barChart = new BarChart(xAxis, yAxis);
+        barChart.getData().addAll(series1);
+        xAxis.setLabel("State");
+        yAxis.setLabel("Cell Population");
+        System.out.println(barChart);
+        myPane.getChildren().add(barChart);
         Scene scene = new Scene(myPane, 600, 600);
         myStage.setScene(scene);
         myStage.show();
+    }
+
+    public void updateGraph(){
+        cellKeys.forEach( (n) -> {
+            series1.getData().add(new XYChart.Data<String, Integer>("State " + n, (Integer) cellNumbers.get(n), true));
+        });
+        
+    }
+
+    public void shutDown(){
+        myStage.close();
     }
 
     public void testGrid(){
