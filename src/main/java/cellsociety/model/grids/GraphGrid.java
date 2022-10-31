@@ -23,11 +23,11 @@ import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
-  public static final String FIRE = "Fire";
-  public static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
-  public static final String MISSING_PARAMETERS = "Missing parameters";
-  public static final String PARAMETERS = "Parameters";
-  public static final String DEFAULT = "Default";
+  private static final String FIRE = "Fire";
+  private static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  private static final String MISSING_PARAMETERS = "Missing parameters";
+  private static final String PARAMETERS = "Parameters";
+  private static final String DEFAULT = "Default";
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
