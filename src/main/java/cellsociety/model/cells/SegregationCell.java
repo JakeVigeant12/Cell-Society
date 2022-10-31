@@ -45,14 +45,14 @@ public class SegregationCell extends Cell {
    * @return next state of the cell
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     countNeighbors(neighbors);
-
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
+    } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+      throw new IllegalStateException("methodNotFound",e);
     }
+
   }
 
   private void setEMPTY() {

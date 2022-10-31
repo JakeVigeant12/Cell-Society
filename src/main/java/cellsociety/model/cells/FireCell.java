@@ -41,12 +41,12 @@ public class FireCell extends Cell {
    * @return next state of the cell
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     myNeighbors = neighbors;
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new IllegalStateException("methodNotFound",e);
     }
   }
 

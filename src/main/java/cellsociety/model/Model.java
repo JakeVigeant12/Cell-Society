@@ -20,13 +20,8 @@ public abstract class Model {
   /**
    * Method that computes the states of the grid class
    */
-  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    try {
-      myGrid.computeStates();
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
-    }
-
+  public void computeStates() throws IllegalStateException {
+    myGrid.computeStates();
   }
 
   /**

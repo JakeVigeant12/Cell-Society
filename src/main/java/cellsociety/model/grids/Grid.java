@@ -13,7 +13,7 @@ public abstract class Grid {
   /**
    * Abstract method that computes the new states of the cells
    */
-  public void computeStates() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+  public void computeStates() throws IllegalStateException {
     return;
   }
 

@@ -36,7 +36,7 @@ public class GameOfLifeCell extends Cell {
    * @return next state of the cell
    */
   @Override
-  public void setFutureState(List<Cell> neighbors) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+  public void setFutureState(List<Cell> neighbors) throws IllegalStateException {
     aliveNeighbors = 0;
     for (Cell neighbor : neighbors) { // Count each neighbor that is alive
       if (neighbor.getCurrentState() == ALIVE) {
@@ -46,8 +46,8 @@ public class GameOfLifeCell extends Cell {
     // using reflection, call the method that corresponds to the current state
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
-    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      throw e;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new IllegalStateException("methodNotFound",e);
     }
   }
 
