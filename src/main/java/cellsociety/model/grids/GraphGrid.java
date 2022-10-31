@@ -1,37 +1,92 @@
 package cellsociety.model.grids;
 
-
+import cellsociety.model.AdjacencyList;
+import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
 import cellsociety.model.neighborhoods.CompleteNeighborhood;
 import cellsociety.model.neighborhoods.Neighborhood;
 import cellsociety.model.neighborhoods.NoDiagonalNeighborhood;
 import cellsociety.view.GridWrapper;
 
+import java.awt.Point;;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
-  protected Map<Integer, Cell> myCells;
-  protected Map<Cell, List<Cell>> myAdjacencyList;
-  protected List<Cell> emptyCells;
-  protected Properties myProperties;
-  protected final String cellPackagePath = "cellsociety.model.cells.";
-  protected Neighborhood simulationNeighbors;
-  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
+
+  private static final String FIRE = "Fire";
+  private static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  private static final String MISSING_PARAMETERS = "Missing parameters";
+  private static final String PARAMETERS = "Parameters";
+  private static final String DEFAULT = "Default";
+  private Map<Point, Cell> myCells;
+  private AdjacencyList myAdjacencyList;
+  private List<Cell> emptyCells;
+  private Properties myProperties;
+  private final String cellPackagePath = "cellsociety.model.cells.";
+  private Neighborhood simulationNeighbors;
+  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER =
+    "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
    * Constructor for GraphGrid class
+   *
    * @param gridParsing is the layout of the grid
    */
   public GraphGrid(GridWrapper gridParsing, Properties properties) {
     myProperties = properties;
-    myAdjacencyList = new HashMap<>();
     myCells = createCells(gridParsing);
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    myAdjacencyList =initializeNeighbors(gridParsing, myCells, simulationNeighbors);
+    if (properties.contains("EdgePolicy")) {
+      if (properties.getProperty("EdgePolicy").equals("toroidal")) {
+        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+      }
+      if (properties.getProperty("EdgePolicy").equals("finite")) {
+        myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+      }
+    } else
+      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
   }
+
+
+  public Map<Point, Cell> getMyCells() {
+    return myCells;
+  }
+
+  public void setMyCells(Map<Point, Cell> myCells) {
+    this.myCells = myCells;
+  }
+
+  public List<Cell> getEmptyCells() {
+    return emptyCells;
+  }
+
+  public void setEmptyCells(List<Cell> emptyCells) {
+    this.emptyCells = emptyCells;
+  }
+
+  protected AdjacencyList getMyAdjacencyList() {
+    return myAdjacencyList;
+  }
+
+  public void setMyAdjacencyList(AdjacencyList myAdjacencyList) {
+    this.myAdjacencyList = myAdjacencyList;
+  }
+
+  public Neighborhood getSimulationNeighbors() {
+    return simulationNeighbors;
+  }
+
+  public void setSimulationNeighbors(Neighborhood simulationNeighbors) {
+    this.simulationNeighbors = simulationNeighbors;
+  }
+
 
   /**
    * Method that creates the cells for the grid
@@ -39,135 +94,128 @@ public class GraphGrid extends Grid {
    * @param inputLayout
    * @return
    */
-  @Override
   //Assume grid values are passed in as expected, sans dimensions
-  public Map<Integer, Cell> createCells(GridWrapper inputLayout) {
+  private Map<Point, Cell> createCells(GridWrapper inputLayout) throws IllegalStateException {
     //Used to ID the cells as they are created for ease of access, upper left is 1, lower right is max
-    Map<Integer, Cell> cellHolder = new HashMap<>();
-    int cellCount = 0;
-    for(int i = 0; i < inputLayout.getColumnSize(); i++){
-      for(int j = 0; j < inputLayout.getRowSize(0); j++){
-        cellCount++;
-        createCell(inputLayout.getState(i, j), cellHolder, cellCount);
+    Map<Point, Cell> cellHolder = new HashMap<>();
+    for (int i = 0; i < inputLayout.getRowCount(); i++) {
+      for (int j = 0; j < inputLayout.getRowSize(0); j++) {
+        createCell(inputLayout.getState(i, j), cellHolder, new Point(j, i));
       }
     }
     return cellHolder;
   }
 
-  private void createCell(int cellData, Map<Integer, Cell> cellHolder, int cellCount) {
+  /**
+   * Method that creates a cell
+   *
+   * @param cellData
+   * @param cellHolder
+   * @param cellCount
+   */
+  private void createCell(int cellData, Map<Point, Cell> cellHolder, Point cellCount)
+    throws IllegalStateException {
     Cell newCell;
+    Class<?> cellClass;
     try {
-      Class<?> cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
-      Constructor<?>[] makeNewCell = cellClass.getConstructors();
-      if(makeNewCell[0].getParameterCount() == 3){
-        double parameter;
-        try {
-          parameter = Double.parseDouble((String) myProperties.get("Parameters"));
-        }
-        catch (NullPointerException e) {//No parameter specified in .sim file
-          try {//load parameter from .sim file
-            parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
-          }
-          catch (MissingResourceException e1) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
-            e1.printStackTrace();
-            throw new IllegalStateException("Missing parameters");
-          }
-        }
-        newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
-      }
-      else{
+      cellClass = Class.forName(cellPackagePath + myProperties.get("Type") + "Cell");
+    } catch (ClassNotFoundException e) {
+      throw new IllegalStateException("classNotFound", e);
+    }
+    Constructor<?>[] makeNewCell = cellClass.getConstructors();
+    if (makeNewCell[0].getParameterCount() == 3) {
+      newCell = getCellWithParameter(cellData, cellCount, makeNewCell);
+    } else {
+      try {
         newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount);
+      } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        throw new IllegalStateException("parameterError", e);
       }
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-             InvocationTargetException e) {
-      throw new IllegalStateException("Cannot make buttons");
     }
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
+    throws IllegalStateException {
+    Cell newCell;
+    double parameter;
+    if (myProperties.contains("Parameters"))
+      parameter = Double.parseDouble((String) myProperties.get("Parameters"));
+    else {//No parameter specified in .sim file
+      try {//load parameter from .sim file
+        parameter = Double.parseDouble(ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "Default" + myProperties.get("Type")).getString("Parameters"));
+      } catch (
+        MissingResourceException e) {//Cannot find default resource, either cannot find .properties file or missing parameter in .properties file
+        throw new IllegalStateException("parameterError", e);
+      }
+    }
+    try {
+      newCell = (Cell) makeNewCell[0].newInstance(cellData, cellCount, parameter);
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new IllegalStateException("parameterError", e);
+    }
+    return newCell;
+  }
+
+  /**
+   * Method that sets the current cell state of the grid
+   *
+   * @param key
+   * @param state
+   */
   @Override
-  public void setCellCurrentState (int key, int state){
+  public void setCellCurrentState(Point key, int state) {
     myCells.get(key).setCurrentState(state);
   }
 
-  
+  /**
+   * Sets the neighbors for the grid
+   *
+   * @param simType
+   * @return
+   */
   //TODO refactor
-  public Neighborhood setNeighbors(String simType){
-    if(simType.equals("Fire")){
+  public Neighborhood setNeighbors(String simType) {
+    if (simType.equals(FIRE)) {
       return new NoDiagonalNeighborhood();
-    }
-    else{
+    } else {
       return new CompleteNeighborhood();
-    }
-  }
-  @Override
-  public Map<Cell, List<Cell>> initializeNeighbors(GridWrapper gridParsing, Map<Integer, Cell> myCells, Neighborhood simulationNeighbors) {
-    //Currently assumes the use of a rectangular input file, thus rectangular gridparsing
-    //ID of the current cell
-    HashMap<Cell, List<Cell>> adjacencyList = new HashMap<>();
-    int currId = 0;
-    for (int i = 0; i < gridParsing.getColumnSize(); i++) {
-      for (int j = 0; j < gridParsing.getRowSize(0); j++) {
-        List<Cell> neighbors = new ArrayList<>();
-        currId++;
-        Cell currentCell = myCells.get(currId);
-        adjacencyList.putIfAbsent(currentCell, neighbors);
-        createNeighborhood(i - 1, j - 1, gridParsing, currId - gridParsing.getColumnSize() - 1, simulationNeighbors, 0, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j, gridParsing, currId - gridParsing.getColumnSize(), simulationNeighbors, 1, adjacencyList, currentCell, myCells);
-        createNeighborhood(i - 1, j + 1, gridParsing, currId - gridParsing.getColumnSize() + 1, simulationNeighbors, 2, adjacencyList, currentCell, myCells);
-        createNeighborhood(i, j - 1, gridParsing, currId - 1, simulationNeighbors, 3, adjacencyList, currentCell, myCells);
-        createNeighborhood(i, j + 1, gridParsing, currId + 1, simulationNeighbors, 4, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j - 1, gridParsing, currId + gridParsing.getColumnSize() - 1, simulationNeighbors, 5, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j, gridParsing, currId + gridParsing.getColumnSize(), simulationNeighbors, 6, adjacencyList, currentCell, myCells);
-        createNeighborhood(i + 1, j + 1, gridParsing, currId + gridParsing.getColumnSize() + 1, simulationNeighbors, 7, adjacencyList, currentCell, myCells);
-      }
-    }
-    return adjacencyList;
-  }
-
-  private void createNeighborhood(int i, int j, GridWrapper gridParsing, int currId, Neighborhood simulationNeighbors, int neighborNumber, HashMap<Cell, List<Cell>> adjacencyList, Cell currentCell, Map<Integer, Cell> myCells) {
-    if(isInBounds(i, j, gridParsing)){
-      int upperLeftNeighborId = currId;
-      if(simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(myCells.get(upperLeftNeighborId));
-      }
     }
   }
 
   /**
    * Method that checks if the cell is in bounds
+   *
    * @param row
    * @param col
    * @param gridWrapper
    * @return
    */
-  public static boolean isInBounds(int row, int col, GridWrapper gridWrapper){
-    return (row >= 0 && row < gridWrapper.getColumnSize()) && (col >= 0 && col < gridWrapper.getRowSize(0));
+  public static boolean isInBounds(int row, int col, GridWrapper gridWrapper) {
+    return (row >= 0 && row < gridWrapper.getRowCount()) && (col >= 0
+      && col < gridWrapper.getRowSize(0));
   }
 
   /**
    * Method that does two passes, the first sets the state, the second updates the state
    */
   @Override
-  public void computeStates() {
-    emptyCells = new ArrayList<>();
-    for (Cell currentCell : myAdjacencyList.keySet()){
-      currentCell.setFutureState(myAdjacencyList.get(currentCell));
-      if (currentCell.getCurrentState() == 0) { // creates a list of empty cells so that the game knows where a cell can move to
-        emptyCells.add(currentCell);
-      }
+  public void computeStates() throws IllegalStateException {
+    for (Cell currentCell : myAdjacencyList.getCells()) {
+      currentCell.setFutureState(myAdjacencyList.getNeighbors(currentCell));
     }
-    for (Cell currentCell : myAdjacencyList.keySet()){
+    for (Cell currentCell : myAdjacencyList.getCells()) {
       currentCell.updateState();
     }
   }
 
   /**
    * Method that returns the map of cells
+   *
    * @return myCells
    */
   @Override
-  public Map<Integer, Cell> getCells(){
+  public Map<Point, Cell> getCells() {
     return myCells;
   }
 }

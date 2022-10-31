@@ -1,14 +1,15 @@
 package cellsociety.view;
 
+import static cellsociety.Main.START_SPLASH_CSS;
+
 import cellsociety.controller.CellSocietyController;
-import com.opencsv.exceptions.CsvValidationException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,14 +21,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 public class FileInput extends SceneCreator {
 
   public static final String OPEN_DATA_FILE = "Open Data File";
   public static final String SIM_FILES = "SIM Files";
   public static final String GRID_SCREEN_CSS = "gridScreen.css";
-  public static final String START_SPLASH_CSS = "startSplash.css";
+  public static final String TITLE_TEXT = "titleText";
+  public static final String MAIN_TEXT = "mainText";
+  public static final String UPLOAD_GIF = "uploadGif";
+  public static final String UPLOAD_BOX = "uploadBox";
+  public static final String FILE_UPLOAD_ERROR = "fileUploadError";
   public BorderPane inputPane;
   // kind of data files to look for
   public static final String DATA_FILE_SIM_EXTENSION = "*.sim";
@@ -58,58 +62,63 @@ public class FileInput extends SceneCreator {
    * @return
    */
   public Pane setUpRootPane() {
-    Text title = new Text(getMyResource().getString("titleText"));
-    title.getStyleClass().add("mainText");
+    Text title = new Text(getResource().getString(TITLE_TEXT));
+    title.getStyleClass().add(MAIN_TEXT);
 
-    inputBackground.setImage(new Image(getMyResource().getString("uploadGif")));
+    inputBackground.setImage(new Image(getResource().getString(UPLOAD_GIF)));
     inputBackground.setFitHeight(getMySize());
     inputBackground.setFitWidth(getMySize());
     inputPane.getChildren().addAll(inputBackground);
 
     VBox upload = new VBox(title);
-    for(String button : buttonList) {
+    for (String button : buttonList) {
       upload.getChildren().add(makeButton(button));
     }
     upload.setAlignment(Pos.CENTER);
-    upload.getStyleClass().add("uploadBox");
+    upload.getStyleClass().add(UPLOAD_BOX);
     inputPane.setTop(upload);
     return inputPane;
   }
 
+  /**
+   * Make a button and sets properties
+   *
+   * @param property
+   * @return
+   */
+  protected Button makeButton(String property) {
+    Button result = new Button();
+    String labelText = getResource().getString(property);
+    result.setText(labelText);
+    result.setId(property);
+    result.getStyleClass().add(BUTTON);
+    result.setOnAction(event -> {
+      try {
+        Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
+        m.invoke(this);
+      } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
+      }
+    });
+    return result;
+  }
+
   private void goBack() {
-    StartSplash beginning = new StartSplash(600, myStage);
+    SplashScreen beginning = new SplashScreen(600, myStage);
     myStage.setScene(beginning.createScene(START_SPLASH_CSS));
   }
 
   /**
    * Sets up the file picker
-   *
    */
-  public void uploadFile() {
-    try {
-      setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
-      if (getLanguage() != null) {
-        CellSocietyController controller = new CellSocietyController(getMyDataFile());
-        controller.loadSimulation(myStage);
-        GridScreen firstGrid = new GridScreen(800, myStage, controller);
-        myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
-      }
-    } catch (IOException | CsvValidationException e) {
-      new Alert(AlertType.ERROR, getMyResource().getString("fileUploadError")).showAndWait();
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             IllegalAccessException e) {
-      showMessage(AlertType.ERROR, e.getCause().getMessage());
+  public void uploadFile() throws IllegalStateException {
+    setMyDataFile(FILE_CHOOSER.showOpenDialog(myStage));
+    if (getLanguage() != null) {
+      CellSocietyController controller = new CellSocietyController(getMyDataFile());
+      controller.loadSimulation(myStage);
+      GridScreen firstGrid = new GridScreen(800, myStage, controller);
+      myStage.setScene(firstGrid.createScene(getLanguage(), GRID_SCREEN_CSS));
     }
-  }
-
-  /**
-   * Sets up the alert message
-   *
-   * @param type
-   * @param message
-   */
-  private void showMessage(Alert.AlertType type, String message) {
-    new Alert(type, message).showAndWait();
   }
 
   /**
@@ -123,30 +132,8 @@ public class FileInput extends SceneCreator {
     result.setTitle(OPEN_DATA_FILE);
     // pick a reasonable place to start searching for files
     result.setInitialDirectory(new File(DATA_FILE_FOLDER));
-    result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
-    return result;
-  }
-
-  /**
-   * Make a button and sets properties
-   *
-   * @param property
-   * @return
-   */
-  public Button makeButton(String property) {
-    Button result = new Button();
-    String labelText = getMyResource().getString(property);
-    result.setText(labelText);
-    result.setId(property);
-    result.getStyleClass().add("button");
-    result.setOnAction(event -> {
-      try {
-        Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
-        m.invoke(this);
-      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IllegalStateException e) {
-        showMessage(AlertType.ERROR, e.getCause().getMessage());
-      }
-    });
+    result.getExtensionFilters()
+        .setAll(new FileChooser.ExtensionFilter(SIM_FILES, extensionAccepted));
     return result;
   }
 }

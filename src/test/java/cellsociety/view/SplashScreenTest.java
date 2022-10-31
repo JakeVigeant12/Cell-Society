@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-class StartSplashTest extends DukeApplicationTest {
+class SplashScreenTest extends DukeApplicationTest {
+
   @Override
   public void start(Stage stage) {
-    StartSplash ss = new StartSplash(600.0, stage);
+    SplashScreen ss = new SplashScreen(600.0, stage);
     stage.setTitle("CellSociety");
     stage.setScene(ss.createScene("startSplash.css"));
     stage.show();
@@ -17,9 +18,9 @@ class StartSplashTest extends DukeApplicationTest {
 
   @Test
   void testEnglish() {
-    Button button = lookup("#English").query();
+    Button button = lookup("#englishButton").query();
     clickOn(button);
-    Button button1 =  lookup("#uploadButton").query();
+    Button button1 = lookup("#uploadButton").query();
     Assertions.assertEquals(button1.getText(), "Upload");
   }
 

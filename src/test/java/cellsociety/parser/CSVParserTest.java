@@ -24,11 +24,11 @@ class CSVParserTest {
   void testParseSquareGrid() throws CsvValidationException, IOException {
     GridWrapper expectedGrid = createSquareGrid();
     GridWrapper actualGrid = myParser.parseData("test/test_square.csv");
-    assertEquals(expectedGrid.getColumnSize(), actualGrid.getColumnSize());
+    assertEquals(expectedGrid.getRowCount(), actualGrid.getRowCount());
     assertEquals(expectedGrid.getRowSize(0), actualGrid.getRowSize(0));
-    for(int i = 0; i < expectedGrid.getColumnSize(); i++) {
-      for(int j = 0; j < expectedGrid.getRowSize(0); j++) {
-        assertEquals(expectedGrid.getState(i,j), actualGrid.getState(i, j));
+    for (int i = 0; i < expectedGrid.getRowCount(); i++) {
+      for (int j = 0; j < expectedGrid.getRowSize(0); j++) {
+        assertEquals(expectedGrid.getState(i, j), actualGrid.getState(i, j));
       }
     }
   }
@@ -37,11 +37,11 @@ class CSVParserTest {
   void testParseRectangularGrid() throws CsvValidationException, IOException {
     GridWrapper expectedGrid = createRectangularGrid();
     GridWrapper actualGrid = myParser.parseData("test/test_rectangle.csv");
-    assertEquals(expectedGrid.getColumnSize(), actualGrid.getColumnSize());
+    assertEquals(expectedGrid.getRowCount(), actualGrid.getRowCount());
     assertEquals(expectedGrid.getRowSize(0), actualGrid.getRowSize(0));
-    for(int i = 0; i < expectedGrid.getColumnSize(); i++) {
-      for(int j = 0; j < expectedGrid.getRowSize(0); j++) {
-        assertEquals(expectedGrid.getState(i,j), actualGrid.getState(i, j));
+    for (int i = 0; i < expectedGrid.getRowCount(); i++) {
+      for (int j = 0; j < expectedGrid.getRowSize(0); j++) {
+        assertEquals(expectedGrid.getState(i, j), actualGrid.getState(i, j));
       }
     }
   }
@@ -53,11 +53,11 @@ class CSVParserTest {
     myParser.saveCurrentGrid(grid, file);
     GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_square.csv");
     List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
-    assertEquals(grid.getColumnSize(), parsedCSVGrid.size());
+    assertEquals(grid.getRowCount(), parsedCSVGrid.size());
     assertEquals(grid.getRowSize(0), parsedCSVGrid.get(0).size());
-    for(int i = 0; i < grid.getColumnSize(); i++) {
-      for(int j = 0; j < grid.getRowSize(0); j++) {
-        assertEquals(grid.getState(i,j), parsedCSVGrid.get(i).get(j));
+    for (int i = 0; i < grid.getRowCount(); i++) {
+      for (int j = 0; j < grid.getRowSize(0); j++) {
+        assertEquals(grid.getState(i, j), parsedCSVGrid.get(i).get(j));
       }
     }
   }
@@ -69,11 +69,11 @@ class CSVParserTest {
     myParser.saveCurrentGrid(grid, file);
     GridWrapper parsedCSVGridWrapper = myParser.parseData("test/test_save_rectangle.csv");
     List<List<Integer>> parsedCSVGrid = parsedCSVGridWrapper.getGrid();
-    assertEquals(grid.getColumnSize(), parsedCSVGrid.size());
+    assertEquals(grid.getRowCount(), parsedCSVGrid.size());
     assertEquals(grid.getRowSize(0), parsedCSVGrid.get(0).size());
-    for(int i = 0; i < grid.getColumnSize(); i++) {
-      for(int j = 0; j < grid.getRowSize(0); j++) {
-        assertEquals(grid.getState(i,j), parsedCSVGrid.get(i).get(j));
+    for (int i = 0; i < grid.getRowCount(); i++) {
+      for (int j = 0; j < grid.getRowSize(0); j++) {
+        assertEquals(grid.getState(i, j), parsedCSVGrid.get(i).get(j));
       }
     }
   }
@@ -81,8 +81,8 @@ class CSVParserTest {
   private GridWrapper createSquareGrid() {
     GridWrapper gridWrapper = new GridWrapper(3, 3);
     int[][] grid = {{0, 0, 1}, {1, 0, 0}, {0, 1, 0}};
-    for(int i = 0; i < grid.length; i++) {
-      for(int j = 0; j < grid[i].length; j++) {
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
         gridWrapper.setState(i, j, grid[i][j]);
       }
     }
@@ -92,8 +92,8 @@ class CSVParserTest {
   private GridWrapper createRectangularGrid() {
     GridWrapper gridWrapper = new GridWrapper(3, 4);
     int[][] grid = {{0, 0, 1, 0}, {1, 0, 0, 1}, {0, 1, 0, 1}};
-    for(int i = 0; i < grid.length; i++) {
-      for(int j = 0; j < grid[i].length; j++) {
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
         gridWrapper.setState(i, j, grid[i][j]);
       }
     }
