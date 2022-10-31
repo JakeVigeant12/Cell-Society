@@ -10,7 +10,7 @@ import java.util.Properties;
 public class FallingSandGraphGrid extends SwappedCellsGraphGrid {
 
   /**
-   * Constructor for GraphGrid class
+   * Constructor for FallingSandGraphGrid class
    *
    * @param gridParsing is the layout of the grid
    * @param properties

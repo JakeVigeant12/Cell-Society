@@ -10,7 +10,7 @@ import java.util.Properties;
 public class GameOfLifeGraphGrid extends GraphGrid {
 
   /**
-   * Constructor for GraphGrid class
+   * Constructor for GameOfLifeGraphGrid class
    *
    * @param gridParsing is the layout of the grid
    * @param properties
@@ -19,6 +19,10 @@ public class GameOfLifeGraphGrid extends GraphGrid {
     super(gridParsing, properties);
   }
 
+    /**
+     * Computes and updates the states of the cells
+     * @throws IllegalStateException
+     */
   @Override
   public void computeStates() throws IllegalStateException {
       for (Cell currentCell : getMyAdjacencyList().getCells()) {
