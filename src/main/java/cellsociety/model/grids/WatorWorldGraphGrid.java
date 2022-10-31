@@ -32,12 +32,7 @@ public class WatorWorldGraphGrid extends SwappedCellsGraphGrid {
   }
 
   /**
-   * Method that creates the cells for the grid
-   * @param inputLayout
-   * @return
-   */
-  /**
-   * Method that computes the new states for the cells
+   * Computes and updates the states of the cells
    */
   @Override
   public void computeStates() {
