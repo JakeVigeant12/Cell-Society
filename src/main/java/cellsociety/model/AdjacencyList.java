@@ -19,6 +19,15 @@ public class AdjacencyList {
   private Map<Point, Cell> cells;
   private Neighborhood simulationNeighbors;
 
+  private static final int UPPERLEFT = 0;
+  private static final int UPPER = 1;
+  private static final int UPPERRIGHT = 2;
+  private static final int LEFT = 3;
+  private static final int RIGHT = 4;
+  private static final int LOWERLEFT = 5;
+  private static final int LOWER = 6;
+  private static final int LOWERRIGHT = 7;
+
   public AdjacencyList(GridWrapper inputLayout, Map<Point, Cell> cells,
       Neighborhood simulationNeighbors) {
     this.inputLayout = inputLayout;
@@ -39,21 +48,21 @@ public class AdjacencyList {
         List<Cell> neighbors = new ArrayList<>();
         Cell currentCell = cells.get(new Point(j, i));
         adjacencyList.putIfAbsent(currentCell, neighbors);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), simulationNeighbors, 0,
+        createNeighborhood(new Point(j, i), new Point(j - 1, i - 1), simulationNeighbors, UPPERLEFT,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j, i - 1), simulationNeighbors, 1,
+        createNeighborhood(new Point(j, i), new Point(j, i - 1), simulationNeighbors, UPPER,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors, 2,
+        createNeighborhood(new Point(j, i), new Point(j + 1, i - 1), simulationNeighbors, UPPERRIGHT,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i), simulationNeighbors, 3,
+        createNeighborhood(new Point(j, i), new Point(j - 1, i), simulationNeighbors, LEFT,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i), simulationNeighbors, 4,
+        createNeighborhood(new Point(j, i), new Point(j + 1, i), simulationNeighbors, RIGHT,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), simulationNeighbors, 5,
+        createNeighborhood(new Point(j, i), new Point(j - 1, i + 1), simulationNeighbors, LOWERLEFT,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j, i + 1), simulationNeighbors, 6,
+        createNeighborhood(new Point(j, i), new Point(j, i + 1), simulationNeighbors, LOWER,
             currentCell);
-        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors, 7,
+        createNeighborhood(new Point(j, i), new Point(j + 1, i + 1), simulationNeighbors, LOWERRIGHT,
             currentCell);
       }
     }
@@ -70,10 +79,8 @@ public class AdjacencyList {
    */
   protected void createNeighborhood(Point cell, Point currId, Neighborhood simulationNeighbors,
       int neighborNumber, Cell currentCell) {
-    if (isInBounds(currId, inputLayout)) {
-      if (simulationNeighbors.countNeighbor(neighborNumber)) {
-        adjacencyList.get(currentCell).add(cells.get(currId));
-      }
+    if (isInBounds(currId, inputLayout) && simulationNeighbors.countNeighbor(neighborNumber)) {
+      adjacencyList.get(currentCell).add(cells.get(currId));
     }
   }
 
