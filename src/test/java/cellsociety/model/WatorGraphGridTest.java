@@ -3,26 +3,28 @@ package cellsociety.model;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import cellsociety.model.grids.PercolationGraphGrid;
+import cellsociety.model.grids.FireGraphGrid;
+import cellsociety.model.grids.GameOfLifeGraphGrid;
+import cellsociety.model.grids.RockPaperScissorGraphGrid;
+import cellsociety.model.grids.SegregationGraphGrid;
+import cellsociety.model.grids.WatorWorldGraphGrid;
 import cellsociety.parser.CSVParser;
-
+import cellsociety.view.GridWrapper;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
-public class PercolationGraphGridTest {
+public class WatorGraphGridTest {
   CSVParser myGridParser = new CSVParser();
-  PercolationGraphGrid myTestGrid;
-  GridWrapper gridWrapper;
-  ArrayList<Integer> prevStates = new ArrayList<>();
-  ArrayList<Integer> nextStates = new ArrayList<>();
+  GridWrapper gridWrapper = myGridParser.parseData("wator/buffet.csv");
   Properties p = new Properties();
   @Test
-  public void testStableStateComputation()
+  public void testStateComputation()
   {
-    p.setProperty("Type", "Percolation");
-    gridWrapper = myGridParser.parseData("percolation/percolation_simple_stable.csv");
-    myTestGrid = new PercolationGraphGrid(gridWrapper, p);
+    p.setProperty("Type", "WatorWorld");
+    WatorWorldGraphGrid myTestGrid = new WatorWorldGraphGrid(gridWrapper, p);
+    ArrayList<Integer> prevStates = new ArrayList<>();
+    ArrayList<Integer> nextStates = new ArrayList<>();
     prevStates = (ArrayList) myTestGrid.representStatesAsList(myTestGrid.getCells());
     myTestGrid.computeStates();
     nextStates = (ArrayList) myTestGrid.representStatesAsList(myTestGrid.getCells());
@@ -32,20 +34,18 @@ public class PercolationGraphGridTest {
     }
     //Stable input config
     assertTrue(areEqual);
-  }
-  @Test
-  public void testMovingStates(){
-    p.setProperty("Type", "Percolation");
-    gridWrapper = myGridParser.parseData("percolation/percolation_simple_unstable.csv");
-    myTestGrid = new PercolationGraphGrid(gridWrapper, p);
+
+    gridWrapper = myGridParser.parseData("wator/buffet.csv");
+    myTestGrid = new WatorWorldGraphGrid(gridWrapper, p);
     prevStates = (ArrayList) myTestGrid.representStatesAsList(myTestGrid.getCells());
     myTestGrid.computeStates();
     nextStates = (ArrayList) myTestGrid.representStatesAsList(myTestGrid.getCells());
-    boolean areEqual = true;
+    areEqual = true;
     for (int i = 0; i < prevStates.size(); i++) {
       areEqual = areEqual && (prevStates.get(i) == nextStates.get(i));
     }
-    //Stable input config
+    //Unstable input config
     assertFalse(areEqual);
+
   }
 }
