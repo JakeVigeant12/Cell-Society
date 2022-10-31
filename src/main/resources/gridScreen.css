@@ -36,6 +36,7 @@
 .buttonBox {
   -fx-border-color: black;
   -fx-fill: light gray;
+  -fx-spacing: 10px;
 }
 
 .title {
