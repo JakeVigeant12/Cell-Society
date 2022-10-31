@@ -83,7 +83,7 @@ public class FallingSandCell extends Cell {
     try {
       this.getClass().getDeclaredMethod("set" + stateMap.get(getCurrentState())).invoke(this);
     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new IllegalStateException("methodNotFound",e);
+      throw new IllegalStateException("methodNotFound", e);
     }
   }
 

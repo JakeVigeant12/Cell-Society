@@ -250,6 +250,8 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+        e.printStackTrace();
+        //TODO:remove it
         showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
       }
     });
