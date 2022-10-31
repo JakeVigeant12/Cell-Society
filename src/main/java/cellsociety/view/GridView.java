@@ -5,10 +5,7 @@ import static cellsociety.view.SplashScreen.DEFAULT_RESOURCE_PACKAGE;
 
 import cellsociety.controller.CellSocietyController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -43,6 +40,8 @@ public abstract class GridView {
   private boolean isUsingColors;
   private final boolean isSetBorder;
   public static final ResourceBundle CELL_VIEW_RESOURCES = ResourceBundle.getBundle(String.format("%s%s", DEFAULT_RESOURCE_PACKAGE, "CellView"));
+  private HashSet<Integer> stateTypes = new HashSet<>();
+  private HashMap<Integer, Integer> allCurrentStates = new HashMap<>();
 
   /**
    * Constructor for GridView, sets up the grid and the cells
@@ -126,6 +125,8 @@ public abstract class GridView {
         createCell(gridData, y, x);
       }
     }
+    updateHash();
+    setCurrentStatesData(gridData);
   }
 
   protected void createCell(GridWrapper gridData, int y, int x) {
@@ -148,6 +149,7 @@ public abstract class GridView {
       node.setOnClick();
       myController.updateOneCell(y, x, node.getState());
     });
+    stateTypes.add(node.getState());
   }
 
   /**
@@ -161,6 +163,7 @@ public abstract class GridView {
         cells.get(y).get(x).updateState(gridData.getState(y, x));
       }
     }
+    setCurrentStatesData(gridData);
   }
 
   protected ColorMap getColors() {
@@ -214,4 +217,33 @@ public abstract class GridView {
   public GridPane getGrid() {
     return grid;
   }
-}
+
+  //updates all the values to 0
+  private void updateHash() {
+    for (Integer n : stateTypes) {
+      allCurrentStates.put(n, 0);
+    }
+  }
+
+  //sets the Hashmap with the correct data of the current cell states
+  private void setCurrentStatesData(GridWrapper gridData) {
+    for (int y = 0; y < row.get(); y++) {
+      for (int x = 0; x < column.get(); x++) {
+        allCurrentStates.put(gridData.getState(y, x), allCurrentStates.get(gridData.getState(y, x)) + 1);
+      }
+    }
+  }
+
+  /**
+   * Returns the HashMap with current state numbers
+   *
+   * @return allCurrentStates
+   */
+  public HashMap getCurrentStates(){return allCurrentStates;}
+  protected HashSet<Integer> getStateTypes() {
+    return stateTypes;
+  }
+  }
+
+
+

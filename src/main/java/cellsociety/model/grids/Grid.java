@@ -18,17 +18,6 @@ public abstract class Grid {
   }
 
   /**
-   * Abstract method that creates the cells
-   * @param inputLayout
-   * @return
-   * @throws ReflectionException
-   * @throws ClassNotFoundException
-   * @throws InvocationTargetException
-   * @throws InstantiationException
-   * @throws IllegalAccessException
-   */
-
-  /**
    * Abstract method that sets the current cell state
    *
    * @param key

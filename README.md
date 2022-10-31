@@ -16,7 +16,7 @@ Part 2: 10/18/22
 
 Part 3: 10/26/22
 
-Finish Date: 
+Finish Date: 10/30/22
 
 Part 1: 10/12/22
 
@@ -33,7 +33,7 @@ Luyao Wang: GUI, Grid side
 
 Jake Vigeant: Grid and Model
 
-Vaishvi Patel: Controller, Configuration
+Vaishvi Patel: Controller, Configuration, Exception Handling
 
 Nick Ward: Cells, Model, Front-End Functionality
 
@@ -72,7 +72,26 @@ How to use the program: Run the Main.java class. From there, a pop-up should app
 Once the sim file is uploaded, if sucessfully uploaded with proper formatting, the grid and the UI will appear. To play the simulation, press play. To pause, press pause. To step forward one frame at a time, press the step function. To speed up the simulation, use the slider to speed it up. To save the current configuration of cells to a CSV, then press the save button. The user can easily exit, go back, and upload a new simulation with the top bar. The user can also view the information from the sim file using the panel on the left.
 
 Data files needed: 
-* A sim file and corresponding csv with the grid states
+* A sim file and optional corresponding csv with the grid states depending on type of initial state
+  * Required sim parameters:
+    * Type (Fire, Wator, Game of Life, etc.)
+    * Title
+    * Author
+    * Description
+    * InitialStates (path to csv, Random, Proportions)
+  * Optional sim parameters:
+    * Parameters
+      * Depending on simulation Type to define simulation parameters (default parameters used if not provided)
+    * InitialProportions 
+      * Required if the InitialStates value is Proportions. Assumes that user provides the correct percentage of for each of the states in the simulation
+    * StateColor
+      * Hex codes for the color of each state (default values for color are set if missing)
+    * StateImages
+      * Path to image files for each of the different states (defaults to colors if not provided)
+    * Outlined
+      * true or false - whether or not the grid is outlined in the UI
+    * EdgePolicy
+      * Define edge policy (defaults to finite)
 
 Features implemented:
 
@@ -94,9 +113,10 @@ Assumptions or Simplifications:
 Interesting data files:
 
 Known Bugs:
+* If you click cancel on the file upload dialog box it throws an error but you can continue as normal afterwards
 
 Noteworthy features:
-
+* Try running the simulations with "styled" in the file name to see cool pictures for the different simulations. It's really cute! 
 
 ### Impressions
 

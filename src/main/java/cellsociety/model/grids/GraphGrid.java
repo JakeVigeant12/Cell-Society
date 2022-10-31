@@ -1,9 +1,5 @@
 package cellsociety.model.grids;
 
-
-import static cellsociety.view.GridScreen.TYPE;
-import static cellsociety.view.GridView.CELL;
-
 import cellsociety.model.AdjacencyList;
 import cellsociety.model.AdjacencyListHexagon;
 import cellsociety.model.AdjacencyListToroidal;
@@ -24,19 +20,19 @@ import java.util.MissingResourceException;
 
 public class GraphGrid extends Grid {
 
-  public static final String FIRE = "Fire";
-  public static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
-  public static final String MISSING_PARAMETERS = "Missing parameters";
-  public static final String PARAMETERS = "Parameters";
-  public static final String DEFAULT = "Default";
+  private static final String FIRE = "Fire";
+  private static final String CANNOT_MAKE_BUTTONS = "Cannot make buttons";
+  private static final String MISSING_PARAMETERS = "Missing parameters";
+  private static final String PARAMETERS = "Parameters";
+  private static final String DEFAULT = "Default";
   private Map<Point, Cell> myCells;
   private AdjacencyList myAdjacencyList;
   private List<Cell> emptyCells;
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
-  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER =
+  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER =
     "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
@@ -148,6 +144,14 @@ public class GraphGrid extends Grid {
     cellHolder.putIfAbsent(cellCount, newCell);
   }
 
+  /**
+   * Method that gets a cell with a parameter
+   * @param cellData
+   * @param cellCount
+   * @param makeNewCell
+   * @return
+   * @throws IllegalStateException
+   */
   private Cell getCellWithParameter(int cellData, Point cellCount, Constructor<?>[] makeNewCell)
     throws IllegalStateException {
     Cell newCell;

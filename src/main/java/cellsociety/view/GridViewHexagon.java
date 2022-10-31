@@ -39,6 +39,7 @@ public class GridViewHexagon extends GridView {
       node.setOnClick();
       getController().updateOneCell(y, x, node.getState());
     });
+    getStateTypes().add(node.getState());
   }
 
   @Override

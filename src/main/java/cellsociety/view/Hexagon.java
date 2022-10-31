@@ -20,12 +20,6 @@ public class Hexagon extends Polygon {
       TILE_WIDTH, 0.0,
       n, -r * 0.5
     );
-
-    // set up the visuals and a click listener for the tile
-    setFill(Color.ANTIQUEWHITE);
-    setStrokeWidth(1);
-    setStroke(Color.BLACK);
-    setOnMouseClicked(e -> System.out.println("Clicked: " + this));
   }
 
   public double getR() {

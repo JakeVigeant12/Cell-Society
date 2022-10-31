@@ -23,7 +23,8 @@ public class SegregationGraphGrid extends SwappedCellsGraphGrid {
   }
 
   /**
-   * Method that computes and sets next state of cells
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
    */
   @Override
   public void computeStates() throws IllegalStateException {

@@ -19,6 +19,10 @@ public class RockPaperScissorGraphGrid extends GraphGrid {
     super(gridParsing, properties);
   }
 
+  /**
+   * Computes and updates the states of the cells
+   * @throws IllegalStateException
+   */
   @Override
   public void computeStates() throws IllegalStateException {
     for (Cell currentCell : getMyAdjacencyList().getCells()) {
