@@ -104,7 +104,7 @@ public class GridScreen extends SceneCreator {
 
     if (myController.getProperties().containsKey("Tiling")) {
       String tilingPolicy = myController.getProperties().getProperty("Tiling");
-      if (tilingPolicy.equals("hex"))
+      if (tilingPolicy.equals("hexagon"))
         gridView = new GridViewHexagon(myController);
       else
         gridView = new GridViewSquare(myController);
@@ -257,7 +257,6 @@ public class GridScreen extends SceneCreator {
         Method m = this.getClass().getDeclaredMethod(getMyCommands().getString(property));
         m.invoke(this);
       } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-        e.printStackTrace();
         showMessage(Alert.AlertType.ERROR, getResource().getString(e.getCause().getMessage()), e);
       }
     });

@@ -42,29 +42,37 @@ public class GraphGrid extends Grid {
    *
    * @param gridParsing is the layout of the grid
    */
-  public GraphGrid(GridWrapper gridParsing, Properties properties) {
+  public GraphGrid(GridWrapper gridParsing, Properties properties) throws IllegalStateException {
     myProperties = properties;
     myCells = createCells(gridParsing);
     numRows = gridParsing.getRowCount();
     simulationNeighbors = setNeighbors(properties.getProperty("Type"));
-    if (properties.containsKey("EdgePolicy")) {
-      String edgePolicy = properties.getProperty("EdgePolicy");
-      if (edgePolicy.equals("toroidal")) {
-        myAdjacencyList = new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
-      }
-      if (edgePolicy.equals("finite")) {
-        myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
-      }
-    } else if (properties.containsKey("Tiling")){
-      String tilingPolicy = properties.getProperty("Tiling");
-      if (tilingPolicy.equals("hex")){
-        myAdjacencyList = new AdjacencyListHexagon(gridParsing, myCells, simulationNeighbors);
-      }
-    }
-    else{
-      myAdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
-    };
+    if (myProperties.containsKey("Tiling")) {
+      String tilingPolicy = myProperties.getProperty("Tiling");
+      myAdjacencyList = switch (tilingPolicy) {
+        case "hexagon" -> new AdjacencyListHexagon(gridParsing, myCells, simulationNeighbors);
+        case "square" -> setSquareAdjacencyList(gridParsing);
+        default -> setSquareAdjacencyList(gridParsing);
+      };
+    } else
+      myAdjacencyList = setSquareAdjacencyList(gridParsing);
   }
+
+  private AdjacencyList setSquareAdjacencyList(GridWrapper gridParsing) {
+    AdjacencyList AdjacencyList;
+    if (myProperties.containsKey("EdgePolicy")) {
+      String edgePolicy = myProperties.getProperty("EdgePolicy");
+      AdjacencyList = switch (edgePolicy) {
+        case "toroidal" -> new AdjacencyListToroidal(gridParsing, myCells, simulationNeighbors);
+        case "finite" -> new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+        default -> new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+      };
+    } else {
+      AdjacencyList = new AdjacencyList(gridParsing, myCells, simulationNeighbors);
+    }
+    return AdjacencyList;
+  }
+
   public List<Cell> getEmptyCells() {
     return emptyCells;
   }
@@ -139,6 +147,7 @@ public class GraphGrid extends Grid {
 
   /**
    * Method that gets a cell with a parameter
+   *
    * @param cellData
    * @param cellCount
    * @param makeNewCell
@@ -228,12 +237,13 @@ public class GraphGrid extends Grid {
   public Map<Point, Cell> getCells() {
     return myCells;
   }
+
   /**
    * For testing purposes
    **/
-  public List<Integer> representStatesAsList(Map<Point, Cell> inputCells){
+  public List<Integer> representStatesAsList(Map<Point, Cell> inputCells) {
     HashMap<Integer, Cell> sortableInput = new HashMap<>();
-    for(Point p : inputCells.keySet()){
+    for (Point p : inputCells.keySet()) {
       //Just need to make an integer of the point values to produce a sorting that is constant. Any method works
 
       sortableInput.put((p.x + numRows * p.y), inputCells.get(p));
@@ -241,7 +251,7 @@ public class GraphGrid extends Grid {
     TreeMap<Integer, Cell> sortedMap = new TreeMap<>();
     sortedMap.putAll(sortableInput);
     List<Integer> cellStates = new ArrayList<>();
-    for(Integer currentCell : sortedMap.keySet()){
+    for (Integer currentCell : sortedMap.keySet()) {
       cellStates.add(sortedMap.get(currentCell).getCurrentState());
     }
     return cellStates;

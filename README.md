@@ -91,7 +91,9 @@ Data files needed:
     * Outlined
       * true or false - whether or not the grid is outlined in the UI
     * EdgePolicy
-      * Define edge policy (defaults to finite)
+      * toroidal or finite (default value finite)
+    * Tiling
+     * square or hexagon (default value square if not provided; for hexagon tiling, edge policy is not supported)
 
 Features implemented:
 
