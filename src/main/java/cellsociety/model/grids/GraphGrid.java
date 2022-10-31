@@ -1,9 +1,5 @@
 package cellsociety.model.grids;
 
-
-import static cellsociety.view.GridScreen.TYPE;
-import static cellsociety.view.GridView.CELL;
-
 import cellsociety.model.AdjacencyList;
 import cellsociety.model.AdjacencyListToroidal;
 import cellsociety.model.cells.Cell;
@@ -34,8 +30,8 @@ public class GraphGrid extends Grid {
   private Properties myProperties;
   private final String cellPackagePath = "cellsociety.model.cells.";
   private Neighborhood simulationNeighbors;
-  public static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
-  public static final String DEFAULT_RESOURCE_FOLDER =
+  private static final String DEFAULT_RESOURCE_PACKAGE = GraphGrid.class.getPackageName() + ".";
+  private static final String DEFAULT_RESOURCE_FOLDER =
     "/" + DEFAULT_RESOURCE_PACKAGE.replace(".", "/");
 
   /**
