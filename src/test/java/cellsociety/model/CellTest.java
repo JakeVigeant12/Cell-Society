@@ -4,6 +4,7 @@ import cellsociety.model.cells.Cell;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,15 @@ public class CellTest {
 
   @Test
   void testCellStateChange() {
-    c.setFutureState(List.of());
+    try {
+      c.setFutureState(List.of());
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
     assertEquals(state, c.getFutureState());
   }
 
@@ -57,7 +66,15 @@ public class CellTest {
     Cell c3 = new Cell(1, new Point(1, 0));
     Cell c4 = new Cell(0, new Point(1, 0));
 
-    c.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(state, c.getFutureState());
   }

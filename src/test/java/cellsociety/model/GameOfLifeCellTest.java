@@ -4,6 +4,7 @@ import cellsociety.model.cells.GameOfLifeCell;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Point;;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,15 @@ public class GameOfLifeCellTest {
     GameOfLifeCell c3 = new GameOfLifeCell(1, new Point(1, 0));
     GameOfLifeCell c4 = new GameOfLifeCell(0, new Point(1, 0));
 
-    c.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(1, c.getFutureState());
   }
@@ -46,7 +55,15 @@ public class GameOfLifeCellTest {
     GameOfLifeCell c3 = new GameOfLifeCell(2132, new Point(1, 0));
     GameOfLifeCell c4 = new GameOfLifeCell(213, new Point(1, 0));
 
-    c.setFutureState(List.of(c1, c2, c3, c4));
+    try {
+      c.setFutureState(List.of(c1, c2, c3, c4));
+    } catch (InvocationTargetException e) {
+      throw new RuntimeException(e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchMethodException e) {
+      throw new RuntimeException(e);
+    }
 
     assertEquals(0, c.getFutureState());
   }
