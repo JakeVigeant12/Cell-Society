@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GridScreenTest extends DukeApplicationTest {
+class GridScreenHexagonTest extends DukeApplicationTest {
 
   Stage stage;
   TextArea myStatusBox;
@@ -26,7 +26,7 @@ class GridScreenTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) {
     this.stage = stage;
-    File myDataFile = new File("./data/game_of_life/blinkers.sim");
+    File myDataFile = new File("./data/game_of_life/blinkers_hexagon.sim");
     CellSocietyController controller = new CellSocietyController(myDataFile);
     controller.loadSimulation(stage);
     GridScreen firstGrid = new GridScreen(800, stage, controller);
@@ -91,15 +91,6 @@ class GridScreenTest extends DukeApplicationTest {
     clickOn(button);
     Button button1 = lookup("#uploadButton").query();
     Assertions.assertEquals(button1.getText(), "Upload");
-  }
-
-  @Test
-  void testGridSize() {
-    GridPane gridView = lookup("#gridView").query();
-    CellView cellView = (CellView) gridView.getChildren().get(0);
-    double actual = cellView.getShapeSize();
-    double expected = Math.min((gridView.getWidth() - 50) / 10, (gridView.getHeight() - 50) / 10);
-    assertEquals(expected, actual);
   }
 
   @Test

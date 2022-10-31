@@ -1,6 +1,5 @@
 package cellsociety.view;
 
-import javafx.scene.shape.Rectangle;
 
 public class CellViewHexagon extends CellView {
   public CellViewHexagon(int state, ColorMap colors) {

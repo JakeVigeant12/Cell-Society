@@ -2,12 +2,10 @@ package cellsociety.model.grids;
 
 import cellsociety.model.cells.Cell;
 import cellsociety.model.cells.SegregationCell;
-import cellsociety.view.GridWrapper;
+import cellsociety.model.GridWrapper;
 
-import java.awt.Point;;
-import java.lang.reflect.InvocationTargetException;
+;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
 
 public class SegregationGraphGrid extends SwappedCellsGraphGrid {

@@ -3,8 +3,6 @@ package cellsociety.view;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 
@@ -61,6 +59,9 @@ public abstract class CellView extends StackPane {
     }
   }
 
+  /**
+   * Circulate through all the states
+   */
   private void circulateState() {
     if (state < numStates - 1) {
       state++;
@@ -87,9 +88,9 @@ public abstract class CellView extends StackPane {
   }
 
 //  For test purpose
-//  protected double getRectangleSize() {
-//    return shape.getWidth();
-//  }
+  protected double getShapeSize() {
+    return 0;
+  }
 
   protected Shape getShapePolygon() {
     return shape;

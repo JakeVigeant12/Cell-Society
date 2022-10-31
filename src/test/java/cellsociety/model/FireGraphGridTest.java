@@ -7,9 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cellsociety.model.grids.FireGraphGrid;
 import cellsociety.parser.CSVParser;
-import cellsociety.view.GridWrapper;
+
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
