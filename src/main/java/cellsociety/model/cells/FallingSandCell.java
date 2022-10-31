@@ -132,39 +132,39 @@ public class FallingSandCell extends Cell {
     }
   }
 
-  private void rulesUPPERSAND() {
+  public void rulesUPPERSAND() {
     setFutureStateValue(SAND); // Turn into SAND
   }
 
-  private void rulesLOWERSAND() {
+  public void rulesLOWERSAND() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesLEFTSAND() {
+  public void rulesLEFTSAND() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesRIGHTSAND() {
+  public void rulesRIGHTSAND() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesUPPERWATER() {
+  public void rulesUPPERWATER() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesLOWERWATER() {
+  public void rulesLOWERWATER() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesLEFTWATER() {
+  public void rulesLEFTWATER() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesRIGHTWATER() {
+  public void rulesRIGHTWATER() {
     setFutureStateValue(WATER);
   }
 
-  private void rulesUPPEREMPTY() {
+  public void rulesUPPEREMPTY() {
     setFutureStateValue(WATER);
   }
 

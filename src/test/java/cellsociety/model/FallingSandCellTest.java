@@ -70,6 +70,59 @@ public class FallingSandCellTest {
 
     assertEquals(neighborStates, List.of(1, 0, 1, 0));
   }
-
+@Test
+  void testRulesUpperSand(){
+  FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+  c1.rulesUPPERSAND();
+  assertEquals(c1.getFutureState(),1);
+}
+  @Test
+  void testRulesLowerSand(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesLOWERSAND();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesLeftSand(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesLEFTSAND();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesRightSand(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesRIGHTSAND();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesUpperWater(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesUPPERWATER();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesLowerWater(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesLOWERWATER();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesLeftWater(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesLEFTWATER();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesRightWater(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesRIGHTWATER();
+    assertEquals(c1.getFutureState(),2);
+  }
+  @Test
+  void testRulesUpperEmpty(){
+    FallingSandCell c1 = new FallingSandCell(1, new Point(0, 0));
+    c1.rulesUPPEREMPTY();
+    assertEquals(c1.getFutureState(),2);
+  }
 
 }
