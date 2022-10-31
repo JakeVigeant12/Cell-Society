@@ -16,9 +16,9 @@ import java.util.Properties;
 //Default implementation of the model
 public class InitialModelImplementation extends Model {
 
-  public static final String WATOR_WORLD = "WatorWorld";
-  public static final String SEGREGATION = "Segregation";
-  public static final String FALLING_SAND = "FallingSand";
+  private static final String WATOR_WORLD = "WatorWorld";
+  private static final String SEGREGATION = "Segregation";
+  private static final String FALLING_SAND = "FallingSand";
   private final Grid myGrid;
   private final String gridPackagePath = "cellsociety.model.grids.";
 
@@ -28,8 +28,7 @@ public class InitialModelImplementation extends Model {
    * @param gridWrapper
    * @param simParameters
    */
-  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters)
-      throws IllegalStateException {
+  public InitialModelImplementation(GridWrapper gridWrapper, Properties simParameters) throws IllegalStateException {
     try {
       Class<?> graphGridClass = Class.forName(
           gridPackagePath + simParameters.get("Type") + "GraphGrid");
