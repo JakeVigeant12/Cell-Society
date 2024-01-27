@@ -107,8 +107,6 @@ Fully working simulations:
  * Schelling's Model of Segregation
  * Falling Sand
 
-Nearly Complete Simulations:
- * Wa-Tor World
 
 ### Notes/Assumptions
 
@@ -125,5 +123,4 @@ each cell is translated up by some distance closely align them.
 Noteworthy features:
 * Try running the simulations with "styled" in the file name to see cool pictures for the different simulations. It's really cute! 
 
-### Impressions
 
